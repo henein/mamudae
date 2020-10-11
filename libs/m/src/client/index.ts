@@ -1,13 +1,6 @@
-import './style.css';
+import * as PIXI from 'pixi.js';
 
-function component() {
-  const element = document.createElement('div');
+const app = new PIXI.Application({ backgroundColor: 0x1099bb });
+app.renderer.autoDensity = true;
 
-  // Lodash, currently included via a script, is required for this line to work
-  element.innerHTML = 'Hello, webpack';
-  element.classList.add('hello');
-
-  return element;
-}
-
-document.body.appendChild(component());
+document.body.appendChild(app.view);

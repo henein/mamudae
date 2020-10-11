@@ -50,6 +50,7 @@
     "webpack-merge": "^5.2.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pixi.js": "^5.3.3"
   }
 }
