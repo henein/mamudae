@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
@@ -6,6 +7,7 @@ module.exports = {
   target: 'web',
   entry: ['./src/client/index.ts'],
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: '메이플 무자본 대회',
     }),
