@@ -6,7 +6,8 @@
     "build": "npm run clean && tsc -p tsconfig.server.json && webpack --config webpack.prod.js",
     "dev": "concurrently --kill-others \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsc-watch -p tsconfig.server.json --onSuccess \"node dist\"",
-    "dev:client": "webpack --watch --config webpack.dev.js"
+    "dev:client": "webpack --watch --config webpack.dev.js",
+    "test": "jest"
   },
   "author": "Pdom",
   "license": "MIT",
