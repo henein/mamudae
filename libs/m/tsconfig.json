@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "rootDir": "src",
+    "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "CommonJS",
@@ -13,6 +14,6 @@
     "moduleResolution": "node"
   },
   "include": [
-    "src/**/*"
+    "src"
   ]
 }

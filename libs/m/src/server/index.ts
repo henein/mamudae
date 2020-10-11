@@ -1,32 +1,13 @@
 import express from 'express';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import ejs from 'ejs';
-
-import config from '../../webpack.config';
+import path from 'path';
 
 const app = express();
-const compiler = webpack(config);
 
-app.set('port', process.env.PORT || 3000);
-app.use(express.static(__dirname + '/public'));
-app.set('views', __dirname + '/public/views');
-app.engine('html', ejs.renderFile);
-app.set('view engine', 'html');
+const port = process.env.PORT || 3000;
 
-app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: config.output?.publicPath,
-  })
-);
+app.use(express.static(path.resolve(__dirname, 'public')));
 
-app.use(webpackHotMiddleware(compiler));
-
-app.listen(app.get('port'), function () {
-  console.log('Example app listening on port 3000!\n');
-});
-
-app.get('/', (req, res) => {
-  res.render('index');
+app.listen(port, function () {
+  console.log(`http://localhost:${port}`);
+  console.log('메이플 교차 선택기 실행 됨!');
 });
