@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
 import io from 'socket.io-client';
 
+import { store } from './store';
+
 const socket = io({
   reconnectionDelayMax: 10000,
   query: {
