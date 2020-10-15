@@ -4,6 +4,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p tsconfig.server.json && webpack --config webpack.prod.js",
+    "start": "node dist/server",
     "dev": "npm run clean && concurrently --kill-others \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsc-watch -p tsconfig.server.json --onSuccess \"node dist/server\"",
     "dev:client": "webpack --watch --config webpack.dev.js",
