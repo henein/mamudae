@@ -7,7 +7,7 @@
     "dev": "npm run clean && concurrently --kill-others \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsc-watch -p tsconfig.server.json --onSuccess \"node dist/server\"",
     "dev:client": "webpack --watch --config webpack.dev.js",
-    "web": "npm run build && pm2 start dist/server",
+    "web": "npm run build && npm run pm2 start dist/server",
     "test": "jest"
   },
   "author": "Pdom",
