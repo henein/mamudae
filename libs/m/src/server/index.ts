@@ -5,6 +5,9 @@ import path from 'path';
 
 import { Event } from '../common/enums';
 import state from './state';
+import SequenceQueue from './sequenceQueue';
+
+new SequenceQueue();
 
 const app = express();
 const server = http.createServer(app);
