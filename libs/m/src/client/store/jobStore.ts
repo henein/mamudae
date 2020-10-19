@@ -1,4 +1,5 @@
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
+import { JobId } from '../../common/enums';
 import { RootStore } from './index';
 
 enum Job {
@@ -8,12 +9,28 @@ enum Job {
 
 export class JobStore {
   rootStore: RootStore;
-  @observable left: Job[];
-  @observable right: Job[];
+  @observable unPickedList: JobId[] = [];
+  @observable leftBanList: JobId[] = [];
+  @observable rightBanList: JobId[] = [];
+  @observable leftPickList: JobId[] = [];
+  @observable rightPickList: JobId[] = [];
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
-    this.left = [];
-    this.right = [];
+  }
+
+  @action
+  initList(
+    unPickedList: JobId[],
+    leftBanList: JobId[],
+    rightBanList: JobId[],
+    leftPickList: JobId[],
+    rightPickList: JobId[]
+  ) {
+    this.unPickedList = unPickedList;
+    this.leftBanList = leftBanList;
+    this.rightBanList = rightBanList;
+    this.leftPickList = leftPickList;
+    this.rightPickList = rightPickList;
   }
 }

@@ -1,5 +1,8 @@
 import * as PIXI from 'pixi.js';
 import io from 'socket.io-client';
+import { IOEvent, JobId } from '../common/enums';
+import { InitPayload } from '../common/payloadTypes';
+import { Sequence } from '../common/sequenceQueue';
 
 import './styles.css';
 import { store } from './store';
@@ -11,7 +14,20 @@ const socket = io({
   },
 });
 
-socket.emit('chat message', '메세지 입니다.');
+socket.on(IOEvent.INIT, (data: InitPayload) => {
+  store.sequenceStore.nextSequence = data.nextSequence; //변뎡
+  store.jobStore.initList(
+    data.unPickedList,
+    data.leftBanList,
+    data.rightBanList,
+    data.leftPickList,
+    data.rightPickList
+  );
+});
+
+socket.on(IOEvent.START, () => {
+  console.log('start');
+});
 
 const app = new PIXI.Application({ backgroundColor: 0x1099bb });
 app.renderer.autoDensity = true;
