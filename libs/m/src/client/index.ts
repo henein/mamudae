@@ -31,6 +31,7 @@ socket.on(IOEvent.START, () => {
 
 const app = new PIXI.Application({ backgroundColor: 0x1099bb });
 app.renderer.autoDensity = true;
+
 const sprite = PIXI.Sprite.from('./assets/splashes/10.png');
 sprite.anchor.set(0.5);
 app.stage.addChild(sprite);
@@ -39,8 +40,21 @@ document.body.appendChild(app.view);
 
 window.addEventListener('resize', onResize);
 
+const MIN_RATIO = 4 / 3;
+const MAX_RATIO = 16 / 9;
+
 function onResize() {
-  app.renderer.resize(window.innerWidth, window.innerHeight);
+  const baseWidth = window.innerWidth;
+  const baseHeight = window.innerHeight;
+  const baseRatio = baseWidth / baseHeight;
+
+  if (baseRatio < MIN_RATIO) {
+    app.renderer.resize(baseWidth, baseWidth / MIN_RATIO);
+  } else if (MIN_RATIO <= baseRatio && baseRatio <= MAX_RATIO) {
+    app.renderer.resize(baseWidth, baseHeight);
+  } else {
+    app.renderer.resize(baseHeight * MAX_RATIO, baseHeight);
+  }
   sprite.position.set(app.screen.width / 2, app.screen.height / 2);
 }
 onResize();
