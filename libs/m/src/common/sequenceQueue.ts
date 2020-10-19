@@ -1,8 +1,9 @@
-import { Event } from '../common/enums';
+import { IOEvent } from './enums';
+import { SequencePayload } from './payloadTypes';
 
 export type Sequence = {
-  event: Event;
-  payload?: { [key: string]: any };
+  event: IOEvent;
+  payload?: SequencePayload;
 };
 
 export type Option = {
@@ -16,19 +17,19 @@ export default class SequenceQueue {
   constructor(option: Option = {}) {
     const { teamBanSize = 5, teamPickSize = 6 } = option;
 
-    this.enqueue({ event: Event.START });
+    this.enqueue({ event: IOEvent.START, payload: { team: 'Left', index: 0 } });
 
     for (let i = 0; i < teamBanSize * 2; i++) {
       const index = Math.floor(i / 2);
 
       if (!(i % 2)) {
         this.enqueue({
-          event: Event.BAN,
+          event: IOEvent.BAN,
           payload: { team: 'Left', index: index },
         });
       } else {
         this.enqueue({
-          event: Event.BAN,
+          event: IOEvent.BAN,
           payload: { team: 'Right', index: index },
         });
       }
@@ -39,18 +40,18 @@ export default class SequenceQueue {
 
       if (!(i % 2)) {
         this.enqueue({
-          event: Event.PICK,
+          event: IOEvent.PICK,
           payload: { team: 'Left', index: index },
         });
       } else {
         this.enqueue({
-          event: Event.PICK,
+          event: IOEvent.PICK,
           payload: { team: 'Right', index: index },
         });
       }
     }
 
-    this.enqueue({ event: Event.END });
+    this.enqueue({ event: IOEvent.END });
   }
 
   enqueue(item: Sequence) {

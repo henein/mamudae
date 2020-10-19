@@ -1,4 +1,7 @@
-export enum Event {
+export enum IOEvent {
+  INIT = 'init',
+  SET_LEFT_LEADER = 'setLeftLeader',
+  SET_RIGHT_LEADER = 'setRightLeader',
   START = 'start',
   BAN = 'ban',
   PICK = 'pick',
