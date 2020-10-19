@@ -29,32 +29,33 @@ socket.on(IOEvent.START, () => {
   console.log('start');
 });
 
-const app = new PIXI.Application({ backgroundColor: 0x1099bb });
+const app = new PIXI.Application({
+  width: 1920,
+  height: 1080,
+  backgroundColor: 0x1099bb,
+});
 app.renderer.autoDensity = true;
 
-const sprite = PIXI.Sprite.from('./assets/splashes/10.png');
-sprite.anchor.set(0.5);
-app.stage.addChild(sprite);
+const container = new PIXI.Container();
+app.stage.addChild(container);
+
+const blurBackground = PIXI.Sprite.from('./assets/backgrounds/10.png');
+const blurFilter = new PIXI.filters.BlurFilter();
+blurFilter.blur = 16;
+blurBackground.filters = [blurFilter];
+blurBackground.filterArea;
+container.addChild(blurBackground);
+
+const multiply = PIXI.Sprite.from('./assets/backgrounds/multiply.png');
+multiply.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+container.addChild(multiply);
+
+const background = PIXI.Sprite.from('./assets/backgrounds/10.png');
+const graphics = new PIXI.Graphics();
+graphics.beginFill(0xff3300);
+graphics.drawRect(428, 248, 1064, 800);
+graphics.endFill();
+background.mask = graphics;
+container.addChild(background);
 
 document.body.appendChild(app.view);
-
-window.addEventListener('resize', onResize);
-
-const MIN_RATIO = 4 / 3;
-const MAX_RATIO = 16 / 9;
-
-function onResize() {
-  const baseWidth = window.innerWidth;
-  const baseHeight = window.innerHeight;
-  const baseRatio = baseWidth / baseHeight;
-
-  if (baseRatio < MIN_RATIO) {
-    app.renderer.resize(baseWidth, baseWidth / MIN_RATIO);
-  } else if (MIN_RATIO <= baseRatio && baseRatio <= MAX_RATIO) {
-    app.renderer.resize(baseWidth, baseHeight);
-  } else {
-    app.renderer.resize(baseHeight * MAX_RATIO, baseHeight);
-  }
-  sprite.position.set(app.screen.width / 2, app.screen.height / 2);
-}
-onResize();
