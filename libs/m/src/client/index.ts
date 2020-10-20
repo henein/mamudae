@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import 'pixi-picture';
 import io from 'socket.io-client';
 import { IOEvent, JobId } from '../common/enums';
 import { InitPayload } from '../common/payloadTypes';
@@ -36,6 +37,21 @@ const app = new PIXI.Application({
 });
 app.renderer.autoDensity = true;
 
+function makeEasyWindow() {
+  const container = new PIXI.Container();
+
+  //mask the background and blur it
+  const graphics = new PIXI.Graphics();
+  graphics.beginFill(0xffffff, 1);
+  graphics.drawRect(400, 400, 300, 100);
+  graphics.drawRect(700, 400, 300, 100);
+  graphics.filters = [new PIXI.picture.MaskFilter(blurFilter)];
+
+  container.addChild(graphics);
+
+  return container;
+}
+
 const container = new PIXI.Container();
 app.stage.addChild(container);
 
@@ -57,5 +73,10 @@ graphics.drawRect(428, 248, 1064, 800);
 graphics.endFill();
 background.mask = graphics;
 container.addChild(background);
+
+container.addChild(makeEasyWindow());
+
+app.stage.filters = [new PIXI.filters.AlphaFilter()];
+app.stage.filterArea = app.screen;
 
 document.body.appendChild(app.view);

@@ -6649,6 +6649,11 @@ pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
+pixi-picture@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/pixi-picture/-/pixi-picture-2.0.3.tgz#11529ae45e563a003306932e9322d5594b638a70"
+  integrity sha512-MpfzRpAyxsR6xLWnPQo8Cm/OV9BhRpLwKAxEmO87vzwFaKoBFQNrqEF2AIa/Y/qMU1lqkNmYsCh1qxZFP7vq6A==
+
 pixi.js@^5.3.3:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-5.3.3.tgz#6e326a52542f4acd97ea3f8593cb0aeae502df9a"

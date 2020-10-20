@@ -57,6 +57,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mobx": "^6.0.1",
+    "pixi-picture": "^2.0.3",
     "pixi.js": "^5.3.3",
     "socket.io": "^2.3.0"
   }
