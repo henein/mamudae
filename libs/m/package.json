@@ -58,6 +58,8 @@
     "express": "^4.17.1",
     "mobx": "^6.0.1",
     "pixi-picture": "^2.0.3",
+    "pixi-scrollbox": "^2.2.0",
+    "pixi-viewport": "^4.15.0",
     "pixi.js": "^5.3.3",
     "socket.io": "^2.3.0"
   }

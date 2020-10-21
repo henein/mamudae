@@ -7,7 +7,7 @@ export interface Job {
   branchName: string;
 }
 
-export const JobList: Job[] = [
+export const jobList: Job[] = [
   {
     id: JobId.BEGINNER,
     jobName: '초보자',

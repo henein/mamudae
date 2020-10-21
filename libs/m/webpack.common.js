@@ -12,12 +12,13 @@ module.exports = {
     new webpack.ProvidePlugin({
       PIXI: 'pixi.js',
     }),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({ verbose: true }),
     new HtmlWebpackPlugin({
       title: '메이플 무자본 대회',
+      filename: '../index.html',
     }),
     new CopyPlugin({
-      patterns: [{ from: 'src/client/assets', to: 'assets' }],
+      patterns: [{ from: 'src/client/assets', to: '../assets' }],
     }),
     new ESLintWebpackPlugin({ extensions: ['ts', 'js'] }),
   ],
@@ -25,8 +26,8 @@ module.exports = {
     extensions: ['.ts', '.js', '.json'],
   },
   output: {
-    path: path.resolve(__dirname, 'dist/public'),
-    publicPath: '/',
+    path: path.resolve(__dirname, 'dist/public/js'),
+    publicPath: 'js',
     filename: '[name].[contenthash].js',
   },
   optimization: {
