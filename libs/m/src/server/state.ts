@@ -1,7 +1,7 @@
 import socketIO from 'socket.io';
 
 import { IOEvent, JobId } from '../common/enums';
-import { JobList } from '../common/jobs';
+import { jobList } from '../common/jobs';
 import { SequencePayload } from '../common/payloadTypes';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
 
@@ -20,7 +20,7 @@ export default class State {
     this._io = io;
     this._sequenceQueue = new SequenceQueue();
     this.dequeueSequence();
-    this.unPickedList = JobList.map<JobId>((value) => {
+    this.unPickedList = jobList.map<JobId>((value) => {
       return value.id;
     });
   }
