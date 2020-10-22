@@ -11,6 +11,9 @@ function makePortraitButton(job: Job) {
   portrait.height = 128;
   portrait.interactive = true;
   portrait.buttonMode = true;
+  portrait.on('pointerdown', () => {
+    console.log(job.jobName);
+  });
   container.addChild(portrait);
 
   const name = new PIXI.Text(job.jobName, { fontSize: 20, fill: '#000000' });
@@ -26,6 +29,7 @@ let isVision = false;
 export function createBanPickModal() {
   const container = new PIXI.Container();
   const modal = container.addChild(new PIXI.Container());
+  modal.interactiveChildren = false;
 
   const graphics = modal.addChild(new PIXI.Graphics());
   graphics.beginFill(0xffffff, 0.9);
@@ -85,13 +89,16 @@ export function createBanPickModal() {
     console.log(isVision);
     if (isVision) {
       isVision = false;
+      modal.interactiveChildren = false;
       appearTween.stop();
       disappearTween.start();
     } else {
       isVision = true;
+      modal.interactiveChildren = true;
       disappearTween.stop();
       appearTween.start();
     }
   });
+
   return container;
 }
