@@ -1,14 +1,13 @@
 import * as PIXI from 'pixi.js';
 import 'pixi-picture';
-import { Scrollbox } from 'pixi-scrollbox';
 import io from 'socket.io-client';
-import { IOEvent, JobId } from '../common/enums';
+import TWEEN from '@tweenjs/tween.js';
+import { IOEvent } from '../common/enums';
 import { InitPayload } from '../common/payloadTypes';
-import { Sequence } from '../common/sequenceQueue';
-
+import { constants } from './constants';
+import { createBanPickModal } from './components/banPick';
 import './styles.css';
 import { store } from './store';
-import { Job, jobList } from '../common/jobs';
 
 const socket = io({
   reconnectionDelayMax: 10000,
@@ -35,11 +34,10 @@ socket.on(IOEvent.START, () => {
 const app = new PIXI.Application({
   width: 1920,
   height: 1080,
-  backgroundColor: 0x1099bb,
 });
 app.renderer.autoDensity = true;
 
-function makeBlurOverlay() {
+function createBlurOverlay() {
   const container = new PIXI.Container();
 
   const blurFilter = new PIXI.filters.BlurFilter();
@@ -56,72 +54,41 @@ function makeBlurOverlay() {
   return container;
 }
 
-function makePortraitButton(job: Job) {
-  const container = new PIXI.Container();
-
-  const portrait = PIXI.Sprite.from(`./assets/portraits/${job.id}.png`);
-  portrait.width = 128;
-  portrait.height = 128;
-  portrait.interactive = true;
-  portrait.buttonMode = true;
-  container.addChild(portrait);
-
-  const name = new PIXI.Text(job.jobName, { fontSize: 20, fill: '#ffffff' });
-  name.anchor.set(0.5, 0);
-  name.position.set(64, 132);
-  container.addChild(name);
-
-  return container;
-}
-
-function makeBanPickContainer() {
-  const container = new PIXI.Container();
-
-  const graphics = new PIXI.Graphics();
-  graphics.beginFill(0x333333);
-  graphics.drawRoundedRect(0, 0, 768, 900, 24);
-  graphics.endFill();
-  container.addChild(graphics);
-
-  const scrollbox = new Scrollbox({
-    boxWidth: 704,
-    boxHeight: 400,
-    fade: true,
-    fadeScrollboxWait: 1000,
-    fadeScrollbarTime: 300,
-    scrollbarForegroundAlpha: 0.8,
-    scrollbarBackgroundAlpha: 0,
-    scrollbarSize: 4,
-    scrollbarOffsetVertical: 8,
-  });
-  scrollbox.position.set(32, 32);
-  container.addChild(scrollbox);
-
-  for (let i = 0; i < jobList.length; i++) {
-    //const portraitButton = makePortraitButton(i + 1);
-    const portraitButton = makePortraitButton(jobList[i]);
-    portraitButton.position.set(144 * (i % 5), 168 * Math.floor(i / 5));
-    scrollbox.content.addChild(portraitButton);
-  }
-  scrollbox.update();
-
-  container.position.set(app.screen.width / 2, app.screen.height / 2);
-  container.pivot.set(container.width / 2, 0);
-
-  return container;
-}
-
-const container = new PIXI.Container();
-app.stage.addChild(container);
+const baseContainer = new PIXI.Container();
 
 const background = PIXI.Sprite.from('./assets/backgrounds/10.png');
-container.addChild(background);
+baseContainer.addChild(background);
 
-container.addChild(makeBlurOverlay());
+baseContainer.addChild(createBlurOverlay());
 
-container.addChild(makeBanPickContainer());
+baseContainer.addChild(createBanPickModal());
+
+baseContainer.pivot.set(constants.BASE_WIDTH / 2, constants.BASE_HEIGHT / 2);
+app.stage.addChild(baseContainer);
 
 app.stage.filters = [new PIXI.filters.AlphaFilter()];
 app.stage.filterArea = app.screen;
 
+app.ticker.add(() => {
+  TWEEN.update();
+});
+
 document.body.appendChild(app.view);
+
+window.addEventListener('resize', onResize);
+
+function onResize() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const ratio = width / height;
+
+  app.renderer.resize(width, height);
+
+  if (ratio < constants.BASE_RATIO) {
+    baseContainer.scale.set(width / constants.BASE_WIDTH);
+  } else {
+    baseContainer.scale.set(height / constants.BASE_HEIGHT);
+  }
+  baseContainer.position.set(width / 2, height / 2);
+}
+onResize();
