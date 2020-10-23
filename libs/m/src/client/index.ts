@@ -5,7 +5,7 @@ import TWEEN from '@tweenjs/tween.js';
 import { IOEvent } from '../common/enums';
 import { InitPayload } from '../common/payloadTypes';
 import { constants } from './constants';
-import { createBanPickModal } from './components/banPick';
+import { BanPickModal } from './components/banPick';
 import './styles.css';
 import { store } from './store';
 
@@ -56,12 +56,11 @@ function createBlurOverlay() {
 
 const baseContainer = new PIXI.Container();
 
-const background = PIXI.Sprite.from('./assets/backgrounds/10.png');
-baseContainer.addChild(background);
+baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/10.png'));
 
 baseContainer.addChild(createBlurOverlay());
 
-baseContainer.addChild(createBanPickModal());
+baseContainer.addChild(new BanPickModal());
 
 baseContainer.pivot.set(constants.BASE_WIDTH / 2, constants.BASE_HEIGHT / 2);
 app.stage.addChild(baseContainer);

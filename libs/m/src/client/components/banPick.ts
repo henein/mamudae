@@ -1,5 +1,5 @@
 import { Scrollbox } from 'pixi-scrollbox';
-import TWEEN, { Tween } from '@tweenjs/tween.js';
+import { Tween } from '@tweenjs/tween.js';
 import { Job, jobList } from '../../common/jobs';
 import { constants } from '../constants';
 
@@ -24,81 +24,85 @@ function makePortraitButton(job: Job) {
   return container;
 }
 
-let isVision = false;
+export class BanPickModal extends PIXI.Container {
+  modal: PIXI.Container;
+  appearTween: Tween<PIXI.Container>;
+  disappearTween: Tween<PIXI.Container>;
+  isVision = false;
 
-export function createBanPickModal() {
-  const container = new PIXI.Container();
-  const modal = container.addChild(new PIXI.Container());
-  modal.interactiveChildren = false;
+  constructor() {
+    super();
+    this.modal = this.addChild(new PIXI.Container());
+    this.modal.interactiveChildren = false;
 
-  const graphics = modal.addChild(new PIXI.Graphics());
-  graphics.beginFill(0xffffff, 0.9);
-  graphics.drawRoundedRect(0, 0, 928, 672, 24);
-  graphics.endFill();
-
-  const scrollbox = modal.addChild(
-    new Scrollbox({
-      boxWidth: 928,
-      boxHeight: 576,
-      fade: true,
-      fadeScrollboxWait: 1000,
-      fadeScrollbarTime: 300,
-      scrollbarForegroundAlpha: 0.8,
-      scrollbarBackgroundAlpha: 0,
-      scrollbarOffsetVertical: -16,
-      scrollbarSize: 4,
-    })
-  );
-  scrollbox.position.set(0, 48);
-
-  const widthBox = scrollbox.content.addChild(new PIXI.Graphics());
-  widthBox.beginFill(0xffffff, 0);
-  widthBox.drawRect(0, 0, 928, 10);
-  widthBox.endFill();
-
-  for (let i = 0; i < jobList.length; i++) {
-    const portraitButton = scrollbox.content.addChild(
-      makePortraitButton(jobList[i])
+    this.appearTween = new Tween(this.modal).to(
+      { position: { y: 648 }, alpha: 1 },
+      200
     );
 
-    portraitButton.position.set(48 + 176 * (i % 5), 168 * Math.floor(i / 5));
-  }
-  scrollbox.update();
+    this.disappearTween = new Tween(this.modal).to(
+      { position: { y: 648 + 24 }, alpha: 0 },
+      200
+    );
 
-  modal.position.set(constants.BASE_WIDTH / 2, 648 + 24);
-  modal.alpha = 0;
-  modal.pivot.set(modal.width / 2, modal.height / 2);
+    const graphics = this.modal.addChild(new PIXI.Graphics());
+    graphics.beginFill(0xffffff, 0.9);
+    graphics.drawRoundedRect(0, 0, 928, 672, 24);
+    graphics.endFill();
 
-  const appearTween = new TWEEN.Tween(modal).to(
-    { position: { y: 648 }, alpha: 1 },
-    200
-  );
+    const scrollbox = this.modal.addChild(
+      new Scrollbox({
+        boxWidth: 928,
+        boxHeight: 576,
+        fade: true,
+        fadeScrollboxWait: 1000,
+        fadeScrollbarTime: 300,
+        scrollbarForegroundAlpha: 0.8,
+        scrollbarBackgroundAlpha: 0,
+        scrollbarOffsetVertical: -16,
+        scrollbarSize: 4,
+      })
+    );
+    scrollbox.position.set(0, 48);
 
-  const disappearTween = new TWEEN.Tween(modal).to(
-    { position: { y: 648 + 24 }, alpha: 0 },
-    200
-  );
+    const widthBox = scrollbox.content.addChild(new PIXI.Graphics());
+    widthBox.beginFill(0xffffff, 0);
+    widthBox.drawRect(0, 0, 928, 10);
+    widthBox.endFill();
 
-  const toggleButton = container.addChild(new PIXI.Graphics());
-  toggleButton.beginFill(0xffffff, 1);
-  toggleButton.drawRect(1920 / 2 - 50, 1080 - 60 - 16, 100, 48);
-  toggleButton.endFill();
-  toggleButton.interactive = true;
-  toggleButton.buttonMode = true;
-  toggleButton.on('pointerdown', () => {
-    console.log(isVision);
-    if (isVision) {
-      isVision = false;
-      modal.interactiveChildren = false;
-      appearTween.stop();
-      disappearTween.start();
-    } else {
-      isVision = true;
-      modal.interactiveChildren = true;
-      disappearTween.stop();
-      appearTween.start();
+    for (let i = 0; i < jobList.length; i++) {
+      const portraitButton = scrollbox.content.addChild(
+        makePortraitButton(jobList[i])
+      );
+
+      portraitButton.position.set(48 + 176 * (i % 5), 168 * Math.floor(i / 5));
     }
-  });
+    scrollbox.update();
 
-  return container;
+    this.modal.position.set(constants.BASE_WIDTH / 2, 648 + 24);
+    this.modal.alpha = 0;
+    this.modal.pivot.set(this.modal.width / 2, this.modal.height / 2);
+
+    const toggleButton = this.addChild(new PIXI.Graphics());
+    toggleButton.beginFill(0xffffff, 1);
+    toggleButton.drawRect(1920 / 2 - 50, 1080 - 60 - 16, 100, 48);
+    toggleButton.endFill();
+    toggleButton.interactive = true;
+    toggleButton.buttonMode = true;
+    toggleButton.on('pointerdown', this.onToggle);
+  }
+
+  onToggle = () => {
+    if (this.isVision) {
+      this.isVision = false;
+      this.modal.interactiveChildren = false;
+      this.appearTween.stop();
+      this.disappearTween.start();
+    } else {
+      this.isVision = true;
+      this.modal.interactiveChildren = true;
+      this.disappearTween.stop();
+      this.appearTween.start();
+    }
+  };
 }
