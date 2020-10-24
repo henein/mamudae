@@ -12,6 +12,7 @@
     "strict": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
+    "useDefineForClassFields": true,
     "experimentalDecorators": true
   },
   "include": [
