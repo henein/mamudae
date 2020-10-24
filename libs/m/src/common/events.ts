@@ -12,7 +12,7 @@ export enum IOEvent {
 }
 
 export interface InitPayload {
-  nextSequence: Sequence;
+  nextSequence?: Sequence;
   unPickedList: JobId[];
   leftBanList: JobId[];
   rightBanList: JobId[];
@@ -21,7 +21,9 @@ export interface InitPayload {
 }
 
 export interface SequencePayload {
-  team: 'Left' | 'Right';
-  index: number;
+  nextSequence?: Sequence;
+  action?: 'ban' | 'pick' | 'opponentPick';
+  team?: 'left' | 'right';
+  index?: number;
   jobId?: JobId;
 }

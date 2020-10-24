@@ -2,7 +2,7 @@ import socketIO from 'socket.io';
 
 import { IOEvent, JobId } from '../common/enums';
 import { jobList } from '../common/jobs';
-import { SequencePayload } from '../common/payloadTypes';
+import { SequencePayload } from '../common/events';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
 
 export default class State {
@@ -34,8 +34,9 @@ export default class State {
   }
 
   onStart() {
+    const payload: SequencePayload = { nextSequence: this._nextSequence };
     this.dequeueSequence();
-    this._io.emit(IOEvent.START);
+    this._io.emit(IOEvent.START, payload);
   }
 
   onEnd() {
@@ -43,57 +44,62 @@ export default class State {
     this._io.emit(IOEvent.END);
   }
 
-  onBan(payload: SequencePayload) {
-    const { team, index, jobId } = payload;
+  onBanPick(payload: SequencePayload) {
+    const { action, team, index, jobId } = payload;
+    const nextSequencePayload = this._nextSequence?.payload;
+
     if (!jobId) {
       console.error('jobId 누락');
       return;
     }
 
-    const isSuccessed = this.moveJob(
-      jobId,
-      this.unPickedList,
-      team == 'Left' ? this.leftBanList : this.rightBanList,
-      index
-    );
-
-    if (isSuccessed) {
-      this.dequeueSequence();
-      this._io.emit(IOEvent.BAN, payload);
+    if (action == 'opponentPick') {
+      // 두개 받는 처리
     }
-  }
 
-  onPick(payload: SequencePayload) {
-    const { team, index, jobId } = payload;
-    if (!jobId) {
-      console.error('jobId 누락');
+    if (
+      nextSequencePayload?.action != action &&
+      nextSequencePayload?.team != team &&
+      nextSequencePayload?.index != index
+    ) {
+      console.error('잘못된 순서');
       return;
     }
 
-    const isSuccessed = this.moveJob(
-      jobId,
-      this.unPickedList,
-      team == 'Left' ? this.leftPickList : this.rightPickList,
-      index
-    );
+    const targetList =
+      action == 'ban'
+        ? team == 'left'
+          ? this.leftBanList
+          : this.rightBanList
+        : team == 'left'
+        ? this.leftPickList
+        : this.rightPickList;
+
+    const isSuccessed = this.moveJob(jobId, targetList, index ?? -1);
 
     if (isSuccessed) {
+      const emitPayload: SequencePayload = {
+        nextSequence: this._nextSequence,
+        action,
+        team,
+        index,
+        jobId,
+      };
+      this._io.emit(IOEvent.BAN_PICK, emitPayload);
       this.dequeueSequence();
-      this._io.emit(IOEvent.PICK, payload);
     }
   }
 
-  private moveJob(
+  private moveJob = (
     jobId: JobId,
-    from: JobId[],
-    to: JobId[],
+    target: JobId[],
     toIndex: number
-  ): boolean {
-    const fromIndex = from.indexOf(jobId);
+  ): boolean => {
+    const fromIndex = this.unPickedList.indexOf(jobId);
 
     if (fromIndex > -1) {
-      if (to.length == toIndex) {
-        to.push(from.splice(fromIndex, 1)[0]);
+      if (target.length == toIndex) {
+        target.push(this.unPickedList.splice(fromIndex, 1)[0]);
         return true;
       } else {
         console.error('잘못된 순서');
@@ -103,5 +109,5 @@ export default class State {
       console.error('선택할 수 없는 직업');
       return false;
     }
-  }
+  };
 }

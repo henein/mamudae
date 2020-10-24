@@ -3,8 +3,7 @@ export enum IOEvent {
   SET_LEFT_LEADER = 'setLeftLeader',
   SET_RIGHT_LEADER = 'setRightLeader',
   START = 'start',
-  BAN = 'ban',
-  PICK = 'pick',
+  BAN_PICK = 'ban_pick',
   END = 'end',
 }
 

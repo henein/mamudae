@@ -5,7 +5,7 @@ import path from 'path';
 
 import { IOEvent } from '../common/enums';
 import State from './state';
-import { SequencePayload } from '../common/payloadTypes';
+import { SequencePayload } from '../common/events';
 
 const app = express();
 const server = http.createServer(app);
@@ -36,15 +36,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on(IOEvent.BAN, (payload: SequencePayload) => {
-    if (checkNextEvent(IOEvent.BAN, payload)) {
-      state.onBan(payload);
-    }
-  });
-
-  socket.on(IOEvent.PICK, (payload: SequencePayload) => {
-    if (checkNextEvent(IOEvent.PICK, payload)) {
-      state.onPick(payload);
+  socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
+    if (checkNextEvent(IOEvent.BAN_PICK)) {
+      state.onBanPick(payload);
     }
   });
 
@@ -60,34 +54,11 @@ server.listen(port, () => {
   console.log('메이플 교차 선택기 실행 됨!');
 });
 
-function checkNextEvent(event: IOEvent, payload?: SequencePayload): boolean {
+function checkNextEvent(event: IOEvent): boolean {
   const nextSequence = state.getNextSequence();
 
   if (nextSequence?.event == event) {
-    if (deepEqual(nextSequence?.payload, payload)) {
-      return true;
-    }
+    return true;
   }
   return false;
-}
-
-function deepEqual(x: any, y: any) {
-  if (x === y) {
-    return true;
-  } else if (
-    typeof x == 'object' &&
-    x != null &&
-    typeof y == 'object' &&
-    y != null
-  ) {
-    if (Object.keys(x).length != Object.keys(y).length) return false;
-
-    for (const prop in x) {
-      if (y.hasOwnProperty(prop)) {
-        if (!deepEqual(x[prop], y[prop])) return false;
-      } else return false;
-    }
-
-    return true;
-  } else return false;
 }
