@@ -2,26 +2,25 @@ import { Scrollbox } from 'pixi-scrollbox';
 import { Tween } from '@tweenjs/tween.js';
 import { Job, jobList } from '../../common/jobs';
 import { constants } from '../constants';
+import { Portrait } from './portrait';
 
-function makePortraitButton(job: Job) {
-  const container = new PIXI.Container();
+class PortraitButton extends PIXI.Container {
+  constructor(job: Job) {
+    super();
+    const portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
 
-  const portrait = PIXI.Sprite.from(`./assets/portraits/${job.id}.png`);
-  portrait.width = 128;
-  portrait.height = 128;
-  portrait.interactive = true;
-  portrait.buttonMode = true;
-  portrait.on('pointerdown', () => {
-    console.log(job.jobName);
-  });
-  container.addChild(portrait);
+    portrait.interactive = true;
+    portrait.buttonMode = true;
+    portrait.on('pointerdown', () => {
+      console.log(job.jobName);
+    });
 
-  const name = new PIXI.Text(job.jobName, { fontSize: 20, fill: '#000000' });
-  name.anchor.set(0.5, 0);
-  name.position.set(64, 132);
-  container.addChild(name);
-
-  return container;
+    const name = this.addChild(
+      new PIXI.Text(job.jobName, { fontSize: 20, fill: '#000000' })
+    );
+    name.anchor.set(0.5, 0);
+    name.position.set(64, 132);
+  }
 }
 
 export class BanPickModal extends PIXI.Container {
@@ -72,7 +71,7 @@ export class BanPickModal extends PIXI.Container {
 
     for (let i = 0; i < jobList.length; i++) {
       const portraitButton = scrollbox.content.addChild(
-        makePortraitButton(jobList[i])
+        new PortraitButton(jobList[i])
       );
 
       portraitButton.position.set(48 + 176 * (i % 5), 168 * Math.floor(i / 5));
