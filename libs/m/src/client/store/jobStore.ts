@@ -1,5 +1,6 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import { JobId } from '../../common/enums';
+import { SequencePayload } from '../../common/events';
 import { RootStore } from './index';
 
 enum Job {
@@ -16,21 +17,45 @@ export class JobStore {
   @observable rightPickList: JobId[] = [];
 
   constructor(rootStore: RootStore) {
+    makeObservable(this);
     this.rootStore = rootStore;
   }
 
   @action
-  initList(
+  initList = (
     unPickedList: JobId[],
     leftBanList: JobId[],
     rightBanList: JobId[],
     leftPickList: JobId[],
     rightPickList: JobId[]
-  ) {
+  ) => {
     this.unPickedList = unPickedList;
     this.leftBanList = leftBanList;
     this.rightBanList = rightBanList;
     this.leftPickList = leftPickList;
     this.rightPickList = rightPickList;
-  }
+    console.log(unPickedList);
+  };
+
+  @action
+  moveJob = (payload: SequencePayload): boolean => {
+    const { action, team, jobId } = payload;
+    const fromIndex = this.unPickedList.indexOf(jobId ?? -1);
+    const targetList =
+      action == 'ban'
+        ? team == 'left'
+          ? this.leftBanList
+          : this.rightBanList
+        : team == 'left'
+        ? this.leftPickList
+        : this.rightPickList;
+
+    if (fromIndex != -1) {
+      targetList.push(this.unPickedList.splice(fromIndex, 1)[0]);
+      return true;
+    } else {
+      console.error('선택할 수 없는 직업'); // 리셋해야 함
+      return false;
+    }
+  };
 }

@@ -2,12 +2,14 @@ import * as PIXI from 'pixi.js';
 import 'pixi-picture';
 import io from 'socket.io-client';
 import TWEEN from '@tweenjs/tween.js';
-import { IOEvent } from '../common/enums';
-import { InitPayload } from '../common/payloadTypes';
+import { IOEvent, JobId } from '../common/enums';
+import { InitPayload } from '../common/events';
 import { constants } from './constants';
 import { BanPickModal } from './components/banPick';
 import './styles.css';
 import { store } from './store';
+import { Portrait } from './components/portrait';
+import { BanViewer } from './components/banViewer';
 
 const socket = io({
   reconnectionDelayMax: 10000,
@@ -25,6 +27,10 @@ socket.on(IOEvent.INIT, (data: InitPayload) => {
     data.leftPickList,
     data.rightPickList
   );
+
+  setTimeout(() => {
+    store.jobStore.moveJob({ action: 'ban', team: 'left', jobId: JobId.ADELE });
+  }, 2000);
 });
 
 socket.on(IOEvent.START, () => {
@@ -58,7 +64,11 @@ const baseContainer = new PIXI.Container();
 
 baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/10.png'));
 
+baseContainer.addChild(PIXI.Sprite.from('./assets/splashes/10.png'));
+
 baseContainer.addChild(createBlurOverlay());
+
+baseContainer.addChild(new BanViewer());
 
 baseContainer.addChild(new BanPickModal());
 
