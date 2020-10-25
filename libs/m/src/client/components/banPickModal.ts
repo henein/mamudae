@@ -3,45 +3,21 @@ import { Easing, Tween } from '@tweenjs/tween.js';
 import { Job, jobList } from '../../common/jobs';
 import { constants } from '../constants';
 import { Portrait } from './portrait';
+import { Button } from './button';
 
-class PortraitButton extends PIXI.Container {
-  private _isDisabled = false;
+class PortraitButton extends Button {
   portrait: Portrait;
-  filter: PIXI.filters.ColorMatrixFilter;
   overlay: PIXI.Sprite;
 
   constructor(job: Job) {
     super();
     this.portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
-    this.portrait.interactive = true;
-    this.portrait.buttonMode = true;
-    this.filter = new PIXI.filters.ColorMatrixFilter();
-    this.portrait.filters = [this.filter];
+    this.hitArea = new PIXI.Rectangle(0, 0, 128, 128);
 
-    this.portrait.on('pointertap', () => {
+    this.on('pointertap', () => {
       if (!this.isDisabled) {
         console.log(job.jobName);
         this.overlay.visible = true;
-      }
-    });
-    this.portrait.on('pointerdown', () => {
-      if (!this.isDisabled) {
-        this.filter.brightness(0.8, false);
-      }
-    });
-    this.portrait.on('pointerup', () => {
-      if (!this.isDisabled) {
-        this.filter.brightness(1.2, false);
-      }
-    });
-    this.portrait.on('pointerover', () => {
-      if (!this.isDisabled) {
-        this.filter.brightness(1.2, false);
-      }
-    });
-    this.portrait.on('pointerout', () => {
-      if (!this.isDisabled) {
-        this.filter.reset();
       }
     });
 
@@ -55,24 +31,6 @@ class PortraitButton extends PIXI.Container {
     );
     name.anchor.set(0.5, 0);
     name.position.set(64, 132);
-  }
-
-  get isDisabled(): boolean {
-    return this._isDisabled;
-  }
-
-  set isDisabled(value: boolean) {
-    this._isDisabled = value;
-
-    if (value) {
-      this.filter.greyscale(0.2, false);
-      this.portrait.interactive = false;
-      this.portrait.buttonMode = false;
-    } else {
-      this.filter.reset();
-      this.portrait.interactive = true;
-      this.portrait.buttonMode = true;
-    }
   }
 }
 
