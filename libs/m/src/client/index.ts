@@ -31,6 +31,27 @@ socket.on(IOEvent.INIT, (data: InitPayload) => {
   setTimeout(() => {
     store.jobStore.moveJob({ action: 'ban', team: 'left', jobId: JobId.ADELE });
   }, 2000);
+  setTimeout(() => {
+    store.jobStore.moveJob({
+      action: 'ban',
+      team: 'left',
+      jobId: JobId.ANGELIC_BUSTER,
+    });
+  }, 3000);
+  setTimeout(() => {
+    store.jobStore.moveJob({
+      action: 'ban',
+      team: 'left',
+      jobId: JobId.BLASTER,
+    });
+  }, 4000);
+  setTimeout(() => {
+    store.jobStore.moveJob({
+      action: 'ban',
+      team: 'left',
+      jobId: JobId.ARAN,
+    });
+  }, 5000);
 });
 
 socket.on(IOEvent.START, () => {

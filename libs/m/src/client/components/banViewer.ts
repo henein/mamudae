@@ -17,8 +17,10 @@ export class BanViewer extends PIXI.Container {
     leftBan[2].position.set(192, 32);
 
     autorun(() => {
-      if (store.jobStore.leftBanList.length >= 1)
-        leftBan[0].jobId = store.jobStore.leftBanList[0];
+      for (let i = 0; i < store.jobStore.leftBanList.length; i++) {
+        if (leftBan.length < store.jobStore.leftBanList.length) return;
+        leftBan[i].jobId = store.jobStore.leftBanList[i];
+      }
     });
   }
 }
