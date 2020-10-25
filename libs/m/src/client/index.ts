@@ -89,6 +89,8 @@ baseContainer.addChild(PIXI.Sprite.from('./assets/splashes/10.png'));
 
 baseContainer.addChild(createBlurOverlay());
 
+baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/cameraUI.png'));
+
 baseContainer.addChild(new BanViewer());
 
 baseContainer.addChild(new BanPickModal());
