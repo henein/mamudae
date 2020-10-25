@@ -5,14 +5,32 @@ import { constants } from '../constants';
 import { Portrait } from './portrait';
 
 class PortraitButton extends PIXI.Container {
+  private _isDisabled = false;
+  portrait: Portrait;
+  filter: PIXI.filters.ColorMatrixFilter;
+
   constructor(job: Job) {
     super();
-    const portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
+    this.portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
+    this.portrait.interactive = true;
+    this.portrait.buttonMode = true;
+    this.filter = new PIXI.filters.ColorMatrixFilter();
+    this.portrait.filters = [this.filter];
 
-    portrait.interactive = true;
-    portrait.buttonMode = true;
-    portrait.on('pointerdown', () => {
-      console.log(job.jobName);
+    this.portrait.on('pointerdown', () => {
+      if (!this.isDisabled) {
+        console.log(job.jobName);
+      }
+    });
+    this.portrait.on('pointerover', () => {
+      if (!this.isDisabled) {
+        this.filter.brightness(1.2, false);
+      }
+    });
+    this.portrait.on('pointerout', () => {
+      if (!this.isDisabled) {
+        this.filter.reset();
+      }
     });
 
     const name = this.addChild(
@@ -20,6 +38,24 @@ class PortraitButton extends PIXI.Container {
     );
     name.anchor.set(0.5, 0);
     name.position.set(64, 132);
+  }
+
+  get isDisabled(): boolean {
+    return this._isDisabled;
+  }
+
+  set isDisabled(value: boolean) {
+    this._isDisabled = value;
+
+    if (value) {
+      this.filter.greyscale(0.2, false);
+      this.portrait.interactive = false;
+      this.portrait.buttonMode = false;
+    } else {
+      this.filter.reset();
+      this.portrait.interactive = true;
+      this.portrait.buttonMode = true;
+    }
   }
 }
 
@@ -69,12 +105,16 @@ export class BanPickModal extends PIXI.Container {
     widthBox.drawRect(0, 0, 928, 10);
     widthBox.endFill();
 
+    const portraitButtonList: PortraitButton[] = [];
+
     for (let i = 0; i < jobList.length; i++) {
-      const portraitButton = scrollbox.content.addChild(
+      portraitButtonList[i] = scrollbox.content.addChild(
         new PortraitButton(jobList[i])
       );
-
-      portraitButton.position.set(48 + 176 * (i % 5), 168 * Math.floor(i / 5));
+      portraitButtonList[i].position.set(
+        48 + 176 * (i % 5),
+        168 * Math.floor(i / 5)
+      );
     }
     scrollbox.update();
 
