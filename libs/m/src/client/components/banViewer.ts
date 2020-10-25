@@ -7,14 +7,14 @@ export class BanViewer extends PIXI.Container {
     super();
 
     const leftBan = [
-      this.addChild(new Portrait({ size: 64 })),
-      this.addChild(new Portrait({ size: 64 })),
-      this.addChild(new Portrait({ size: 64 })),
+      this.addChild(new Portrait({ size: 84 })),
+      this.addChild(new Portrait({ size: 84 })),
+      this.addChild(new Portrait({ size: 84 })),
     ];
 
     leftBan[0].position.set(32, 32);
-    leftBan[1].position.set(112, 32);
-    leftBan[2].position.set(192, 32);
+    leftBan[1].position.set(32 + 84 + 16, 32);
+    leftBan[2].position.set(32 + 84 + 16 + 84 + 16 + 16, 32);
 
     autorun(() => {
       for (let i = 0; i < store.jobStore.leftBanList.length; i++) {
