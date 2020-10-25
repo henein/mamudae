@@ -3,11 +3,6 @@ import { JobId } from '../../common/enums';
 import { SequencePayload } from '../../common/events';
 import { RootStore } from './index';
 
-enum Job {
-  '초보자',
-  '히어로',
-}
-
 export class JobStore {
   rootStore: RootStore;
   @observable unPickedList: JobId[] = [];
@@ -37,7 +32,7 @@ export class JobStore {
     console.log(unPickedList);
   };
 
-  @action
+  @action // index 추가 검사
   moveJob = (payload: SequencePayload): boolean => {
     const { action, team, jobId } = payload;
     const fromIndex = this.unPickedList.indexOf(jobId ?? -1);
