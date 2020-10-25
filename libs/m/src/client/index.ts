@@ -5,7 +5,7 @@ import TWEEN from '@tweenjs/tween.js';
 import { IOEvent, JobId } from '../common/enums';
 import { InitPayload } from '../common/events';
 import { constants } from './constants';
-import { BanPickModal } from './components/banPick';
+import { BanPickModal } from './components/banPickModal';
 import './styles.css';
 import { store } from './store';
 import { Portrait } from './components/portrait';
