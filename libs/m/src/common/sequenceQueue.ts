@@ -1,5 +1,4 @@
-import { IOEvent } from './enums';
-import { SequencePayload } from './events';
+import { IOEvent, SequencePayload } from './events';
 
 export type Sequence = {
   event: IOEvent;

@@ -1,12 +1,3 @@
-export enum IOEvent {
-  INIT = 'init',
-  SET_LEFT_LEADER = 'setLeftLeader',
-  SET_RIGHT_LEADER = 'setRightLeader',
-  START = 'start',
-  BAN_PICK = 'ban_pick',
-  END = 'end',
-}
-
 export enum JobId {
   BEGINNER = 1,
   HERO,

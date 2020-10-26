@@ -1,8 +1,8 @@
 import socketIO from 'socket.io';
 
-import { IOEvent, JobId } from '../common/enums';
+import { JobId } from '../common/enums';
 import { jobList } from '../common/jobs';
-import { SequencePayload } from '../common/events';
+import { IOEvent, SequencePayload } from '../common/events';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
 
 export default class State {
