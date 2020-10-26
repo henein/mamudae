@@ -11,10 +11,10 @@ export default class State {
   private _nextSequence?: Sequence;
 
   unPickedList: JobId[];
-  leftBanList: JobId[] = [];
-  rightBanList: JobId[] = [];
-  leftPickList: JobId[] = [];
-  rightPickList: JobId[] = [];
+  leftBanList: JobId[];
+  rightBanList: JobId[];
+  leftPickList: JobId[];
+  rightPickList: JobId[];
 
   constructor(io: socketIO.Server) {
     this._io = io;
@@ -23,6 +23,10 @@ export default class State {
     this.unPickedList = jobList.map<JobId>((value) => {
       return value.id;
     });
+    this.leftBanList = [];
+    this.rightBanList = [];
+    this.leftPickList = [];
+    this.rightPickList = [];
   }
 
   private dequeueSequence() {
@@ -89,6 +93,19 @@ export default class State {
       this.dequeueSequence();
     }
   }
+
+  onReset = () => {
+    this._sequenceQueue = new SequenceQueue();
+    this.dequeueSequence();
+    this.unPickedList = jobList.map<JobId>((value) => {
+      return value.id;
+    });
+    this.leftBanList = [];
+    this.rightBanList = [];
+    this.leftPickList = [];
+    this.rightPickList = [];
+    this._io.emit(IOEvent.RESET);
+  };
 
   private moveJob = (
     jobId: JobId,

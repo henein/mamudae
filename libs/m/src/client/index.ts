@@ -10,6 +10,7 @@ import './styles.css';
 import { store } from './store';
 import { Portrait } from './components/portrait';
 import { BanViewer } from './components/banViewer';
+import { autorun } from 'mobx';
 
 const socket = io({
   reconnectionDelayMax: 10000,
@@ -18,44 +19,16 @@ const socket = io({
   },
 });
 
-socket.on(IOEvent.INIT, (data: InitPayload) => {
-  store.sequenceStore.nextSequence = data.nextSequence; //변뎡
-  store.jobStore.initList(
-    data.unPickedList,
-    data.leftBanList,
-    data.rightBanList,
-    data.leftPickList,
-    data.rightPickList
-  );
+store.sequenceStore.init(socket);
 
-  setTimeout(() => {
-    store.jobStore.moveJob({ action: 'ban', team: 'left', jobId: JobId.ADELE });
-  }, 2000);
-  setTimeout(() => {
-    store.jobStore.moveJob({
-      action: 'ban',
-      team: 'left',
-      jobId: JobId.ANGELIC_BUSTER,
-    });
-  }, 3000);
-  setTimeout(() => {
-    store.jobStore.moveJob({
-      action: 'ban',
-      team: 'left',
-      jobId: JobId.BLASTER,
-    });
-  }, 4000);
-  setTimeout(() => {
-    store.jobStore.moveJob({
-      action: 'ban',
-      team: 'left',
-      jobId: JobId.ARAN,
-    });
-  }, 5000);
+socket.on(IOEvent.START, (data: SequencePayload) => {
+  store.sequenceStore.setNextSequence(data.nextSequence);
+  console.log('start');
 });
 
-socket.on(IOEvent.START, () => {
-  console.log('start');
+socket.on(IOEvent.RESET, () => {
+  socket.emit(IOEvent.INIT);
+  console.log('reset');
 });
 
 const app = new PIXI.Application({
@@ -95,6 +68,14 @@ baseContainer.addChild(new BanViewer());
 
 baseContainer.addChild(new BanPickModal());
 
+const text = baseContainer.addChild(
+  new PIXI.Text('시퀸스', { fontSize: 50, fill: '#ffffff' })
+);
+text.position.set(500, 500);
+autorun(() => {
+  text.text = store.sequenceStore.nextSequence?.event.toString() ?? '';
+});
+
 baseContainer.pivot.set(constants.BASE_WIDTH / 2, constants.BASE_HEIGHT / 2);
 app.stage.addChild(baseContainer);
 
@@ -124,3 +105,25 @@ function onResize() {
   baseContainer.position.set(width / 2, height / 2);
 }
 onResize();
+
+setTimeout(() => {
+  store.jobStore.moveJob({
+    action: 'ban',
+    team: 'left',
+    jobId: JobId.ADELE,
+  });
+}, 2000);
+setTimeout(() => {
+  store.jobStore.moveJob({
+    action: 'ban',
+    team: 'left',
+    jobId: JobId.ANGELIC_BUSTER,
+  });
+}, 3000);
+setTimeout(() => {
+  store.jobStore.moveJob({
+    action: 'ban',
+    team: 'left',
+    jobId: JobId.BLASTER,
+  });
+}, 4000);

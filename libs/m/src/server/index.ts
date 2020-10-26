@@ -73,6 +73,7 @@ io.of('/admin').on('connection', (socket) => {
   });
   socket.on('reset', () => {
     console.log(`[${socket.id}] 관리자의 리셋 요청!!!`);
+    state.onReset();
   });
 });
 

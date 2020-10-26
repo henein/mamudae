@@ -8,6 +8,7 @@ export enum IOEvent {
   START = 'start',
   BAN_PICK = 'ban_pick',
   END = 'end',
+  RESET = 'reset',
 }
 
 export interface InitPayload {
