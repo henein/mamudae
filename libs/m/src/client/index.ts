@@ -8,6 +8,7 @@ import { store } from './store';
 import { BanViewer } from './components/banViewer';
 import { autorun } from 'mobx';
 import { PickViewer } from './components/pickViewer';
+import { TitleBar } from './components/titleBar';
 
 const app = new PIXI.Application({
   width: 1920,
@@ -41,6 +42,8 @@ baseContainer.addChild(PIXI.Sprite.from('./assets/splashes/10.png'));
 baseContainer.addChild(createBlurOverlay());
 
 baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/cameraUI.png'));
+
+baseContainer.addChild(new TitleBar());
 
 baseContainer.addChild(new BanViewer());
 
