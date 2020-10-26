@@ -1,9 +1,10 @@
 import { autorun } from 'mobx';
 import { store } from '../store';
 import { BanPanel } from './banPanel';
-import { Portrait } from './portrait';
 
 export class BanViewer extends PIXI.Container {
+  private _nextPanel?: BanPanel;
+
   constructor() {
     super();
 
@@ -45,6 +46,23 @@ export class BanViewer extends PIXI.Container {
       for (let i = 0; i < rightBan.length; i++) {
         if (store.jobStore.rightBanList.length <= i) break;
         rightBan[i].jobId = store.jobStore.rightBanList[i];
+      }
+    });
+
+    autorun(() => {
+      const nextPayload = store.sequenceStore.nextSequence?.payload;
+
+      if (this._nextPanel) {
+        this._nextPanel.isNext = false;
+      }
+
+      if (nextPayload?.action == 'ban') {
+        const target = nextPayload?.team == 'left' ? leftBan : rightBan;
+
+        if (nextPayload.index != undefined) {
+          this._nextPanel = target[nextPayload.index];
+          this._nextPanel.isNext = true;
+        }
       }
     });
   }
