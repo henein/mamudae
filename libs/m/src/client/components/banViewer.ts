@@ -1,5 +1,6 @@
 import { autorun } from 'mobx';
 import { store } from '../store';
+import { BanPanel } from './banPanel';
 import { Portrait } from './portrait';
 
 export class BanViewer extends PIXI.Container {
@@ -7,9 +8,9 @@ export class BanViewer extends PIXI.Container {
     super();
 
     const leftBan = [
-      this.addChild(new Portrait({ size: 84 })),
-      this.addChild(new Portrait({ size: 84 })),
-      this.addChild(new Portrait({ size: 84 })),
+      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel()),
     ];
 
     leftBan[0].position.set(32, 32);
@@ -17,9 +18,9 @@ export class BanViewer extends PIXI.Container {
     leftBan[2].position.set(32 + 84 + 16 + 84 + 16 + 16, 32);
 
     const rightBan = [
-      this.addChild(new Portrait({ size: 84 })),
-      this.addChild(new Portrait({ size: 84 })),
-      this.addChild(new Portrait({ size: 84 })),
+      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel()),
     ];
 
     rightBan[0].position.set(1920 - 84 - 32, 32);

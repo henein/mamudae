@@ -1,16 +1,13 @@
 import * as PIXI from 'pixi.js';
 import 'pixi-picture';
-import io from 'socket.io-client';
 import TWEEN from '@tweenjs/tween.js';
-import { JobId } from '../common/enums';
-import { InitPayload, IOEvent, SequencePayload } from '../common/events';
 import { constants } from './constants';
 import { BanPickModal } from './components/banPickModal';
 import './styles.css';
 import { store } from './store';
-import { Portrait } from './components/portrait';
 import { BanViewer } from './components/banViewer';
 import { autorun } from 'mobx';
+import { PickViewer } from './components/pickViewer';
 
 const app = new PIXI.Application({
   width: 1920,
@@ -46,6 +43,8 @@ baseContainer.addChild(createBlurOverlay());
 baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/cameraUI.png'));
 
 baseContainer.addChild(new BanViewer());
+
+baseContainer.addChild(new PickViewer());
 
 baseContainer.addChild(new BanPickModal());
 

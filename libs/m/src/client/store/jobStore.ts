@@ -1,6 +1,7 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { JobId } from '../../common/enums';
 import { SequencePayload } from '../../common/events';
+import { Job, jobList } from '../../common/jobs';
 import { RootStore } from './index';
 
 export class JobStore {
@@ -53,4 +54,14 @@ export class JobStore {
       return false;
     }
   };
+
+  @computed
+  get disableList() {
+    return jobList.reduce<JobId[]>((previousValue, currentValue) => {
+      if (this.unPickedList.indexOf(currentValue.id) == -1) {
+        previousValue.push(currentValue.id);
+      }
+      return previousValue;
+    }, []);
+  }
 }
