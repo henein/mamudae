@@ -7,7 +7,7 @@ const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   target: 'web',
-  entry: ['./src/client/index.ts'],
+  entry: { index: './src/client/index.ts', admin: './src/client/admin.ts' },
   plugins: [
     new webpack.ProvidePlugin({
       PIXI: 'pixi.js',
@@ -16,6 +16,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: '메이플 무자본 대회',
       filename: '../index.html',
+      excludeChunks: ['admin'],
+    }),
+    new HtmlWebpackPlugin({
+      title: '메무대 관리',
+      filename: '../admin.html',
+      chunks: ['admin'],
     }),
     new CopyPlugin({
       patterns: [{ from: 'src/client/assets', to: '../assets' }],
