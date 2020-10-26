@@ -4,22 +4,19 @@ import { Job, jobList } from '../../common/jobs';
 import { constants } from '../constants';
 import { Portrait } from './portrait';
 import { Button } from './button';
+import { TextButton } from './textButton';
 
 class PortraitButton extends Button {
+  private _isSelected = false;
+  job: Job;
   portrait: Portrait;
   overlay: PIXI.Sprite;
 
   constructor(job: Job) {
     super();
+    this.job = job;
     this.portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
     this.hitArea = new PIXI.Rectangle(0, 0, 128, 128);
-
-    this.on('pointertap', () => {
-      if (!this.isDisabled) {
-        console.log(job.jobName);
-        this.overlay.visible = true;
-      }
-    });
 
     this.overlay = this.addChild(
       PIXI.Sprite.from('../assets/portraits/overlay.png')
@@ -32,6 +29,20 @@ class PortraitButton extends Button {
     name.anchor.set(0.5, 0);
     name.position.set(64, 132);
   }
+
+  get isSelected(): boolean {
+    return this._isSelected;
+  }
+
+  set isSelected(value: boolean) {
+    this._isSelected = value;
+
+    if (value) {
+      this.overlay.visible = true;
+    } else {
+      this.overlay.visible = false;
+    }
+  }
 }
 
 export class BanPickModal extends PIXI.Container {
@@ -39,6 +50,7 @@ export class BanPickModal extends PIXI.Container {
   appearTween: Tween<PIXI.Container>;
   disappearTween: Tween<PIXI.Container>;
   isVision = false;
+  selectedButton?: PortraitButton;
 
   constructor() {
     super();
@@ -54,7 +66,7 @@ export class BanPickModal extends PIXI.Container {
       .easing(Easing.Quartic.Out);
 
     const graphics = this.modal.addChild(new PIXI.Graphics());
-    graphics.beginFill(0xffffff, 0.9);
+    graphics.beginFill(0xffffff, 0.8);
     graphics.drawRoundedRect(0, 0, 928, 752, 24);
     graphics.endFill();
 
@@ -88,8 +100,31 @@ export class BanPickModal extends PIXI.Container {
         48 + 176 * (i % 5),
         168 * Math.floor(i / 5)
       );
+      portraitButtonList[i].on('pointertap', () => {
+        if (!portraitButtonList[i].isDisabled) {
+          if (this.selectedButton) {
+            this.selectedButton.isSelected = false;
+          }
+          this.selectedButton = portraitButtonList[i];
+          portraitButtonList[i].isSelected = true;
+        }
+      });
     }
     scrollbox.update();
+
+    const returnButton = this.modal.addChild(
+      new TextButton({
+        title: '선택',
+        backgroundColor: 0x333333,
+        width: 200,
+        height: 96,
+      })
+    );
+    returnButton.pivot.set(returnButton.width / 2, 0);
+    returnButton.position.set(928 / 2, 640);
+    returnButton.on('pointertap', () => {
+      console.log(this.selectedButton?.job.jobName);
+    });
 
     this.modal.position.set(constants.BASE_WIDTH / 2, 576 + 24);
     this.modal.alpha = 0;
