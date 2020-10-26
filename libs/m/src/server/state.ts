@@ -38,8 +38,8 @@ export default class State {
   }
 
   onStart() {
-    const payload: SequencePayload = { nextSequence: this._nextSequence };
     this.dequeueSequence();
+    const payload: SequencePayload = { nextSequence: this._nextSequence };
     this._io.emit(IOEvent.START, payload);
   }
 
@@ -82,6 +82,7 @@ export default class State {
     const isSuccessed = this.moveJob(jobId, targetList, index ?? -1);
 
     if (isSuccessed) {
+      this.dequeueSequence();
       const emitPayload: SequencePayload = {
         nextSequence: this._nextSequence,
         action,
@@ -90,7 +91,6 @@ export default class State {
         jobId,
       };
       this._io.emit(IOEvent.BAN_PICK, emitPayload);
-      this.dequeueSequence();
     }
   }
 
