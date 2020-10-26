@@ -5,6 +5,7 @@ import { constants } from '../constants';
 import { Portrait } from './portrait';
 import { Button } from './button';
 import { TextButton } from './textButton';
+import { store } from '../store';
 
 class PortraitButton extends Button {
   private _isSelected = false;
@@ -123,7 +124,10 @@ export class BanPickModal extends PIXI.Container {
     returnButton.pivot.set(returnButton.width / 2, 0);
     returnButton.position.set(928 / 2, 640);
     returnButton.on('pointertap', () => {
-      console.log(this.selectedButton?.job.jobName);
+      if (this.selectedButton) {
+        store.sequenceStore.banPick(this.selectedButton.job.id);
+        console.log(this.selectedButton?.job.jobName);
+      }
     });
 
     this.modal.position.set(constants.BASE_WIDTH / 2, 576 + 24);

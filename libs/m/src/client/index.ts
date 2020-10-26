@@ -12,25 +12,6 @@ import { Portrait } from './components/portrait';
 import { BanViewer } from './components/banViewer';
 import { autorun } from 'mobx';
 
-const socket = io({
-  reconnectionDelayMax: 10000,
-  query: {
-    auth: '123',
-  },
-});
-
-store.sequenceStore.init(socket);
-
-socket.on(IOEvent.START, (data: SequencePayload) => {
-  store.sequenceStore.setNextSequence(data.nextSequence);
-  console.log('start');
-});
-
-socket.on(IOEvent.RESET, () => {
-  socket.emit(IOEvent.INIT);
-  console.log('reset');
-});
-
 const app = new PIXI.Application({
   width: 1920,
   height: 1080,
@@ -105,25 +86,3 @@ function onResize() {
   baseContainer.position.set(width / 2, height / 2);
 }
 onResize();
-
-setTimeout(() => {
-  store.jobStore.moveJob({
-    action: 'ban',
-    team: 'left',
-    jobId: JobId.ADELE,
-  });
-}, 2000);
-setTimeout(() => {
-  store.jobStore.moveJob({
-    action: 'ban',
-    team: 'left',
-    jobId: JobId.ANGELIC_BUSTER,
-  });
-}, 3000);
-setTimeout(() => {
-  store.jobStore.moveJob({
-    action: 'ban',
-    team: 'left',
-    jobId: JobId.BLASTER,
-  });
-}, 4000);
