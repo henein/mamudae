@@ -147,7 +147,8 @@ export class BanPickModal extends PIXI.Container {
     returnButton.on('pointertap', () => {
       if (this.selectedButton) {
         store.sequenceStore.banPick(this.selectedButton.job.id);
-        console.log(this.selectedButton?.job.jobName);
+        this.selectedButton.isSelected = false;
+        this.selectedButton = undefined;
       }
     });
 
