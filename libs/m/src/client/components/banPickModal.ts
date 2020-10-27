@@ -53,6 +53,7 @@ export class BanPickModal extends PIXI.Container {
   disappearTween: Tween<PIXI.Container>;
   isVision = false;
   selectedButton?: PortraitButton;
+  toggleButton: PIXI.Sprite;
 
   constructor() {
     super();
@@ -156,13 +157,13 @@ export class BanPickModal extends PIXI.Container {
     this.modal.alpha = 0;
     this.modal.pivot.set(this.modal.width / 2, this.modal.height / 2);
 
-    const toggleButton = this.addChild(new PIXI.Graphics());
-    toggleButton.beginFill(0xffffff, 1);
-    toggleButton.drawRect(1920 / 2 - 50, 1080 - 48 - 32, 100, 48);
-    toggleButton.endFill();
-    toggleButton.interactive = true;
-    toggleButton.buttonMode = true;
-    toggleButton.on('pointerdown', this.onToggle);
+    this.toggleButton = this.addChild(
+      PIXI.Sprite.from('../assets/backgrounds/up.png')
+    );
+    this.toggleButton.position.set(910, 1000);
+    this.toggleButton.interactive = true;
+    this.toggleButton.buttonMode = true;
+    this.toggleButton.on('pointerdown', this.onToggle);
   }
 
   onToggle = () => {
@@ -171,11 +172,17 @@ export class BanPickModal extends PIXI.Container {
       this.modal.interactiveChildren = false;
       this.appearTween.stop();
       this.disappearTween.start();
+      this.toggleButton.texture = PIXI.Texture.from(
+        '../assets/backgrounds/up.png'
+      );
     } else {
       this.isVision = true;
       this.modal.interactiveChildren = true;
       this.disappearTween.stop();
       this.appearTween.start();
+      this.toggleButton.texture = PIXI.Texture.from(
+        '../assets/backgrounds/down.png'
+      );
     }
   };
 }
