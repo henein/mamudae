@@ -11,6 +11,7 @@ export class JobStore {
   @observable rightBanList: JobId[] = [];
   @observable leftPickList: JobId[] = [];
   @observable rightPickList: JobId[] = [];
+  @observable selectedJob?: JobId;
 
   constructor(rootStore: RootStore) {
     makeObservable(this);
@@ -54,6 +55,11 @@ export class JobStore {
       return false;
     }
   };
+
+  @action
+  setSelectedJob(value?: JobId) {
+    this.selectedJob = value;
+  }
 
   @computed
   get disableList() {

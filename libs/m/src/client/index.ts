@@ -9,6 +9,7 @@ import { BanViewer } from './components/banViewer';
 import { autorun } from 'mobx';
 import { PickViewer } from './components/pickViewer';
 import { TitleBar } from './components/titleBar';
+import { Camera } from './components/camera';
 
 const app = new PIXI.Application({
   width: 1920,
@@ -45,32 +46,9 @@ window.WebFontConfig = {
 /* eslint-enabled */
 
 function onAssetsLoaded() {
-  function createBlurOverlay() {
-    const container = new PIXI.Container();
-
-    const blurFilter = new PIXI.filters.BlurFilter();
-    blurFilter.blur = 16;
-
-    const graphics = PIXI.Sprite.from('./assets/backgrounds/multiply.png');
-    graphics.filters = [new PIXI.picture.MaskFilter(blurFilter)];
-    container.addChild(graphics);
-
-    const multiply = PIXI.Sprite.from('./assets/backgrounds/multiply.png');
-    multiply.blendMode = PIXI.BLEND_MODES.MULTIPLY;
-    container.addChild(multiply);
-
-    return container;
-  }
-
   const baseContainer = new PIXI.Container();
-
-  baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/10.png'));
-
-  baseContainer.addChild(PIXI.Sprite.from('./assets/splashes/10.png'));
-
-  baseContainer.addChild(createBlurOverlay());
-
-  baseContainer.addChild(PIXI.Sprite.from('./assets/backgrounds/cameraUI.png'));
+  
+  baseContainer.addChild(new Camera())
 
   baseContainer.addChild(new TitleBar());
 

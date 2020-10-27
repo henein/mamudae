@@ -110,6 +110,7 @@ export class BanPickModal extends PIXI.Container {
           }
           this.selectedButton = portraitButtonList[i];
           portraitButtonList[i].isSelected = true;
+          store.jobStore.setSelectedJob(portraitButtonList[i].job.id);
         }
       });
     }
@@ -150,6 +151,7 @@ export class BanPickModal extends PIXI.Container {
         store.sequenceStore.banPick(this.selectedButton.job.id);
         this.selectedButton.isSelected = false;
         this.selectedButton = undefined;
+        store.jobStore.setSelectedJob(undefined);
       }
     });
 
