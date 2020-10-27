@@ -7,7 +7,7 @@ export class BanPanel extends Portrait {
   nextOverlay: PIXI.Sprite;
 
   constructor() {
-    super({ size: 64 });
+    super({ size: 84 });
 
     this.nextOverlay = this.addChild(
       PIXI.Sprite.from('../assets/portraits/next_ban.png')
