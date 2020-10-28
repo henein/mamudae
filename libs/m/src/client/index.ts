@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import 'pixi-picture';
 import TWEEN from '@tweenjs/tween.js';
+import WebFont from 'webfontloader';
 import { constants } from './constants';
 import { BanPickModal } from './components/banPickModal';
 import './styles.css';
@@ -17,13 +18,7 @@ const app = new PIXI.Application({
 });
 document.body.appendChild(app.view);
 
-declare global {
-  interface Window {
-    WebFontConfig: any;
-  }
-}
-
-window.WebFontConfig = {
+WebFont.load({
   google: {
     families: ['Jua'],
   },
@@ -31,24 +26,12 @@ window.WebFontConfig = {
   active() {
     onAssetsLoaded();
   },
-};
-
-/* eslint-disable */
-(function() {
-  const wf = document.createElement('script');
-  wf.src = `${document.location.protocol === 'https:' ? 'https' : 'http'
-  }://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
-  wf.type = 'text/javascript';
-  wf.async = true;
-  const s = document.getElementsByTagName('script')[0];
-  s.parentNode?.insertBefore(wf, s);
-}());
-/* eslint-enabled */
+});
 
 function onAssetsLoaded() {
   const baseContainer = new PIXI.Container();
-  
-  baseContainer.addChild(new Camera())
+
+  baseContainer.addChild(new Camera());
 
   baseContainer.addChild(new TitleBar());
 
@@ -58,19 +41,18 @@ function onAssetsLoaded() {
 
   baseContainer.addChild(new BanPickModal());
 
-  const text = baseContainer.addChild(
-    new PIXI.Text('시퀸스', { fontFamily: 'Jua', fontSize: 50, fill: '#ffffff' })
-  );
-  text.position.set(500, 500);
-  autorun(() => {
-    text.text = store.sequenceStore.nextSequence?.event.toString() ?? '';
-  });
-
   baseContainer.pivot.set(constants.BASE_WIDTH / 2, constants.BASE_HEIGHT / 2);
   app.stage.addChild(baseContainer);
 
   app.stage.filters = [new PIXI.filters.AlphaFilter()];
   app.stage.filterArea = app.screen;
+
+  const graphics = baseContainer.addChild(new PIXI.Graphics());
+  graphics.beginFill(0xffffff);
+  graphics.drawRect(0, 0, 1920, 1080);
+  graphics.endFill();
+
+  baseContainer.mask = graphics;
 
   window.addEventListener('resize', onResize);
 
