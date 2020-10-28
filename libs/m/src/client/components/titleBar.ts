@@ -23,7 +23,7 @@ export class TitleBar extends PIXI.Container {
     );
 
     const title = this.addChild(
-      new MultiStyleText('<leftTeam>나초팀</leftTeam> 첫 직업 선택 중', {
+      new MultiStyleText('', {
         default: {
           fontFamily: 'Jua',
           fontSize: '64px',
@@ -33,6 +33,10 @@ export class TitleBar extends PIXI.Container {
         leftTeam: {
           fontSize: '64px',
           fill: '#0075ca',
+        },
+        rightTeam: {
+          fontSize: '64px',
+          fill: '#de9300',
         },
       })
     );
@@ -46,10 +50,33 @@ export class TitleBar extends PIXI.Container {
       if (nextSequence) {
         switch (nextSequence.event) {
           case IOEvent.START:
-            title.setText('시작');
+            title.setText('대기 중');
             break;
           case IOEvent.BAN_PICK:
-            title.setText('밴픽');
+            if (nextSequence.payload?.action == 'ban') {
+              title.setText(
+                `${
+                  nextSequence.payload.team == 'left'
+                    ? '<leftTeam>나초팀</leftTeam>'
+                    : '<rightTeam>XX팀</rightTeam>'
+                }이 ${
+                  (nextSequence.payload.index ?? 0) + 1
+                }번째 밴할 직업을 선택 중`
+              );
+            } else if (nextSequence.payload?.action == 'pick') {
+              title.setText(
+                `${
+                  nextSequence.payload?.team == 'left'
+                    ? '<leftTeam>나초팀</leftTeam>'
+                    : '<rightTeam>XX팀</rightTeam>'
+                }이 ${
+                  (nextSequence.payload?.index ?? 0) + 1
+                }번째 직업을 선택 중`
+              );
+            }
+            break;
+          case IOEvent.END:
+            title.setText('종료');
             break;
           default:
             title.setText('');
