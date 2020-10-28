@@ -85,6 +85,7 @@ export default class State {
       this.dequeueSequence();
       const emitPayload: SequencePayload = {
         nextSequence: this._nextSequence,
+        nextNextSequence: this._sequenceQueue.next(),
         action,
         team,
         index,

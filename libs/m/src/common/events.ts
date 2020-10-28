@@ -22,6 +22,7 @@ export interface InitPayload {
 
 export interface SequencePayload {
   nextSequence?: Sequence;
+  nextNextSequence?: Sequence;
   action?: 'ban' | 'pick' | 'opponentPick';
   team?: 'left' | 'right';
   index?: number;

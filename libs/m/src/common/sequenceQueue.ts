@@ -93,6 +93,12 @@ export default class SequenceQueue {
     return this.sequences.shift();
   }
 
+  next() {
+    if (this.sequences[0]) {
+      return this.sequences[0];
+    }
+  }
+
   size() {
     return this.sequences.length;
   }
