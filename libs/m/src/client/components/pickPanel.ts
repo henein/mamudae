@@ -1,4 +1,5 @@
 import { JobId } from '../../common/enums';
+import { DetailRoundedRect } from './detailRoundedRect';
 
 type Option = {
   direction?: 'left' | 'right';
@@ -16,13 +17,19 @@ export class PickPanel extends PIXI.Container {
 
     this.background = this.addChild(new PIXI.Graphics());
     this.background.beginFill(0x000000, 0.5);
-    this.background.drawRect(0, 0, 364, 120);
+    this.background.drawRect(0, 0, 396, 120);
     this.background.endFill();
 
-    const graphics = this.addChild(new PIXI.Graphics());
-    graphics.beginFill(0x000000);
-    graphics.drawRect(0, 0, 364, 120);
-    graphics.endFill();
+    const graphics = this.addChild(
+      new DetailRoundedRect({
+        x: 0,
+        y: 0,
+        width: 396,
+        height: 120,
+        topRight: direction == 'left' ? 64 : 0,
+        topLeft: direction == 'right' ? 64 : 0,
+      })
+    );
     this.mask = graphics;
 
     this.sprite = this.addChild(PIXI.Sprite.from('../assets/splashes/1.png'));
