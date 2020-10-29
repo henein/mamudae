@@ -11,7 +11,7 @@ export class JobStore {
   @observable rightBanList: JobId[] = [];
   @observable leftPickList: JobId[] = [];
   @observable rightPickList: JobId[] = [];
-  @observable selectedJob?: JobId;
+  @observable selectedJob?: JobId | 0;
 
   constructor(rootStore: RootStore) {
     makeObservable(this);
@@ -56,8 +56,10 @@ export class JobStore {
     }
   };
 
+  // undefined: 없음
+  // 0: 선택됨 -> 애니메이션 출력
   @action
-  setSelectedJob(value?: JobId) {
+  setSelectedJob(value?: JobId | 0) {
     this.selectedJob = value;
   }
 

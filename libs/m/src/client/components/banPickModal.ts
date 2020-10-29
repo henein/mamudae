@@ -48,10 +48,10 @@ class PortraitButton extends Button {
 }
 
 export class BanPickModal extends PIXI.Container {
+  private _isVision = false;
   modal: PIXI.Container;
   appearTween: Tween<PIXI.Container>;
   disappearTween: Tween<PIXI.Container>;
-  isVision = false;
   selectedButton?: PortraitButton;
   toggleButton: PIXI.Sprite;
 
@@ -65,7 +65,7 @@ export class BanPickModal extends PIXI.Container {
       .easing(Easing.Quartic.Out);
 
     this.disappearTween = new Tween(this.modal)
-      .to({ position: { y: 576 + 24 }, alpha: 0 }, 500)
+      .to({ position: { y: 576 + 24 }, alpha: 0 }, 100)
       .easing(Easing.Quartic.Out);
 
     const graphics = this.modal.addChild(new PIXI.Graphics());
@@ -151,7 +151,8 @@ export class BanPickModal extends PIXI.Container {
         store.sequenceStore.banPick(this.selectedButton.job.id);
         this.selectedButton.isSelected = false;
         this.selectedButton = undefined;
-        store.jobStore.setSelectedJob(undefined);
+        store.jobStore.setSelectedJob(0);
+        this.isVision = false;
       }
     });
 
@@ -171,20 +172,32 @@ export class BanPickModal extends PIXI.Container {
   onToggle = () => {
     if (this.isVision) {
       this.isVision = false;
-      this.modal.interactiveChildren = false;
-      this.appearTween.stop();
-      this.disappearTween.start();
-      this.toggleButton.texture = PIXI.Texture.from(
-        '../assets/backgrounds/up.png'
-      );
     } else {
       this.isVision = true;
+    }
+  };
+
+  get isVision(): boolean {
+    return this._isVision;
+  }
+
+  set isVision(value: boolean) {
+    this._isVision = value;
+
+    if (this._isVision) {
       this.modal.interactiveChildren = true;
       this.disappearTween.stop();
       this.appearTween.start();
       this.toggleButton.texture = PIXI.Texture.from(
         '../assets/backgrounds/down.png'
       );
+    } else {
+      this.modal.interactiveChildren = false;
+      this.appearTween.stop();
+      this.disappearTween.start();
+      this.toggleButton.texture = PIXI.Texture.from(
+        '../assets/backgrounds/up.png'
+      );
     }
-  };
+  }
 }

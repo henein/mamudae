@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import 'pixi-picture';
+import 'pixi-heaven';
 import TWEEN from '@tweenjs/tween.js';
 import WebFont from 'webfontloader';
 import { constants } from './constants';
