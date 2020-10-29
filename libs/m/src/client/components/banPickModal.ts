@@ -164,9 +164,30 @@ export class BanPickModal extends PIXI.Container {
       PIXI.Sprite.from('../assets/backgrounds/up.png')
     );
     this.toggleButton.position.set(910, 1000);
-    this.toggleButton.interactive = true;
-    this.toggleButton.buttonMode = true;
     this.toggleButton.on('pointerdown', this.onToggle);
+
+    autorun(() => {
+      const auth = store.sequenceStore.auth;
+
+      if (auth == 'leftMember' || auth == 'rightMember') {
+        this.toggleButton.visible = false;
+      } else {
+        this.toggleButton.visible = true;
+      }
+    });
+
+    autorun(() => {
+      if (store.jobStore.isModalEnabled) {
+        this.toggleButton.alpha = 1;
+        this.toggleButton.interactive = true;
+        this.toggleButton.buttonMode = true;
+      } else {
+        this.toggleButton.alpha = 0.3;
+        this.toggleButton.interactive = false;
+        this.toggleButton.buttonMode = false;
+        this.isVision = false;
+      }
+    });
   }
 
   onToggle = () => {

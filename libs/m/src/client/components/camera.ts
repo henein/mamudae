@@ -39,7 +39,6 @@ export class Camera extends PIXI.Container {
     this._splash.position.set(1920 / 2, 1080 / 2);
 
     this._colorFilter = new PIXI.filters.ColorMatrixFilter();
-    this._colorFilter.brightness(1.2, false);
     this._blurFilter = new PIXI.filters.BlurFilter();
     this._blurFilter.enabled = false;
     this._blurFilter.blur = 0;

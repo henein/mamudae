@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 import socketIO from 'socket.io';
 import path from 'path';
+import dotenv from 'dotenv';
 
 import State from './state';
 import { IOEvent, SequencePayload } from '../common/events';
@@ -9,6 +10,8 @@ import { IOEvent, SequencePayload } from '../common/events';
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+
+dotenv.config();
 
 const state = new State(io);
 const port = process.env.PORT || 3000;
@@ -28,6 +31,7 @@ io.on('connection', (socket) => {
     rightBanList: state.rightBanList,
     leftPickList: state.leftPickList,
     rightPickList: state.rightPickList,
+    auth: getAuth(socket.handshake.query.key),
   });
   socket.on('disconnect', () => {
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);
@@ -42,18 +46,23 @@ io.on('connection', (socket) => {
       rightBanList: state.rightBanList,
       leftPickList: state.leftPickList,
       rightPickList: state.rightPickList,
+      auth: getAuth(socket.handshake.query.key),
     });
-  });
-
-  socket.on(IOEvent.START, () => {
-    if (checkNextEvent(IOEvent.START)) {
-      state.onStart();
-    }
   });
 
   socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
     if (checkNextEvent(IOEvent.BAN_PICK)) {
-      state.onBanPick(payload);
+      if (
+        payload.team == 'left' &&
+        getAuth(socket.handshake.query.key) == 'leftLeader'
+      ) {
+        state.onBanPick(payload);
+      } else if (
+        payload.team == 'right' &&
+        getAuth(socket.handshake.query.key) == 'rightLeader'
+      ) {
+        state.onBanPick(payload);
+      }
     }
   });
 
@@ -89,4 +98,19 @@ function checkNextEvent(event: IOEvent): boolean {
     return true;
   }
   return false;
+}
+
+function getAuth(key: string) {
+  switch (key) {
+    case process.env.LEFT_MEMBER_KEY:
+      return 'leftMember';
+    case process.env.RIGHT_MEMBER_KEY:
+      return 'rightMember';
+    case process.env.LEFT_LEADER_KEY:
+      return 'leftLeader';
+    case process.env.RIGHT_LEADER_KEY:
+      return 'rightLeader';
+    default:
+      return undefined;
+  }
 }

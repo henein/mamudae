@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { JobId } from '../../common/enums';
 import { SequencePayload } from '../../common/events';
-import { Job, jobList } from '../../common/jobs';
+import { jobList } from '../../common/jobs';
 import { RootStore } from './index';
 
 export class JobStore {
@@ -12,6 +12,7 @@ export class JobStore {
   @observable leftPickList: JobId[] = [];
   @observable rightPickList: JobId[] = [];
   @observable selectedJob?: JobId | 0;
+  @observable isModalEnabled = false;
 
   constructor(rootStore: RootStore) {
     makeObservable(this);

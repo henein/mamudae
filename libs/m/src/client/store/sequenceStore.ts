@@ -11,14 +11,22 @@ export class SequenceStore {
   socket: SocketIOClient.Socket;
   @observable reset = false;
   @observable nextSequence?: Sequence;
+  @observable auth?:
+    | 'leftMember'
+    | 'rightMember'
+    | 'leftLeader'
+    | 'rightLeader';
 
   constructor(rootStore: RootStore) {
     makeObservable(this);
     this.rootStore = rootStore;
+
+    const key = prompt('접속키를 입력해주세요!');
+
     this.socket = io({
       reconnectionDelayMax: 10000,
       query: {
-        auth: '123',
+        key: key,
       },
     });
 
@@ -45,7 +53,25 @@ export class SequenceStore {
     this.socket.on(IOEvent.INIT, (data: InitPayload) => {
       runInAction(() => {
         this.onReset();
-        this.setNextSequence(data.nextSequence);
+        this.auth = data.auth;
+
+        switch (this.auth) {
+          case 'leftMember':
+            alert('나초팀 멤버입니다!');
+            break;
+          case 'rightMember':
+            alert('금앙팀 멤버입니다!');
+            break;
+          case 'leftLeader':
+            alert('나초팀 팀장입니다!');
+            break;
+          case 'rightLeader':
+            alert('금앙팀 팀장입니다!');
+            break;
+          default:
+            alert('관전자입니다! 블라인드가 적용되지 않습니다!');
+        }
+
         this.rootStore.jobStore.initList(
           data.unPickedList,
           data.leftBanList,
@@ -53,6 +79,7 @@ export class SequenceStore {
           data.leftPickList,
           data.rightPickList
         );
+        this.setNextSequence(data.nextSequence);
       });
     });
   }
@@ -66,7 +93,6 @@ export class SequenceStore {
       index: nextPayload?.index,
       jobId,
     };
-    console.log(payload);
     this.socket.emit(IOEvent.BAN_PICK, payload);
   }
 
@@ -78,5 +104,15 @@ export class SequenceStore {
   @action
   setNextSequence(sequence?: Sequence) {
     this.nextSequence = sequence;
+    if (sequence?.payload?.team == 'left' && this.auth == 'leftLeader') {
+      this.rootStore.jobStore.isModalEnabled = true;
+    } else if (
+      sequence?.payload?.team == 'right' &&
+      this.auth == 'rightLeader'
+    ) {
+      this.rootStore.jobStore.isModalEnabled = true;
+    } else {
+      this.rootStore.jobStore.isModalEnabled = false;
+    }
   }
 }

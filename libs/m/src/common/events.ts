@@ -18,6 +18,7 @@ export interface InitPayload {
   rightBanList: JobId[];
   leftPickList: JobId[];
   rightPickList: JobId[];
+  auth?: 'leftMember' | 'rightMember' | 'leftLeader' | 'rightLeader';
 }
 
 export interface SequencePayload {
