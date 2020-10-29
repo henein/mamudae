@@ -15,8 +15,8 @@ export class BanViewer extends PIXI.Container {
     ];
 
     leftBan[0].position.set(32, 32);
-    leftBan[1].position.set(32 + 84 + 16, 32);
-    leftBan[2].position.set(32 + 84 + 16 + 84 + 16 + 16, 32);
+    leftBan[1].position.set(32 + 72 + 16, 32);
+    leftBan[2].position.set(32 + 72 + 16 + 72 + 16 + 16, 32);
 
     const rightBan = [
       this.addChild(new BanPanel()),
@@ -24,9 +24,9 @@ export class BanViewer extends PIXI.Container {
       this.addChild(new BanPanel()),
     ];
 
-    rightBan[0].position.set(1920 - 84 - 32, 32);
-    rightBan[1].position.set(1920 - 84 - (32 + 84 + 16), 32);
-    rightBan[2].position.set(1920 - 84 - (32 + 84 + 16 + 84 + 16 + 16), 32);
+    rightBan[0].position.set(1920 - 72 - 32, 32);
+    rightBan[1].position.set(1920 - 72 - (32 + 72 + 16), 32);
+    rightBan[2].position.set(1920 - 72 - (32 + 72 + 16 + 72 + 16 + 16), 32);
 
     autorun(() => {
       store.sequenceStore.reset;
