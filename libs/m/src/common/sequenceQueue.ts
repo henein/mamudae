@@ -9,7 +9,7 @@ export default class SequenceQueue {
   private sequences: Sequence[] = [];
 
   constructor() {
-    this.enqueue({ event: IOEvent.START, payload: { team: 'left', index: 0 } });
+    this.enqueue({ event: IOEvent.START });
     this.enqueue({
       event: IOEvent.BAN_PICK,
       payload: { action: 'ban', team: 'left', index: 0 },
