@@ -9,6 +9,12 @@ export interface Job {
 
 export const jobList: Job[] = [
   {
+    id: JobId.BEGINNER,
+    jobName: '초보자',
+    className: '모험가',
+    branchName: '초보자',
+  },
+  {
     id: JobId.HERO,
     jobName: '히어로',
     className: '모험가',
