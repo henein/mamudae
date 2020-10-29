@@ -62,6 +62,7 @@
     "express": "^4.17.1",
     "fontfaceobserver": "^2.1.0",
     "mobx": "^6.0.1",
+    "pixi-filters": "^3.1.1",
     "pixi-heaven": "^0.2.2",
     "pixi-multistyle-text": "^0.10.0",
     "pixi-picture": "^2.0.3",
