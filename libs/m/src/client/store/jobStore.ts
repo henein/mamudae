@@ -32,7 +32,6 @@ export class JobStore {
     this.rightBanList = rightBanList;
     this.leftPickList = leftPickList;
     this.rightPickList = rightPickList;
-    console.log(unPickedList);
   };
 
   @action // index 추가 검사
