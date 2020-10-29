@@ -170,7 +170,7 @@ export class Camera extends PIXI.Container {
 
     this.addChild(createBlurOverlay());
 
-    this.addChild(PIXI.Sprite.from('./assets/backgrounds/cameraUI.png'));
+    this.addChild(PIXI.Sprite.from('./assets/ui/cameraUI.png'));
   }
 
   get shakeRange(): number {

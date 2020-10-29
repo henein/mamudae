@@ -160,9 +160,7 @@ export class BanPickModal extends PIXI.Container {
     this.modal.alpha = 0;
     this.modal.pivot.set(this.modal.width / 2, this.modal.height / 2);
 
-    this.toggleButton = this.addChild(
-      PIXI.Sprite.from('../assets/backgrounds/up.png')
-    );
+    this.toggleButton = this.addChild(PIXI.Sprite.from('../assets/ui/up.png'));
     this.toggleButton.position.set(910, 1000);
     this.toggleButton.on('pointerdown', this.onToggle);
 
@@ -209,16 +207,12 @@ export class BanPickModal extends PIXI.Container {
       this.modal.interactiveChildren = true;
       this.disappearTween.stop();
       this.appearTween.start();
-      this.toggleButton.texture = PIXI.Texture.from(
-        '../assets/backgrounds/down.png'
-      );
+      this.toggleButton.texture = PIXI.Texture.from('../assets/ui/down.png');
     } else {
       this.modal.interactiveChildren = false;
       this.appearTween.stop();
       this.disappearTween.start();
-      this.toggleButton.texture = PIXI.Texture.from(
-        '../assets/backgrounds/up.png'
-      );
+      this.toggleButton.texture = PIXI.Texture.from('../assets/ui/up.png');
     }
   }
 }
