@@ -58,7 +58,7 @@ export class TitleBar extends PIXI.Container {
                 `${
                   nextSequence.payload.team == 'left'
                     ? '<leftTeam>나초팀</leftTeam>'
-                    : '<rightTeam>XX팀</rightTeam>'
+                    : '<rightTeam>금앙팀</rightTeam>'
                 }이 ${
                   (nextSequence.payload.index ?? 0) + 1
                 }번째 밴할 직업을 선택 중`
