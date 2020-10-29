@@ -25,24 +25,24 @@ export class TitleBar extends PIXI.Container {
     const title = this.addChild(
       new MultiStyleText('', {
         default: {
-          fontFamily: 'Jua',
-          fontSize: '64px',
+          fontFamily: 'MaplestoryOTFBold',
+          fontSize: '56px',
           fill: '#404040',
           align: 'center',
         },
         leftTeam: {
-          fontSize: '64px',
+          fontSize: '56px',
           fill: '#0075ca',
         },
         rightTeam: {
-          fontSize: '64px',
+          fontSize: '56px',
           fill: '#de9300',
         },
       })
     );
 
     title.anchor.set(0.5, 0);
-    title.position.set(1920 / 2, 32);
+    title.position.set(1920 / 2, 32 - 2);
 
     autorun(() => {
       const nextSequence = store.sequenceStore.nextSequence;

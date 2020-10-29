@@ -6,9 +6,7 @@ import WebFont from 'webfontloader';
 import { constants } from './constants';
 import { BanPickModal } from './components/banPickModal';
 import './styles.css';
-import { store } from './store';
 import { BanViewer } from './components/banViewer';
-import { autorun } from 'mobx';
 import { PickViewer } from './components/pickViewer';
 import { TitleBar } from './components/titleBar';
 import { Camera } from './components/camera';
@@ -20,8 +18,9 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view);
 
 WebFont.load({
-  google: {
-    families: ['Jua'],
+  custom: {
+    families: ['MaplestoryOTFBold'],
+    urls: ['./assets/fonts.css'],
   },
 
   active() {
