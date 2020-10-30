@@ -38,6 +38,14 @@ function onFontLoaded() {
   loader.add(splashes);
 
   loader.load(onAssetsLoaded);
+
+  const loading = app.stage.addChild(
+    new PIXI.Text('로딩 중...', { fill: '#ffffff' })
+  );
+
+  loader.onComplete.add(() => {
+    loading.destroy();
+  });
 }
 
 function onAssetsLoaded() {
