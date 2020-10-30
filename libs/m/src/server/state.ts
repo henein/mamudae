@@ -4,6 +4,7 @@ import { JobId } from '../common/enums';
 import { jobList } from '../common/jobs';
 import { IOEvent, SequencePayload } from '../common/events';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
+import { SelectPayload } from './../common/events';
 
 export default class State {
   private _io: socketIO.Server;
@@ -16,6 +17,9 @@ export default class State {
   leftPickList: JobId[];
   rightPickList: JobId[];
 
+  leftSelect?: JobId;
+  rightSelect?: JobId;
+
   constructor(io: socketIO.Server) {
     this._io = io;
     this._sequenceQueue = new SequenceQueue();
@@ -27,6 +31,9 @@ export default class State {
     this.rightBanList = [];
     this.leftPickList = [];
     this.rightPickList = [];
+
+    this.leftSelect = undefined;
+    this.rightSelect = undefined;
   }
 
   private dequeueSequence() {
@@ -83,6 +90,13 @@ export default class State {
 
     if (isSuccessed) {
       this.dequeueSequence();
+
+      if (team == 'left') {
+        this.leftSelect = undefined;
+      } else {
+        this.rightSelect = undefined;
+      }
+
       const emitPayload: SequencePayload = {
         nextSequence: this._nextSequence,
         nextNextSequence: this._sequenceQueue.next(),
@@ -95,6 +109,27 @@ export default class State {
     }
   }
 
+  onSelect = (payload: SelectPayload) => {
+    this.leftSelect = this.checkUnPicked(payload.leftSelect)
+      ? payload.leftSelect
+      : this.checkUnPicked(this.leftSelect)
+      ? this.leftSelect
+      : undefined;
+    this.rightSelect = this.checkUnPicked(payload.rightSelect)
+      ? payload.rightSelect
+      : this.checkUnPicked(this.rightSelect)
+      ? this.rightSelect
+      : undefined;
+
+    const emitPayload: SelectPayload = {
+      leftSelect: this.leftSelect,
+      rightSelect: this.rightSelect,
+    };
+
+    console.log(emitPayload);
+    this._io.emit(IOEvent.SELECT, emitPayload);
+  };
+
   onReset = () => {
     this._sequenceQueue = new SequenceQueue();
     this.dequeueSequence();
@@ -105,6 +140,10 @@ export default class State {
     this.rightBanList = [];
     this.leftPickList = [];
     this.rightPickList = [];
+
+    this.leftSelect = undefined;
+    this.rightSelect = undefined;
+
     this._io.emit(IOEvent.RESET);
   };
 
@@ -128,4 +167,10 @@ export default class State {
       return false;
     }
   };
+
+  private checkUnPicked(jobId?: JobId) {
+    if (!jobId) return false;
+
+    return this.unPickedList.indexOf(jobId) > -1;
+  }
 }

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 import State from './state';
 import { IOEvent, SequencePayload } from '../common/events';
+import { SelectPayload } from './../common/events';
 
 const app = express();
 const server = http.createServer(app);
@@ -62,6 +63,22 @@ io.on('connection', (socket) => {
         getAuth(socket.handshake.query.key) == 'rightLeader'
       ) {
         state.onBanPick(payload);
+      }
+    }
+  });
+
+  socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
+    if (checkNextEvent(IOEvent.BAN_PICK)) {
+      if (
+        payload.leftSelect &&
+        getAuth(socket.handshake.query.key) == 'leftLeader'
+      ) {
+        state.onSelect({ leftSelect: payload.leftSelect });
+      } else if (
+        payload.rightSelect &&
+        getAuth(socket.handshake.query.key) == 'rightLeader'
+      ) {
+        state.onSelect({ rightSelect: payload.rightSelect });
       }
     }
   });

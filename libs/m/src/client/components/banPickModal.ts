@@ -151,7 +151,6 @@ export class BanPickModal extends PIXI.Container {
         store.sequenceStore.banPick(this.selectedButton.job.id);
         this.selectedButton.isSelected = false;
         this.selectedButton = undefined;
-        store.jobStore.setSelectedJob(0);
         this.isVision = false;
       }
     });

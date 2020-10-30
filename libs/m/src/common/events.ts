@@ -3,6 +3,7 @@ import { Sequence } from './sequenceQueue';
 
 export enum IOEvent {
   INIT = 'init',
+  SELECT = 'select',
   SET_LEFT_LEADER = 'setLeftLeader',
   SET_RIGHT_LEADER = 'setRightLeader',
   START = 'start',
@@ -19,6 +20,13 @@ export interface InitPayload {
   leftPickList: JobId[];
   rightPickList: JobId[];
   auth?: 'leftMember' | 'rightMember' | 'leftLeader' | 'rightLeader';
+  leftSelect?: JobId;
+  rightSelect?: JobId;
+}
+
+export interface SelectPayload {
+  leftSelect?: JobId;
+  rightSelect?: JobId;
 }
 
 export interface SequencePayload {

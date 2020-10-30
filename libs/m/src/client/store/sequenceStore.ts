@@ -4,7 +4,7 @@ import { RootStore } from '.';
 import { JobId } from '../../common/enums';
 import { InitPayload, IOEvent } from '../../common/events';
 import { Sequence } from '../../common/sequenceQueue';
-import { SequencePayload } from './../../common/events';
+import { SequencePayload, SelectPayload } from './../../common/events';
 
 export class SequenceStore {
   rootStore: RootStore;
@@ -43,8 +43,12 @@ export class SequenceStore {
     });
 
     this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
-      this.setNextSequence(payload.nextSequence);
       rootStore.jobStore.moveJob(payload);
+      this.setNextSequence(payload.nextSequence);
+    });
+
+    this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
+      this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
     });
   }
 
@@ -77,7 +81,9 @@ export class SequenceStore {
           data.leftBanList,
           data.rightBanList,
           data.leftPickList,
-          data.rightPickList
+          data.rightPickList,
+          data.leftSelect,
+          data.rightSelect
         );
         this.setNextSequence(data.nextSequence);
       });

@@ -45,41 +45,39 @@ export class Camera extends PIXI.Container {
     this._blurFilter.quality = 10;
 
     autorun(() => {
-      if (!store.jobStore.selectedJob) {
-        if (store.jobStore.selectedJob == 0) {
-          const preTween = new Tween({ dark: 0, shakeRange: 64 })
-            .to({ dark: 1, shakeRange: 0 }, 1000)
-            .easing(Easing.Quartic.InOut)
-            .onUpdate((object) => {
-              this._splash.color.setDark(object.dark, object.dark, object.dark);
-              this.shakeRange = object.shakeRange;
-            });
+      if (!store.jobStore.selectJobId) {
+        if (store.jobStore.selectJobId == undefined) return;
 
-          const afterTween = new Tween({ scale: 2 })
-            .to({ scale: 0 }, 300)
-            .easing(Easing.Quartic.In)
-            .onUpdate((object) => {
-              this._splash.scale.set(object.scale);
-            })
-            .onComplete(() => {
-              if (this._nextChangeTween) {
-                this._changeTween = this._nextChangeTween.start();
-                this._nextChangeTween = undefined;
-              } else {
-                this._selecteTween = undefined;
-              }
-            });
+        const preTween = new Tween({ dark: 0, shakeRange: 64 })
+          .to({ dark: 1, shakeRange: 0 }, 1000)
+          .easing(Easing.Quartic.InOut)
+          .onUpdate((object) => {
+            this._splash.color.setDark(object.dark, object.dark, object.dark);
+            this.shakeRange = object.shakeRange;
+          });
 
-          this._selecteTween = preTween.chain(afterTween).start();
-        } else {
-          this._splash.visible = false;
-        }
+        const afterTween = new Tween({ scale: 2 })
+          .to({ scale: 0 }, 300)
+          .easing(Easing.Quartic.In)
+          .onUpdate((object) => {
+            this._splash.scale.set(object.scale);
+          })
+          .onComplete(() => {
+            if (this._nextChangeTween) {
+              this._changeTween = this._nextChangeTween.start();
+              this._nextChangeTween = undefined;
+            } else {
+              this._selecteTween = undefined;
+            }
+          });
+
+        this._selecteTween = preTween.chain(afterTween).start();
       } else {
         const preTween = new Tween({
           brightness: 1,
           blur: 0,
           nextBackgroundAlpha: 0,
-          jobId: store.jobStore.selectedJob,
+          jobId: store.jobStore.selectJobId,
         })
           .to(
             {
@@ -110,7 +108,7 @@ export class Camera extends PIXI.Container {
         const afterTween = new Tween({
           brightness: 1.3,
           blur: 32,
-          jobId: store.jobStore.selectedJob,
+          jobId: store.jobStore.selectJobId,
         })
           .to({ brightness: 1, blur: 0 }, 300)
           .easing(Easing.Quartic.InOut)
