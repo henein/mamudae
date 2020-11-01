@@ -95,16 +95,29 @@ io.on('connection', (socket) => {
 });
 
 io.of('/admin').on('connection', (socket) => {
-  console.log(`[${socket.id}] 관리자 접속!!!`);
-  socket.on('start', () => {
-    if (checkNextEvent(IOEvent.START)) {
-      state.onStart();
-    }
-  });
-  socket.on('reset', () => {
-    console.log(`[${socket.id}] 관리자의 리셋 요청!!!`);
-    state.onReset();
-  });
+  if (checkAdmin(socket.handshake.query.key)) {
+    console.log(`[${socket.id}] 관리자 접속!!!`);
+
+    socket.emit('login', true);
+
+    socket.on('disconnect', () => {
+      console.log(`[${socket.id}] 관리자 접속 끊어짐 ㅠㅠ`);
+    });
+
+    socket.on(IOEvent.START, () => {
+      if (checkNextEvent(IOEvent.START)) {
+        state.onStart();
+      }
+    });
+    socket.on(IOEvent.RESET, () => {
+      console.log(`[${socket.id}] 관리자의 리셋 요청!!!`);
+      state = new State(io);
+      io.emit(IOEvent.RESET);
+    });
+  } else {
+    console.log(`[${socket.id}] 관리자 암호 불일치`);
+    socket.emit('login', false);
+  }
 });
 
 server.listen(port, () => {
@@ -116,6 +129,13 @@ function checkNextEvent(event: IOEvent): boolean {
   const nextSequence = state.getNextSequence();
 
   if (nextSequence?.event == event) {
+    return true;
+  }
+  return false;
+}
+
+function checkAdmin(key: string) {
+  if (key == process.env.ADMIN_KEY) {
     return true;
   }
   return false;
