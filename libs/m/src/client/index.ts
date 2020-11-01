@@ -32,7 +32,7 @@ function onFontLoaded() {
   const loader = PIXI.Loader.shared;
 
   const backgrounds = [];
-  for (let i = 1; i <= 27; i++) {
+  for (let i = 0; i <= 26; i++) {
     backgrounds.push(`./assets/backgrounds/${i}.png`);
   }
   loader.add(backgrounds);

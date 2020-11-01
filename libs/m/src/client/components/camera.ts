@@ -29,7 +29,7 @@ export class Camera extends PIXI.Container {
     const container = this.addChild(new PIXI.Container());
 
     this._background = container.addChild(
-      PIXI.Sprite.from('./assets/backgrounds/27.png')
+      PIXI.Sprite.from('./assets/backgrounds/0.png')
     );
     this._background.anchor.set(0.5);
     this._background.scale.set(2);
@@ -54,7 +54,7 @@ export class Camera extends PIXI.Container {
     autorun(() => {
       store.sequenceStore.reset;
       this._background.texture = PIXI.Texture.from(
-        './assets/backgrounds/27.png'
+        './assets/backgrounds/0.png'
       );
       this._splash.texture = PIXI.Texture.EMPTY;
     });
@@ -112,7 +112,7 @@ export class Camera extends PIXI.Container {
             this._nextBackground.alpha = object.nextBackgroundAlpha;
             this._nextBackground.texture = PIXI.Texture.from(
               `../assets/backgrounds/${
-                jobList[object.jobId - 1].background ?? 27
+                jobList[object.jobId - 1].background ?? 0
               }.png`
             );
           })
