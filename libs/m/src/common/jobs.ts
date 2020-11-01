@@ -6,6 +6,7 @@ export interface Job {
   className: string;
   branchName: string;
   background: number;
+  globalBan?: boolean;
 }
 
 export const jobList: Job[] = [
@@ -15,6 +16,7 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '초보자',
     background: 3,
+    globalBan: true,
   },
   {
     id: JobId.HERO,
@@ -309,6 +311,7 @@ export const jobList: Job[] = [
     className: '제로',
     branchName: '전사',
     background: 25,
+    globalBan: true,
   },
   {
     id: JobId.KINESIS,

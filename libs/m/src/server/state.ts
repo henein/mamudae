@@ -1,7 +1,7 @@
 import socketIO from 'socket.io';
 
 import { JobId } from '../common/enums';
-import { jobList } from '../common/jobs';
+import { Job, jobList } from '../common/jobs';
 import { IOEvent, SequencePayload } from '../common/events';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
 import { SelectPayload } from './../common/events';
@@ -24,9 +24,17 @@ export default class State {
     this._io = io;
     this._sequenceQueue = new SequenceQueue();
     this.dequeueSequence();
-    this.unPickedList = jobList.map<JobId>((value) => {
-      return value.id;
-    });
+    this.unPickedList = jobList.reduce<JobId[]>(
+      (previousValue: JobId[], currentValue: Job) => {
+        if (currentValue.globalBan) {
+          return previousValue;
+        }
+
+        previousValue.push(currentValue.id);
+        return previousValue;
+      },
+      []
+    );
     this.leftBanList = [];
     this.rightBanList = [];
     this.leftPickList = [];
