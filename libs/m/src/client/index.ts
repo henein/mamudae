@@ -31,6 +31,12 @@ WebFont.load({
 function onFontLoaded() {
   const loader = PIXI.Loader.shared;
 
+  const backgrounds = [];
+  for (let i = 1; i <= 27; i++) {
+    backgrounds.push(`./assets/backgrounds/${i}.png`);
+  }
+  loader.add(backgrounds);
+
   const splashes = [];
   for (let i = 1; i <= 44; i++) {
     splashes.push(`./assets/splashes/${i}.png`);

@@ -33,6 +33,8 @@ io.on('connection', (socket) => {
     leftPickList: state.leftPickList,
     rightPickList: state.rightPickList,
     auth: getAuth(socket.handshake.query.key),
+    leftSelect: state.leftSelect,
+    rightSelect: state.rightSelect,
   });
   socket.on('disconnect', () => {
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);
@@ -48,6 +50,8 @@ io.on('connection', (socket) => {
       leftPickList: state.leftPickList,
       rightPickList: state.rightPickList,
       auth: getAuth(socket.handshake.query.key),
+      leftSelect: state.leftSelect,
+      rightSelect: state.rightSelect,
     });
   });
 

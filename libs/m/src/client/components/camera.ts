@@ -7,6 +7,7 @@ import { store } from '../store';
 import { Tween } from '@tweenjs/tween.js';
 import SimplexNoise from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';
+import { jobList } from '../../common/jobs';
 
 export class Camera extends PIXI.Container {
   private _background: PIXI.Sprite;
@@ -28,10 +29,16 @@ export class Camera extends PIXI.Container {
     const container = this.addChild(new PIXI.Container());
 
     this._background = container.addChild(
-      PIXI.Sprite.from('./assets/backgrounds/10.png')
+      PIXI.Sprite.from('./assets/backgrounds/27.png')
     );
+    this._background.anchor.set(0.5);
+    this._background.scale.set(2);
+    this._background.position.set(1920 / 2, 1080 / 2);
 
     this._nextBackground = container.addChild(new PIXI.Sprite());
+    this._nextBackground.anchor.set(0.5);
+    this._nextBackground.scale.set(2);
+    this._nextBackground.position.set(1920 / 2, 1080 / 2);
 
     this._splash = container.addChild(new PIXI.Sprite()).convertToHeaven();
     this._splash.anchor.set(0.5);
@@ -43,6 +50,14 @@ export class Camera extends PIXI.Container {
     this._blurFilter.enabled = false;
     this._blurFilter.blur = 0;
     this._blurFilter.quality = 10;
+
+    autorun(() => {
+      store.sequenceStore.reset;
+      this._background.texture = PIXI.Texture.from(
+        './assets/backgrounds/27.png'
+      );
+      this._splash.texture = PIXI.Texture.EMPTY;
+    });
 
     autorun(() => {
       if (!store.jobStore.selectJobId) {
@@ -96,7 +111,9 @@ export class Camera extends PIXI.Container {
             this._nextBackground.visible = true;
             this._nextBackground.alpha = object.nextBackgroundAlpha;
             this._nextBackground.texture = PIXI.Texture.from(
-              '../assets/backgrounds/11.png'
+              `../assets/backgrounds/${
+                jobList[object.jobId - 1].background ?? 27
+              }.png`
             );
           })
           .onUpdate((object) => {
