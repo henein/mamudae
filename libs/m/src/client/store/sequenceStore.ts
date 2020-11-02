@@ -1,4 +1,10 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 import io from 'socket.io-client';
 import { RootStore } from '.';
 import { JobId } from '../../common/enums';
@@ -43,13 +49,36 @@ export class SequenceStore {
     });
 
     this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
-      rootStore.jobStore.moveJob(payload);
+      if (payload.action == 'opponentPick' && payload.jobId && payload.team) {
+        rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
+      } else {
+        rootStore.jobStore.moveJob(payload);
+      }
+
       this.setNextSequence(payload.nextSequence);
     });
 
     this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
       this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
     });
+
+    this.socket.on(IOEvent.END, () => {
+      this.rootStore.jobStore.onEnd();
+    });
+  }
+
+  @computed
+  get team() {
+    switch (this.auth) {
+      case 'leftLeader':
+      case 'leftMember':
+        return 'left';
+      case 'rightLeader':
+      case 'rightMember':
+        return 'right';
+      default:
+        return;
+    }
   }
 
   @action
@@ -75,31 +104,21 @@ export class SequenceStore {
           default:
             alert('관전자입니다! 블라인드가 적용되지 않습니다!');
         }
-
+        console.log(data.leftSelect + '+' + data.rightSelect);
         this.rootStore.jobStore.initList(
           data.unPickedList,
           data.leftBanList,
           data.rightBanList,
           data.leftPickList,
           data.rightPickList,
+          data.leftOpponentPick,
+          data.rightOpponentPick,
           data.leftSelect,
           data.rightSelect
         );
         this.setNextSequence(data.nextSequence);
       });
     });
-  }
-
-  @action
-  banPick(jobId: JobId) {
-    const nextPayload = this.nextSequence?.payload;
-    const payload: SequencePayload = {
-      action: nextPayload?.action,
-      team: nextPayload?.team,
-      index: nextPayload?.index,
-      jobId,
-    };
-    this.socket.emit(IOEvent.BAN_PICK, payload);
   }
 
   @action
@@ -117,8 +136,37 @@ export class SequenceStore {
       this.auth == 'rightLeader'
     ) {
       this.rootStore.jobStore.isModalEnabled = true;
+    } else if (
+      sequence?.payload?.action == 'opponentPick' &&
+      (this.auth == 'leftLeader' || this.auth == 'rightLeader')
+    ) {
+      this.rootStore.jobStore.isModalEnabled = true;
     } else {
       this.rootStore.jobStore.isModalEnabled = false;
     }
+  }
+
+  @action
+  emitSelect(value: JobId) {
+    if (this.rootStore.sequenceStore.auth == 'leftLeader') {
+      const payload: SelectPayload = { leftSelect: value };
+      this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
+    } else if (this.rootStore.sequenceStore.auth == 'rightLeader') {
+      const payload: SelectPayload = { rightSelect: value };
+      this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
+    }
+  }
+
+  @action
+  emitBanPick() {
+    const nextPayload = this.nextSequence?.payload;
+
+    const payload: SequencePayload = {
+      action: nextPayload?.action,
+      team: this.team,
+      index: nextPayload?.index,
+      jobId: this.rootStore.jobStore.teamSelect,
+    };
+    this.socket.emit(IOEvent.BAN_PICK, payload);
   }
 }

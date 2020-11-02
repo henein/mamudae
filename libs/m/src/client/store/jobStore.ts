@@ -11,6 +11,8 @@ export class JobStore {
   @observable rightBanList: JobId[] = [];
   @observable leftPickList: JobId[] = [];
   @observable rightPickList: JobId[] = [];
+  @observable leftOpponentPick?: JobId;
+  @observable rightOpponentPick?: JobId;
   @observable leftSelect?: JobId | 0;
   @observable rightSelect?: JobId | 0;
   @observable isModalEnabled = false;
@@ -23,14 +25,20 @@ export class JobStore {
   // undefined: 없음
   // 0: 선택됨 -> 애니메이션 출력
   @computed get selectJobId() {
-    console.log('sel');
     const nextSequence = this.rootStore.sequenceStore.nextSequence;
-
-    console.log(this.leftSelect + ' + ' + this.rightSelect);
 
     if (nextSequence?.payload?.team == 'left') {
       return this.leftSelect;
-    } else {
+    } else if (nextSequence?.payload?.team == 'right') {
+      return this.rightSelect;
+    }
+  }
+
+  @computed
+  get teamSelect() {
+    if (this.rootStore.sequenceStore.team == 'left') {
+      return this.leftSelect;
+    } else if (this.rootStore.sequenceStore.team == 'right') {
       return this.rightSelect;
     }
   }
@@ -42,6 +50,8 @@ export class JobStore {
     rightBanList: JobId[],
     leftPickList: JobId[],
     rightPickList: JobId[],
+    leftOpponentPick?: JobId,
+    rightOpponentPick?: JobId,
     leftSelect?: JobId,
     rightSelect?: JobId
   ) => {
@@ -50,6 +60,8 @@ export class JobStore {
     this.rightBanList = rightBanList;
     this.leftPickList = leftPickList;
     this.rightPickList = rightPickList;
+    this.leftOpponentPick = leftOpponentPick;
+    this.rightOpponentPick = rightOpponentPick;
     this.leftSelect = leftSelect;
     this.rightSelect = rightSelect;
   };
@@ -69,12 +81,23 @@ export class JobStore {
 
     if (team == 'left') {
       this.leftSelect = 0;
-    } else {
+    } else if (team == 'right') {
       this.rightSelect = 0;
     }
 
     if (fromIndex != -1) {
       targetList.push(this.unPickedList.splice(fromIndex, 1)[0]);
+      return true;
+    } else {
+      console.error('선택할 수 없는 직업'); // 리셋해야 함
+      return false;
+    }
+  };
+
+  @action
+  addJob = (jobId: JobId, target: JobId[]) => {
+    if (this.checkUnPicked(jobId)) {
+      target.push(jobId);
       return true;
     } else {
       console.error('선택할 수 없는 직업'); // 리셋해야 함
@@ -89,15 +112,23 @@ export class JobStore {
   }
 
   @action
-  setSelectedJob(value: JobId) {
-    if (this.rootStore.sequenceStore.auth == 'leftLeader') {
-      const payload: SelectPayload = { leftSelect: value };
-      this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
-    } else if (this.rootStore.sequenceStore.auth == 'rightLeader') {
-      const payload: SelectPayload = { rightSelect: value };
-      this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
+  onOpponentPick = (jobId: JobId, team: 'left' | 'right') => {
+    if (team == 'left') {
+      this.leftOpponentPick = jobId;
+    } else if (team == 'right') {
+      this.rightOpponentPick = jobId;
     }
-  }
+  };
+
+  @action
+  onEnd = () => {
+    if (!this.leftOpponentPick || !this.rightOpponentPick) {
+      return;
+    }
+
+    this.leftPickList.push(this.rightOpponentPick);
+    this.rightPickList.push(this.leftOpponentPick);
+  };
 
   @computed
   get disableList() {
@@ -107,5 +138,11 @@ export class JobStore {
       }
       return previousValue;
     }, []);
+  }
+
+  private checkUnPicked(jobId?: JobId) {
+    if (!jobId) return false;
+
+    return this.unPickedList.indexOf(jobId) > -1;
   }
 }

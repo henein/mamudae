@@ -170,6 +170,8 @@ export class TitleBar extends PIXI.Container {
                   ? '<leftTeam>나초팀</leftTeam>'
                   : '<rightTeam>금앙팀</rightTeam>'
               }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
+            } else if (nextSequence.payload?.action == 'opponentPick') {
+              title.text = '상대픽';
             }
 
             switch (nextSequence?.payload?.team) {

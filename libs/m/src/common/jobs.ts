@@ -9,6 +9,10 @@ export interface Job {
   globalBan?: boolean;
 }
 
+export const getJob = (jobId: JobId) => {
+  return jobList[jobId - 1];
+};
+
 export const jobList: Job[] = [
   {
     id: JobId.BEGINNER,

@@ -112,12 +112,7 @@ export class BanPickModal extends PIXI.Container {
       );
       portraitButtonList[i].on('pointertap', () => {
         if (!portraitButtonList[i].isDisabled) {
-          if (this.selectedButton) {
-            this.selectedButton.isSelected = false;
-          }
-          this.selectedButton = portraitButtonList[i];
-          portraitButtonList[i].isSelected = true;
-          store.jobStore.setSelectedJob(portraitButtonList[i].job.id);
+          store.sequenceStore.emitSelect(portraitButtonList[i].job.id);
         }
       });
     }
@@ -127,6 +122,17 @@ export class BanPickModal extends PIXI.Container {
       portraitButtonList.forEach((value) => {
         value.isDisabled = false;
       });
+    });
+
+    autorun(() => {
+      if (this.selectedButton) {
+        this.selectedButton.isSelected = false;
+      }
+
+      if (store.jobStore.teamSelect) {
+        this.selectedButton = portraitButtonList[store.jobStore.teamSelect - 1];
+        this.selectedButton.isSelected = true;
+      }
     });
 
     autorun(() => {
@@ -154,10 +160,8 @@ export class BanPickModal extends PIXI.Container {
     returnButton.pivot.set(returnButton.width / 2, 0);
     returnButton.position.set(928 / 2, 640);
     returnButton.on('pointertap', () => {
-      if (this.selectedButton) {
-        store.sequenceStore.banPick(this.selectedButton.job.id);
-        this.selectedButton.isSelected = false;
-        this.selectedButton = undefined;
+      if (store.jobStore.teamSelect) {
+        store.sequenceStore.emitBanPick();
         this.isVision = false;
       }
     });

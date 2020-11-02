@@ -19,6 +19,8 @@ export interface InitPayload {
   rightBanList: JobId[];
   leftPickList: JobId[];
   rightPickList: JobId[];
+  leftOpponentPick?: JobId;
+  rightOpponentPick?: JobId;
   auth?: 'leftMember' | 'rightMember' | 'leftLeader' | 'rightLeader';
   leftSelect?: JobId;
   rightSelect?: JobId;
@@ -36,4 +38,5 @@ export interface SequencePayload {
   team?: 'left' | 'right';
   index?: number;
   jobId?: JobId;
+  opponentJobId?: { left: JobId; right: JobId };
 }

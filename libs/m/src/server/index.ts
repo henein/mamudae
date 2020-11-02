@@ -14,8 +14,9 @@ const io = socketIO(server);
 
 dotenv.config();
 
-const state = new State(io);
 const port = process.env.PORT || 3000;
+
+let state = new State(io);
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
@@ -23,8 +24,7 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/admin.html'));
 });
 
-io.on('connection', (socket) => {
-  console.log(`[${socket.id}] 접속!`);
+const onInit = (socket: socketIO.Socket) => {
   socket.emit(IOEvent.INIT, {
     nextSequence: state.getNextSequence(),
     unPickedList: state.unPickedList,
@@ -32,27 +32,25 @@ io.on('connection', (socket) => {
     rightBanList: state.rightBanList,
     leftPickList: state.leftPickList,
     rightPickList: state.rightPickList,
+    leftOpponentPick: state.leftOpponentPick,
+    rightOpponentPick: state.rightOpponentPick,
     auth: getAuth(socket.handshake.query.key),
     leftSelect: state.leftSelect,
     rightSelect: state.rightSelect,
   });
+};
+
+io.on('connection', (socket) => {
+  console.log(`[${socket.id}] 접속!`);
+  onInit(socket);
+
   socket.on('disconnect', () => {
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);
   });
 
   socket.on(IOEvent.INIT, () => {
     console.log(`[${socket.id}] 초기화 요청!?`);
-    socket.emit(IOEvent.INIT, {
-      nextSequence: state.getNextSequence(),
-      unPickedList: state.unPickedList,
-      leftBanList: state.leftBanList,
-      rightBanList: state.rightBanList,
-      leftPickList: state.leftPickList,
-      rightPickList: state.rightPickList,
-      auth: getAuth(socket.handshake.query.key),
-      leftSelect: state.leftSelect,
-      rightSelect: state.rightSelect,
-    });
+    onInit(socket);
   });
 
   socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
@@ -86,12 +84,6 @@ io.on('connection', (socket) => {
       }
     }
   });
-
-  socket.on(IOEvent.END, () => {
-    if (checkNextEvent(IOEvent.END)) {
-      state.onEnd();
-    }
-  });
 });
 
 io.of('/admin').on('connection', (socket) => {
@@ -113,6 +105,11 @@ io.of('/admin').on('connection', (socket) => {
       console.log(`[${socket.id}] 관리자의 리셋 요청!!!`);
       state = new State(io);
       io.emit(IOEvent.RESET);
+    });
+    socket.on(IOEvent.END, () => {
+      if (checkNextEvent(IOEvent.END)) {
+        state.onEnd();
+      }
     });
   } else {
     console.log(`[${socket.id}] 관리자 암호 불일치`);

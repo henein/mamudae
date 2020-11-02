@@ -17,8 +17,15 @@ resetButton.addEventListener('click', () => {
   socket.emit('reset');
 });
 
+const endButton = document.body.appendChild(document.createElement('button'));
+endButton.innerHTML = '블라인드 상대픽 공개';
+endButton.addEventListener('click', () => {
+  socket.emit('end');
+});
+
 startButton.disabled = false;
 resetButton.disabled = false;
+endButton.disabled = false;
 
 const key = prompt('비밀번호를 입력해주세요!');
 
@@ -35,10 +42,12 @@ socket.on('login', (isSuccessed: boolean) => {
     text.innerHTML = '로그인 성공';
     startButton.disabled = false;
     resetButton.disabled = false;
+    endButton.disabled = false;
   } else {
     alert('로그인에 실패했습니다. 재시도시 새로고침 해주세요.');
     text.innerHTML = '로그인 실패';
     startButton.disabled = true;
     resetButton.disabled = true;
+    endButton.disabled = true;
   }
 });
