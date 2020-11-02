@@ -26,7 +26,14 @@ class PortraitButton extends Button {
     this.overlay.visible = false;
 
     const name = this.addChild(
-      new PIXI.Text(job.jobName, { fontSize: 20, fill: '#000000' })
+      new PIXI.Text(
+        job.jobName,
+        new PIXI.TextStyle({
+          fontFamily: 'NanumBarunGothic',
+          fontSize: 20,
+          fill: '#000000',
+        })
+      )
     );
     name.anchor.set(0.5, 0);
     name.position.set(64, 132);

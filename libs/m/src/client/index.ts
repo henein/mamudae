@@ -19,7 +19,7 @@ document.body.appendChild(app.view);
 
 WebFont.load({
   custom: {
-    families: ['MaplestoryOTFBold'],
+    families: ['NanumBarunGothic', 'MaplestoryOTFLight', 'MaplestoryOTFBold'],
     urls: ['./assets/fonts.css'],
   },
 
