@@ -7,7 +7,7 @@ import { store } from '../store';
 import { Tween } from '@tweenjs/tween.js';
 import SimplexNoise from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';
-import { getJob, jobList } from '../../common/jobs';
+import { getJob } from '../../common/jobs';
 
 export class Camera extends PIXI.Container {
   private _backgroundContainer: PIXI.Container;
@@ -74,7 +74,10 @@ export class Camera extends PIXI.Container {
       if (!store.jobStore.selectJobId) {
         if (store.jobStore.selectJobId == undefined) return;
 
-        const preTween = new Tween({ dark: 0, shakeRange: 64 })
+        const preTween = new Tween({
+          dark: 0,
+          shakeRange: 64,
+        })
           .to({ dark: 1, shakeRange: 0 }, 1000)
           .easing(Easing.Quartic.InOut)
           .onUpdate((object) => {
@@ -101,12 +104,16 @@ export class Camera extends PIXI.Container {
                   this._changeTween = this._nextChangeTween.start();
                   this._nextChangeTween = undefined;
                 } else {
-                  this._selecteTween = undefined;
+                  this._changeTween = undefined;
                 }
               })
           );
 
-        this._selecteTween = preTween.chain(afterTween).start();
+        if (this._changeTween) {
+          this._selecteTween = preTween.chain(afterTween);
+        } else {
+          this._changeTween = preTween.chain(afterTween).start();
+        }
       } else {
         const preTween = new Tween({
           brightness: 1,
@@ -164,22 +171,26 @@ export class Camera extends PIXI.Container {
             this._colorFilter.brightness(object.brightness, false);
             this._blurFilter.blur = object.blur;
           })
-          .onComplete((object) => {
+          .onStop((object) => {
             this._colorFilter.reset();
             this._blurFilter.enabled = false;
             this._blurFilter.blur = object.blur;
             this._background.texture = this._nextBackground.texture;
             this._nextBackground.visible = false;
-
+          })
+          .onComplete(() => {
             if (this._nextChangeTween) {
               this._changeTween = this._nextChangeTween.start();
               this._nextChangeTween = undefined;
+            } else if (this._selecteTween) {
+              this._changeTween = this._selecteTween.start();
+              this._selecteTween = undefined;
             } else {
               this._changeTween = undefined;
             }
           });
 
-        if (this._changeTween || this._selecteTween) {
+        if (this._changeTween) {
           this._nextChangeTween = preTween.chain(afterTween);
         } else {
           this._changeTween = preTween.chain(afterTween).start();
