@@ -1,31 +1,43 @@
 import io from 'socket.io-client';
+import { IOEvent } from '../common/events';
+import { TeamNamePayload } from './../common/events';
 
-const text = document.body.appendChild(document.createElement('a'));
-text.innerHTML = '로그인 중...';
+const stateText = document.getElementById('stateText') as HTMLHeadingElement;
 
-document.body.appendChild(document.createElement('br'));
-
-const startButton = document.body.appendChild(document.createElement('button'));
-startButton.innerHTML = '시작';
+const startButton = document.getElementById('startButton') as HTMLButtonElement;
 startButton.addEventListener('click', () => {
   socket.emit('start');
 });
 
-const resetButton = document.body.appendChild(document.createElement('button'));
-resetButton.innerHTML = '리셋';
+const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 resetButton.addEventListener('click', () => {
   socket.emit('reset');
 });
 
-const endButton = document.body.appendChild(document.createElement('button'));
-endButton.innerHTML = '블라인드 상대픽 공개';
+const endButton = document.getElementById('endButton') as HTMLButtonElement;
 endButton.addEventListener('click', () => {
   socket.emit('end');
 });
 
-startButton.disabled = false;
-resetButton.disabled = false;
-endButton.disabled = false;
+const leftTeamNameInput = document.getElementById(
+  'leftTeamNameInput'
+) as HTMLInputElement;
+
+const rightTeamNameInput = document.getElementById(
+  'rightTeamNameInput'
+) as HTMLInputElement;
+
+const submitButton = document.getElementById(
+  'submitButton'
+) as HTMLButtonElement;
+submitButton.addEventListener('click', () => {
+  const payload: TeamNamePayload = {
+    leftTeamName: leftTeamNameInput.value,
+    rightTeamName: rightTeamNameInput.value,
+  };
+
+  socket.emit(IOEvent.TEAM_NAME, payload);
+});
 
 const key = prompt('비밀번호를 입력해주세요!');
 
@@ -36,18 +48,31 @@ const socket = io('/admin', {
   },
 });
 
-socket.on('login', (isSuccessed: boolean) => {
-  if (isSuccessed) {
-    alert('로그인 성공!');
-    text.innerHTML = '로그인 성공';
-    startButton.disabled = false;
-    resetButton.disabled = false;
-    endButton.disabled = false;
-  } else {
-    alert('로그인에 실패했습니다. 재시도시 새로고침 해주세요.');
-    text.innerHTML = '로그인 실패';
-    startButton.disabled = true;
-    resetButton.disabled = true;
-    endButton.disabled = true;
+socket.on(
+  IOEvent.LOGIN,
+  (isSuccessed: boolean, leftTeamName: string, rightTeamName: string) => {
+    if (isSuccessed) {
+      alert('로그인 성공!');
+      stateText.innerHTML = '로그인 성공';
+      startButton.disabled = false;
+      resetButton.disabled = false;
+      endButton.disabled = false;
+      leftTeamNameInput.value = leftTeamName;
+      leftTeamNameInput.disabled = false;
+      rightTeamNameInput.value = rightTeamName;
+      rightTeamNameInput.disabled = false;
+      submitButton.disabled = false;
+    } else {
+      alert('로그인에 실패했습니다. 재시도시 새로고침 해주세요.');
+      stateText.innerHTML = '로그인 실패';
+      startButton.disabled = true;
+      resetButton.disabled = true;
+      endButton.disabled = true;
+      leftTeamNameInput.value = '';
+      leftTeamNameInput.disabled = true;
+      rightTeamNameInput.value = '';
+      rightTeamNameInput.disabled = true;
+      submitButton.disabled = true;
+    }
   }
-});
+);

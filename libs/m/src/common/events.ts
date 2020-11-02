@@ -2,10 +2,10 @@ import { JobId } from './enums';
 import { Sequence } from './sequenceQueue';
 
 export enum IOEvent {
+  LOGIN = 'login',
   INIT = 'init',
+  TEAM_NAME = 'team_name',
   SELECT = 'select',
-  SET_LEFT_LEADER = 'setLeftLeader',
-  SET_RIGHT_LEADER = 'setRightLeader',
   START = 'start',
   BAN_PICK = 'ban_pick',
   END = 'end',
@@ -14,6 +14,8 @@ export enum IOEvent {
 
 export interface InitPayload {
   nextSequence?: Sequence;
+  leftTeamName: string;
+  rightTeamName: string;
   unPickedList: JobId[];
   leftBanList: JobId[];
   rightBanList: JobId[];
@@ -24,6 +26,11 @@ export interface InitPayload {
   auth?: 'leftMember' | 'rightMember' | 'leftLeader' | 'rightLeader';
   leftSelect?: JobId;
   rightSelect?: JobId;
+}
+
+export interface TeamNamePayload {
+  leftTeamName: string;
+  rightTeamName: string;
 }
 
 export interface SelectPayload {

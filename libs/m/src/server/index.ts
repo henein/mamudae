@@ -5,8 +5,8 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import State from './state';
-import { IOEvent, SequencePayload } from '../common/events';
-import { SelectPayload } from './../common/events';
+import { InitPayload, IOEvent, SequencePayload } from '../common/events';
+import { SelectPayload, TeamNamePayload } from './../common/events';
 
 const app = express();
 const server = http.createServer(app);
@@ -25,8 +25,10 @@ app.get('/admin', (req, res) => {
 });
 
 const onInit = (socket: socketIO.Socket) => {
-  socket.emit(IOEvent.INIT, {
+  const payload: InitPayload = {
     nextSequence: state.getNextSequence(),
+    leftTeamName: state.leftTeamName,
+    rightTeamName: state.rightTeamName,
     unPickedList: state.unPickedList,
     leftBanList: state.leftBanList,
     rightBanList: state.rightBanList,
@@ -37,7 +39,9 @@ const onInit = (socket: socketIO.Socket) => {
     auth: getAuth(socket.handshake.query.key),
     leftSelect: state.leftSelect,
     rightSelect: state.rightSelect,
-  });
+  };
+
+  socket.emit(IOEvent.INIT, payload);
 };
 
 io.on('connection', (socket) => {
@@ -90,10 +94,17 @@ io.of('/admin').on('connection', (socket) => {
   if (checkAdmin(socket.handshake.query.key)) {
     console.log(`[${socket.id}] 관리자 접속!!!`);
 
-    socket.emit('login', true);
+    socket.emit(IOEvent.LOGIN, true, state.leftTeamName, state.rightTeamName);
 
     socket.on('disconnect', () => {
       console.log(`[${socket.id}] 관리자 접속 끊어짐 ㅠㅠ`);
+    });
+
+    socket.on(IOEvent.TEAM_NAME, (payload: TeamNamePayload) => {
+      console.log(
+        `[${socket.id}] 팀명 변경: left=${payload.leftTeamName} right=${payload.rightTeamName}`
+      );
+      state.onTeamName(payload);
     });
 
     socket.on(IOEvent.START, () => {
@@ -101,11 +112,13 @@ io.of('/admin').on('connection', (socket) => {
         state.onStart();
       }
     });
+
     socket.on(IOEvent.RESET, () => {
       console.log(`[${socket.id}] 관리자의 리셋 요청!!!`);
       state = new State(io);
       io.emit(IOEvent.RESET);
     });
+
     socket.on(IOEvent.END, () => {
       if (checkNextEvent(IOEvent.END)) {
         state.onEnd();
@@ -113,7 +126,7 @@ io.of('/admin').on('connection', (socket) => {
     });
   } else {
     console.log(`[${socket.id}] 관리자 암호 불일치`);
-    socket.emit('login', false);
+    socket.emit('login', false, '', '');
   }
 });
 

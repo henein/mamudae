@@ -10,12 +10,18 @@ import { RootStore } from '.';
 import { JobId } from '../../common/enums';
 import { InitPayload, IOEvent } from '../../common/events';
 import { Sequence } from '../../common/sequenceQueue';
-import { SequencePayload, SelectPayload } from './../../common/events';
+import {
+  SequencePayload,
+  SelectPayload,
+  TeamNamePayload,
+} from './../../common/events';
 
 export class SequenceStore {
   rootStore: RootStore;
   socket: SocketIOClient.Socket;
   @observable reset = false;
+  @observable leftTeamName = '';
+  @observable rightTeamName = '';
   @observable nextSequence?: Sequence;
   @observable auth?:
     | 'leftMember'
@@ -46,6 +52,11 @@ export class SequenceStore {
     this.socket.on(IOEvent.RESET, () => {
       this.socket.emit(IOEvent.INIT);
       console.log('reset');
+    });
+
+    this.socket.on(IOEvent.TEAM_NAME, (payload: TeamNamePayload) => {
+      this.onTeamName(payload);
+      console.log('teamName');
     });
 
     this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
@@ -86,25 +97,28 @@ export class SequenceStore {
     this.socket.on(IOEvent.INIT, (data: InitPayload) => {
       runInAction(() => {
         this.onReset();
-        this.auth = data.auth;
 
+        this.leftTeamName = data.leftTeamName;
+        this.rightTeamName = data.rightTeamName;
+
+        this.auth = data.auth;
         switch (this.auth) {
           case 'leftMember':
-            alert('나초팀 멤버입니다!');
+            alert(`${this.leftTeamName} 멤버입니다!`);
             break;
           case 'rightMember':
-            alert('금앙팀 멤버입니다!');
+            alert(`${this.rightTeamName} 멤버입니다!`);
             break;
           case 'leftLeader':
-            alert('나초팀 팀장입니다!');
+            alert(`${this.leftTeamName} 팀장입니다!`);
             break;
           case 'rightLeader':
-            alert('금앙팀 팀장입니다!');
+            alert(`${this.rightTeamName} 팀장입니다!`);
             break;
           default:
             alert('관전자입니다! 블라인드가 적용되지 않습니다!');
         }
-        console.log(data.leftSelect + '+' + data.rightSelect);
+
         this.rootStore.jobStore.initList(
           data.unPickedList,
           data.leftBanList,
@@ -124,6 +138,12 @@ export class SequenceStore {
   @action
   onReset() {
     this.reset = !this.reset;
+  }
+
+  @action
+  onTeamName(payload: TeamNamePayload) {
+    this.leftTeamName = payload.leftTeamName;
+    this.rightTeamName = payload.rightTeamName;
   }
 
   @action

@@ -19,7 +19,7 @@ module.exports = {
       excludeChunks: ['admin'],
     }),
     new HtmlWebpackPlugin({
-      title: '메무대 관리',
+      template: 'src/client/views/admin.html',
       filename: '../admin.html',
       chunks: ['admin'],
     }),

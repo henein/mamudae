@@ -159,16 +159,16 @@ export class TitleBar extends PIXI.Container {
             if (nextSequence.payload?.action == 'ban') {
               title.text = `${
                 nextSequence.payload.team == 'left'
-                  ? '<leftTeam>나초팀</leftTeam>'
-                  : '<rightTeam>금앙팀</rightTeam>'
+                  ? `<leftTeam>${store.sequenceStore.leftTeamName}</leftTeam>`
+                  : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
               }이 ${
                 (nextSequence.payload.index ?? 0) + 1
               }번째 밴할 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'pick') {
               title.text = `${
                 nextSequence.payload?.team == 'left'
-                  ? '<leftTeam>나초팀</leftTeam>'
-                  : '<rightTeam>금앙팀</rightTeam>'
+                  ? `<leftTeam>${store.sequenceStore.leftTeamName}</leftTeam>`
+                  : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
               }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'opponentPick') {
               title.text = '상대픽';

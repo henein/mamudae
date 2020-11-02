@@ -4,12 +4,15 @@ import { JobId } from '../common/enums';
 import { Job, jobList } from '../common/jobs';
 import { IOEvent, SequencePayload } from '../common/events';
 import SequenceQueue, { Sequence } from '../common/sequenceQueue';
-import { SelectPayload } from './../common/events';
+import { SelectPayload, TeamNamePayload } from './../common/events';
 
 export default class State {
   private _io: socketIO.Server;
   private _sequenceQueue: SequenceQueue;
   private _nextSequence?: Sequence;
+
+  leftTeamName: string;
+  rightTeamName: string;
 
   unPickedList: JobId[];
   leftBanList: JobId[];
@@ -22,10 +25,18 @@ export default class State {
   leftSelect?: JobId;
   rightSelect?: JobId;
 
-  constructor(io: socketIO.Server) {
+  constructor(
+    io: socketIO.Server,
+    leftTeamName?: string,
+    rightTeamName?: string
+  ) {
     this._io = io;
     this._sequenceQueue = new SequenceQueue();
     this.dequeueSequence();
+
+    this.leftTeamName = leftTeamName ?? 'A팀';
+    this.rightTeamName = rightTeamName ?? 'B팀';
+
     this.unPickedList = jobList.reduce<JobId[]>(
       (previousValue: JobId[], currentValue: Job) => {
         if (currentValue.globalBan) {
@@ -55,6 +66,22 @@ export default class State {
 
   getNextSequence() {
     return this._nextSequence;
+  }
+
+  onTeamName(payload: TeamNamePayload) {
+    this.leftTeamName = payload.leftTeamName
+      ? payload.leftTeamName
+      : this.leftTeamName;
+    this.rightTeamName = payload.rightTeamName
+      ? payload.rightTeamName
+      : this.rightTeamName;
+
+    const emitPayload: TeamNamePayload = {
+      leftTeamName: this.leftTeamName,
+      rightTeamName: this.rightTeamName,
+    };
+
+    this._io.emit(IOEvent.TEAM_NAME, emitPayload);
   }
 
   onStart() {
