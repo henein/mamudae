@@ -14,7 +14,9 @@ export class Camera extends PIXI.Container {
   private _background: PIXI.Sprite;
   private _nextBackground: PIXI.Sprite;
   private _splashContainer: PIXI.Container;
-  private _splash: PIXI.heaven.Sprite;
+  private _mainSplash: PIXI.heaven.Sprite;
+  private _leftSplash: PIXI.heaven.Sprite;
+  private _rightSplash: PIXI.heaven.Sprite;
   private _colorFilter: PIXI.filters.ColorMatrixFilter;
   private _blurFilter: PIXI.filters.BlurFilter;
   private _jobNameText: PIXI.Text;
@@ -49,12 +51,26 @@ export class Camera extends PIXI.Container {
 
     this._splashContainer = container.addChild(new PIXI.Container());
 
-    this._splash = this._splashContainer
+    this._mainSplash = this._splashContainer
       .addChild(new PIXI.Sprite())
       .convertToHeaven();
-    this._splash.anchor.set(0.5);
-    this._splash.scale.set(2);
-    this._splash.position.set(1920 / 2, 1080 / 2);
+    this._mainSplash.anchor.set(0.5);
+    this._mainSplash.scale.set(2);
+    this._mainSplash.position.set(1920 / 2, 1080 / 2);
+
+    this._leftSplash = this._splashContainer
+      .addChild(new PIXI.Sprite())
+      .convertToHeaven();
+    this._leftSplash.anchor.set(0.5);
+    this._leftSplash.scale.set(1.5);
+    this._leftSplash.position.set(1920 / 2 - 200, 1080 / 2);
+
+    this._rightSplash = this._splashContainer
+      .addChild(new PIXI.Sprite())
+      .convertToHeaven();
+    this._rightSplash.anchor.set(0.5);
+    this._rightSplash.scale.set(1.5);
+    this._rightSplash.position.set(1920 / 2 + 200, 1080 / 2);
 
     this._colorFilter = new PIXI.filters.ColorMatrixFilter();
     this._blurFilter = new PIXI.filters.BlurFilter();
@@ -67,12 +83,29 @@ export class Camera extends PIXI.Container {
       this._background.texture = PIXI.Texture.from(
         './assets/backgrounds/0.png'
       );
-      this._splash.texture = PIXI.Texture.EMPTY;
+      this._mainSplash.texture = PIXI.Texture.EMPTY;
+      this._leftSplash.texture = PIXI.Texture.EMPTY;
+      this._rightSplash.texture = PIXI.Texture.EMPTY;
     });
 
     autorun(() => {
       if (!store.jobStore.selectJobId) {
-        if (store.jobStore.selectJobId == undefined) return;
+        if (store.jobStore.selectJobId == undefined) {
+          if (
+            store.sequenceStore.nextSequence?.payload?.action == 'opponentPick'
+          ) {
+            if (store.sequenceStore.team == 'left') {
+              this._leftSplash.texture = PIXI.Texture.from(
+                `../assets/splashes/${store.jobStore.leftSelect}.png`
+              );
+            } else if (store.sequenceStore.team == 'right') {
+              this._rightSplash.texture = PIXI.Texture.from(
+                `../assets/splashes/${store.jobStore.rightSelect}.png`
+              );
+            }
+          }
+          return;
+        }
 
         const preTween = new Tween({
           dark: 0,
@@ -81,7 +114,11 @@ export class Camera extends PIXI.Container {
           .to({ dark: 1, shakeRange: 0 }, 1000)
           .easing(Easing.Quartic.InOut)
           .onUpdate((object) => {
-            this._splash.color.setDark(object.dark, object.dark, object.dark);
+            this._mainSplash.color.setDark(
+              object.dark,
+              object.dark,
+              object.dark
+            );
             this.shakeRange = object.shakeRange;
           });
 
@@ -89,7 +126,7 @@ export class Camera extends PIXI.Container {
           .to({ scale: 0 }, 300)
           .easing(Easing.Quartic.In)
           .onUpdate((object) => {
-            this._splash.scale.set(object.scale);
+            this._mainSplash.scale.set(object.scale);
             this._jobNameText.alpha = object.scale / 2;
           })
           .chain(
@@ -157,12 +194,12 @@ export class Camera extends PIXI.Container {
           .to({ brightness: 1, blur: 0 }, 300)
           .easing(Easing.Quartic.InOut)
           .onStart((object) => {
-            this._splash.color.setDark(0, 0, 0);
-            this._splash.scale.set(2);
-            this._splash.texture = PIXI.Texture.from(
+            this._mainSplash.color.setDark(0, 0, 0);
+            this._mainSplash.scale.set(2);
+            this._mainSplash.texture = PIXI.Texture.from(
               `./assets/splashes/${object.jobId}.png`
             );
-            this._splash.visible = true;
+            this._mainSplash.visible = true;
             this._jobNameText.text = getJob(object.jobId).jobName;
             this._jobNameText.alpha = 1;
             this.shakeRange = 64;
