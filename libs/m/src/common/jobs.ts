@@ -7,6 +7,9 @@ export interface Job {
   branchName: string;
   background: number;
   globalBan?: boolean;
+  offsetX: number;
+  offsetY: number;
+  reverse?: boolean;
 }
 
 export const getJob = (jobId: JobId) => {
@@ -21,6 +24,8 @@ export const jobList: Job[] = [
     branchName: '초보자',
     background: 3,
     globalBan: true,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.HERO,
@@ -28,6 +33,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '전사',
     background: 1,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.PALADIN,
@@ -35,6 +42,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '전사',
     background: 1,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.DARK_KNIGHT,
@@ -42,6 +51,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '전사',
     background: 1,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ARCH_MAGE_FIRE_POISON,
@@ -49,6 +60,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '마법사',
     background: 2,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ARCH_MAGE_ICE_LIGHTNING,
@@ -56,6 +69,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '마법사',
     background: 2,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BISHOP,
@@ -63,6 +78,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '마법사',
     background: 2,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BOWMASTER,
@@ -70,6 +87,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '궁수',
     background: 3,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.MARKSMAN,
@@ -77,6 +96,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '궁수',
     background: 3,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.PATHFINDER,
@@ -84,6 +105,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '궁수',
     background: 4,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.NIGHT_LORD,
@@ -91,6 +114,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '도적',
     background: 5,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.SHADOWER,
@@ -98,6 +123,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '도적',
     background: 5,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.DUAL_BLADE,
@@ -105,6 +132,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '도적',
     background: 6,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BUCCANEER,
@@ -112,6 +141,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '해적',
     background: 7,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.CORSAIR,
@@ -119,6 +150,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '해적',
     background: 7,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.CANNONEER,
@@ -126,6 +159,8 @@ export const jobList: Job[] = [
     className: '모험가',
     branchName: '해적',
     background: 7,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.DAWN_WARRIOR,
@@ -133,6 +168,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '전사',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.MIHILE,
@@ -140,6 +177,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '전사',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BLAZE_WIZARD,
@@ -147,6 +186,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '마법사',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.WIND_ARCHER,
@@ -154,6 +195,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '궁수',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.NIGHT_WALKER,
@@ -161,6 +204,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '도적',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.THUNDER_BREAKER,
@@ -168,6 +213,8 @@ export const jobList: Job[] = [
     className: '시그너스 기사단',
     branchName: '해적',
     background: 8,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BLASTER,
@@ -175,6 +222,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '전사',
     background: 9,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.BATTLE_MAGE,
@@ -182,6 +231,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '마법사',
     background: 9,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.WILD_HUNTER,
@@ -189,6 +240,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '궁수',
     background: 9,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.MECHANIC,
@@ -196,6 +249,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '해적',
     background: 9,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.XENON,
@@ -203,6 +258,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '도적/해적',
     background: 10,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.DEMON_SLAYER,
@@ -210,6 +267,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '전사',
     background: 11,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.DEMON_AVENGER,
@@ -217,6 +276,8 @@ export const jobList: Job[] = [
     className: '레지스탕스',
     branchName: '전사',
     background: 11,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ARAN,
@@ -224,6 +285,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '전사',
     background: 12,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.EVAN,
@@ -231,6 +294,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '마법사',
     background: 13,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.LUMINOUS,
@@ -238,6 +303,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '마법사',
     background: 14,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.MERCEDES,
@@ -245,6 +312,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '궁수',
     background: 15,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.PHANTOM,
@@ -252,6 +321,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '도적',
     background: 16,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.SHADE,
@@ -259,6 +330,8 @@ export const jobList: Job[] = [
     className: '영웅',
     branchName: '해적',
     background: 17,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.KAISER,
@@ -266,6 +339,8 @@ export const jobList: Job[] = [
     className: '노바',
     branchName: '전사',
     background: 18,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.CADENA,
@@ -273,6 +348,8 @@ export const jobList: Job[] = [
     className: '노바',
     branchName: '도적',
     background: 19,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ANGELIC_BUSTER,
@@ -280,6 +357,8 @@ export const jobList: Job[] = [
     className: '노바',
     branchName: '해적',
     background: 20,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ADELE,
@@ -287,6 +366,8 @@ export const jobList: Job[] = [
     className: '레프',
     branchName: '전사',
     background: 21,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ILLIUM,
@@ -294,6 +375,8 @@ export const jobList: Job[] = [
     className: '레프',
     branchName: '마법사',
     background: 22,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ARK,
@@ -301,6 +384,8 @@ export const jobList: Job[] = [
     className: '레프',
     branchName: '해적',
     background: 23,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.HOYOUNG,
@@ -308,6 +393,8 @@ export const jobList: Job[] = [
     className: '아니마',
     branchName: '도적',
     background: 24,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.ZERO,
@@ -316,6 +403,8 @@ export const jobList: Job[] = [
     branchName: '전사',
     background: 25,
     globalBan: true,
+    offsetX: 0,
+    offsetY: 0,
   },
   {
     id: JobId.KINESIS,
@@ -323,5 +412,7 @@ export const jobList: Job[] = [
     className: '키네시스',
     branchName: '마법사',
     background: 26,
+    offsetX: 0,
+    offsetY: 0,
   },
 ];
