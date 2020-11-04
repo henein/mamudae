@@ -67,6 +67,23 @@ function onAssetsLoaded() {
 
   baseContainer.addChild(new BanPickModal());
 
+  const authorText = baseContainer.addChild(
+    new PIXI.Text(
+      'made by Pdom (프돔이@스카니아)',
+      new PIXI.TextStyle({
+        fontFamily: 'MaplestoryOTFLight',
+        fontSize: 24,
+        fill: 0xb2b2b2,
+        dropShadow: true,
+        dropShadowColor: 0x000000,
+        dropShadowDistance: 0,
+        dropShadowBlur: 4,
+      })
+    )
+  );
+  authorText.anchor.set(1, 1);
+  authorText.position.set(1920 - 28, 1080 - 24);
+
   baseContainer.pivot.set(constants.BASE_WIDTH / 2, constants.BASE_HEIGHT / 2);
   app.stage.addChild(baseContainer);
 
