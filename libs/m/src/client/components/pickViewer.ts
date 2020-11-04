@@ -12,14 +12,28 @@ export class PickViewer extends PIXI.Container {
     const leftPick: PickPanel[] = [];
 
     for (let i = 0; i < 6; i++) {
-      leftPick[i] = this.addChild(new PickPanel({ direction: 'left' }));
+      if (i == 5) {
+        leftPick[i] = this.addChild(
+          new PickPanel({ direction: 'left', isOpponent: true })
+        );
+      } else {
+        leftPick[i] = this.addChild(new PickPanel({ direction: 'left' }));
+      }
+
       leftPick[i].position.set(0, 168 + 136 * i);
     }
 
     const rightPick: PickPanel[] = [];
 
     for (let i = 0; i < 6; i++) {
-      rightPick[i] = this.addChild(new PickPanel({ direction: 'right' }));
+      if (i == 5) {
+        rightPick[i] = this.addChild(
+          new PickPanel({ direction: 'right', isOpponent: true })
+        );
+      } else {
+        rightPick[i] = this.addChild(new PickPanel({ direction: 'right' }));
+      }
+
       rightPick[i].position.set(1524, 168 + 136 * i);
     }
 

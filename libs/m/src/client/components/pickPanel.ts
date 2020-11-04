@@ -6,6 +6,7 @@ import { DetailRoundedRect } from './detailRoundedRect';
 
 type Option = {
   direction?: 'left' | 'right';
+  isOpponent?: boolean;
 };
 
 export class PickPanel extends PIXI.Container {
@@ -27,7 +28,7 @@ export class PickPanel extends PIXI.Container {
   constructor(option: Option = {}) {
     super();
 
-    const { direction = 'left' } = option;
+    const { direction = 'left', isOpponent } = option;
     this._direction = direction;
 
     this._state = 'default';
@@ -59,6 +60,14 @@ export class PickPanel extends PIXI.Container {
     this._currentSprite = this.addChild(new PIXI.Sprite());
 
     this.addChild(PIXI.Sprite.from(`../assets/ui/${direction}PickShadow.png`));
+
+    if (isOpponent) {
+      const opponentIcon = this.addChild(
+        PIXI.Sprite.from(`../assets/ui/${direction}Opponent.png`)
+      );
+      opponentIcon.anchor.set(0.5);
+      opponentIcon.position.set(396 / 2, 120 / 2);
+    }
 
     this.title = this.addChild(
       new PIXI.Text(
