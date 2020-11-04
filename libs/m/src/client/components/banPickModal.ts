@@ -31,7 +31,7 @@ class PortraitButton extends Button {
         new PIXI.TextStyle({
           fontFamily: 'NanumBarunGothic',
           fontSize: 20,
-          fill: '#000000',
+          fill: '#404040',
         })
       )
     );
