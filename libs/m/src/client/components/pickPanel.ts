@@ -189,7 +189,7 @@ export class PickPanel extends PIXI.Container {
         this.title.text = '다음 선택';
         break;
       case 'blind':
-        this.background.alpha = this._backgroundAlpha.next;
+        this.background.alpha = this._backgroundAlpha.current;
         this.sprite.visible = false;
         this._currentSprite.visible = false;
         this.title.text = '선택 중...';

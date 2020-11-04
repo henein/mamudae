@@ -58,7 +58,7 @@ export class PickViewer extends PIXI.Container {
         return;
       }
 
-      if (store.sequenceStore.currentSequence.event == IOEvent.END) {
+      if (!store.sequenceStore.currentSequence.event) {
         leftPick[5].state = 'default';
         rightPick[5].state = 'default';
         return;
