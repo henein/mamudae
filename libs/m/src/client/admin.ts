@@ -12,6 +12,13 @@ startButton.addEventListener('click', () => {
 const resetButton = document.getElementById('resetButton') as HTMLButtonElement;
 resetButton.addEventListener('click', () => {
   socket.emit('reset');
+
+  const payload: TeamNamePayload = {
+    leftTeamName: leftTeamNameInput.value,
+    rightTeamName: rightTeamNameInput.value,
+  };
+
+  socket.emit(IOEvent.TEAM_NAME, payload);
 });
 
 const endButton = document.getElementById('endButton') as HTMLButtonElement;
