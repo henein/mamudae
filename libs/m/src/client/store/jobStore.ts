@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { JobId } from '../../common/enums';
-import { IOEvent, SelectPayload, SequencePayload } from '../../common/events';
+import { SequencePayload } from '../../common/events';
 import { jobList } from '../../common/jobs';
 import { RootStore } from './index';
 
@@ -25,7 +25,7 @@ export class JobStore {
   // undefined: 없음
   // 0: 선택됨 -> 애니메이션 출력
   @computed get selectJobId() {
-    const nextSequence = this.rootStore.sequenceStore.nextSequence;
+    const nextSequence = this.rootStore.sequenceStore.currentSequence;
 
     if (nextSequence?.payload?.team == 'left') {
       return this.leftSelect;

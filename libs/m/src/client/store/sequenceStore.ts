@@ -22,6 +22,7 @@ export class SequenceStore {
   @observable reset = false;
   @observable leftTeamName = '';
   @observable rightTeamName = '';
+  @observable currentSequence?: Sequence;
   @observable nextSequence?: Sequence;
   @observable auth?:
     | 'leftMember'
@@ -45,7 +46,8 @@ export class SequenceStore {
     this.init();
 
     this.socket.on(IOEvent.START, (payload: SequencePayload) => {
-      this.setNextSequence(payload.nextSequence);
+      this.setCurrentSequence(payload.nextSequence);
+      this.setNextSequence(payload.nextNextSequence);
       console.log('start');
     });
 
@@ -66,7 +68,8 @@ export class SequenceStore {
         rootStore.jobStore.moveJob(payload);
       }
 
-      this.setNextSequence(payload.nextSequence);
+      this.setCurrentSequence(payload.nextSequence);
+      this.setNextSequence(payload.nextNextSequence);
     });
 
     this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
@@ -96,8 +99,6 @@ export class SequenceStore {
   init() {
     this.socket.on(IOEvent.INIT, (data: InitPayload) => {
       runInAction(() => {
-        this.onReset();
-
         this.leftTeamName = data.leftTeamName;
         this.rightTeamName = data.rightTeamName;
 
@@ -130,7 +131,9 @@ export class SequenceStore {
           data.leftSelect,
           data.rightSelect
         );
-        this.setNextSequence(data.nextSequence);
+        this.setCurrentSequence(data.nextSequence);
+        this.setNextSequence(data.nextNextSequence);
+        this.onReset();
       });
     });
   }
@@ -147,8 +150,8 @@ export class SequenceStore {
   }
 
   @action
-  setNextSequence(sequence?: Sequence) {
-    this.nextSequence = sequence;
+  setCurrentSequence(sequence?: Sequence) {
+    this.currentSequence = sequence;
     if (sequence?.payload?.team == 'left' && this.auth == 'leftLeader') {
       this.rootStore.jobStore.isModalEnabled = true;
     } else if (
@@ -167,6 +170,11 @@ export class SequenceStore {
   }
 
   @action
+  setNextSequence(sequence?: Sequence) {
+    this.nextSequence = sequence;
+  }
+
+  @action
   emitSelect(value: JobId) {
     if (this.rootStore.sequenceStore.auth == 'leftLeader') {
       const payload: SelectPayload = { leftSelect: value };
@@ -179,7 +187,7 @@ export class SequenceStore {
 
   @action
   emitBanPick() {
-    const nextPayload = this.nextSequence?.payload;
+    const nextPayload = this.currentSequence?.payload;
 
     const payload: SequencePayload = {
       action: nextPayload?.action,

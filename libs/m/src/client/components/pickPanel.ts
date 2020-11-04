@@ -1,4 +1,7 @@
+import { IReactionDisposer, autorun } from 'mobx';
 import { JobId } from '../../common/enums';
+import { getJob, Job } from '../../common/jobs';
+import { store } from '../store';
 import { DetailRoundedRect } from './detailRoundedRect';
 
 type Option = {
@@ -6,14 +9,33 @@ type Option = {
 };
 
 export class PickPanel extends PIXI.Container {
-  private _jobId?: JobId;
+  private _job?: Job;
+  private _direction: 'left' | 'right';
+  private _state: 'default' | 'current' | 'next' | 'blind' | 'done';
+  private _currentDisposer?: IReactionDisposer;
+  private _currentSprite: PIXI.Sprite;
+  private _backgroundAlpha = {
+    none: 0,
+    current: 0.95,
+    next: 0.2,
+    done: 0.5,
+  };
   background: PIXI.Sprite;
   sprite: PIXI.Sprite;
+  title: PIXI.Text;
 
   constructor(option: Option = {}) {
     super();
 
     const { direction = 'left' } = option;
+    this._direction = direction;
+
+    this._state = 'default';
+
+    const backgroundColor = this.addChild(new PIXI.Graphics());
+    backgroundColor.beginFill(0x000000, 0.3);
+    backgroundColor.drawRect(0, 0, 396, 120);
+    backgroundColor.endFill();
 
     this.background = this.addChild(
       PIXI.Sprite.from(
@@ -34,22 +56,135 @@ export class PickPanel extends PIXI.Container {
     this.mask = graphics;
 
     this.sprite = this.addChild(new PIXI.Sprite());
-    this.sprite.anchor.set(0.5),
-      this.sprite.position.set(
-        396 / 2 + (direction == 'left' ? -20 : 20),
-        120 / 2
-      );
+    this._currentSprite = this.addChild(new PIXI.Sprite());
+
+    this.addChild(PIXI.Sprite.from(`../assets/ui/${direction}PickShadow.png`));
+
+    this.title = this.addChild(
+      new PIXI.Text(
+        '',
+        new PIXI.TextStyle({
+          fontFamily: 'MaplestoryOTFLight',
+          fontSize: 28,
+          fill: '#ffffff',
+          dropShadow: true,
+          dropShadowColor: '#000000',
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
+        })
+      )
+    );
+    this.title.anchor.set(direction == 'left' ? 1 : 0, 1);
+    this.title.position.set(direction == 'left' ? 396 - 12 : 0 + 12, 120 - 8);
+
+    this.reset();
   }
 
-  reset() {
-    this._jobId = undefined;
+  reset = () => {
+    this._job = undefined;
     this.sprite.texture = PIXI.Texture.EMPTY;
-  }
+    this._currentSprite.texture = PIXI.Texture.EMPTY;
+    this._currentSprite.alpha = 0.5;
+    this.title.text = '';
+    this.background.alpha = this._backgroundAlpha.none;
+    this.sprite.visible = false;
+    this._currentSprite.visible = false;
+  };
+
+  applyJob = (sprite: PIXI.Sprite, job?: Job) => {
+    if (!job) {
+      return;
+    }
+
+    sprite.texture = PIXI.Texture.from(`../assets/splashes/${job.id}.png`);
+    sprite.scale.set(0.65);
+    sprite.scale.x *=
+      (this._direction == 'left' && job.reverse) ||
+      (this._direction == 'right' && !job.reverse)
+        ? -1
+        : 1;
+    sprite.anchor.set(0.5 + job.offsetX / 1024, 0.5 + job.offsetY / 604);
+    sprite.position.set(
+      396 / 2 + (this._direction == 'left' ? -76 : 76),
+      120 / 2 + 20
+    );
+  };
 
   set jobId(value: JobId) {
-    this._jobId = value;
-    this.sprite.texture = PIXI.Texture.from(
-      `../assets/splashes/${this._jobId}.png`
-    );
+    this._job = getJob(value);
+
+    if (this._state == 'default') {
+      this.background.alpha = this._backgroundAlpha.done;
+      this.sprite.visible = true;
+      this._currentSprite.visible = false;
+    }
+
+    this.applyJob(this.sprite, this._job);
+    this.title.text = this._job.jobName;
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  set state(value: 'default' | 'current' | 'next' | 'blind' | 'done') {
+    if (this._state == value) {
+      return;
+    }
+
+    this._state = value;
+
+    if (this._currentDisposer) {
+      this._currentDisposer();
+    }
+
+    switch (this._state) {
+      case 'default':
+        if (this._job) {
+          this.background.alpha = this._backgroundAlpha.done;
+          this.sprite.visible = true;
+          this._currentSprite.visible = false;
+          this.title.text = this._job.jobName;
+        } else {
+          this.background.alpha = this._backgroundAlpha.none;
+          this.sprite.visible = false;
+          this._currentSprite.visible = false;
+          this.title.text = '';
+        }
+        break;
+      case 'current':
+        this.background.alpha = this._backgroundAlpha.current;
+        this.sprite.visible = false;
+        this._currentSprite.visible = true;
+        this._currentSprite.alpha = 0.5;
+        this._currentDisposer = autorun(() => {
+          const selectJobId =
+            this._direction == 'left'
+              ? store.jobStore.leftSelect
+              : store.jobStore.rightSelect;
+
+          if (!selectJobId) {
+            return;
+          }
+
+          const selectJob = getJob(selectJobId);
+
+          this.applyJob(this._currentSprite, selectJob);
+        });
+        this.title.text = '선택 중...';
+        break;
+      case 'next':
+        this.background.alpha = this._backgroundAlpha.next;
+        this.sprite.visible = false;
+        this._currentSprite.visible = false;
+        this.title.text = '다음 선택';
+        break;
+      case 'blind':
+        this.background.alpha = this._backgroundAlpha.next;
+        this.sprite.visible = false;
+        this._currentSprite.visible = false;
+        this.title.text = '선택 중...';
+        break;
+    }
   }
 }

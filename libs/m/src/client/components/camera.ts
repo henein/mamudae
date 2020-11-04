@@ -103,7 +103,8 @@ export class Camera extends PIXI.Container {
       if (!store.jobStore.selectJobId) {
         if (store.jobStore.selectJobId == undefined) {
           if (
-            store.sequenceStore.nextSequence?.payload?.action == 'opponentPick'
+            store.sequenceStore.currentSequence?.payload?.action ==
+            'opponentPick'
           ) {
             if (store.sequenceStore.team == 'left') {
               this._leftSplash.texture = PIXI.Texture.from(

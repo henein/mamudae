@@ -50,7 +50,7 @@ export class BanViewer extends PIXI.Container {
     });
 
     autorun(() => {
-      const nextPayload = store.sequenceStore.nextSequence?.payload;
+      const nextPayload = store.sequenceStore.currentSequence?.payload;
 
       if (this._nextPanel) {
         this._nextPanel.isNext = false;

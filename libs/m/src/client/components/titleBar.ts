@@ -144,7 +144,7 @@ export class TitleBar extends PIXI.Container {
     title.position.set(1920 / 2, 32 - 2);
 
     autorun(() => {
-      const nextSequence = store.sequenceStore.nextSequence;
+      const nextSequence = store.sequenceStore.currentSequence;
       this._preLeftTween.stop();
       this._leftTween.stop();
       this._preRightTween.stop();
