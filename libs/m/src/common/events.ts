@@ -14,6 +14,7 @@ export enum IOEvent {
 
 export interface InitPayload {
   nextSequence?: Sequence;
+  nextNextSequence?: Sequence;
   leftTeamName: string;
   rightTeamName: string;
   unPickedList: JobId[];

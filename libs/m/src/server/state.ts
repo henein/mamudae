@@ -9,7 +9,9 @@ import { SelectPayload, TeamNamePayload } from './../common/events';
 export default class State {
   private _io: socketIO.Server;
   private _sequenceQueue: SequenceQueue;
-  private _nextSequence?: Sequence;
+
+  nextSequence?: Sequence;
+  nextNextSequence?: Sequence;
 
   leftTeamName: string;
   rightTeamName: string;
@@ -60,12 +62,9 @@ export default class State {
   }
 
   private dequeueSequence() {
-    this._nextSequence = this._sequenceQueue.dequeue();
-    console.log('[NextEvent]' + this._nextSequence?.event);
-  }
-
-  getNextSequence() {
-    return this._nextSequence;
+    this.nextSequence = this._sequenceQueue.dequeue();
+    this.nextNextSequence = this._sequenceQueue.next();
+    console.log('[NextEvent]' + this.nextSequence?.event);
   }
 
   onTeamName(payload: TeamNamePayload) {
@@ -86,13 +85,16 @@ export default class State {
 
   onStart() {
     this.dequeueSequence();
-    const payload: SequencePayload = { nextSequence: this._nextSequence };
+    const payload: SequencePayload = {
+      nextSequence: this.nextSequence,
+      nextNextSequence: this.nextNextSequence,
+    };
     this._io.emit(IOEvent.START, payload);
   }
 
   onBanPick(payload: SequencePayload) {
     const { action, team, index, jobId } = payload;
-    const nextSequencePayload = this._nextSequence?.payload;
+    const nextSequencePayload = this.nextSequence?.payload;
 
     if (!jobId) {
       console.error('jobId 누락');
@@ -134,8 +136,8 @@ export default class State {
       }
 
       const emitPayload: SequencePayload = {
-        nextSequence: this._nextSequence,
-        nextNextSequence: this._sequenceQueue.next(),
+        nextSequence: this.nextSequence,
+        nextNextSequence: this.nextNextSequence,
         action,
         team,
         index,
@@ -161,8 +163,8 @@ export default class State {
       this.dequeueSequence();
 
       const emitPayload: SequencePayload = {
-        nextSequence: this._nextSequence,
-        nextNextSequence: this._sequenceQueue.next(),
+        nextSequence: this.nextSequence,
+        nextNextSequence: this.nextNextSequence,
         action,
         team,
         jobId,

@@ -26,7 +26,8 @@ app.get('/admin', (req, res) => {
 
 const onInit = (socket: socketIO.Socket) => {
   const payload: InitPayload = {
-    nextSequence: state.getNextSequence(),
+    nextSequence: state.nextSequence,
+    nextNextSequence: state.nextNextSequence,
     leftTeamName: state.leftTeamName,
     rightTeamName: state.rightTeamName,
     unPickedList: state.unPickedList,
@@ -136,7 +137,7 @@ server.listen(port, () => {
 });
 
 function checkNextEvent(event: IOEvent): boolean {
-  const nextSequence = state.getNextSequence();
+  const nextSequence = state.nextSequence;
 
   if (nextSequence?.event == event) {
     return true;
