@@ -2,7 +2,7 @@
   스프라이트 화질 개선?
 */
 
-import { autorun } from 'mobx';
+import { autorun, reaction } from 'mobx';
 import { store } from '../store';
 import { Tween } from '@tweenjs/tween.js';
 import SimplexNoise from 'simplex-noise';
@@ -78,15 +78,26 @@ export class Camera extends PIXI.Container {
     this._blurFilter.blur = 0;
     this._blurFilter.quality = 10;
 
-    autorun(() => {
-      store.sequenceStore.reset;
-      this._background.texture = PIXI.Texture.from(
-        './assets/backgrounds/0.png'
-      );
-      this._mainSplash.texture = PIXI.Texture.EMPTY;
-      this._leftSplash.texture = PIXI.Texture.EMPTY;
-      this._rightSplash.texture = PIXI.Texture.EMPTY;
-    });
+    reaction(
+      () => store.sequenceStore.reset,
+      () => {
+        if (this._changeTween) {
+          this._changeTween.stopChainedTweens();
+        }
+        this._changeTween = undefined;
+        this._nextChangeTween = undefined;
+        this._selecteTween = undefined;
+
+        this._background.texture = PIXI.Texture.from(
+          './assets/backgrounds/0.png'
+        );
+        this._nextBackground.visible = false;
+        this._mainSplash.texture = PIXI.Texture.EMPTY;
+        this._leftSplash.texture = PIXI.Texture.EMPTY;
+        this._rightSplash.texture = PIXI.Texture.EMPTY;
+        this._jobNameText.text = '';
+      }
+    );
 
     autorun(() => {
       if (!store.jobStore.selectJobId) {
@@ -171,7 +182,6 @@ export class Camera extends PIXI.Container {
             this._colorFilter.reset();
             this._blurFilter.enabled = true;
             this._blurFilter.blur = object.blur;
-            this._background.alpha = 1;
             this._nextBackground.visible = true;
             this._nextBackground.alpha = object.nextBackgroundAlpha;
             this._nextBackground.texture = PIXI.Texture.from(
@@ -208,14 +218,13 @@ export class Camera extends PIXI.Container {
             this._colorFilter.brightness(object.brightness, false);
             this._blurFilter.blur = object.blur;
           })
-          .onStop((object) => {
+          .onComplete((object) => {
             this._colorFilter.reset();
             this._blurFilter.enabled = false;
             this._blurFilter.blur = object.blur;
             this._background.texture = this._nextBackground.texture;
             this._nextBackground.visible = false;
-          })
-          .onComplete(() => {
+
             if (this._nextChangeTween) {
               this._changeTween = this._nextChangeTween.start();
               this._nextChangeTween = undefined;
