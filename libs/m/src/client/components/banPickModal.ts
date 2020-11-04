@@ -6,7 +6,7 @@ import { Portrait } from './portrait';
 import { Button } from './button';
 import { TextButton } from './textButton';
 import { store } from '../store';
-import { autorun } from 'mobx';
+import { autorun, reaction } from 'mobx';
 
 class PortraitButton extends Button {
   private _isSelected = false;
@@ -117,12 +117,18 @@ export class BanPickModal extends PIXI.Container {
       });
     }
 
-    autorun(() => {
-      store.sequenceStore.reset;
-      portraitButtonList.forEach((value) => {
-        value.isDisabled = false;
-      });
-    });
+    reaction(
+      () => store.sequenceStore.reset,
+      () => {
+        portraitButtonList.forEach((value) => {
+          if (store.jobStore.disableList.indexOf(value.job.id) == -1) {
+            value.isDisabled = false;
+          } else {
+            value.isDisabled = true;
+          }
+        });
+      }
+    );
 
     autorun(() => {
       if (this.selectedButton) {
