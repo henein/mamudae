@@ -5,20 +5,36 @@ type Option = {
   width?: number;
   height?: number;
   backgroundColor?: number;
+  textColor?: number;
 };
 
 export class TextButton extends Button {
   constructor(option: Option = {}) {
     super();
 
-    const { title = '', width = 100, height = 100, backgroundColor } = option;
+    const {
+      title = '',
+      width = 100,
+      height = 100,
+      backgroundColor,
+      textColor,
+    } = option;
 
     const background = this.addChild(new PIXI.Graphics());
     background.beginFill(backgroundColor);
-    background.drawRect(0, 0, width, height);
+    background.drawRoundedRect(0, 0, width, height, 64);
     background.endFill();
 
-    const text = this.addChild(new PIXI.Text(title));
+    const text = this.addChild(
+      new PIXI.Text(
+        title,
+        new PIXI.TextStyle({
+          fontFamily: 'MaplestoryOTFLight',
+          fontSize: 28,
+          fill: textColor,
+        })
+      )
+    );
     text.anchor.set(0.5);
     text.position.set(width / 2, height / 2);
   }

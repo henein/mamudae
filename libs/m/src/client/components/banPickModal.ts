@@ -61,6 +61,7 @@ export class BanPickModal extends PIXI.Container {
   disappearTween: Tween<PIXI.Container>;
   selectedButton?: PortraitButton;
   toggleButton: PIXI.Sprite;
+  returnButton: TextButton;
 
   constructor() {
     super();
@@ -77,7 +78,7 @@ export class BanPickModal extends PIXI.Container {
 
     const graphics = this.modal.addChild(new PIXI.Graphics());
     graphics.beginFill(0xffffff, 0.8);
-    graphics.drawRoundedRect(0, 0, 928, 752, 24);
+    graphics.drawRoundedRect(0, 0, 928, 752, 64);
     graphics.endFill();
 
     const scrollbox = this.modal.addChild(
@@ -131,17 +132,6 @@ export class BanPickModal extends PIXI.Container {
     );
 
     autorun(() => {
-      if (this.selectedButton) {
-        this.selectedButton.isSelected = false;
-      }
-
-      if (store.jobStore.teamSelect) {
-        this.selectedButton = portraitButtonList[store.jobStore.teamSelect - 1];
-        this.selectedButton.isSelected = true;
-      }
-    });
-
-    autorun(() => {
       if (store.jobStore.disableList.length) {
         portraitButtonList.forEach((value) => {
           if (store.jobStore.disableList.indexOf(value.job.id) == -1) {
@@ -155,20 +145,36 @@ export class BanPickModal extends PIXI.Container {
 
     scrollbox.update();
 
-    const returnButton = this.modal.addChild(
+    this.returnButton = this.modal.addChild(
       new TextButton({
         title: '선택',
-        backgroundColor: 0x333333,
+        backgroundColor: 0x0075ca,
+        textColor: 0xffffff,
         width: 200,
         height: 96,
       })
     );
-    returnButton.pivot.set(returnButton.width / 2, 0);
-    returnButton.position.set(928 / 2, 640);
-    returnButton.on('pointertap', () => {
+    this.returnButton.isDisabled = true;
+    this.returnButton.pivot.set(this.returnButton.width / 2, 0);
+    this.returnButton.position.set(928 / 2, 640);
+    this.returnButton.on('pointertap', () => {
       if (store.jobStore.teamSelect) {
         store.sequenceStore.emitBanPick();
         this.isVision = false;
+      }
+    });
+
+    autorun(() => {
+      if (this.selectedButton) {
+        this.selectedButton.isSelected = false;
+      }
+
+      if (store.jobStore.teamSelect) {
+        this.selectedButton = portraitButtonList[store.jobStore.teamSelect - 1];
+        this.selectedButton.isSelected = true;
+        this.returnButton.isDisabled = false;
+      } else {
+        this.returnButton.isDisabled = true;
       }
     });
 
