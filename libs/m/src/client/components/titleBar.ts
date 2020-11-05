@@ -12,6 +12,8 @@ export class TitleBar extends PIXI.Container {
   private _rightGlow: PIXI.Sprite;
   private _leftArrow: PIXI.Sprite;
   private _rightArrow: PIXI.Sprite;
+  private _leftTeamName: PIXI.Text;
+  private _rightTeamName: PIXI.Text;
   private _leftTween: Tween<any>;
   private _rightTween: Tween<any>;
   private _preLeftTween: Tween<any>;
@@ -33,6 +35,45 @@ export class TitleBar extends PIXI.Container {
     this._rightGlow.position.set(1920 - 428, 0);
     this._rightGlow.visible = false;
     this._rightGlow.alpha = 0;
+
+    this._leftTeamName = this.addChild(
+      new PIXI.Text(
+        '',
+        new PIXI.TextStyle({
+          fontFamily: 'MaplestoryOTFLight',
+          fontSize: 28,
+          fill: 0xffffff,
+          dropShadow: true,
+          dropShadowColor: 0x0075ca,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
+        })
+      )
+    );
+    this._leftTeamName.anchor.set(0, 0.5);
+    this._leftTeamName.position.set(32, 132);
+
+    this._rightTeamName = this.addChild(
+      new PIXI.Text(
+        '',
+        new PIXI.TextStyle({
+          fontFamily: 'MaplestoryOTFLight',
+          fontSize: 28,
+          fill: 0xffffff,
+          dropShadow: true,
+          dropShadowColor: 0xde9300,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
+        })
+      )
+    );
+    this._rightTeamName.anchor.set(1, 0.5);
+    this._rightTeamName.position.set(1920 - 32, 132);
+
+    autorun(() => {
+      this._leftTeamName.text = store.sequenceStore.leftTeamName;
+      this._rightTeamName.text = store.sequenceStore.rightTeamName;
+    });
 
     this._main = this.addChild(
       new DetailRoundedRect({

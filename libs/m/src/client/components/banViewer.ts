@@ -4,29 +4,33 @@ import { BanPanel } from './banPanel';
 
 export class BanViewer extends PIXI.Container {
   private _nextPanel?: BanPanel;
+  private _size = 64;
 
   constructor() {
     super();
 
     const leftBan = [
-      this.addChild(new BanPanel()),
-      this.addChild(new BanPanel()),
-      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel(this._size)),
+      this.addChild(new BanPanel(this._size)),
+      this.addChild(new BanPanel(this._size)),
     ];
 
     leftBan[0].position.set(32, 32);
-    leftBan[1].position.set(32 + 72 + 16, 32);
-    leftBan[2].position.set(32 + 72 + 16 + 72 + 16 + 16, 32);
+    leftBan[1].position.set(32 + this._size + 16, 32);
+    leftBan[2].position.set(32 + this._size + 16 + this._size + 16 + 16, 32);
 
     const rightBan = [
-      this.addChild(new BanPanel()),
-      this.addChild(new BanPanel()),
-      this.addChild(new BanPanel()),
+      this.addChild(new BanPanel(this._size)),
+      this.addChild(new BanPanel(this._size)),
+      this.addChild(new BanPanel(this._size)),
     ];
 
-    rightBan[0].position.set(1920 - 72 - 32, 32);
-    rightBan[1].position.set(1920 - 72 - (32 + 72 + 16), 32);
-    rightBan[2].position.set(1920 - 72 - (32 + 72 + 16 + 72 + 16 + 16), 32);
+    rightBan[0].position.set(1920 - this._size - 32, 32);
+    rightBan[1].position.set(1920 - this._size - (32 + this._size + 16), 32);
+    rightBan[2].position.set(
+      1920 - this._size - (32 + this._size + 16 + this._size + 16 + 16),
+      32
+    );
 
     autorun(() => {
       store.sequenceStore.reset;
