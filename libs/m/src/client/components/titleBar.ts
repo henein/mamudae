@@ -30,7 +30,7 @@ export class TitleBar extends PIXI.Container {
     this._rightGlow = this.addChild(
       PIXI.Sprite.from('../assets/ui/rightGlow.png')
     );
-    this._rightGlow.position.set(1360, 0);
+    this._rightGlow.position.set(1920 - 428, 0);
     this._rightGlow.visible = false;
     this._rightGlow.alpha = 0;
 

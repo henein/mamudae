@@ -1,5 +1,4 @@
 import { autorun, reaction } from 'mobx';
-import { IOEvent } from '../../common/events';
 import { store } from '../store';
 import { PickPanel } from './pickPanel';
 
@@ -55,10 +54,6 @@ export class PickViewer extends PIXI.Container {
       }
 
       if (!store.sequenceStore.currentSequence) {
-        return;
-      }
-
-      if (!store.sequenceStore.currentSequence.event) {
         leftPick[5].state = 'default';
         rightPick[5].state = 'default';
         return;

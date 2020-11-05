@@ -78,6 +78,8 @@ export class SequenceStore {
 
     this.socket.on(IOEvent.END, () => {
       this.rootStore.jobStore.onEnd();
+      this.setCurrentSequence(undefined);
+      this.setNextSequence(undefined);
     });
   }
 

@@ -24,6 +24,7 @@ export class PickPanel extends PIXI.Container {
   background: PIXI.Sprite;
   sprite: PIXI.Sprite;
   title: PIXI.Text;
+  shadow: PIXI.Sprite;
 
   constructor(option: Option = {}) {
     super();
@@ -59,7 +60,10 @@ export class PickPanel extends PIXI.Container {
     this.sprite = this.addChild(new PIXI.Sprite());
     this._currentSprite = this.addChild(new PIXI.Sprite());
 
-    this.addChild(PIXI.Sprite.from(`../assets/ui/${direction}PickShadow.png`));
+    this.shadow = this.addChild(
+      PIXI.Sprite.from(`../assets/ui/${direction}PickShadow.png`)
+    );
+    this.shadow.visible = false;
 
     if (isOpponent) {
       const opponentIcon = this.addChild(
@@ -98,6 +102,7 @@ export class PickPanel extends PIXI.Container {
     this.background.alpha = this._backgroundAlpha.none;
     this.sprite.visible = false;
     this._currentSprite.visible = false;
+    this.shadow.visible = false;
   };
 
   applyJob = (sprite: PIXI.Sprite, job?: Job) => {
@@ -126,10 +131,10 @@ export class PickPanel extends PIXI.Container {
       this.background.alpha = this._backgroundAlpha.done;
       this.sprite.visible = true;
       this._currentSprite.visible = false;
+      this.title.text = this._job.jobName;
     }
 
     this.applyJob(this.sprite, this._job);
-    this.title.text = this._job.jobName;
   }
 
   get state() {
@@ -154,11 +159,13 @@ export class PickPanel extends PIXI.Container {
           this.sprite.visible = true;
           this._currentSprite.visible = false;
           this.title.text = this._job.jobName;
+          this.shadow.visible = true;
         } else {
           this.background.alpha = this._backgroundAlpha.none;
           this.sprite.visible = false;
           this._currentSprite.visible = false;
           this.title.text = '';
+          this.shadow.visible = false;
         }
         break;
       case 'current':
@@ -181,18 +188,21 @@ export class PickPanel extends PIXI.Container {
           this.applyJob(this._currentSprite, selectJob);
         });
         this.title.text = '선택 중...';
+        this.shadow.visible = true;
         break;
       case 'next':
         this.background.alpha = this._backgroundAlpha.next;
         this.sprite.visible = false;
         this._currentSprite.visible = false;
         this.title.text = '다음 선택';
+        this.shadow.visible = false;
         break;
       case 'blind':
         this.background.alpha = this._backgroundAlpha.current;
         this.sprite.visible = false;
         this._currentSprite.visible = false;
         this.title.text = '선택 중...';
+        this.shadow.visible = true;
         break;
     }
   }
