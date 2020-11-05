@@ -1,4 +1,5 @@
 import { autorun, reaction } from 'mobx';
+import { IOEvent } from '../../common/events';
 import { store } from '../store';
 import { PickPanel } from './pickPanel';
 
@@ -57,6 +58,10 @@ export class PickViewer extends PIXI.Container {
         leftPick[5].state = 'default';
         rightPick[5].state = 'default';
         return;
+      } else if (store.sequenceStore.currentSequence.event == IOEvent.END) {
+        leftPick[5].state = 'done';
+        rightPick[5].state = 'done';
+        return;
       }
 
       const payload = store.sequenceStore.currentSequence.payload;
@@ -73,6 +78,14 @@ export class PickViewer extends PIXI.Container {
       } else if (payload?.action == 'opponentPick') {
         leftPick[5].state = 'blind';
         rightPick[5].state = 'blind';
+
+        if (store.jobStore.leftOpponentPick) {
+          leftPick[5].state = 'done';
+        }
+
+        if (store.jobStore.rightOpponentPick) {
+          rightPick[5].state = 'done';
+        }
       }
     });
 

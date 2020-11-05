@@ -204,6 +204,13 @@ export class PickPanel extends PIXI.Container {
         this.title.text = '선택 중...';
         this.shadow.visible = true;
         break;
+      case 'done':
+        this.background.alpha = this._backgroundAlpha.done;
+        this.sprite.visible = true;
+        this._currentSprite.visible = false;
+        this.title.text = '선택 완료';
+        this.shadow.visible = true;
+        break;
     }
   }
 }

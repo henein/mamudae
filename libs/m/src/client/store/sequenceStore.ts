@@ -6,7 +6,7 @@ import {
   runInAction,
 } from 'mobx';
 import io from 'socket.io-client';
-import { RootStore } from '.';
+import { RootStore, store } from '.';
 import { JobId } from '../../common/enums';
 import { InitPayload, IOEvent } from '../../common/events';
 import { Sequence } from '../../common/sequenceQueue';
@@ -171,7 +171,14 @@ export class SequenceStore {
       sequence?.payload?.action == 'opponentPick' &&
       (this.auth == 'leftLeader' || this.auth == 'rightLeader')
     ) {
-      this.rootStore.jobStore.isModalEnabled = true;
+      console.log(sequence?.payload.team == this.team);
+      if (this.team == 'left' && store.jobStore.leftOpponentPick) {
+        this.rootStore.jobStore.isModalEnabled = false;
+      } else if (this.team == 'right' && store.jobStore.rightOpponentPick) {
+        this.rootStore.jobStore.isModalEnabled = false;
+      } else {
+        this.rootStore.jobStore.isModalEnabled = true;
+      }
     } else {
       this.rootStore.jobStore.isModalEnabled = false;
     }

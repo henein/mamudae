@@ -212,7 +212,7 @@ export class TitleBar extends PIXI.Container {
                   : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
               }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'opponentPick') {
-              title.text = '상대픽';
+              title.text = '상대에게 줄 직업을 선택 중';
             }
 
             switch (nextSequence?.payload?.team) {
@@ -223,8 +223,12 @@ export class TitleBar extends PIXI.Container {
                 this._preRightTween.chain(this._rightTween).start();
                 break;
               default:
-                this._preLeftTween.chain(this._leftTween).start();
-                this._preRightTween.chain(this._rightTween).start();
+                if (!store.jobStore.leftOpponentPick) {
+                  this._preLeftTween.chain(this._leftTween).start();
+                }
+                if (!store.jobStore.rightOpponentPick) {
+                  this._preRightTween.chain(this._rightTween).start();
+                }
             }
 
             break;
