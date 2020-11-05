@@ -2,19 +2,22 @@
   스프라이트 화질 개선?
 */
 
-import { autorun, reaction } from 'mobx';
+import { autorun, observable, reaction } from 'mobx';
 import { store } from '../store';
 import { Tween } from '@tweenjs/tween.js';
 import SimplexNoise from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';
 import { getJob } from '../../common/jobs';
+import { Splash } from './splash';
+import { JobId } from '../../common/enums';
+import e from 'express';
 
 export class Camera extends PIXI.Container {
   private _backgroundContainer: PIXI.Container;
   private _background: PIXI.Sprite;
   private _nextBackground: PIXI.Sprite;
   private _splashContainer: PIXI.Container;
-  private _mainSplash: PIXI.heaven.Sprite;
+  private _mainSplash?: Splash;
   private _leftSplash: PIXI.heaven.Sprite;
   private _rightSplash: PIXI.heaven.Sprite;
   private _colorFilter: PIXI.filters.ColorMatrixFilter;
@@ -22,11 +25,10 @@ export class Camera extends PIXI.Container {
   private _jobNameText: PIXI.Text;
   private _simplexX = new SimplexNoise(Math.random);
   private _simplexY = new SimplexNoise(Math.random);
-  private _changeTween?: Tween<any>;
-  private _nextChangeTween?: Tween<any>;
-  private _selecteTween?: Tween<any>;
   private _shakeTween: Tween<any>;
   private _shakeRange = 32;
+  private _eventQueue: CameraEventQueue;
+  private _lastJobId?: 0 | JobId;
 
   constructor() {
     super();
@@ -51,13 +53,6 @@ export class Camera extends PIXI.Container {
 
     this._splashContainer = container.addChild(new PIXI.Container());
 
-    this._mainSplash = this._splashContainer
-      .addChild(new PIXI.Sprite())
-      .convertToHeaven();
-    this._mainSplash.anchor.set(0.5);
-    this._mainSplash.scale.set(2);
-    this._mainSplash.position.set(1920 / 2, 1080 / 2);
-
     this._leftSplash = this._splashContainer
       .addChild(new PIXI.Sprite())
       .convertToHeaven();
@@ -78,24 +73,21 @@ export class Camera extends PIXI.Container {
     this._blurFilter.blur = 0;
     this._blurFilter.quality = 10;
 
+    this._eventQueue = new CameraEventQueue(this.onEvent);
+
     reaction(
       () => store.sequenceStore.reset,
       () => {
-        if (this._changeTween) {
-          this._changeTween.stopChainedTweens();
-        }
-        this._changeTween = undefined;
-        this._nextChangeTween = undefined;
-        this._selecteTween = undefined;
-
         this._background.texture = PIXI.Texture.from(
           './assets/backgrounds/0.png'
         );
         this._nextBackground.visible = false;
-        this._mainSplash.texture = PIXI.Texture.EMPTY;
+        this._mainSplash?.destroy();
         this._leftSplash.texture = PIXI.Texture.EMPTY;
         this._rightSplash.texture = PIXI.Texture.EMPTY;
         this._jobNameText.text = '';
+        this._eventQueue = new CameraEventQueue(this.onEvent);
+        this._lastJobId = undefined;
       }
     );
 
@@ -118,131 +110,17 @@ export class Camera extends PIXI.Container {
           }
           return;
         }
-
-        const preTween = new Tween({
-          dark: 0,
-          shakeRange: 64,
-        })
-          .to({ dark: 1, shakeRange: 0 }, 1000)
-          .easing(Easing.Quartic.InOut)
-          .onUpdate((object) => {
-            this._mainSplash.color.setDark(
-              object.dark,
-              object.dark,
-              object.dark
-            );
-            this.shakeRange = object.shakeRange;
-          });
-
-        const afterTween = new Tween({ scale: 2 })
-          .to({ scale: 0 }, 300)
-          .easing(Easing.Quartic.In)
-          .onUpdate((object) => {
-            this._mainSplash.scale.set(object.scale);
-            this._jobNameText.alpha = object.scale / 2;
-          })
-          .chain(
-            new Tween({ shakeRange: 0 })
-              .to({ shakeRange: 32 })
-              .easing(Easing.Quartic.InOut)
-              .onUpdate((object) => {
-                this.shakeRange = object.shakeRange;
-              })
-              .onComplete(() => {
-                if (this._nextChangeTween) {
-                  this._changeTween = this._nextChangeTween.start();
-                  this._nextChangeTween = undefined;
-                } else {
-                  this._changeTween = undefined;
-                }
-              })
-          );
-
-        if (this._changeTween) {
-          this._selecteTween = preTween.chain(afterTween);
-        } else {
-          this._changeTween = preTween.chain(afterTween).start();
-        }
+        this._eventQueue.enqueue({
+          action: 'select',
+        });
       } else {
-        const preTween = new Tween({
-          brightness: 1,
-          blur: 0,
-          nextBackgroundAlpha: 0,
+        this._eventQueue.enqueue({
+          action: 'change',
           jobId: store.jobStore.selectJobId,
-        })
-          .to(
-            {
-              brightness: 1.3,
-              blur: 32,
-              nextBackgroundAlpha: 1,
-            },
-            300
-          )
-          .easing(Easing.Quartic.InOut)
-          .onStart((object) => {
-            this._colorFilter.reset();
-            this._blurFilter.enabled = true;
-            this._blurFilter.blur = object.blur;
-            this._nextBackground.visible = true;
-            this._nextBackground.alpha = object.nextBackgroundAlpha;
-            this._nextBackground.texture = PIXI.Texture.from(
-              `../assets/backgrounds/${
-                getJob(object.jobId).background ?? 0
-              }.png`
-            );
-          })
-          .onUpdate((object) => {
-            this._colorFilter.brightness(object.brightness, false);
-            this._blurFilter.blur = object.blur;
-            this._nextBackground.alpha = object.nextBackgroundAlpha;
-          });
-
-        const afterTween = new Tween({
-          brightness: 1.3,
-          blur: 32,
-          jobId: store.jobStore.selectJobId,
-        })
-          .to({ brightness: 1, blur: 0 }, 300)
-          .easing(Easing.Quartic.InOut)
-          .onStart((object) => {
-            this._mainSplash.color.setDark(0, 0, 0);
-            this._mainSplash.scale.set(2);
-            this._mainSplash.texture = PIXI.Texture.from(
-              `./assets/splashes/${object.jobId}.png`
-            );
-            this._mainSplash.visible = true;
-            this._jobNameText.text = getJob(object.jobId).jobName;
-            this._jobNameText.alpha = 1;
-            this.shakeRange = 64;
-          })
-          .onUpdate((object) => {
-            this._colorFilter.brightness(object.brightness, false);
-            this._blurFilter.blur = object.blur;
-          })
-          .onComplete((object) => {
-            this._colorFilter.reset();
-            this._blurFilter.enabled = false;
-            this._blurFilter.blur = object.blur;
-            this._background.texture = this._nextBackground.texture;
-            this._nextBackground.visible = false;
-
-            if (this._nextChangeTween) {
-              this._changeTween = this._nextChangeTween.start();
-              this._nextChangeTween = undefined;
-            } else if (this._selecteTween) {
-              this._changeTween = this._selecteTween.start();
-              this._selecteTween = undefined;
-            } else {
-              this._changeTween = undefined;
-            }
-          });
-
-        if (this._changeTween) {
-          this._nextChangeTween = preTween.chain(afterTween);
-        } else {
-          this._changeTween = preTween.chain(afterTween).start();
-        }
+        });
       }
+
+      this._lastJobId = store.jobStore.selectJobId;
     });
 
     let time = 0;
@@ -290,6 +168,90 @@ export class Camera extends PIXI.Container {
     this.addChild(PIXI.Sprite.from('./assets/ui/cameraUI.png'));
   }
 
+  onEvent = (event: CameraEvent, done: () => void) => {
+    switch (event.action) {
+      case 'change':
+        this.onChange(event.jobId ?? JobId.BEGINNER, done);
+        break;
+      case 'select':
+        if (this._mainSplash) {
+          this._mainSplash.remove(() => {
+            this._mainSplash = undefined;
+            done();
+          });
+        }
+        break;
+    }
+  };
+
+  onChange = (jobId: JobId, done: () => void) => {
+    new Tween({
+      brightness: 1,
+      blur: 0,
+      nextBackgroundAlpha: 0,
+      jobId: jobId,
+    })
+      .to(
+        {
+          brightness: 1.3,
+          blur: 32,
+          nextBackgroundAlpha: 1,
+        },
+        300
+      )
+      .easing(Easing.Quartic.InOut)
+      .onStart((object) => {
+        this._colorFilter.reset();
+        this._blurFilter.enabled = true;
+        this._blurFilter.blur = object.blur;
+        this._nextBackground.visible = true;
+        this._nextBackground.alpha = object.nextBackgroundAlpha;
+        this._nextBackground.texture = PIXI.Texture.from(
+          `../assets/backgrounds/${getJob(object.jobId).background ?? 0}.png`
+        );
+      })
+      .onUpdate((object) => {
+        this._colorFilter.brightness(object.brightness, false);
+        this._blurFilter.blur = object.blur;
+        this._nextBackground.alpha = object.nextBackgroundAlpha;
+      })
+      .chain(
+        new Tween({
+          brightness: 1.3,
+          blur: 32,
+          jobId: jobId,
+        })
+          .to({ brightness: 1, blur: 0 }, 300)
+          .easing(Easing.Quartic.InOut)
+          .onStart((object) => {
+            if (this._mainSplash) {
+              this._mainSplash.jobId = object.jobId;
+            } else {
+              this._mainSplash = this._splashContainer.addChild(
+                new Splash(object.jobId, 1920 / 2, 1080 / 2)
+              );
+            }
+            this._jobNameText.text = getJob(object.jobId).jobName;
+            this._jobNameText.alpha = 1;
+            this.shakeRange = 64;
+          })
+          .onUpdate((object) => {
+            this._colorFilter.brightness(object.brightness, false);
+            this._blurFilter.blur = object.blur;
+          })
+          .onComplete((object) => {
+            this._colorFilter.reset();
+            this._blurFilter.enabled = false;
+            this._blurFilter.blur = object.blur;
+            this._background.texture = this._nextBackground.texture;
+            this._nextBackground.visible = false;
+
+            done();
+          })
+      )
+      .start();
+  };
+
   get shakeRange(): number {
     return this._shakeRange;
   }
@@ -322,4 +284,54 @@ function createBlurOverlay() {
   container.addChild(multiply);
 
   return container;
+}
+
+type CameraEvent = {
+  action: 'change' | 'select';
+  jobId?: JobId;
+};
+
+class CameraEventQueue {
+  private _cameraEvents: CameraEvent[];
+  private _onEvent: (event: CameraEvent, done: () => void) => void;
+  private _isProgress = false;
+
+  constructor(onEvent: (event: CameraEvent, done: () => void) => void) {
+    this._cameraEvents = [];
+    this._onEvent = onEvent;
+  }
+
+  enqueue = (item: CameraEvent) => {
+    if (this._isProgress) {
+      if (!this._cameraEvents.length) {
+        this._cameraEvents.push(item);
+      } else {
+        if (
+          this._cameraEvents[this._cameraEvents.length - 1].action ==
+            'change' &&
+          item.action == 'change'
+        ) {
+          this._cameraEvents[this._cameraEvents.length - 1] = item;
+        } else {
+          this._cameraEvents.push(item);
+        }
+      }
+    } else {
+      this._isProgress = true;
+      this._onEvent(item, this.next);
+    }
+  };
+
+  next = () => {
+    const nextEvent = this.dequeue();
+    if (nextEvent) {
+      this._onEvent(nextEvent, this.next);
+    } else {
+      this._isProgress = false;
+    }
+  };
+
+  dequeue = () => {
+    return this._cameraEvents.shift();
+  };
 }
