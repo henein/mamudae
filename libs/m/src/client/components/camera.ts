@@ -10,7 +10,7 @@ import { Easing } from '@tweenjs/tween.js';
 import { getJob } from '../../common/jobs';
 import { Splash } from './splash';
 import { JobId } from '../../common/enums';
-import e from 'express';
+import { IOEvent } from '../../common/events';
 
 export class Camera extends PIXI.Container {
   private _backgroundContainer: PIXI.Container;
@@ -92,35 +92,52 @@ export class Camera extends PIXI.Container {
     );
 
     autorun(() => {
-      if (!store.jobStore.selectJobId) {
-        if (store.jobStore.selectJobId == undefined) {
-          if (
-            store.sequenceStore.currentSequence?.payload?.action ==
-            'opponentPick'
-          ) {
-            if (store.sequenceStore.team == 'left') {
-              this._leftSplash.texture = PIXI.Texture.from(
-                `../assets/splashes/${store.jobStore.leftSelect}.png`
-              );
-            } else if (store.sequenceStore.team == 'right') {
-              this._rightSplash.texture = PIXI.Texture.from(
-                `../assets/splashes/${store.jobStore.rightSelect}.png`
-              );
-            }
+      switch (store.sequenceStore.currentSequence?.payload?.action) {
+        case 'ban':
+        case 'pick':
+          if (this._lastJobId == store.jobStore.selectJobId) {
+            return;
           }
-          return;
-        }
-        this._eventQueue.enqueue({
-          action: 'select',
-        });
-      } else {
-        this._eventQueue.enqueue({
-          action: 'change',
-          jobId: store.jobStore.selectJobId,
-        });
-      }
 
-      this._lastJobId = store.jobStore.selectJobId;
+          if (!store.jobStore.selectJobId) {
+            if (store.jobStore.selectJobId == undefined) {
+              return;
+            }
+            this._eventQueue.enqueue({
+              action: 'select',
+            });
+          } else {
+            this._eventQueue.enqueue({
+              action: 'change',
+              jobId: store.jobStore.selectJobId,
+            });
+          }
+
+          this._lastJobId = store.jobStore.selectJobId;
+          break;
+        case 'opponentPick':
+          if (store.sequenceStore.nextSequence?.event != IOEvent.END) {
+            console.log(store.sequenceStore.nextSequence?.payload?.action);
+            this._eventQueue.enqueue({ action: 'defaultBG' });
+          }
+          break;
+      }
+    });
+
+    autorun(() => {
+      if (
+        store.sequenceStore.currentSequence?.payload?.action == 'opponentPick'
+      ) {
+        if (store.sequenceStore.team == 'left') {
+          this._leftSplash.texture = PIXI.Texture.from(
+            `../assets/splashes/${store.jobStore.leftSelect}.png`
+          );
+        } else if (store.sequenceStore.team == 'right') {
+          this._rightSplash.texture = PIXI.Texture.from(
+            `../assets/splashes/${store.jobStore.rightSelect}.png`
+          );
+        }
+      }
     });
 
     let time = 0;
@@ -179,7 +196,14 @@ export class Camera extends PIXI.Container {
             this._mainSplash = undefined;
             done();
           });
+          new Tween(this._jobNameText)
+            .to({ alpha: 0 }, 1000)
+            .easing(Easing.Quartic.InOut)
+            .start();
         }
+        break;
+      case 'defaultBG':
+        this.onDefaultBG(done);
         break;
     }
   };
@@ -233,8 +257,61 @@ export class Camera extends PIXI.Container {
             }
             this._jobNameText.text = getJob(object.jobId).jobName;
             this._jobNameText.alpha = 1;
-            this.shakeRange = 64;
           })
+          .onUpdate((object) => {
+            this._colorFilter.brightness(object.brightness, false);
+            this._blurFilter.blur = object.blur;
+          })
+          .onComplete((object) => {
+            this._colorFilter.reset();
+            this._blurFilter.enabled = false;
+            this._blurFilter.blur = object.blur;
+            this._background.texture = this._nextBackground.texture;
+            this._nextBackground.visible = false;
+
+            done();
+          })
+      )
+      .start();
+  };
+
+  onDefaultBG = (done: () => void) => {
+    new Tween({
+      brightness: 1,
+      blur: 0,
+      nextBackgroundAlpha: 0,
+    })
+      .to(
+        {
+          brightness: 1.3,
+          blur: 32,
+          nextBackgroundAlpha: 1,
+        },
+        300
+      )
+      .easing(Easing.Quartic.InOut)
+      .onStart((object) => {
+        this._colorFilter.reset();
+        this._blurFilter.enabled = true;
+        this._blurFilter.blur = object.blur;
+        this._nextBackground.visible = true;
+        this._nextBackground.alpha = object.nextBackgroundAlpha;
+        this._nextBackground.texture = PIXI.Texture.from(
+          './assets/backgrounds/0.png'
+        );
+      })
+      .onUpdate((object) => {
+        this._colorFilter.brightness(object.brightness, false);
+        this._blurFilter.blur = object.blur;
+        this._nextBackground.alpha = object.nextBackgroundAlpha;
+      })
+      .chain(
+        new Tween({
+          brightness: 1.3,
+          blur: 32,
+        })
+          .to({ brightness: 1, blur: 0 }, 300)
+          .easing(Easing.Quartic.InOut)
           .onUpdate((object) => {
             this._colorFilter.brightness(object.brightness, false);
             this._blurFilter.blur = object.blur;
@@ -287,7 +364,7 @@ function createBlurOverlay() {
 }
 
 type CameraEvent = {
-  action: 'change' | 'select';
+  action: 'change' | 'select' | 'defaultBG';
   jobId?: JobId;
 };
 
@@ -308,8 +385,7 @@ class CameraEventQueue {
       } else {
         if (
           this._cameraEvents[this._cameraEvents.length - 1].action ==
-            'change' &&
-          item.action == 'change'
+          item.action
         ) {
           this._cameraEvents[this._cameraEvents.length - 1] = item;
         } else {

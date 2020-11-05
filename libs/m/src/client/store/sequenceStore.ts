@@ -46,8 +46,10 @@ export class SequenceStore {
     this.init();
 
     this.socket.on(IOEvent.START, (payload: SequencePayload) => {
-      this.setCurrentSequence(payload.nextSequence);
-      this.setNextSequence(payload.nextNextSequence);
+      runInAction(() => {
+        this.setCurrentSequence(payload.nextSequence);
+        this.setNextSequence(payload.nextNextSequence);
+      });
       console.log('start');
     });
 
@@ -68,8 +70,10 @@ export class SequenceStore {
         rootStore.jobStore.moveJob(payload);
       }
 
-      this.setCurrentSequence(payload.nextSequence);
-      this.setNextSequence(payload.nextNextSequence);
+      runInAction(() => {
+        this.setCurrentSequence(payload.nextSequence);
+        this.setNextSequence(payload.nextNextSequence);
+      });
     });
 
     this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
@@ -78,8 +82,10 @@ export class SequenceStore {
 
     this.socket.on(IOEvent.END, () => {
       this.rootStore.jobStore.onEnd();
-      this.setCurrentSequence(undefined);
-      this.setNextSequence(undefined);
+      runInAction(() => {
+        this.setCurrentSequence(undefined);
+        this.setNextSequence(undefined);
+      });
     });
   }
 
