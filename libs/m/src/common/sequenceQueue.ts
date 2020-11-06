@@ -64,15 +64,15 @@ export default class SequenceQueue {
     });
     this.enqueue({
       event: IOEvent.BAN_PICK,
-      payload: { action: 'pick', team: 'right', index: 4 },
-    });
-    this.enqueue({
-      event: IOEvent.BAN_PICK,
       payload: { action: 'pick', team: 'left', index: 3 },
     });
     this.enqueue({
       event: IOEvent.BAN_PICK,
       payload: { action: 'pick', team: 'left', index: 4 },
+    });
+    this.enqueue({
+      event: IOEvent.BAN_PICK,
+      payload: { action: 'pick', team: 'right', index: 4 },
     });
     this.enqueue({
       event: IOEvent.BAN_PICK,
