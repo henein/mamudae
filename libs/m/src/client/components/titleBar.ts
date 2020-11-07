@@ -212,7 +212,7 @@ export class TitleBar extends PIXI.Container {
                   : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
               }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'opponentPick') {
-              title.text = '상대에게 줄 직업을 선택 중';
+              title.text = '상대팀 직업을 선택 중';
             }
 
             switch (nextSequence?.payload?.team) {
@@ -233,13 +233,13 @@ export class TitleBar extends PIXI.Container {
 
             break;
           case IOEvent.END:
-            title.text = '종료';
+            title.text = '상대팀 직업 선택 완료!';
             break;
           default:
             title.text = '';
         }
       } else {
-        title.text = '';
+        title.text = '메무대 시작합니다!';
       }
     });
   }
