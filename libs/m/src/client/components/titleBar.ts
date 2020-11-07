@@ -178,6 +178,10 @@ export class TitleBar extends PIXI.Container {
           fontSize: '56px',
           fill: '#de9300',
         },
+        ban: {
+          fontSize: '56px',
+          fill: '#ca0000',
+        },
       })
     );
 
@@ -204,7 +208,7 @@ export class TitleBar extends PIXI.Container {
                   : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
               }이 ${
                 (nextSequence.payload.index ?? 0) + 1
-              }번째 밴할 직업을 선택 중`;
+              }번째 <ban>밴</ban>할 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'pick') {
               title.text = `${
                 nextSequence.payload?.team == 'left'

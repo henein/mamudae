@@ -1,4 +1,5 @@
 import { IReactionDisposer, autorun } from 'mobx';
+import { DropShadowFilter } from 'pixi-filters';
 import { JobId } from '../../common/enums';
 import { getJob, Job } from '../../common/jobs';
 import { store } from '../store';
@@ -89,6 +90,12 @@ export class PickPanel extends PIXI.Container {
     );
     this.title.anchor.set(direction == 'left' ? 1 : 0, 1);
     this.title.position.set(direction == 'left' ? 396 - 12 : 0 + 12, 120 - 8);
+
+    const dropShadowFilter = new DropShadowFilter({
+      distance: 4,
+      rotation: 90,
+    });
+    this.filters = [dropShadowFilter];
 
     this.reset();
   }

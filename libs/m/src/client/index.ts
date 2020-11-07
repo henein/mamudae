@@ -43,6 +43,9 @@ function onFontLoaded() {
   }
   loader.add(splashes);
 
+  loader.add('../assets/backgrounds/multiply.png');
+  loader.add('../assets/backgrounds/multiplyBan.png');
+
   loader.load(onAssetsLoaded);
 
   const loading = app.stage.addChild(

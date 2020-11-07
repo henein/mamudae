@@ -326,7 +326,7 @@ export class Camera extends PIXI.Container {
     this._jobNameText.anchor.set(0.5);
     this._jobNameText.position.set(1920 / 2, 916);
 
-    this.addChild(createBlurOverlay());
+    this.addChild(new BlurOverlay());
 
     this.addChild(PIXI.Sprite.from('./assets/ui/cameraUI.png'));
   }
@@ -522,22 +522,57 @@ export class Camera extends PIXI.Container {
   }
 }
 
-function createBlurOverlay() {
-  const container = new PIXI.Container();
+class BlurOverlay extends PIXI.Container {
+  private _state: 'default' | 'ban';
+  private _tween?: Tween<any>;
+  private _multiply: PIXI.Sprite;
 
-  const blurFilter = new PIXI.filters.BlurFilter();
-  blurFilter.blur = 16;
-  blurFilter.quality = 6;
+  constructor() {
+    super();
 
-  const graphics = PIXI.Sprite.from('./assets/backgrounds/multiply.png');
-  graphics.filters = [new PIXI.picture.MaskFilter(blurFilter)];
-  container.addChild(graphics);
+    this._state = 'default';
 
-  const multiply = PIXI.Sprite.from('./assets/backgrounds/multiply.png');
-  multiply.blendMode = PIXI.BLEND_MODES.MULTIPLY;
-  container.addChild(multiply);
+    const blurFilter = new PIXI.filters.BlurFilter();
+    blurFilter.blur = 16;
+    blurFilter.quality = 6;
 
-  return container;
+    const graphics = PIXI.Sprite.from('../assets/backgrounds/multiply.png');
+    graphics.filters = [new PIXI.picture.MaskFilter(blurFilter)];
+    this.addChild(graphics);
+
+    this._multiply = PIXI.Sprite.from('../assets/backgrounds/multiply.png');
+    this._multiply.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+    this.addChild(this._multiply);
+
+    autorun(() => {
+      if (store.sequenceStore.currentSequence?.payload?.action == 'ban') {
+        this.state = 'ban';
+      } else {
+        this.state = 'default';
+      }
+    });
+  }
+
+  set state(value: 'default' | 'ban') {
+    if (this._state == value) {
+      return;
+    }
+
+    this._state = value;
+
+    switch (this._state) {
+      case 'default':
+        this._multiply.texture = PIXI.Texture.from(
+          '../assets/backgrounds/multiply.png'
+        );
+        break;
+      case 'ban':
+        this._multiply.texture = PIXI.Texture.from(
+          '../assets/backgrounds/multiplyBan.png'
+        );
+        break;
+    }
+  }
 }
 
 type CameraEvent = {
