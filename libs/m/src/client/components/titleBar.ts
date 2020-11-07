@@ -87,6 +87,12 @@ export class TitleBar extends PIXI.Container {
       })
     );
 
+    const mask = this.addChild(
+      PIXI.Sprite.from('../assets/ui/titlebarMask.png')
+    );
+    mask.position.set(428, 0);
+    this._main.mask = mask;
+
     this._leftArrow = this.addChild(
       PIXI.Sprite.from('../assets/ui/leftArrow.png')
     );

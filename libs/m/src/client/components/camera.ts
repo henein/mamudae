@@ -37,6 +37,7 @@ export class Camera extends PIXI.Container {
   private _eventQueue: CameraEventQueue;
   private _lastJobId?: 0 | JobId;
   private _opponentOffset = 360;
+  private _logo: PIXI.Sprite;
 
   constructor() {
     super();
@@ -60,6 +61,19 @@ export class Camera extends PIXI.Container {
     this._nextBackground.position.set(1920 / 2, 1080 / 2);
 
     this._splashContainer = container.addChild(new PIXI.Container());
+
+    this._logo = this._splashContainer.addChild(
+      PIXI.Sprite.from('../assets/ui/logo.png')
+    );
+    this._logo.visible = false;
+
+    autorun(() => {
+      if (store.sequenceStore.currentSequence?.event == IOEvent.START) {
+        this._logo.visible = true;
+      } else {
+        this._logo.visible = false;
+      }
+    });
 
     this._leftSplash = this._splashContainer.addChild(
       new Splash(
