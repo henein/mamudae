@@ -1,3 +1,9 @@
+import MainPage from "../src/container/MainPage/MainPage";
+
 export default function Home() {
-  return <div>안녕</div>;
+  return (
+    <div>
+      <MainPage />
+    </div>
+  );
 }
