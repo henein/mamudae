@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import { AiOutlineSearch } from "react-icons/ai";
+import search from "../../assets/search.svg";
 
 const Header = () => {
   return (
@@ -14,10 +15,12 @@ const Header = () => {
           <Link href='/'>홈</Link>
           <Link href='#'>더치트</Link>
         </div>
-        <div className='inputBox'>
+        <form className='inputBox'>
           <input></input>
-          <AiOutlineSearch size='21' />
-        </div>
+          <button type='submit'>
+            <Image src={search} width='18' height='18' alt='search' />
+          </button>
+        </form>
       </div>
     </Top>
   );
@@ -33,8 +36,10 @@ const Top = styled.div`
   align-items: center;
   color: white;
   h1 {
-    font-size: 30px;
-    font-weight: bold;
+    font-family: Noto Sans KR;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 46.34px;
   }
   a {
     text-decoration: none;
@@ -55,8 +60,8 @@ const Top = styled.div`
   }
   .inputBox {
     background-color: white;
-    width: 230px;
-    height: 30px;
+    width: 240px;
+    height: 32px;
     border-radius: 40px;
     border: none;
     display: flex;
@@ -66,20 +71,23 @@ const Top = styled.div`
       width: 180px;
       height: 30px;
       border: none;
-      position: relative;
-      left: 5px;
       box-sizing: border-box;
     }
     input:focus {
       outline: none;
     }
-    svg {
-      display: block;
-      color: #ff8038;
-      font-weight: bold;
-      border-radius: 40px;
+    button {
+      width: 24px;
+      height: 24px;
+      padding: 2px;
+      margin: 0;
+      border: 0;
       position: relative;
-      left: 5px;
+      left: 10px;
+      background-color: white;
+    }
+    button:hover {
+      cursor: pointer;
     }
   }
 `;
