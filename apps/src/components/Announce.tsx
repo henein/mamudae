@@ -7,8 +7,12 @@ const Announce = () => {
   return (
     <Layout>
       <div>
-        <Image src={campaign} width='20' height='16' alt='campaignimg' />
-        헤네인 공지사항입니다.
+        <span>
+          <div className='img'>
+            <Image src={campaign} width='20' height='16' alt='campaignimg' />
+          </div>
+          <span className='text'>헤네인 공지사항입니다.</span>
+        </span>
       </div>
     </Layout>
   );
@@ -31,8 +35,19 @@ const Layout = styled.div`
     border-radius: 32px;
     box-sizing: border-box;
     gap: 5px;
-    svg {
-      color: #ff8038f2;
+    .img {
+      width: 24px;
+      height: 24px;
+      border: none;
+      margin-right: 4px;
+    }
+    span {
+      display: flex;
+      line-height: 24px;
+    }
+    .text {
+      font-size: 20px;
+      font-weight: 400;
     }
   }
 `;
