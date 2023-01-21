@@ -1,12 +1,14 @@
+import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import { AiFillNotification } from "react-icons/ai";
+import campaign from "../../assets/campaign.svg";
 
 const Announce = () => {
   return (
     <Layout>
       <div>
-        <AiFillNotification /> 헤네인 공지사항입니다.
+        <Image src={campaign} width='20' height='16' alt='campaignimg' />
+        헤네인 공지사항입니다.
       </div>
     </Layout>
   );

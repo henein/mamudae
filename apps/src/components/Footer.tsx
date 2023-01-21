@@ -22,13 +22,16 @@ const Bottom = styled.div`
   align-items: center;
   margin-top: 24px;
   h1 {
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29.05px;
     color: #5f5e61;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
   span {
-    font-size: 10px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.52px;
     color: #afadb2;
   }
   .inlineBox {

@@ -13,7 +13,8 @@ const Board = ({ board_title, isLarge }: CardInfoType) => {
       <div className='boardContent'>
         <div className='boardTit'>
           <h3>
-            {board_title} {">"}
+            {board_title}
+            {" >"}
           </h3>
         </div>
         <div className='postList'>
