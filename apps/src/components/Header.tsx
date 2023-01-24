@@ -49,6 +49,7 @@ const Top = styled.div`
   .inlineBox {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 1140px;
   }
   .list {

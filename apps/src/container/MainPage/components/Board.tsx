@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import dummy from "../../../../db/dummy.json";
@@ -12,10 +13,12 @@ const Board = ({ board_title, isLarge }: CardInfoType) => {
     <Layout isLarge={isLarge}>
       <div className='boardContent'>
         <div className='boardTit'>
-          <h3>
-            {board_title}
-            {" >"}
-          </h3>
+          <Link href={`postlist/${board_title}`}>
+            <h3>
+              {board_title}
+              {" >"}
+            </h3>
+          </Link>
         </div>
         <div className='postList'>
           {dummy.userpost.map((item) => {
