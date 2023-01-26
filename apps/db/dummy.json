@@ -16,5 +16,187 @@
     { "text": "인생 허무하다", "name": "Valora", "id": 6 },
     { "text": "노래듣는데 중간에", "name": "유니온", "id": 7 },
     { "text": "호영 남캐 vs 여캐", "name": "인생은메다", "id": 8 }
+  ],
+  "userpost2": [
+    {
+      "postnumber": "000001",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000002",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000003",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000004",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000005",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000006",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000007",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000008",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000009",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000010",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000011",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000012",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000013",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000014",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000015",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000016",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000017",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000018",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000019",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    },
+    {
+      "postnumber": "000020",
+      "title": "제목",
+      "comment": 20,
+      "nickname": "익명",
+      "rank": "48층",
+      "time": "3일 전",
+      "view": 1000
+    }
   ]
 }
