@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import heart from "/public/detailPageImages/Frame 80.png";
+import LikeIcon from "./LikeIcon";
 
 const Like = () => {
   return (
     <Container>
-      <LikeImg src={heart} alt="none" />
+      <LikeIcon />
       10
     </Container>
   );
@@ -22,8 +22,9 @@ const Container = styled.div`
   width: 40px;
 `;
 const LikeImg = styled(Image)`
-  padding: 8px 8px;
   &:hover {
-    color: red;
+    fill: red;
+    cursor: pointer;
   }
+  padding: 8px 8px;
 `;

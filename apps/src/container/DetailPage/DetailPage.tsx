@@ -8,7 +8,6 @@ import Like from "./components/Like";
 const DetailPage = () => {
   return (
     <Container>
-
       <WriteBox>
         <Title />
         <Content>
@@ -58,6 +57,7 @@ const DetailPage = () => {
       <SideBox>
         <Login />
       </SideBox>
+
       <CommentBox></CommentBox>
     </Container>
   );
@@ -69,10 +69,12 @@ const Content = styled.div`
   margin-top: 20px;
   overflow-y: scroll;
   font-size: 16px;
+  font-weight: 500;
   ::-webkit-scrollbar {
     display: none;
   }
   height: 530px;
+  line-height: 18px;
 `;
 
 const SideBox = styled.div`
