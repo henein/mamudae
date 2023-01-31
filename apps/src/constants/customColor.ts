@@ -3,6 +3,9 @@ export type customColorType = {
   orange: string;
   gray: string;
   darkOrange: string;
+  floor: string;
+  white: string;
+  shadow: string;
 };
 
 export const customColor: customColorType = {
@@ -10,4 +13,7 @@ export const customColor: customColorType = {
   orange: "#FF8038",
   gray: "#575757",
   darkOrange: "#E67332",
+  floor: "#4B79EF",
+  white: "#FFFFFF",
+  shadow: "rgba(255, 128, 56, 0.25)",
 };
