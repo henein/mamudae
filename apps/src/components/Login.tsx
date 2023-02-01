@@ -1,12 +1,21 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../constants/customColor";
+import { FieldValues, useForm } from "react-hook-form";
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
+  const submit = (data: FieldValues) => {
+    alert(JSON.stringify(data));
+  };
   return (
-    <LoginForm>
-      <Id type="text" name="id" placeholder="이메일" />
-      <Password type="password" name="password" placeholder="비밀번호" />
+    <LoginForm onSubmit={handleSubmit(submit)}>
+      <Id type="text" {...register("id")} placeholder="이메일" />
+      <Password
+        type="password"
+        {...register("password")}
+        placeholder="비밀번호"
+      />
       <LoginBtn type="submit">로그인</LoginBtn>
     </LoginForm>
   );
