@@ -14,12 +14,10 @@ const PostPage = () => {
     <Layout>
       <BoardContent>
         <BoardTit>
-          <div>
-            <h3>{router.query.post}</h3>
-          </div>
-          <div>
+          <TitleText>{router.query.post}</TitleText>
+          <ImageMargin>
             <Image src='/edit_square.svg' width='20' height='20' alt='' />
-          </div>
+          </ImageMargin>
         </BoardTit>
         <PostList>
           {dummy.userpost2.map((item) => {
@@ -27,21 +25,21 @@ const PostPage = () => {
               <PostItem key={item.postnumber}>
                 <LeftSide>
                   <PostNum>{item.postnumber}</PostNum>
-                  <div>
+                  <DivGap>
                     <span>{item.title}</span>
                     <CommentNum>{`[${item.comment}]`}</CommentNum>
-                  </div>
+                  </DivGap>
                 </LeftSide>
                 <RightSide>
-                  <div>
+                  <DivGap>
                     <span>{item.nickname}</span>
                     <Rank>{item.rank}</Rank>
-                  </div>
-                  <ImgSpanSet>
+                  </DivGap>
+                  <DivGap>
                     <Image src='/schedule.svg' width='16' height='16' alt='' />
                     <span>{item.time}</span>
-                  </ImgSpanSet>
-                  <ImgSpanSet>
+                  </DivGap>
+                  <DivGap>
                     <Image
                       src='/visibility.svg'
                       width='16'
@@ -49,16 +47,16 @@ const PostPage = () => {
                       alt=''
                     />
                     <span>{item.view}</span>
-                  </ImgSpanSet>
+                  </DivGap>
                 </RightSide>
               </PostItem>
             );
           })}
         </PostList>
         <MoreInfo>
-          <button>
+          <ExpandBtn>
             <Image src='/expand_more.svg' width='12' height='7' alt='' />
-          </button>
+          </ExpandBtn>
         </MoreInfo>
       </BoardContent>
       <Aside>
@@ -101,17 +99,16 @@ const BoardTit = styled.div`
   border: 1px solid #e6e6e6;
   z-index: 1;
   box-shadow: 0 2px 3px rgba(255, 128, 56, 0.2);
-  h3 {
-    color: ${customColor.orange};
-    font-weight: bold;
-    margin-left: 24px;
-    font-size: 18px;
-  }
-  img {
-    margin-right: 24px;
-  }
 `;
-
+const TitleText = styled.h3`
+  color: ${customColor.orange};
+  font-weight: bold;
+  margin-left: 24px;
+  font-size: 18px;
+`;
+const ImageMargin = styled.div`
+  margin-right: 24px;
+`;
 const PostList = styled.div`
   display: flex;
   flex-direction: column;
@@ -119,7 +116,6 @@ const PostList = styled.div`
   margin-top: 12px;
   margin-bottom: 12px;
 `;
-
 const MoreInfo = styled.div`
   display: flex;
   justify-content: center;
@@ -127,17 +123,16 @@ const MoreInfo = styled.div`
   padding: 20px 24px;
   height: 64px;
   border-top: 1px solid #e6e6e6;
-  button {
-    width: 24px;
-    height: 24px;
-    background-color: white;
-    border: none;
-  }
+`;
+const ExpandBtn = styled.button`
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border: none;
   button:hover {
     cursor: pointer;
   }
 `;
-
 const PostItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -147,17 +142,16 @@ const PostItem = styled.div`
   line-height: 16px;
   gap: 10.5;
 `;
-
 const LeftSide = styled.div`
   display: flex;
   gap: 12px;
-  div {
-    display: flex;
-    gap: 4px;
-  }
   span {
     font-size: 12px;
   }
+`;
+const DivGap = styled.div`
+  display: flex;
+  gap: 4px;
 `;
 const PostNum = styled.span`
   width: 43px;
@@ -165,15 +159,10 @@ const PostNum = styled.span`
 const CommentNum = styled.span`
   color: ${customColor.orange};
 `;
-
 const RightSide = styled.div`
   display: flex;
   gap: 12px;
   color: ${customColor.darkGray};
-  div {
-    display: flex;
-    gap: 4px;
-  }
   span {
     font-size: 12px;
   }
@@ -188,11 +177,6 @@ const Rank = styled.div`
   height: 16px;
   font-size: 10px;
 `;
-const ImgSpanSet = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const Aside = styled.aside`
   display: flex;
   width: 300px;
