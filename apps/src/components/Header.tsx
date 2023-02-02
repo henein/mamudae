@@ -74,7 +74,7 @@ const InlineInput = styled.input`
   height: 30px;
   border: none;
   box-sizing: border-box;
-  input:focus {
+  &:focus {
     outline: none;
   }
 `;
@@ -87,7 +87,7 @@ const SubmitBtn = styled.button`
   position: relative;
   left: 10px;
   background-color: white;
-  button:hover {
+  &:hover {
     cursor: pointer;
   }
 `;
