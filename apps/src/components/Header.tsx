@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import search from "../../assets/search.svg";
 
 const Header = () => {
   return (
@@ -18,7 +17,7 @@ const Header = () => {
         <form className='inputBox'>
           <input></input>
           <button type='submit'>
-            <Image src={search} width='18' height='18' alt='search' />
+            <Image src='/search.svg' width='18' height='18' alt='search' />
           </button>
         </form>
       </div>

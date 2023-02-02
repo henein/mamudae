@@ -1,14 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import dummy from "../../../db/dummy.json";
+import dummy from "../../../dummy/dummy.json";
 import Login from "../../components/Login";
 import Image from "next/image";
 import { customColor } from "../../constants/customColor";
-import edit_square from "../../../assets/edit_square.svg";
-import schedule from "../../../assets/schedule.svg";
-import visibility from "../../../assets/visibility.svg";
-import expand_more from "../../../assets/expand_more.svg";
 
 const PostPage = () => {
   const router = useRouter();
@@ -22,7 +18,7 @@ const PostPage = () => {
             <h3>{router.query.post}</h3>
           </div>
           <div>
-            <Image src={edit_square} width='20' height='20' alt='' />
+            <Image src='/edit_square.svg' width='20' height='20' alt='' />
           </div>
         </div>
         <div className='postList'>
@@ -42,11 +38,16 @@ const PostPage = () => {
                     <span className='rank'>{item.rank}</span>
                   </div>
                   <div className='setting'>
-                    <Image src={schedule} width='16' height='16' alt='' />
+                    <Image src='/schedule.svg' width='16' height='16' alt='' />
                     <span>{item.time}</span>
                   </div>
                   <div className='setting'>
-                    <Image src={visibility} width='16' height='16' alt='' />
+                    <Image
+                      src='/visibility.svg'
+                      width='16'
+                      height='16'
+                      alt=''
+                    />
                     <span>{item.view}</span>
                   </div>
                 </div>
@@ -56,7 +57,7 @@ const PostPage = () => {
         </div>
         <div className='moreinfo'>
           <button>
-            <Image src={expand_more} width='12' height='7.4' alt='' />
+            <Image src='/expand_more.svg' width='12' height='7.4' alt='' />
           </button>
         </div>
       </div>

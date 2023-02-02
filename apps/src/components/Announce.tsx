@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import campaign from "../../assets/campaign.svg";
 
 const Announce = () => {
   return (
@@ -9,7 +8,12 @@ const Announce = () => {
       <div>
         <span>
           <div className='img'>
-            <Image src={campaign} width='20' height='16' alt='campaignimg' />
+            <Image
+              src='/campaign.svg'
+              width='20'
+              height='16'
+              alt='campaignimg'
+            />
           </div>
           <span className='text'>헤네인 공지사항입니다.</span>
         </span>
