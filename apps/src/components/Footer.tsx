@@ -4,10 +4,10 @@ import styled from "styled-components";
 const Footer = () => {
   return (
     <Bottom>
-      <div className='inlineBox'>
-        <h1>Henein</h1>
-        <span>© Gamza. All rights reserved</span>
-      </div>
+      <InlineBox>
+        <Title>Henein</Title>
+        <CopyRight>© Gamza. All rights reserved</CopyRight>
+      </InlineBox>
     </Bottom>
   );
 };
@@ -21,22 +21,21 @@ const Bottom = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 24px;
-  h1 {
-    font-size: 24px;
-    font-weight: 900;
-    line-height: 29.05px;
-    color: #5f5e61;
-    margin-bottom: 4px;
-  }
-  span {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14.52px;
-    color: #afadb2;
-  }
-  .inlineBox {
-    display: flex;
-    flex-direction: column;
-    width: 1140px;
-  }
+`;
+const InlineBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+`;
+const Title = styled.h1`
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29.05px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 4px;
+`;
+const CopyRight = styled.span`
+  font-size: 12px;
+  line-height: 14.52px;
+  color: rgba(0, 0, 0, 0.3);
 `;

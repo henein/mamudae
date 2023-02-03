@@ -3,23 +3,29 @@ import styled from "styled-components";
 import Login from "../../components/Login";
 import Board from "./components/Board";
 
+export type BoardInfoType = {
+  board_title: "전체" | "자유" | "유머" | "보스" | "직업";
+  isLarge: boolean;
+};
+
 const MainPage = () => {
   return (
     <Layout>
-      <div className='boardSet'>
-        <div className='largeBoard'>
+      <BoardSet>
+        <div>
           <Board board_title='전체' isLarge={true} />
         </div>
-        <div className='smallBoard'>
+        <SmallBoard>
           <Board board_title='자유' isLarge={false} />
           <Board board_title='유머' isLarge={false} />
           <Board board_title='보스' isLarge={false} />
           <Board board_title='직업' isLarge={false} />
-        </div>
-      </div>
-      <div className='aside'>
+        </SmallBoard>
+      </BoardSet>
+
+      <Aside>
         <Login />
-      </div>
+      </Aside>
     </Layout>
   );
 };
@@ -30,19 +36,19 @@ const Layout = styled.div`
   display: flex;
   width: 1140px;
   margin: 0 auto;
-  .boardSet {
-    display: flex;
-    flex-direction: column;
-    width: 840px;
-    gap: 24px;
-  }
-  .smallBoard {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-  }
-  .aside {
-    width: 300px;
-    background-color: white;
-  }
+`;
+const BoardSet = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 840px;
+  gap: 24px;
+`;
+const SmallBoard = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+`;
+const Aside = styled.aside`
+  width: 300px;
+  background-color: white;
 `;

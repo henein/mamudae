@@ -1,8 +1,8 @@
 import React from "react";
 import PostPage from "../../src/container/PostPage/PostPage";
 
-const Post = () => {
+const PostList = () => {
   return <PostPage />;
 };
 
-export default Post;
+export default PostList;
