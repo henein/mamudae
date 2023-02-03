@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import dummy from "../../../../db/dummy.json";
+import dummy from "../../../../dummy/dummy.json";
 
 type CardInfoType = {
   board_title: "전체" | "자유" | "유머" | "보스" | "직업";
