@@ -50,8 +50,26 @@ const DetailPage = () => {
           <br />
           <br />
           <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <Like />
         </Content>
-        <Like />
       </WriteBox>
 
       <SideBox>
@@ -64,16 +82,13 @@ const DetailPage = () => {
 };
 
 export default DetailPage;
+
 const Content = styled.div`
-  padding: 0 24px;
-  margin-top: 20px;
-  overflow-y: scroll;
+  z-index: 0;
+  margin-top: 8px;
   font-size: 16px;
   font-weight: 500;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  height: 530px;
+  padding: 0 8px;
   line-height: 18px;
 `;
 
@@ -87,12 +102,17 @@ const CommentBox = styled.div`
   background-color: red;
 `;
 const WriteBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 748px;
-  width: 808px;
-  border: 1px solid ${customColor.whiteGray};
+  overflow: scroll;
+  height: 750px;
   border-radius: 32px;
+  border: 1px solid ${customColor.whiteGray};
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 808px;
 `;
 const Container = styled.div`
   margin: 0 auto;

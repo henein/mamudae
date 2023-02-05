@@ -31,14 +31,18 @@ const Title = () => {
 
 export default Title;
 const Container = styled.div`
+  z-index: 1;
+  top: 0;
   box-shadow: 0 2px 4px ${customColor.shadow};
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 32px;
-  height: 97px;
+  min-height: 97px;
   border-bottom: 1px solid ${customColor.whiteGray};
   padding: 0 24px;
+  position: sticky;
+  background-color: ${customColor.white};
 `;
 
 const CustomImage = styled(Image)`
