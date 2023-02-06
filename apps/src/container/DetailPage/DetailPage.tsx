@@ -4,6 +4,9 @@ import Login from "../../components/Login";
 import { customColor } from "../../constants/customColor";
 import Title from "./components/Title";
 import Like from "./components/Like";
+import Comment from "./components/Comment";
+import Write from "./components/Write";
+import Board from "../../components/Board";
 
 const DetailPage = () => {
   return (
@@ -74,15 +77,26 @@ const DetailPage = () => {
 
       <SideBox>
         <Login />
+        <Board />
       </SideBox>
 
-      <CommentBox></CommentBox>
+      <CommentBox>
+        <Write />
+        {/*
+          총 댓글 정보들 받아서 map핑 ㄱㄱ
+        */}
+        <Comment />
+        <Comment />
+        <Comment />
+        <Comment />
+        <Comment />
+        <Comment />
+      </CommentBox>
     </Container>
   );
 };
 
 export default DetailPage;
-
 const Content = styled.div`
   z-index: 0;
   margin-top: 8px;
@@ -95,11 +109,24 @@ const Content = styled.div`
 const SideBox = styled.div`
   display: flex;
   flex-direction: column;
+  > * {
+    margin-bottom: 12px;
+  }
 `;
 
 const CommentBox = styled.div`
+  margin-top: 20px;
+  position: relative;
   width: 808px;
-  background-color: red;
+  border-radius: 32px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  overflow: scroll;
+  height: 450px;
+  border: 1px solid ${customColor.whiteGray};
+  display: flex;
+  flex-direction: column;
 `;
 const WriteBox = styled.div`
   overflow: scroll;
@@ -109,8 +136,8 @@ const WriteBox = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  display: flex;
   position: relative;
+  display: flex;
   flex-direction: column;
   width: 808px;
 `;
