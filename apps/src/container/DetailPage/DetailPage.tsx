@@ -7,6 +7,7 @@ import Like from "./components/Like";
 import Comment from "./components/Comment";
 import Write from "./components/Write";
 import Board from "../../components/Board";
+import CompleteLogin from "../../components/CompleteLogin";
 
 const DetailPage = () => {
   return (
@@ -76,6 +77,7 @@ const DetailPage = () => {
       </WriteBox>
 
       <SideBox>
+        {/* <CompleteLogin /> */}
         <Login />
         <Board />
       </SideBox>
