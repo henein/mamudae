@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CommentTools from "./CommentTools";
 
-interface ICommentMenuIcon {
-  setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const CommentMenuIcon = () => {
   const [isHover, setIsHover] = useState(false);
 
