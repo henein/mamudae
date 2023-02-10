@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import CommentTools from "./CommentTools";
+
+interface ICommentMenuIcon {
+  setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const CommentMenuIcon = () => {
+  const [isHover, setIsHover] = useState(false);
+
   return (
-    <>
+    <Wrap>
       <Svg
+        onClick={() => setIsHover((prev) => !prev)}
         width="20"
         height="20"
         viewBox="0 0 20 20"
@@ -28,11 +36,16 @@ const CommentMenuIcon = () => {
           />
         </g>
       </Svg>
-    </>
+      {isHover && <CommentTools />}
+    </Wrap>
   );
 };
 
 export default CommentMenuIcon;
+
+const Wrap = styled.div`
+  position: relative;
+`;
 const Svg = styled.svg`
   &:hover {
     cursor: pointer;

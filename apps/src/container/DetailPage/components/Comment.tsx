@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
+import CommentTools from "./CommentTools";
 
 const Comment = () => {
-    // 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+  // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
   return (
     <Container>
       <Comments>
-        <ReComment src={reComment} alt="none"></ReComment>
+        <ReComment src={reComment} alt="none" />
+
         <CommentBox>
           <CommentHeader>
             <UserInfo>
@@ -19,7 +21,7 @@ const Comment = () => {
               <Job>겸마 격수</Job>
               <Time>ㆍ3일 전</Time>
             </UserInfo>
-            <CommentMenuIcon></CommentMenuIcon>
+            <CommentMenuIcon />
           </CommentHeader>
           <CommentContent>안녕하세요</CommentContent>
         </CommentBox>
