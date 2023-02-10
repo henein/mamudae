@@ -2,7 +2,7 @@ const withSvgr = require("@svgr/webpack");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.svg$/,
