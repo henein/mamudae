@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { customColor } from "../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
+import Tag from "./Tag";
 
 const CompleteLogin = () => {
   return (
@@ -12,8 +13,9 @@ const CompleteLogin = () => {
         <Profile>
           <Nickname>프돔이</Nickname>
           <Honours>
-            <Level>250</Level>
-            <Floor>48층</Floor>
+            <Tag type="level">2150</Tag>
+            <Tag type="floor">49층</Tag>
+            <Tag type="job">전사</Tag>
           </Honours>
         </Profile>
       </LoginHeader>
