@@ -11,7 +11,12 @@ const BoardTitle = () => {
       <BoardTit>
         <TitleText>{router.query.post}</TitleText>
         <ImageMargin>
-          <Image src='/edit_square.svg' width='20' height='20' alt='' />
+          <Image
+            src='/postPageImages/edit_square.svg'
+            width='20'
+            height='20'
+            alt=''
+          />
         </ImageMargin>
       </BoardTit>
     </>

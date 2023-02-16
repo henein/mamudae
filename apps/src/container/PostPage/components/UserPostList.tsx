@@ -24,11 +24,21 @@ const UserPostList = () => {
                   <Rank>{item.rank}</Rank>
                 </DivGap>
                 <DivGap>
-                  <Image src='/schedule.svg' width='16' height='16' alt='' />
+                  <Image
+                    src='/postPageImages/schedule.svg'
+                    width='16'
+                    height='16'
+                    alt=''
+                  />
                   <span>{item.time}</span>
                 </DivGap>
                 <DivGap>
-                  <Image src='/visibility.svg' width='16' height='16' alt='' />
+                  <Image
+                    src='/postPageImages/visibility.svg'
+                    width='16'
+                    height='16'
+                    alt=''
+                  />
                   <span>{item.view}</span>
                 </DivGap>
               </RightSide>

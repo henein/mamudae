@@ -7,7 +7,12 @@ const MoreInfoBox = () => {
     <>
       <MoreInfo>
         <ExpandBtn>
-          <Image src='/expand_more.svg' width='12' height='7' alt='' />
+          <Image
+            src='/postPageImages/expand_more.svg'
+            width='12'
+            height='7'
+            alt=''
+          />
         </ExpandBtn>
       </MoreInfo>
     </>
