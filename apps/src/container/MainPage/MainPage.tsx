@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Announce from "../../components/Announce/Announce";
+import Announcement from "../../components/AnnounceComponent/Announcement";
 import Login from "../../components/Login";
-import { customColor } from "../../constants/customColor";
 import Board from "./components/Board";
 
 export type BoardInfoType = {
@@ -13,7 +12,7 @@ export type BoardInfoType = {
 const MainPage = () => {
   return (
     <Layout>
-      <Announce />
+      <Announcement />
       <MainPageSet>
         <BoardSet>
           <div>
