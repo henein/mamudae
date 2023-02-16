@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import TextRolling from "./TextRolling";
 
-const Announce = () => {
+const Announcement = () => {
   return (
     <Layout>
       <ContentBox>
@@ -12,7 +12,7 @@ const Announce = () => {
     </Layout>
   );
 };
-export default Announce;
+export default Announcement;
 
 const Layout = styled.div`
   margin: 24px 0;

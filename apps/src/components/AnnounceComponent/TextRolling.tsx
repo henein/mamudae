@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Slider from "react-slick";
 import dummy from "../../dummy/dummy.json";
 import Image from "next/image";
