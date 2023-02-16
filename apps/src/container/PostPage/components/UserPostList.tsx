@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import dummy from "../../../../dummy/dummy.json";
+import dummy from "../../../dummy/dummy.json";
 import { customColor } from "../../../constants/customColor";
 
 const UserPostList = () => {

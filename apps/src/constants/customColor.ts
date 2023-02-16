@@ -7,6 +7,7 @@ export type customColorType = {
   floor: string;
   white: string;
   shadow: string;
+  backgroundGray: string;
 };
 
 export const customColor: customColorType = {
@@ -18,4 +19,5 @@ export const customColor: customColorType = {
   floor: "#4B79EF",
   white: "#FFFFFF",
   shadow: "rgba(255, 128, 56, 0.25)",
+  backgroundGray: "#FBFBFF",
 };

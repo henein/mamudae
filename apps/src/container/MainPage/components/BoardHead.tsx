@@ -11,7 +11,12 @@ const BoardHead = ({ board_title }: BoardInfoType) => {
         <Title>
           {board_title}
           <ImgDiv>
-            <Image src='/chevron_right.svg' width='6' height='10' alt='' />
+            <Image
+              src='/mainPageImages/chevron_right.svg'
+              width='7'
+              height='10'
+              alt=''
+            />
           </ImgDiv>
         </Title>
       </Link>
@@ -23,7 +28,6 @@ export default BoardHead;
 const BoardHeader = styled.div`
   display: flex;
   align-items: center;
-  background-color: white;
   height: 60px;
   border-radius: 32px;
   border: 1px solid #e6e6e6;
@@ -34,7 +38,7 @@ const BoardHeader = styled.div`
 `;
 const Title = styled.h3`
   display: flex;
-  color: #ff8038;
+  color: black;
   font-weight: bold;
   font-size: 18px;
 `;
