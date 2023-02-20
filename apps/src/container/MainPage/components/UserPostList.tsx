@@ -30,7 +30,7 @@ const PostList = styled.div`
   margin-top: 20px;
   font-size: 12px;
   a {
-    color: black;
+    color: ${customColor.black};
   }
 `;
 const PostItem = styled.div`

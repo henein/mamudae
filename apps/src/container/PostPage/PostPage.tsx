@@ -4,18 +4,22 @@ import Login from "../../components/Login";
 import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
+import Announcement from "../../components/AnnounceComponent/Announcement";
 
 const PostPage = () => {
   return (
     <Layout>
-      <BoardContent>
-        <BoardTitle />
-        <UserPostList />
-        <MoreInfoBox />
-      </BoardContent>
-      <Aside>
-        <Login />
-      </Aside>
+      <Announcement />
+      <PostPageSet>
+        <BoardContent>
+          <BoardTitle />
+          <UserPostList />
+          <MoreInfoBox />
+        </BoardContent>
+        <Aside>
+          <Login />
+        </Aside>
+      </PostPageSet>
     </Layout>
   );
 };
@@ -23,14 +27,16 @@ const PostPage = () => {
 export default PostPage;
 
 const Layout = styled.div`
-  font-family: "Inter";
-  font-style: normal;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 1140px;
   margin: 0 auto;
-  background-color: white;
   box-sizing: border-box;
+`;
+const PostPageSet = styled.div`
+  display: flex;
+  gap: 32px;
 `;
 const BoardContent = styled.div`
   display: flex;
@@ -46,5 +52,4 @@ const BoardContent = styled.div`
 const Aside = styled.aside`
   display: flex;
   width: 300px;
-  background-color: white;
 `;

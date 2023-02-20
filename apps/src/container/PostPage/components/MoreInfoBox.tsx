@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import { customColor } from "../../../constants/customColor";
 
 const MoreInfoBox = () => {
   return (
@@ -27,12 +28,12 @@ const MoreInfo = styled.div`
   align-items: center;
   padding: 20px 24px;
   height: 64px;
-  border-top: 1px solid #e6e6e6;
+  border-top: 1px solid ${customColor.whiteGray};
 `;
 const ExpandBtn = styled.button`
   width: 24px;
   height: 24px;
-  background-color: white;
+  background-color: ${customColor.white};
   border: none;
   &:hover {
     cursor: pointer;

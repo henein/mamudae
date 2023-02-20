@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
 import { BoardInfoType } from "../MainPage";
+import { customColor } from "../../../constants/customColor";
 
 const BoardHead = ({ board_title }: BoardInfoType) => {
   return (
@@ -30,17 +31,19 @@ const BoardHeader = styled.div`
   align-items: center;
   height: 60px;
   border-radius: 32px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${customColor.whiteGray};
   box-sizing: border-box;
   z-index: 1;
-  box-shadow: 0 2px 3px rgba(255, 128, 56, 0.2);
+  box-shadow: 0 2px 3px ${customColor.shadow};
   padding-left: 24px;
 `;
 const Title = styled.h3`
   display: flex;
-  color: black;
-  font-weight: bold;
-  font-size: 18px;
+  color: ${customColor.black};
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
 `;
 const ImgDiv = styled.div`
   display: flex;

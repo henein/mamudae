@@ -96,8 +96,8 @@ const RightSide = styled.div`
 const Rank = styled.div`
   display: flex;
   justify-content: center;
-  color: white;
-  background-color: #4b79ef;
+  color: ${customColor.white};
+  background-color: ${customColor.tagBlue};
   border-radius: 8px;
   width: 30px;
   height: 16px;
