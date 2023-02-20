@@ -24,11 +24,21 @@ const UserPostList = () => {
                   <Rank>{item.rank}</Rank>
                 </DivGap>
                 <DivGap>
-                  <Image src='/schedule.svg' width='16' height='16' alt='' />
+                  <Image
+                    src='/postPageImages/schedule.svg'
+                    width='16'
+                    height='16'
+                    alt=''
+                  />
                   <span>{item.time}</span>
                 </DivGap>
                 <DivGap>
-                  <Image src='/visibility.svg' width='16' height='16' alt='' />
+                  <Image
+                    src='/postPageImages/visibility.svg'
+                    width='16'
+                    height='16'
+                    alt=''
+                  />
                   <span>{item.view}</span>
                 </DivGap>
               </RightSide>
@@ -86,8 +96,8 @@ const RightSide = styled.div`
 const Rank = styled.div`
   display: flex;
   justify-content: center;
-  color: white;
-  background-color: #4b79ef;
+  color: ${customColor.white};
+  background-color: ${customColor.tagBlue};
   border-radius: 8px;
   width: 30px;
   height: 16px;

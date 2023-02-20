@@ -63,7 +63,6 @@ const TitleBox = styled.div`
 const Title = styled.h1`
   font-size: 32px;
   font-weight: 900;
-  line-height: 46.34px;
 `;
 const InputBox = styled.form`
   background-color: white;

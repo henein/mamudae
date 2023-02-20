@@ -11,7 +11,12 @@ const BoardTitle = () => {
       <BoardTit>
         <TitleText>{router.query.post}</TitleText>
         <ImageMargin>
-          <Image src='/edit_square.svg' width='20' height='20' alt='' />
+          <Image
+            src='/postPageImages/edit_square.svg'
+            width='20'
+            height='20'
+            alt=''
+          />
         </ImageMargin>
       </BoardTit>
     </>
@@ -23,18 +28,19 @@ const BoardTit = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: ${customColor.white};
   height: 64px;
   border-radius: 32px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${customColor.whiteGray};
   z-index: 1;
-  box-shadow: 0 2px 3px rgba(255, 128, 56, 0.2);
+  box-shadow: 0 2px 3px ${customColor.shadow};
 `;
-const TitleText = styled.h3`
-  color: ${customColor.orange};
-  font-weight: bold;
+const TitleText = styled.div`
+  color: ${customColor.black};
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
   margin-left: 24px;
-  font-size: 18px;
 `;
 const ImageMargin = styled.div`
   margin-right: 24px;

@@ -21,8 +21,8 @@ const Layout = styled.div`
   box-sizing: border-box;
 `;
 const BoardContent = styled.div<{ isLarge: boolean }>`
-  border: 1px solid #e6e6e6;
-  background-color: white;
+  border: 1px solid ${customColor.whiteGray};
+  background-color: ${customColor.white};
   border-top: none;
   border-radius: 32px;
   width: ${(props) => (props.isLarge ? "816px" : "396px")};
