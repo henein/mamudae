@@ -15,7 +15,7 @@ const Like = () => {
 export default Like;
 
 const Container = styled.div`
-  margin: 20px auto 0 auto;
+  margin: 20px auto 20px auto;
   display: flex;
   flex-direction: column;
   align-items: center;

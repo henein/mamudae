@@ -4,16 +4,38 @@ import { customColor } from "../constants/customColor";
 
 const Login = () => {
   return (
-    <LoginForm>
-      <Id type="text" name="id" placeholder="이메일" />
-      <Password type="password" name="password" placeholder="비밀번호" />
-      <LoginBtn type="submit">로그인</LoginBtn>
-    </LoginForm>
+    <LoginContainer>
+      <LoginBtn>로그인</LoginBtn>
+      <LoginFooter>
+        <Text>로그인이 안 되시나요?</Text>
+        <SignUpBtn>회원가입</SignUpBtn>
+      </LoginFooter>
+    </LoginContainer>
   );
 };
 
 export default Login;
-
+const Text = styled.span`
+  color: ${customColor.darkGray};
+  font-size: 12px;
+  font-weight: 900;
+`;
+const SignUpBtn = styled.button`
+  color: ${customColor.orange};
+  border: none;
+  background-color: ${customColor.white};
+  font-size: 12px;
+  font-weight: 900;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const LoginFooter = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
 const LoginBtn = styled.button`
   border-radius: 32px;
   border: none;
@@ -22,38 +44,24 @@ const LoginBtn = styled.button`
   height: 39px;
   font-size: 12px;
   font-weight: 900;
+  margin-bottom: 16px;
   color: white;
   &:hover {
     background-color: ${customColor.darkOrange};
+    cursor: pointer;
   }
   &:active {
     transform: scale(0.98);
   }
 `;
-const loginContentCss = css`
-  width: 252px;
-  height: 39px;
-  border-radius: 32px;
-  margin-bottom: 6px;
-  padding-left: 13px;
-  border: 1px solid ${customColor.whiteGray};
-  ::placeholder {
-    color: ${customColor.gray};
-  }
-`;
-const Id = styled.input`
-  ${loginContentCss}
-`;
-const Password = styled.input`
-  ${loginContentCss}
-`;
-const LoginForm = styled.form`
+const LoginContainer = styled.div`
+  padding: 20px 24px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   border: 1px solid ${customColor.whiteGray};
   border-radius: 32px;
   width: 300px;
-  height: 173px;
-  justify-content: center;
+  height: 118px;
 `;
