@@ -5,8 +5,13 @@ export type customColorType = {
   darkOrange: string;
   darkGray: string;
   floor: string;
+  level: string;
+  job: string;
   white: string;
   shadow: string;
+  tagBlue: string;
+  tagBlack: string;
+  boardHeaderGray: string;
   backgroundGray: string;
 };
 
@@ -17,7 +22,12 @@ export const customColor: customColorType = {
   darkOrange: "#E67332",
   darkGray: "#757575",
   floor: "#4B79EF",
+  level: "#D36F13",
+  job: "#7354B5",
   white: "#FFFFFF",
   shadow: "rgba(255, 128, 56, 0.25)",
+  tagBlue: "#4B79EF",
+  tagBlack: "#2F2F2F",
+  boardHeaderGray: "#EDEBF2",
   backgroundGray: "#FBFBFF",
 };
