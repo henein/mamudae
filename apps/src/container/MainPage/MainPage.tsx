@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Announcement from "../../components/AnnounceComponent/Announcement";
 import Login from "../../components/Login";
 import Board from "./components/Board";
 
@@ -11,21 +12,24 @@ export type BoardInfoType = {
 const MainPage = () => {
   return (
     <Layout>
-      <BoardSet>
-        <div>
-          <Board board_title='전체' isLarge={true} />
-        </div>
-        <SmallBoard>
-          <Board board_title='자유' isLarge={false} />
-          <Board board_title='유머' isLarge={false} />
-          <Board board_title='보스' isLarge={false} />
-          <Board board_title='직업' isLarge={false} />
-        </SmallBoard>
-      </BoardSet>
+      <Announcement />
+      <MainPageSet>
+        <BoardSet>
+          <div>
+            <Board board_title='전체' isLarge={true} />
+          </div>
+          <SmallBoard>
+            <Board board_title='자유' isLarge={false} />
+            <Board board_title='유머' isLarge={false} />
+            <Board board_title='보스' isLarge={false} />
+            <Board board_title='직업' isLarge={false} />
+          </SmallBoard>
+        </BoardSet>
 
-      <Aside>
-        <Login />
-      </Aside>
+        <Aside>
+          <Login />
+        </Aside>
+      </MainPageSet>
     </Layout>
   );
 };
@@ -34,8 +38,12 @@ export default MainPage;
 
 const Layout = styled.div`
   display: flex;
+  flex-direction: column;
   width: 1140px;
   margin: 0 auto;
+`;
+const MainPageSet = styled.div`
+  display: flex;
 `;
 const BoardSet = styled.div`
   display: flex;
@@ -50,5 +58,4 @@ const SmallBoard = styled.div`
 `;
 const Aside = styled.aside`
   width: 300px;
-  background-color: white;
 `;

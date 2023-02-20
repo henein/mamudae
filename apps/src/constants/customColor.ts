@@ -12,6 +12,7 @@ export type customColorType = {
   tagBlue: string;
   tagBlack: string;
   boardHeaderGray: string;
+  backgroundGray: string;
 };
 
 export const customColor: customColorType = {
@@ -28,4 +29,5 @@ export const customColor: customColorType = {
   tagBlue: "#4B79EF",
   tagBlack: "#2F2F2F",
   boardHeaderGray: "#EDEBF2",
+  backgroundGray: "#FBFBFF",
 };

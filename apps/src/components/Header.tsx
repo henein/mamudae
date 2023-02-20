@@ -2,62 +2,68 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+import { customColor } from "../constants/customColor";
 
 const Header = () => {
   return (
-    <Top>
-      <InlineBox>
-        <NavList>
+    <Layout>
+      <LayoutTop>
+        <TitleBox>
           <Link href='/'>
             <Title>Henein</Title>
           </Link>
+          <InputBox>
+            <InlineInput></InlineInput>
+            <SubmitBtn>
+              <Image
+                src='/headerCompoImages/search.svg'
+                width='18'
+                height='18'
+                alt='search'
+              />
+            </SubmitBtn>
+          </InputBox>
+        </TitleBox>
+      </LayoutTop>
+
+      <LayoutBottom>
+        <NavList>
           <Link href='/'>홈</Link>
           <Link href='/'>더치트</Link>
         </NavList>
-        <InputBox>
-          <InlineInput></InlineInput>
-          <SubmitBtn>
-            <Image src='/search.svg' width='18' height='18' alt='search' />
-          </SubmitBtn>
-        </InputBox>
-      </InlineBox>
-    </Top>
+      </LayoutBottom>
+    </Layout>
   );
 };
 
 export default Header;
-
-const Top = styled.div`
-  background-color: #ff8038;
-  height: 80px;
+const Layout = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+  flex-direction: column;
+  height: 180px;
   a {
     text-decoration: none;
-    color: white;
+    color: ${customColor.orange};
     margin: 0px, 10px;
   }
 `;
+const LayoutTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 12px;
+  height: 116px;
+  width: 1140px;
+`;
 const Title = styled.h1`
-  font-family: Noto Sans KR;
   font-size: 32px;
   font-weight: 900;
   line-height: 46.34px;
-`;
-const InlineBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 1140px;
-`;
-const NavList = styled.div`
-  display: flex;
-  align-items: center;
-  a {
-    margin-right: 25px;
-  }
 `;
 const InputBox = styled.form`
   background-color: white;
@@ -68,6 +74,7 @@ const InputBox = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid ${customColor.whiteGray};
 `;
 const InlineInput = styled.input`
   width: 180px;
@@ -90,4 +97,20 @@ const SubmitBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+const LayoutBottom = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 64px;
+  z-index: 999;
+  border: 1px solid ${customColor.whiteGray};
+  background-color: white;
+`;
+const NavList = styled.div`
+  display: flex;
+  align-items: center;
+  height: 63px;
+  width: 1140px;
+  border-bottom: 1px solid ${customColor.whiteGray};
+  gap: 24px;
 `;
