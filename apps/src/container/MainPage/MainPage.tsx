@@ -33,7 +33,6 @@ const MainPage = () => {
     </Layout>
   );
 };
-
 export default MainPage;
 
 const Layout = styled.div`
