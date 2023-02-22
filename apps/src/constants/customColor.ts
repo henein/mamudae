@@ -14,6 +14,8 @@ export type customColorType = {
   boardHeaderGray: string;
   backgroundGray: string;
   black: string;
+  yellow: string;
+  darkYellow: string;
 };
 
 export const customColor: customColorType = {
@@ -32,4 +34,6 @@ export const customColor: customColorType = {
   boardHeaderGray: "#EDEBF2",
   backgroundGray: "#FBFBFF",
   black: "#000000",
+  yellow: "#FEE500",
+  darkYellow: "#F9D547",
 };
