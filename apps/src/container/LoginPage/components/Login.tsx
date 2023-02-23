@@ -51,6 +51,7 @@ const KaKaoDiv = styled.div`
   justify-content: center;
 `;
 const Container = styled.form`
+  z-index: 1;
   justify-content: space-between;
   border: 1px solid ${customColor.whiteGray};
   width: 380px;
