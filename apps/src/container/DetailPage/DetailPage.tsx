@@ -122,7 +122,6 @@ const Wrapper = styled.div`
   position: relative;
 `;
 const Content = styled.div`
-  z-index: 0;
   margin-top: 8px;
   font-size: 16px;
   font-weight: 500;
@@ -140,6 +139,7 @@ const SideBox = styled.div`
 
 const CommentBox = styled.div`
   margin-top: 20px;
+  background-color: ${customColor.white};
   width: 808px;
   border-radius: 32px;
   ::-webkit-scrollbar {
@@ -151,6 +151,7 @@ const CommentBox = styled.div`
 `;
 const WriteBox = styled.div`
   border-radius: 32px;
+  background-color: ${customColor.white};
   border: 1px solid ${customColor.whiteGray};
   ::-webkit-scrollbar {
     display: none;

@@ -58,6 +58,7 @@ const LoginContainer = styled.div`
   padding: 20px 24px;
   display: flex;
   align-items: center;
+  background-color: ${customColor.white};
   justify-content: center;
   flex-direction: column;
   border: 1px solid ${customColor.whiteGray};
