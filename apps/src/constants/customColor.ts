@@ -16,6 +16,7 @@ export type customColorType = {
   black: string;
   yellow: string;
   darkYellow: string;
+  danger: string;
 };
 
 export const customColor: customColorType = {
@@ -36,4 +37,5 @@ export const customColor: customColorType = {
   black: "#000000",
   yellow: "#FEE500",
   darkYellow: "#F9D547",
+  danger: "#FF4646",
 };
