@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { customColor } from "../../constants/customColor";
-import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
     <Container>
-      <LoginTitle>Henein</LoginTitle>
-      <Login />
+      <SignUpTitle>Henein</SignUpTitle>
+      <SignUp />
     </Container>
   );
 };
 
-export default LoginPage;
+export default SignUpPage;
 
-const LoginTitle = styled.span`
+const SignUpTitle = styled.span`
   position: absolute;
   top: 16%;
   left: 50%;

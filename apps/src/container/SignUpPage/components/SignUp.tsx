@@ -6,16 +6,24 @@ import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../components/Button";
 
-const Login = () => {
+const SignUp = () => {
   const { register, handleSubmit } = useForm();
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
   };
   return (
     <Container onSubmit={handleSubmit(submit)}>
-      <Title>로그인</Title>
+      <Title>회원가입</Title>
       <Id type="text" placeholder="이메일" {...register("id")} />
       <PassWord type="text" placeholder="비밀번호" {...register("password")} />
+      <ConfirmBox>
+        <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>
+        <ConfirmPassWord
+          type="text"
+          placeholder="비밀번호 확인"
+          {...register("confirmPassword")}
+        />
+      </ConfirmBox>
       <LoginBtn
         type="submit"
         sort="main"
@@ -23,29 +31,44 @@ const Login = () => {
         height="41px"
         fontWeight="900"
       >
-        로그인
+        이메일로 가입하기
       </LoginBtn>
       <SignUpContents>
-        <LeftBtn type="button">로그인이 안되시나요?</LeftBtn>
-        <RightBtn type="button">회원가입</RightBtn>
+        <LeftBtn type="button">이미 계정이 있으신가요?</LeftBtn>
+        <RightBtn type="button">로그인</RightBtn>
       </SignUpContents>
       <Lines>
         <Line />
         <MidLineTextDiv>또는</MidLineTextDiv>
         <Line />
       </Lines>
-      <KaKaoBtn>
+      <KaKaoBtn type="button">
         <KaKaoDiv>
           <KaKaoImg src={kaKao} alt="s" />
-          <span>KaKao로 로그인하기</span>
+          <span>KaKao로 가입하기</span>
         </KaKaoDiv>
       </KaKaoBtn>
     </Container>
   );
 };
 
-export default Login;
+export default SignUp;
 
+const ErrorMessage = styled.p`
+  /* opacity: 0; */
+  padding: 2px 0 2px 8px;
+  width: 100%;
+  color: ${customColor.danger};
+  font-size: 10px;
+`;
+const ConfirmBox = styled.div`
+  height: 57px;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+`;
 const KaKaoImg = styled(Image)`
   position: absolute;
   left: 14px;
@@ -92,7 +115,16 @@ const PassWord = styled.input`
   padding-left: 14px;
   font-size: 14px;
 `;
+const ConfirmPassWord = styled.input`
+  border: 1px solid ${customColor.whiteGray};
+  border-radius: 32px;
+  width: 100%;
+  height: 41px;
+  padding-left: 14px;
+  font-size: 14px;
+`;
 const LoginBtn = styled(Button)``;
+
 const SignUpContents = styled.div`
   width: 100%;
   display: flex;
@@ -116,7 +148,6 @@ const MidLineTextDiv = styled.div`
   width: 30px;
   text-align: center;
 `;
-
 const KaKaoBtn = styled.button`
   border-radius: 16px;
   border: 1px solid ${customColor.whiteGray};

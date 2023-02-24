@@ -31,6 +31,7 @@ const Li = styled.li`
 `;
 const Container = styled.div`
   width: 300px;
+  background-color: ${customColor.white};
   border: 1px solid ${customColor.whiteGray};
   border-radius: 32px;
   padding-bottom: 12px;
