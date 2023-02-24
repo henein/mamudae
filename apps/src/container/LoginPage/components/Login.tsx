@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
+import Button from "../../../components/Button";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +16,15 @@ const Login = () => {
       <Title>로그인</Title>
       <Id type="text" placeholder="이메일" {...register("id")} />
       <PassWord type="text" placeholder="비밀번호" {...register("password")} />
-      <LoginBtn type="submit">로그인</LoginBtn>
+      <LoginBtn
+        type="submit"
+        sort="main"
+        width="100%"
+        height="41px"
+        fontWeight="900"
+      >
+        로그인
+      </LoginBtn>
       <SignUpContents>
         <LeftBtn type="button">로그인이 안되시나요?</LeftBtn>
         <RightBtn type="button">회원가입</RightBtn>
@@ -25,7 +34,7 @@ const Login = () => {
         <MidLineTextDiv>또는</MidLineTextDiv>
         <Line />
       </Lines>
-      <KaKaoBtn type="button">
+      <KaKaoBtn>
         <KaKaoDiv>
           <KaKaoImg src={kaKao} alt="s" />
           <span>KaKao로 로그인하기</span>
@@ -83,21 +92,7 @@ const PassWord = styled.input`
   padding-left: 14px;
   font-size: 14px;
 `;
-const LoginBtn = styled.button`
-  background-color: ${customColor.orange};
-  color: white;
-  font-size: 14px;
-  font-weight: 900;
-  width: 100%;
-  height: 41px;
-  border-radius: 16px;
-  &:hover {
-    background-color: ${customColor.darkOrange};
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-`;
+const LoginBtn = styled(Button)``;
 const SignUpContents = styled.div`
   width: 100%;
   display: flex;
@@ -121,6 +116,7 @@ const MidLineTextDiv = styled.div`
   width: 30px;
   text-align: center;
 `;
+
 const KaKaoBtn = styled.button`
   border-radius: 16px;
   border: 1px solid ${customColor.whiteGray};

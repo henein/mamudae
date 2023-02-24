@@ -58,7 +58,7 @@ const Floor = styled.div`
   font-size: 12px;
   margin-right: 4px;
   color: ${customColor.white};
-  background-color: ${customColor.tagBlue};
+  background-color: ${customColor.floor};
 `;
 const NickName = styled.div`
   color: ${customColor.darkGray};

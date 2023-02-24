@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
+import Button from "../../../components/Button";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -23,7 +24,15 @@ const SignUp = () => {
           {...register("confirmPassword")}
         />
       </ConfirmBox>
-      <LoginBtn type="submit">이메일로 가입하기</LoginBtn>
+      <LoginBtn
+        type="submit"
+        sort="main"
+        width="100%"
+        height="41px"
+        fontWeight="900"
+      >
+        이메일로 가입하기
+      </LoginBtn>
       <SignUpContents>
         <LeftBtn type="button">이미 계정이 있으신가요?</LeftBtn>
         <RightBtn type="button">로그인</RightBtn>
@@ -114,21 +123,8 @@ const ConfirmPassWord = styled.input`
   padding-left: 14px;
   font-size: 14px;
 `;
-const LoginBtn = styled.button`
-  background-color: ${customColor.orange};
-  color: white;
-  font-size: 14px;
-  font-weight: 900;
-  width: 100%;
-  height: 41px;
-  border-radius: 16px;
-  &:hover {
-    background-color: ${customColor.darkOrange};
-  }
-  &:active {
-    transform: scale(0.98);
-  }
-`;
+const LoginBtn = styled(Button)``;
+
 const SignUpContents = styled.div`
   width: 100%;
   display: flex;
