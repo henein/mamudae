@@ -16,7 +16,7 @@ export default LoginPage;
 
 const LoginTitle = styled.span`
   position: absolute;
-  top: 22%;
+  top: 16%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 128px;

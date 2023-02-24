@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          {router.pathname === "/login" || "/signUp" ? (
+          {router.pathname === "/login" || router.pathname === "/signUp" ? (
             <Component {...pageProps} />
           ) : (
             <Layout>
