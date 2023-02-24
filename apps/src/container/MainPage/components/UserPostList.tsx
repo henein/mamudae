@@ -1,13 +1,11 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import dummy from "../../../dummy/dummy.json";
 import { customColor } from "../../../constants/customColor";
-import axios from "axios";
-import { GetServerSideProps } from "next";
-import { dehydrate, QueryClient, useQueries } from "react-query";
+import { useGetAllPost } from "../../../hooks/queries/boardPost";
+import { BoardInfoType } from "../MainPage";
 
-export type propsInfoType = {
+export type ItemType = {
   id: number;
   title: string;
   commentNum: number;
@@ -18,52 +16,71 @@ export type propsInfoType = {
   text: string;
 };
 
-const UserPostList = () => {
-  const res = useQueries([
-    {
-      queryKey: "freeInfo",
-      queryFn: getFreeInfo,
-    },
-    {
-      queryKey: "freeInfo",
-      queryFn: getFreeInfo,
-    },
-  ]);
+const UserPostList = ({ board_title }: BoardInfoType) => {
+  const allPost = useGetAllPost();
+  const data = allPost.map((item) => item.data);
 
   return (
     <PostList>
-      {dummy.userpost.map((item) => {
-        return (
-          <PostItem key={item.id}>
-            <Link href={`detail/${item.id}`} key={item.id}>
-              <span>{item.text}</span>
-            </Link>
-            <NickName>{item.name}</NickName>
-          </PostItem>
-        );
-      })}
+      {board_title == "전체"
+        ? data[0].map((item: ItemType) => {
+            return (
+              <PostItem key={item.id}>
+                <Link href={`detail/${item.id}`} key={item.id}>
+                  <span>{item.text}</span>
+                </Link>
+                <NickName>{item.name}</NickName>
+              </PostItem>
+            );
+          })
+        : board_title == "자유"
+        ? data[1].map((item: ItemType) => {
+            return (
+              <PostItem key={item.id}>
+                <Link href={`detail/${item.id}`} key={item.id}>
+                  <span>{item.text}</span>
+                </Link>
+                <NickName>{item.name}</NickName>
+              </PostItem>
+            );
+          })
+        : board_title == "유머"
+        ? data[2].map((item: ItemType) => {
+            return (
+              <PostItem key={item.id}>
+                <Link href={`detail/${item.id}`} key={item.id}>
+                  <span>{item.text}</span>
+                </Link>
+                <NickName>{item.name}</NickName>
+              </PostItem>
+            );
+          })
+        : board_title == "보스"
+        ? data[3].map((item: ItemType) => {
+            return (
+              <PostItem key={item.id}>
+                <Link href={`detail/${item.id}`} key={item.id}>
+                  <span>{item.text}</span>
+                </Link>
+                <NickName>{item.name}</NickName>
+              </PostItem>
+            );
+          })
+        : board_title == "직업" &&
+          data[4].map((item: ItemType) => {
+            return (
+              <PostItem key={item.id}>
+                <Link href={`detail/${item.id}`} key={item.id}>
+                  <span>{item.text}</span>
+                </Link>
+                <NickName>{item.name}</NickName>
+              </PostItem>
+            );
+          })}
     </PostList>
   );
 };
 export default UserPostList;
-
-const getFreeInfo = async () => {
-  const apiurl = `http://henesysback.shop:8081/board/free/`;
-  const getApi = await axios.get(apiurl);
-  const item = getApi.data;
-  return item;
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("freeInfo", getFreeInfo);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
 
 const PostList = styled.div`
   display: flex;

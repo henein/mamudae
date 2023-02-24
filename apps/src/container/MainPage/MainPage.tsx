@@ -6,7 +6,7 @@ import Board from "./components/Board";
 
 export type BoardInfoType = {
   board_title: "전체" | "자유" | "유머" | "보스" | "직업";
-  isLarge: boolean;
+  isLarge?: boolean;
 };
 
 const MainPage = () => {

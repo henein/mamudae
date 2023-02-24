@@ -10,11 +10,11 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+        <Header />
         <Hydrate state={pageProps.dehydratedState}>
-          <Header />
           <Component {...pageProps} />
-          <Footer />
         </Hydrate>
+        <Footer />
       </QueryClientProvider>
     </>
   );
