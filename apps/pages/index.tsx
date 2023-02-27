@@ -13,11 +13,11 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("advertise", () => getApi("advertise"));
-  await queryClient.prefetchQuery("free", () => getApi("free"));
-  await queryClient.prefetchQuery("boss", () => getApi("boss"));
-  await queryClient.prefetchQuery("humor", () => getApi("humor"));
-  await queryClient.prefetchQuery("info", () => getApi("info"));
+  await queryClient.prefetchQuery("A", () => getApi("A"));
+  await queryClient.prefetchQuery("F", () => getApi("F"));
+  await queryClient.prefetchQuery("B", () => getApi("B"));
+  await queryClient.prefetchQuery("H", () => getApi("H"));
+  await queryClient.prefetchQuery("I", () => getApi("I"));
 
   return {
     props: {

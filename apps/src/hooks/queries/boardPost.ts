@@ -11,25 +11,25 @@ export const getApi = async (boardName: string) => {
 };
 
 export const useGetFreePost = (options = {}) => {
-  return useQuery("free", () => getApi("free"), {
+  return useQuery("F", () => getApi("F"), {
     ...options,
   });
 };
 
 export const useGetHumorPost = (options = {}) => {
-  return useQuery("humor", () => getApi("humor"), {
+  return useQuery("H", () => getApi("H"), {
     ...options,
   });
 };
 
 export const useGetBossPost = (options = {}) => {
-  return useQuery("boss", () => getApi("boss"), {
+  return useQuery("B", () => getApi("B"), {
     ...options,
   });
 };
 
 export const useGetInfoPost = (options = {}) => {
-  return useQuery("info", () => getApi("info"), {
+  return useQuery("I", () => getApi("I"), {
     ...options,
   });
 };
@@ -38,24 +38,24 @@ export const useGetInfoPost = (options = {}) => {
 export const useGetAllPost = () => {
   return useQueries([
     {
-      queryKey: "advertise",
-      queryFn: () => getApi("advertise"),
+      queryKey: "A",
+      queryFn: () => getApi("A"),
     },
     {
-      queryKey: "free",
-      queryFn: () => getApi("free"),
+      queryKey: "F",
+      queryFn: () => getApi("F"),
     },
     {
-      queryKey: "humor",
-      queryFn: () => getApi("humor"),
+      queryKey: "H",
+      queryFn: () => getApi("H"),
     },
     {
-      queryKey: "boss",
-      queryFn: () => getApi("boss"),
+      queryKey: "B",
+      queryFn: () => getApi("B"),
     },
     {
-      queryKey: "info",
-      queryFn: () => getApi("info"),
+      queryKey: "I",
+      queryFn: () => getApi("I"),
     },
   ]);
 };
