@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { customColor } from "../../../constants/customColor";
+import { customColor } from "../../constants/customColor";
+
 
 const CommentTools = () => {
   return (

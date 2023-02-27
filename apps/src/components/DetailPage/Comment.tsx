@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
 import CommentTools from "./CommentTools";
+import { customColor } from "../../constants/customColor";
 
 const Comment = () => {
   // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
