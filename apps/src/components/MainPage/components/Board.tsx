@@ -9,8 +9,8 @@ function Board({ board_title, isLarge }: BoardInfoType) {
   return (
     <Layout>
       <BoardContent isLarge={isLarge}>
-        <BoardHead isLarge={isLarge} board_title={board_title} />
-        <UserPostList />
+        <BoardHead board_title={board_title} />
+        <UserPostList board_title={board_title} />
       </BoardContent>
     </Layout>
   );
@@ -20,7 +20,7 @@ export default Board;
 const Layout = styled.div`
   box-sizing: border-box;
 `;
-const BoardContent = styled.div<{ isLarge: boolean }>`
+const BoardContent = styled.div<{ isLarge?: boolean }>`
   border: 1px solid ${customColor.whiteGray};
   background-color: ${customColor.white};
   border-top: none;

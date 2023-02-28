@@ -1,14 +1,28 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Header from "../src/components/Header";
-import Footer from "../src/components/Footer";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { useState } from "react";
+import Layout from "../src/components/Layout";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const queryClient = useState(() => new QueryClient())[0];
+  const router = useRouter();
+  const shouldRenderLayout = !["/login", "/signUp"].includes(router.pathname);
+
   return (
     <>
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          {shouldRenderLayout ? (
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </Hydrate>
+      </QueryClientProvider>
     </>
   );
 }

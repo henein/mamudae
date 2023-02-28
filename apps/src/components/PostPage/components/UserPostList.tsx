@@ -112,7 +112,7 @@ const Rank = styled.div`
   display: flex;
   justify-content: center;
   color: ${customColor.white};
-  background-color: ${customColor.tagBlue};
+  background-color: ${customColor.floor};
   border-radius: 8px;
   width: 30px;
   height: 16px;
