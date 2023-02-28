@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
-import { useGetAllPost } from "../../../hooks/queries/boardPost";
+import { useGetAllPost } from "../../../../pages/hook/mainPageHooks/useGetAllPost";
 import { BoardInfoType } from "../MainPage";
 
 export type ItemType = {

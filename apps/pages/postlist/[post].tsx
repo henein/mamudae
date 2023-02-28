@@ -1,6 +1,5 @@
 import React from "react";
-import PostPage from "../../src/container/PostPage/PostPage";
-
+import PostPage from "../../src/components/PostPage/PostPage";
 const PostList = () => {
   return <PostPage />;
 };
