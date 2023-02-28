@@ -1,7 +1,7 @@
-import MainPage from "../src/container/MainPage/MainPage";
+import MainPage from "../src/components/MainPage/MainPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { getApi } from "../src/hooks/queries/boardPost";
+import { getApi } from "../src/api/mainpage";
 
 export default function Home() {
   return (
