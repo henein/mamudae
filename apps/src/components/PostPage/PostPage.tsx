@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import Login from "../../components/Login";
 import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
 import Announcement from "../../components/AnnounceComponent/Announcement";
+import Login from "../common/Login";
 
 const PostPage = () => {
   return (

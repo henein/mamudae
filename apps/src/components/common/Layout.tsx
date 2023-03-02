@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "./common/Footer";
-import Header from "./common/Header";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
   return (
