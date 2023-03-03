@@ -3,15 +3,15 @@ import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
 import { dehydrate, QueryClient } from "react-query";
 import styled from "styled-components";
-import Board from "../../../src/components/Board";
-import Login from "../../../src/components/Login";
 import Title from "../../../src/components/DetailPage/Title";
 import { useRouter } from "next/router";
 import Write from "../../../src/components/DetailPage/Write";
 import Comment from "../../../src/components/DetailPage/Comment";
 import Like from "../../../src/components/DetailPage/Like";
 import { customColor } from "../../../src/constants/customColor";
-import { useDetail } from "../../hook/detail/useDetail";
+import { useDetail } from "../../hook/detailPageHooks/useDetail";
+import Login from "../../../src/components/common/Login";
+import Board from "../../../src/components/common/Board";
 
 const Detail = () => {
   const router = useRouter();

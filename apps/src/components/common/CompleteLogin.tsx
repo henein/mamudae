@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor } from "../constants/customColor";
+import { customColor } from "../../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import Tag from "./Tag";
