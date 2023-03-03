@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import { useGetAllPost } from "../../../../pages/hook/mainPageHooks/useGetAllPost";
@@ -14,11 +13,12 @@ export type ItemType = {
   views: number;
   recomment: number;
   text: string;
+  boardType: string;
 };
 
 const UserPostList = ({ board_title }: BoardInfoType) => {
   const allPost = useGetAllPost();
-  const data = allPost.map((item) => item.data);
+  const data = allPost.map((item) => item.data.slice(0, 8));
 
   return (
     <PostList>
@@ -26,7 +26,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
         ? data[0].map((item: ItemType) => {
             return (
               <PostItem key={item.id}>
-                <Link href={`detail/${item.id}`} key={item.id}>
+                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
                   <span>{item.text}</span>
                 </Link>
                 <NickName>{item.name}</NickName>
@@ -37,7 +37,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
         ? data[1].map((item: ItemType) => {
             return (
               <PostItem key={item.id}>
-                <Link href={`detail/${item.id}`} key={item.id}>
+                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
                   <span>{item.text}</span>
                 </Link>
                 <NickName>{item.name}</NickName>
@@ -48,7 +48,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
         ? data[2].map((item: ItemType) => {
             return (
               <PostItem key={item.id}>
-                <Link href={`detail/${item.id}`} key={item.id}>
+                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
                   <span>{item.text}</span>
                 </Link>
                 <NickName>{item.name}</NickName>
@@ -59,7 +59,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
         ? data[3].map((item: ItemType) => {
             return (
               <PostItem key={item.id}>
-                <Link href={`detail/${item.id}`} key={item.id}>
+                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
                   <span>{item.text}</span>
                 </Link>
                 <NickName>{item.name}</NickName>
@@ -70,7 +70,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
           data[4].map((item: ItemType) => {
             return (
               <PostItem key={item.id}>
-                <Link href={`detail/${item.id}`} key={item.id}>
+                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
                   <span>{item.text}</span>
                 </Link>
                 <NickName>{item.name}</NickName>
