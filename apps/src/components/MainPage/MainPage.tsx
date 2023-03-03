@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Announcement from "../AnnounceComponent/Announcement";
-import Login from "../Login";
+import Login from "../common/Login";
 import Board from "./components/Board";
 
 export type BoardInfoType = {

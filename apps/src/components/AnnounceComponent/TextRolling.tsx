@@ -1,11 +1,14 @@
 import Slider from "react-slick";
-import dummy from "../../dummy/dummy.json";
 import Image from "next/image";
 import styled from "styled-components";
+import { useGetAnnounce } from "../../../pages/hook/announce/useGetAnnounce";
 
 type SlidePropType = {
   txt: string;
   props?: boolean | number;
+};
+type AnnounceDataType = {
+  title: string;
 };
 
 const CustomSlide = ({ txt, ...props }: SlidePropType) => {
@@ -38,12 +41,15 @@ const TextRolling = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  const { data } = useGetAnnounce();
+
   return (
     <Slider {...settings}>
-      {dummy.announcetxt.map((item, idx) => {
+      {data.map((item: AnnounceDataType, idx: number) => {
         return (
           <div key={idx}>
-            <CustomSlide txt={item.text} />
+            <CustomSlide txt={item.title} />
           </div>
         );
       })}
@@ -57,17 +63,19 @@ const TextSet = styled.div`
   display: flex;
   justify-content: center;
   line-height: 24px;
+  position: relative;
+  top: -24px;
 `;
 const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 3px;
   width: 24px;
   height: 24px;
   border: none;
   margin-right: 4px;
 `;
 const InfoText = styled.span`
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 400;
 `;
