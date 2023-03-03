@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Layout from "../src/components/common/Layout";
+import Layout from "../src/component/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
