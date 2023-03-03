@@ -16,10 +16,10 @@ const CustomSlide = ({ txt, ...props }: SlidePropType) => {
     <TextSet {...props}>
       <ImgDiv>
         <Image
-          src='/announceCompoImages/campaign.svg'
-          width='20'
-          height='16'
-          alt='campaignimg'
+          src="/announceCompoImages/campaign.svg"
+          width="20"
+          height="16"
+          alt="campaignimg"
         />
       </ImgDiv>
       <InfoText>{txt}</InfoText>
@@ -46,13 +46,14 @@ const TextRolling = () => {
 
   return (
     <Slider {...settings}>
-      {data.map((item: AnnounceDataType, idx: number) => {
-        return (
-          <div key={idx}>
-            <CustomSlide txt={item.title} />
-          </div>
-        );
-      })}
+      {data &&
+        data.map((item: AnnounceDataType, idx: number) => {
+          return (
+            <div key={idx}>
+              <CustomSlide txt={item.title} />
+            </div>
+          );
+        })}
     </Slider>
   );
 };

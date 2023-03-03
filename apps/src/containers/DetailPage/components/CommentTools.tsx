@@ -38,15 +38,15 @@ const Functions = styled.div`
   padding: 4px 8px;
 `;
 const Container = styled.div`
-  width: 90px;
-  height: 62px;
+  width: 62px;
+  height: 71px;
   border: 1px solid ${customColor.whiteGray};
   box-shadow: 0 2px 4px ${customColor.shadow};
   border-radius: 16px;
   align-items: center;
   justify-content: center;
   display: flex;
-  bottom: -100px;
+  bottom: -109px;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
