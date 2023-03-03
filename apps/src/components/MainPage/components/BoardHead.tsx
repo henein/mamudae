@@ -8,7 +8,7 @@ import { customColor } from "../../../constants/customColor";
 const BoardHead = ({ board_title }: BoardInfoType) => {
   return (
     <BoardHeader>
-      <Link href={`postlist/${board_title}`}>
+      <Link href={`board/${board_title}`}>
         <Title>
           {board_title}
           <ImgDiv>
