@@ -1,36 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
-import CommentTools from "./CommentTools";
 import { customColor } from "../../../constants/customColor";
 
 const Comment = () => {
   // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
   return (
-    <Container>
-      <Comments>
-        <ReComment src={reComment} alt="none" />
+    <Comments>
+      <ReComment src={reComment} alt="none" />
 
-        <CommentBox>
-          <CommentHeader>
-            <UserInfo>
-              <NickName>임송재</NickName>
-              <Floor>48층</Floor>
-              <Job>겸마 격수</Job>
-              <Time>ㆍ3일 전</Time>
-            </UserInfo>
-            <CommentMenuIcon />
-          </CommentHeader>
-          <CommentContent>안녕하세요</CommentContent>
-        </CommentBox>
-      </Comments>
-    </Container>
+      <CommentBox>
+        <CommentHeader>
+          <UserInfo>
+            <NickName>임송재</NickName>
+            <Floor>48층</Floor>
+            <Job>겸마 격수</Job>
+            <Time>ㆍ3일 전</Time>
+          </UserInfo>
+          <CommentMenuIcon />
+        </CommentHeader>
+        <CommentContent>안녕하세요</CommentContent>
+        <div>
+          <ReCommentBtn>답글</ReCommentBtn>
+        </div>
+      </CommentBox>
+    </Comments>
   );
 };
 
 export default Comment;
+
+const ReCommentBtn = styled.button`
+  color: ${customColor.darkGray};
+  font-size: 12px;
+  text-align: start;
+  &:hover {
+    color: ${customColor.moreDarkGray};
+    font-weight: 900;
+  }
+`;
 
 const Comments = styled.div`
   display: flex;
@@ -71,7 +81,7 @@ const CommentBox = styled.div`
   width: 100%;
   flex-direction: column;
   padding-bottom: 14px;
-  border-bottom: 1px solid ${customColor.gray};
+  border-bottom: 1px solid ${customColor.divider};
 `;
 const CommentHeader = styled.div`
   display: flex;
@@ -85,10 +95,5 @@ const UserInfo = styled.div`
 `;
 const CommentContent = styled.div`
   font-size: 14px;
-`;
-
-const Container = styled.div`
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 8px;
 `;

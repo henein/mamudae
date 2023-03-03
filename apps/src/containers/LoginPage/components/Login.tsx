@@ -73,7 +73,7 @@ const Container = styled.form`
 `;
 const Title = styled.span`
   padding: 8px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 900;
 `;
 const Id = styled.input`
