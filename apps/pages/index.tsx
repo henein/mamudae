@@ -1,15 +1,11 @@
-import MainPage from "../src/components/MainPage/MainPage";
+import MainPage from "../src/containers/MainPage/MainPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { getApi, getEntireBoard } from "../src/api/mainpage";
 import { announce } from "../src/api/announce";
 
 export default function Home() {
-  return (
-    <>
-      <MainPage />
-    </>
-  );
+  return <MainPage />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
