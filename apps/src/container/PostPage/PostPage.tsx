@@ -3,8 +3,8 @@ import styled from "styled-components";
 import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
-import Announcement from "../../components/AnnounceComponent/Announcement";
-import Login from "../../components/common/Login";
+import Announcement from "../../component/AnnounceComponent/Announcement";
+import Login from "../../component/Login";
 import { customColor } from "../../constants/customColor";
 const PostPage = () => {
   return (

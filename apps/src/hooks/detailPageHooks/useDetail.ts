@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { detail } from "../../../src/api/detail";
+import { detail } from "../../api/detail";
 
 interface IUseDetail {
   id: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { customColor } from "../../constants/customColor";
+import { customColor } from "../../../constants/customColor";
 
 const Write = () => {
   const { register, handleSubmit } = useForm();

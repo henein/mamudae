@@ -5,7 +5,7 @@ import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
 import Announcement from "../../components/AnnounceComponent/Announcement";
 import Login from "../common/Login";
-import { customColor } from "../../constants/customColor";
+
 const PostPage = () => {
   return (
     <Layout>
@@ -48,7 +48,6 @@ const BoardContent = styled.div`
   height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
-  background-color: ${customColor.white};
 `;
 const Aside = styled.aside`
   display: flex;
