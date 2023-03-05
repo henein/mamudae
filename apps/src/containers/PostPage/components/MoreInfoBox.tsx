@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
-import dummy from "../../../dummy/dummy.json";
 import { useRouter } from "next/router";
 
 const MoreInfoBox = () => {
