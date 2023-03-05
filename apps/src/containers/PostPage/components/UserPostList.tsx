@@ -8,7 +8,6 @@ import { useGetAllPost } from "../../../../pages/hook/postPageHooks/useGetEachPo
 
 const UserPostList = () => {
   const router = useRouter();
-  console.log(router.query.post);
 
   const data = useGetAllPost().map((item) => item.data);
 
