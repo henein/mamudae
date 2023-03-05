@@ -1,4 +1,4 @@
-import MainPage from "../src/components/MainPage/MainPage";
+import MainPage from "../src/container/MainPage/MainPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { getApi, getEntireBoard } from "../src/api/mainpage";
