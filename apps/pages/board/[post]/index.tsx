@@ -1,5 +1,5 @@
 import React from "react";
-import PostPage from "../../../src/container/PostPage/PostPage";
+import PostPage from "../../../src/containers/PostPage/PostPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { getApi, getEntireBoard } from "../../../src/api/mainpage";
