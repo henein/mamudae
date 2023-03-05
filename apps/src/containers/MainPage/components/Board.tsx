@@ -27,7 +27,6 @@ const BoardContent = styled.div<{ isLarge?: boolean }>`
   border-radius: 32px;
   width: ${(props) => (props.isLarge ? "816px" : "396px")};
   height: 332px;
-  gap: 24px;
   box-sizing: border-box;
   z-index: 0.5;
 `;
