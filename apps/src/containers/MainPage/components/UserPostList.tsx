@@ -18,68 +18,32 @@ export type ItemType = {
 
 const UserPostList = ({ board_title }: BoardInfoType) => {
   const allPost = useGetAllPost();
-  const data = allPost.map((item) => item.data.slice(0, 8));
+  const data = {
+    전체: allPost[0].data.slice(0, 8),
+    자유: allPost[1].data.slice(0, 8),
+    유머: allPost[2].data.slice(0, 8),
+    보스: allPost[3].data.slice(0, 8),
+    직업: allPost[4].data.slice(0, 8),
+  };
+
+  const boardData = data[board_title];
 
   return (
     <PostList>
-      {board_title == "전체"
-        ? data[0].map((item: ItemType) => {
-            return (
-              <PostItem key={item.id}>
-                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-                  <span>{item.text}</span>
-                </Link>
-                <NickName>{item.name}</NickName>
-              </PostItem>
-            );
-          })
-        : board_title == "자유"
-        ? data[1].map((item: ItemType) => {
-            return (
-              <PostItem key={item.id}>
-                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-                  <span>{item.text}</span>
-                </Link>
-                <NickName>{item.name}</NickName>
-              </PostItem>
-            );
-          })
-        : board_title == "유머"
-        ? data[2].map((item: ItemType) => {
-            return (
-              <PostItem key={item.id}>
-                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-                  <span>{item.text}</span>
-                </Link>
-                <NickName>{item.name}</NickName>
-              </PostItem>
-            );
-          })
-        : board_title == "보스"
-        ? data[3].map((item: ItemType) => {
-            return (
-              <PostItem key={item.id}>
-                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-                  <span>{item.text}</span>
-                </Link>
-                <NickName>{item.name}</NickName>
-              </PostItem>
-            );
-          })
-        : board_title == "직업" &&
-          data[4].map((item: ItemType) => {
-            return (
-              <PostItem key={item.id}>
-                <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-                  <span>{item.text}</span>
-                </Link>
-                <NickName>{item.name}</NickName>
-              </PostItem>
-            );
-          })}
+      {boardData.map((item: ItemType) => {
+        return (
+          <PostItem key={item.id}>
+            <Link href={`board/${board_title}/${item.id}`} key={item.id}>
+              <span>{item.text}</span>
+            </Link>
+            <NickName>{item.name}</NickName>
+          </PostItem>
+        );
+      })}
     </PostList>
   );
 };
+
 export default UserPostList;
 
 const PostList = styled.div`
