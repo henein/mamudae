@@ -64,6 +64,7 @@ const BoardContent = styled.div`
   height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
+  background-color: ${customColor.white};
 `;
 const ContentSet = styled.div`
   display: flex;

@@ -19,7 +19,6 @@ const BoardTit = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${customColor.white};
   height: 64px;
   border-radius: 32px;
   border: 1px solid ${customColor.whiteGray};
