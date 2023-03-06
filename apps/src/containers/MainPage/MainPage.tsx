@@ -14,6 +14,9 @@ const MainPage = () => {
     <Layout>
       <Announcement />
       <MainPageSet>
+        <Aside>
+          <Login />
+        </Aside>
         <BoardSet>
           <div>
             <Board board_title='전체' isLarge={true} />
@@ -25,10 +28,6 @@ const MainPage = () => {
             <Board board_title='직업' isLarge={false} />
           </SmallBoard>
         </BoardSet>
-
-        <Aside>
-          <Login />
-        </Aside>
       </MainPageSet>
     </Layout>
   );
@@ -47,14 +46,17 @@ const MainPageSet = styled.div`
 const BoardSet = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   width: 840px;
   gap: 24px;
 `;
 const SmallBoard = styled.div`
   display: flex;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 24px;
 `;
 const Aside = styled.aside`
+  display: flex;
   width: 300px;
 `;

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { customColor } from "../../../constants/customColor";
 
@@ -10,14 +9,6 @@ const BoardTitle = () => {
     <>
       <BoardTit>
         <TitleText>{router.query.post}</TitleText>
-        <ImageMargin>
-          <Image
-            src='/postPageImages/edit_square.svg'
-            width='20'
-            height='20'
-            alt=''
-          />
-        </ImageMargin>
       </BoardTit>
     </>
   );
@@ -28,7 +19,6 @@ const BoardTit = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${customColor.white};
   height: 64px;
   border-radius: 32px;
   border: 1px solid ${customColor.whiteGray};
@@ -41,7 +31,4 @@ const TitleText = styled.div`
   font-size: 16px;
   line-height: 19px;
   margin-left: 24px;
-`;
-const ImageMargin = styled.div`
-  margin-right: 24px;
 `;
