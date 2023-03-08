@@ -19,11 +19,11 @@ export type ItemType = {
 const UserPostList = ({ board_title }: BoardInfoType) => {
   const allPost = useGetAllPost();
   const data = {
-    전체: allPost[0].data.slice(0, 8),
-    자유: allPost[1].data.slice(0, 8),
-    유머: allPost[2].data.slice(0, 8),
-    보스: allPost[3].data.slice(0, 8),
-    직업: allPost[4].data.slice(0, 8),
+    전체: allPost[0].data.content.slice(0, 8),
+    자유: allPost[1].data.content.slice(0, 8),
+    유머: allPost[2].data.content.slice(0, 8),
+    보스: allPost[3].data.content.slice(0, 8),
+    직업: allPost[4].data.content.slice(0, 8),
   };
 
   const boardData = data[board_title];

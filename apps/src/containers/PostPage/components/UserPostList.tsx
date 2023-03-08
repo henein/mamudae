@@ -4,12 +4,12 @@ import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useGetAllPost } from "../../../../pages/hook/postPageHooks/useGetEachPost";
+import { useGetAllPost } from "../../../hooks/mainPageHooks/useGetAllPost";
 
 const UserPostList = () => {
   const router = useRouter();
 
-  const data = useGetAllPost().map((item) => item.data);
+  const data = useGetAllPost().map((item) => item.data.content);
 
   return (
     <>

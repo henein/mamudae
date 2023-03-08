@@ -3,7 +3,7 @@ import axios from "axios";
 // free,humor,boss,info
 export const getApi = async (boardName: string) => {
   const json = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/${boardName}`
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${boardName}/?page=1`
   );
   const apiData = await json.data;
   return apiData;
@@ -11,7 +11,7 @@ export const getApi = async (boardName: string) => {
 
 export const getEntireBoard = async () => {
   const json = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/entireboard`
+    `${process.env.NEXT_PUBLIC_API_URL}/board/entireboard/?page=1`
   );
   const apiData = await json.data;
   return apiData;
