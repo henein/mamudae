@@ -3,11 +3,15 @@ import Image from "next/image";
 import styled from "styled-components";
 import LikeIcon from "./LikeIcon";
 
-const Like = () => {
+interface ILike {
+  recommend: number;
+}
+
+const Like = ({ recommend }: ILike) => {
   return (
     <Container>
       <LikeIcon />
-      10
+      {recommend}
     </Container>
   );
 };

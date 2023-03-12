@@ -5,13 +5,19 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 
-const Title = () => {
+interface ITitle {
+  title: string;
+  name: string;
+  views: number;
+}
+
+const Title = ({ title, name, views }: ITitle) => {
   return (
     <Container>
-      <Name>제목</Name>
+      <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
-          <Nickname>익명</Nickname>
+          <Nickname>{name}</Nickname>
           <Floor>48층</Floor>
         </NicknameAndFloor>
         <TimeAndWatch>
@@ -21,7 +27,7 @@ const Title = () => {
           </Time>
           <Watch>
             <CustomImage src={watch} alt="none" />
-            1000
+            {views}
           </Watch>
         </TimeAndWatch>
       </WriteState>
