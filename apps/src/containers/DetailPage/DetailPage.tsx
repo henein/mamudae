@@ -15,22 +15,17 @@ const DetailPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
   // Hybrid Rendering
-  const { data } = useDetail({ id });
-  const { title } = data;
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const { title, text, recommend, name, views } = useDetail({ id });
 
   return (
     <Container>
       <Announcement />
       <WriteBox>
         <Wrapper>
-          <Title />
+          <Title title={title} name={name} views={views} />
           <Content>
-            슬퍼하는 이름을 나의asdfa
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            <Like />
+            {text}
+            <Like recommend={recommend} />
           </Content>
         </Wrapper>
       </WriteBox>
@@ -62,7 +57,7 @@ const Comments = styled.div`
   padding: 20px 24px;
 `;
 const Wrapper = styled.div`
-  min-height: calc(100% + 22px);
+  min-height: calc(100% + 21px);
   position: relative;
 `;
 const Content = styled.div`

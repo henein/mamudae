@@ -70,23 +70,23 @@ const UserPostList = () => {
                   <DivGap>
                     <span>{item.name}</span>
                     <Rank>{item.rank == undefined ? "48층" : item.rank}</Rank>
-                    {/* <Tag type='floor'>48층</Tag> */}
+                    {/* <Label type='floor'>48층</Label> */}
                   </DivGap>
                   <DivGap>
                     <Image
-                      src='/postPageImages/schedule.svg'
-                      width='16'
-                      height='16'
-                      alt=''
+                      src="/postPageImages/schedule.svg"
+                      width="16"
+                      height="16"
+                      alt=""
                     />
                     <Time>{timeAgo}</Time>
                   </DivGap>
                   <ViewDiv>
                     <Image
-                      src='/postPageImages/visibility.svg'
-                      width='16'
-                      height='16'
-                      alt=''
+                      src="/postPageImages/visibility.svg"
+                      width="16"
+                      height="16"
+                      alt=""
                     />
                     <Views>{item.views}</Views>
                   </ViewDiv>

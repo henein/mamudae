@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { customColor, customColorType } from "../constants/customColor";
 
-interface ITag {
+interface ILabel {
   type: keyof customColorType; // floor | level | job 등등
+  // 단계별, 레벨별 색깔 데이터를 받기?
 }
 
 const handleColor = (type: keyof customColorType) => {
@@ -11,16 +12,16 @@ const handleColor = (type: keyof customColorType) => {
     if (keyStore === type) return customColor[keyStore];
   }
 };
-const Tag = (props: React.PropsWithChildren<ITag>) => {
+const Label = (props: React.PropsWithChildren<ILabel>) => {
   return <Container {...props}>{props.children}</Container>;
 };
 
-export default Tag;
+export default Label;
 
-const Container = styled.div<ITag>`
+const Container = styled.div<ILabel>`
   padding: 2px 4px;
   color: ${customColor.white};
-  font-size: 10px;
+  font-size: 12px;
   background-color: ${({ type }) => handleColor(type)};
   border-radius: 8px;
   margin-right: 4px;

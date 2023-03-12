@@ -5,6 +5,8 @@ import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
+import Link from "next/link";
+import { FormInputCss } from "../../LoginPage/components/Login";
 
 const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -35,7 +37,9 @@ const SignUp = () => {
       </LoginBtn>
       <SignUpContents>
         <LeftBtn type="button">이미 계정이 있으신가요?</LeftBtn>
-        <RightBtn type="button">로그인</RightBtn>
+        <Link href="/login">
+          <RightBtn type="button">로그인</RightBtn>
+        </Link>
       </SignUpContents>
       <Lines>
         <Line />
@@ -96,32 +100,17 @@ const Container = styled.form`
 `;
 const Title = styled.span`
   padding: 8px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 900;
 `;
 const Id = styled.input`
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 32px;
-  width: 100%;
-  height: 41px;
-  padding-left: 14px;
-  font-size: 14px;
+  ${FormInputCss}
 `;
 const PassWord = styled.input`
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 32px;
-  width: 100%;
-  height: 41px;
-  padding-left: 14px;
-  font-size: 14px;
+  ${FormInputCss}
 `;
 const ConfirmPassWord = styled.input`
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 32px;
-  width: 100%;
-  height: 41px;
-  padding-left: 14px;
-  font-size: 14px;
+  ${FormInputCss}
 `;
 const LoginBtn = styled(Button)``;
 

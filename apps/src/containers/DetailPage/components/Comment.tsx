@@ -56,7 +56,7 @@ const Job = styled.div`
   font-size: 12px;
   margin-right: 4px;
   color: ${customColor.white};
-  background-color: ${customColor.tagBlack};
+  background-color: ${customColor.labelBlack};
 `;
 const Time = styled.div`
   color: ${customColor.darkGray};

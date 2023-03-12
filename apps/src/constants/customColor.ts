@@ -9,7 +9,7 @@ export type customColorType = {
   darkOrange: string;
   white: string;
   black: string;
-  tagBlack: string;
+  labelBlack: string;
   shadow: string;
   divider: string;
   yellow: string;
@@ -31,7 +31,7 @@ export const customColor: customColorType = {
   darkOrange: "#E67332",
   white: "#FFFFFF",
   black: "#000000",
-  tagBlack: "#2F2F2F",
+  labelBlack: "#2F2F2F",
   shadow: "rgba(255, 128, 56, 0.25)",
   divider: "rgba(0,0,0,0.2)",
   yellow: "#FEE500",
