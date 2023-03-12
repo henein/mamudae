@@ -1,17 +1,12 @@
+import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { getEntireBoard, getApi } from "../../api/mainpage";
+import { getApi } from "../../api/postpage";
 
-type UseGetPostType = {
-  boardType: string;
-  options?: any;
-};
+export function useEachPost(boardType: string) {
+  const router = useRouter();
+  const pageNum = parseInt(router.query.page as string) || 1;
 
-export function useGetPost({ boardType, options }: UseGetPostType) {
-  return useQuery(
-    boardType,
-    boardType == "entire" ? () => getEntireBoard() : () => getApi(boardType),
-    {
-      ...options,
-    }
-  );
+  return useQuery([boardType, pageNum], () => getApi(boardType, pageNum), {
+    refetchOnWindowFocus: false,
+  });
 }
