@@ -2,7 +2,7 @@ import React from "react";
 import PostPage from "../../../src/containers/PostPage/PostPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { getApi, getEntireBoard } from "../../../src/api/mainpage";
+import { getApi } from "../../../src/api/postpage";
 import { announce } from "../../../src/api/announce";
 
 const PostList = () => {
@@ -13,16 +13,20 @@ export default PostList;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("entire", () => getEntireBoard());
-  await queryClient.prefetchQuery("F", () => getApi("F"));
-  await queryClient.prefetchQuery("B", () => getApi("B"));
-  await queryClient.prefetchQuery("H", () => getApi("H"));
-  await queryClient.prefetchQuery("I", () => getApi("I"));
-  await queryClient.prefetchQuery("announce", () => announce());
+  await Promise.all([
+    queryClient.prefetchQuery("entire", () => getApi("entireboard", 1)),
+    queryClient.prefetchQuery("F", () => getApi("F", 1)),
+    queryClient.prefetchQuery("B", () => getApi("B", 1)),
+    queryClient.prefetchQuery("H", () => getApi("H", 1)),
+    queryClient.prefetchQuery("I", () => getApi("I", 1)),
+    queryClient.prefetchQuery("announce", () => announce()),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      dehydratedState,
     },
   };
 };

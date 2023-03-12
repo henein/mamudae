@@ -1,254 +1,74 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useGetAllPost } from "../../../hooks/mainPageHooks/useGetAllPost";
+import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
 
 const UserPostList = () => {
   const router = useRouter();
+  const title: { [key: string]: string } = {
+    전체: "entireboard",
+    자유: "F",
+    유머: "H",
+    보스: "B",
+    직업: "I",
+  };
+  const boardTitle = router.query.post as string;
+  const boardKey = title[boardTitle];
 
-  const data = useGetAllPost().map((item) => item.data.content);
-
+  const { data, isLoading } = useEachPost(boardKey);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <PostList>
-        {router.query.post == "전체"
-          ? data[0].map((item: any, idx: number) => {
-              return (
-                <Link
-                  href={{
-                    pathname: `/board/${router.query.post}/${item.id}`,
-                  }}
-                  key={idx}
-                >
-                  <PostItem>
-                    <LeftSide>
-                      <PostNum>{item.id}</PostNum>
-                      <DivGap>
-                        <span>{item.title}</span>
-                        <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                      </DivGap>
-                    </LeftSide>
-                    <RightSide>
-                      <DivGap>
-                        <span>{item.name}</span>
-                        <Rank>
-                          {item.rank == undefined ? "48층" : item.rank}
-                        </Rank>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/schedule.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.createTime}</span>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/visibility.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.views}</span>
-                      </DivGap>
-                    </RightSide>
-                  </PostItem>
-                </Link>
-              );
-            })
-          : router.query.post == "자유"
-          ? data[1].map((item: any, idx: number) => {
-              return (
-                <Link
-                  href={{
-                    pathname: `/board/${router.query.post}/${item.id}`,
-                  }}
-                  key={idx}
-                >
-                  <PostItem>
-                    <LeftSide>
-                      <PostNum>{item.id}</PostNum>
-                      <DivGap>
-                        <span>{item.title}</span>
-                        <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                      </DivGap>
-                    </LeftSide>
-                    <RightSide>
-                      <DivGap>
-                        <span>{item.name}</span>
-                        <Rank>
-                          {item.rank == undefined ? "48층" : item.rank}
-                        </Rank>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/schedule.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.createTime}</span>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/visibility.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.views}</span>
-                      </DivGap>
-                    </RightSide>
-                  </PostItem>
-                </Link>
-              );
-            })
-          : router.query.post == "유머"
-          ? data[2].map((item: any, idx: number) => {
-              return (
-                <Link
-                  href={{
-                    pathname: `/board/${router.query.post}/${item.id}`,
-                  }}
-                  key={idx}
-                >
-                  <PostItem>
-                    <LeftSide>
-                      <PostNum>{item.id}</PostNum>
-                      <DivGap>
-                        <span>{item.title}</span>
-                        <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                      </DivGap>
-                    </LeftSide>
-                    <RightSide>
-                      <DivGap>
-                        <span>{item.name}</span>
-                        <Rank>
-                          {item.rank == undefined ? "48층" : item.rank}
-                        </Rank>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/schedule.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.createTime}</span>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/visibility.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.views}</span>
-                      </DivGap>
-                    </RightSide>
-                  </PostItem>
-                </Link>
-              );
-            })
-          : router.query.post == "보스"
-          ? data[3].map((item: any, idx: number) => {
-              return (
-                <Link
-                  href={{
-                    pathname: `/board/${router.query.post}/${item.id}`,
-                  }}
-                  key={idx}
-                >
-                  <PostItem>
-                    <LeftSide>
-                      <PostNum>{item.id}</PostNum>
-                      <DivGap>
-                        <span>{item.title}</span>
-                        <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                      </DivGap>
-                    </LeftSide>
-                    <RightSide>
-                      <DivGap>
-                        <span>{item.name}</span>
-                        <Rank>
-                          {item.rank == undefined ? "48층" : item.rank}
-                        </Rank>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/schedule.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.createTime}</span>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/visibility.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.views}</span>
-                      </DivGap>
-                    </RightSide>
-                  </PostItem>
-                </Link>
-              );
-            })
-          : router.query.post == "직업" &&
-            data[4].map((item: any, idx: number) => {
-              return (
-                <Link
-                  href={{
-                    pathname: `/board/${router.query.post}/${item.id}`,
-                  }}
-                  key={idx}
-                >
-                  <PostItem>
-                    <LeftSide>
-                      <PostNum>{item.id}</PostNum>
-                      <DivGap>
-                        <span>{item.title}</span>
-                        <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                      </DivGap>
-                    </LeftSide>
-                    <RightSide>
-                      <DivGap>
-                        <span>{item.name}</span>
-                        <Rank>
-                          {item.rank == undefined ? "48층" : item.rank}
-                        </Rank>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/schedule.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.createTime}</span>
-                      </DivGap>
-                      <DivGap>
-                        <Image
-                          src='/postPageImages/visibility.svg'
-                          width='16'
-                          height='16'
-                          alt=''
-                        />
-                        <span>{item.views}</span>
-                      </DivGap>
-                    </RightSide>
-                  </PostItem>
-                </Link>
-              );
-            })}
+        {data.content.map((item: any, idx: number) => {
+          return (
+            <Link
+              href={{
+                pathname: `/board/${router.query.post}/${item.id}`,
+              }}
+              key={idx}
+            >
+              <PostItem>
+                <LeftSide>
+                  <PostNum>{item.id}</PostNum>
+                  <DivGap>
+                    <span>{item.title}</span>
+                    <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+                  </DivGap>
+                </LeftSide>
+                <RightSide>
+                  <DivGap>
+                    <span>{item.name}</span>
+                    <Rank>{item.rank == undefined ? "48층" : item.rank}</Rank>
+                  </DivGap>
+                  <DivGap>
+                    <Image
+                      src='/postPageImages/schedule.svg'
+                      width='16'
+                      height='16'
+                      alt=''
+                    />
+                    <span>{item.createTime}</span>
+                  </DivGap>
+                  <DivGap>
+                    <Image
+                      src='/postPageImages/visibility.svg'
+                      width='16'
+                      height='16'
+                      alt=''
+                    />
+                    <span>{item.views}</span>
+                  </DivGap>
+                </RightSide>
+              </PostItem>
+            </Link>
+          );
+        })}
       </PostList>
     </>
   );
