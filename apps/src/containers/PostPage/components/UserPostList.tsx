@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
@@ -18,6 +18,28 @@ const UserPostList = () => {
   const boardTitle = router.query.post as string;
   const boardKey = title[boardTitle];
 
+  const timeDifference = (previous: number) => {
+    const msPerMinute = 60 * 1000;
+    const msPerHour = msPerMinute * 60;
+    const msPerDay = msPerHour * 24;
+    const msPerYear = msPerDay * 365;
+    const currentTimestamp = new Date().getTime();
+
+    const elapsed = currentTimestamp - previous;
+
+    if (elapsed < msPerMinute) {
+      return Math.round(elapsed / 1000) + "초 전";
+    } else if (elapsed < msPerHour) {
+      return Math.round(elapsed / msPerMinute) + "분 전";
+    } else if (elapsed < msPerDay) {
+      return Math.round(elapsed / msPerHour) + "시간 전";
+    } else if (elapsed < msPerYear) {
+      return Math.round(elapsed / msPerDay) + "일 전";
+    } else {
+      return Math.round(elapsed / msPerYear) + "년 전";
+    }
+  };
+
   const { data, isLoading } = useEachPost(boardKey);
   if (isLoading) {
     return <div>Loading...</div>;
@@ -26,6 +48,9 @@ const UserPostList = () => {
     <>
       <PostList>
         {data.content.map((item: any, idx: number) => {
+          const createTime = item.createTime;
+          const createTimeTimestamp = Date.parse(createTime);
+          const timeAgo = timeDifference(createTimeTimestamp);
           return (
             <Link
               href={{
@@ -45,6 +70,7 @@ const UserPostList = () => {
                   <DivGap>
                     <span>{item.name}</span>
                     <Rank>{item.rank == undefined ? "48층" : item.rank}</Rank>
+                    {/* <Tag type='floor'>48층</Tag> */}
                   </DivGap>
                   <DivGap>
                     <Image
@@ -53,17 +79,17 @@ const UserPostList = () => {
                       height='16'
                       alt=''
                     />
-                    <span>{item.createTime}</span>
+                    <Time>{timeAgo}</Time>
                   </DivGap>
-                  <DivGap>
+                  <ViewDiv>
                     <Image
                       src='/postPageImages/visibility.svg'
                       width='16'
                       height='16'
                       alt=''
                     />
-                    <span>{item.views}</span>
-                  </DivGap>
+                    <Views>{item.views}</Views>
+                  </ViewDiv>
                 </RightSide>
               </PostItem>
             </Link>
@@ -91,9 +117,9 @@ const PostItem = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 760px;
-  height: 36px;
+  min-height: 36px;
   line-height: 16px;
-  gap: 10.5;
+  gap: 10.5px;
 `;
 const LeftSide = styled.div`
   display: flex;
@@ -129,4 +155,17 @@ const Rank = styled.div`
   width: 30px;
   height: 16px;
   font-size: 10px;
+`;
+const Time = styled.span`
+  display: flex;
+  justify-content: center;
+  width: 36px;
+`;
+const ViewDiv = styled.div`
+  display: flex;
+`;
+const Views = styled.span`
+  display: flex;
+  justify-content: center;
+  width: 27px;
 `;
