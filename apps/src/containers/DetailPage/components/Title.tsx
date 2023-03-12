@@ -48,7 +48,6 @@ const Container = styled.div`
   border-bottom: 1px solid ${customColor.whiteGray};
   padding: 0 24px;
   position: sticky;
-  opacity: 0.7;
   backdrop-filter: blur(30px);
   background-color: ${customColor.white};
 `;

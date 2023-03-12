@@ -57,7 +57,7 @@ const Comments = styled.div`
   padding: 20px 24px;
 `;
 const Wrapper = styled.div`
-  min-height: calc(100% + 22px);
+  min-height: calc(100% + 21px);
   position: relative;
 `;
 const Content = styled.div`
