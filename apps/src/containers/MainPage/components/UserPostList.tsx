@@ -28,7 +28,6 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
 
   const boardData = data[board_title];
 
-  console.log(boardData);
   return (
     <PostList>
       {boardData.map((item: ItemType) => {

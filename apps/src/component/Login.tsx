@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { customColor } from "../constants/customColor";
+import Link from "next/link";
 import Button from "./Button";
 
 const Login = () => {
@@ -18,7 +19,9 @@ const Login = () => {
       </LoginBtn>
       <LoginFooter>
         <Text>로그인이 안 되시나요?</Text>
-        <SignUpBtn>회원가입</SignUpBtn>
+        <Link href="/signUp">
+          <SignUpBtn>회원가입</SignUpBtn>
+        </Link>
       </LoginFooter>
     </LoginContainer>
   );

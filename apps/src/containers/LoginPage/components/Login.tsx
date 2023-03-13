@@ -1,10 +1,11 @@
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
+import Link from "next/link";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -27,7 +28,9 @@ const Login = () => {
       </LoginBtn>
       <SignUpContents>
         <LeftBtn type="button">로그인이 안되시나요?</LeftBtn>
-        <RightBtn type="button">회원가입</RightBtn>
+        <Link href="/signUp">
+          <RightBtn type="button">회원가입</RightBtn>
+        </Link>
       </SignUpContents>
       <Lines>
         <Line />
@@ -45,6 +48,15 @@ const Login = () => {
 };
 
 export default Login;
+
+export const FormInputCss = css`
+  border: 1px solid ${customColor.whiteGray};
+  border-radius: 32px;
+  width: 100%;
+  height: 41px;
+  padding: 12px 16px;
+  font-size: 14px;
+`;
 
 const KaKaoImg = styled(Image)`
   position: absolute;
@@ -77,20 +89,10 @@ const Title = styled.span`
   font-weight: 900;
 `;
 const Id = styled.input`
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 32px;
-  width: 100%;
-  height: 41px;
-  padding-left: 14px;
-  font-size: 14px;
+  ${FormInputCss}
 `;
 const PassWord = styled.input`
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 32px;
-  width: 100%;
-  height: 41px;
-  padding-left: 14px;
-  font-size: 14px;
+  ${FormInputCss}
 `;
 const LoginBtn = styled(Button)``;
 const SignUpContents = styled.div`

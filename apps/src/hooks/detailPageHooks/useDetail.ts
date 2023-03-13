@@ -7,7 +7,10 @@ interface IUseDetail {
 }
 
 export function useDetail({ id, options }: IUseDetail) {
-  return useQuery(["detailPageData", id], () => detail(id), {
+  const { data } = useQuery(["detailPageData", id], () => detail(id), {
     ...options,
   });
+
+  console.log(data);
+  return { ...data };
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
@@ -7,8 +7,26 @@ import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/Login";
 import Button from "../../component/Button";
 import { customColor } from "../../constants/customColor";
+import { useRouter } from "next/router";
 
 const PostPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    switch (router.query.post) {
+      case "전체":
+      case "자유":
+      case "유머":
+      case "보스":
+      case "직업":
+        break;
+      default:
+        router.push("/404");
+        break;
+    }
+  }, [router.isReady, router.query.post]);
+
   return (
     <Layout>
       <Announcement />
