@@ -28,13 +28,14 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
 
   const boardData = data[board_title];
 
+  console.log(boardData);
   return (
     <PostList>
       {boardData.map((item: ItemType) => {
         return (
           <PostItem key={item.id}>
             <Link href={`board/${board_title}/${item.id}`} key={item.id}>
-              <span>{item.text}</span>
+              <span>{item.title}</span>
             </Link>
             <NickName>{item.name}</NickName>
           </PostItem>
