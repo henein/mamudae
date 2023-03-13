@@ -5,6 +5,7 @@ import { customColor } from "../../../constants/customColor";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
+import Label from "../../../component/Label";
 
 const UserPostList = () => {
   const router = useRouter();
@@ -69,24 +70,25 @@ const UserPostList = () => {
                 <RightSide>
                   <DivGap>
                     <span>{item.name}</span>
-                    <Rank>{item.rank == undefined ? "48층" : item.rank}</Rank>
-                    {/* <Label type='floor'>48층</Label> */}
+                    <Label type='floor'>
+                      {item.rank == undefined ? "48층" : item.rank}
+                    </Label>
                   </DivGap>
                   <DivGap>
                     <Image
-                      src="/postPageImages/schedule.svg"
-                      width="16"
-                      height="16"
-                      alt=""
+                      src='/postPageImages/schedule.svg'
+                      width='16'
+                      height='16'
+                      alt=''
                     />
                     <Time>{timeAgo}</Time>
                   </DivGap>
                   <ViewDiv>
                     <Image
-                      src="/postPageImages/visibility.svg"
-                      width="16"
-                      height="16"
-                      alt=""
+                      src='/postPageImages/visibility.svg'
+                      width='16'
+                      height='16'
+                      alt=''
                     />
                     <Views>{item.views}</Views>
                   </ViewDiv>
@@ -118,8 +120,7 @@ const PostItem = styled.div`
   align-items: center;
   width: 760px;
   min-height: 36px;
-  line-height: 16px;
-  gap: 10.5px;
+  gap: 10px;
 `;
 const LeftSide = styled.div`
   display: flex;
@@ -131,6 +132,7 @@ const LeftSide = styled.div`
 const DivGap = styled.div`
   display: flex;
   gap: 4px;
+  align-items: center;
 `;
 const PostNum = styled.span`
   width: 43px;
@@ -140,21 +142,12 @@ const CommentNum = styled.span`
 `;
 const RightSide = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
   color: ${customColor.darkGray};
   span {
     font-size: 12px;
   }
-`;
-const Rank = styled.div`
-  display: flex;
-  justify-content: center;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-  border-radius: 8px;
-  width: 30px;
-  height: 16px;
-  font-size: 10px;
 `;
 const Time = styled.span`
   display: flex;
@@ -167,5 +160,6 @@ const ViewDiv = styled.div`
 const Views = styled.span`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 27px;
 `;
