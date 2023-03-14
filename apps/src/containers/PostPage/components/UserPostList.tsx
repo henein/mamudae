@@ -6,97 +6,73 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
 import Label from "../../../component/Label";
-
+import timeDifference from "../../../utils/timeDifference";
 const UserPostList = () => {
   const router = useRouter();
-  const title: { [key: string]: string } = {
-    전체: "entireboard",
-    자유: "F",
-    유머: "H",
-    보스: "B",
-    직업: "I",
+
+  const { data } = useEachPost();
+
+  type ItmePost = {
+    id: string;
+    title: string;
+    name: string;
+    rank?: string;
+    views: number;
+    createTime: string;
+    commentNum: number;
   };
-  const boardTitle = router.query.post as string;
-  const boardKey = title[boardTitle];
-
-  const timeDifference = (previous: number) => {
-    const msPerMinute = 60 * 1000;
-    const msPerHour = msPerMinute * 60;
-    const msPerDay = msPerHour * 24;
-    const msPerYear = msPerDay * 365;
-    const currentTimestamp = new Date().getTime();
-
-    const elapsed = currentTimestamp - previous;
-
-    if (elapsed < msPerMinute) {
-      return Math.round(elapsed / 1000) + "초 전";
-    } else if (elapsed < msPerHour) {
-      return Math.round(elapsed / msPerMinute) + "분 전";
-    } else if (elapsed < msPerDay) {
-      return Math.round(elapsed / msPerHour) + "시간 전";
-    } else if (elapsed < msPerYear) {
-      return Math.round(elapsed / msPerDay) + "일 전";
-    } else {
-      return Math.round(elapsed / msPerYear) + "년 전";
-    }
-  };
-
-  const { data, isLoading } = useEachPost(boardKey);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <PostList>
-        {data.content.map((item: any, idx: number) => {
-          const createTime = item.createTime;
-          const createTimeTimestamp = Date.parse(createTime);
-          const timeAgo = timeDifference(createTimeTimestamp);
-          return (
-            <Link
-              href={{
-                pathname: `/board/${router.query.post}/${item.id}`,
-              }}
-              key={idx}
-            >
-              <PostItem>
-                <LeftSide>
-                  <PostNum>{item.id}</PostNum>
-                  <DivGap>
-                    <span>{item.title}</span>
-                    <CommentNum>{`[${item.commentNum}]`}</CommentNum>
-                  </DivGap>
-                </LeftSide>
-                <RightSide>
-                  <DivGap>
-                    <span>{item.name}</span>
-                    <Label type='floor'>
-                      {item.rank == undefined ? "48층" : item.rank}
-                    </Label>
-                  </DivGap>
-                  <DivGap>
-                    <Image
-                      src='/postPageImages/schedule.svg'
-                      width='16'
-                      height='16'
-                      alt=''
-                    />
-                    <Time>{timeAgo}</Time>
-                  </DivGap>
-                  <ViewDiv>
-                    <Image
-                      src='/postPageImages/visibility.svg'
-                      width='16'
-                      height='16'
-                      alt=''
-                    />
-                    <Views>{item.views}</Views>
-                  </ViewDiv>
-                </RightSide>
-              </PostItem>
-            </Link>
-          );
-        })}
+        {data &&
+          data.content.map((item: ItmePost, idx: number) => {
+            const timeAgo = timeDifference(item.createTime);
+
+            return (
+              <Link
+                href={{
+                  pathname: `/board/${router.query.post}/${item.id}`,
+                }}
+                key={idx}
+              >
+                <PostItem>
+                  <LeftSide>
+                    <PostNum>{item.id}</PostNum>
+                    <DivGap>
+                      <span>{item.title}</span>
+                      <CommentNum>{`[${item.commentNum}]`}</CommentNum>
+                    </DivGap>
+                  </LeftSide>
+                  <RightSide>
+                    <DivGap>
+                      <span>{item.name}</span>
+                      <Label type='floor'>
+                        {item.rank == undefined ? "48층" : item.rank}
+                      </Label>
+                    </DivGap>
+                    <DivGap>
+                      <Image
+                        src='/postPageImages/schedule.svg'
+                        width='16'
+                        height='16'
+                        alt=''
+                      />
+                      <Time>{timeAgo}</Time>
+                    </DivGap>
+                    <ViewDiv>
+                      <Image
+                        src='/postPageImages/visibility.svg'
+                        width='16'
+                        height='16'
+                        alt=''
+                      />
+                      <Views>{item.views}</Views>
+                    </ViewDiv>
+                  </RightSide>
+                </PostItem>
+              </Link>
+            );
+          })}
       </PostList>
     </>
   );
@@ -152,7 +128,7 @@ const RightSide = styled.div`
 const Time = styled.span`
   display: flex;
   justify-content: center;
-  width: 36px;
+  width: 38px;
 `;
 const ViewDiv = styled.div`
   display: flex;
