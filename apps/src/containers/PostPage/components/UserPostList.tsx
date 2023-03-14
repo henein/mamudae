@@ -9,6 +9,8 @@ import Label from "../../../component/Label";
 import timeDifference from "../../../utils/timeDifference";
 const UserPostList = () => {
   const router = useRouter();
+  const { page } = router.query;
+  const pageNum = parseInt(page as string, 10) || 1;
 
   const { data } = useEachPost();
 
@@ -27,7 +29,6 @@ const UserPostList = () => {
         {data &&
           data.content.map((item: ItmePost, idx: number) => {
             const timeAgo = timeDifference(item.createTime);
-
             return (
               <Link
                 href={{
@@ -37,7 +38,11 @@ const UserPostList = () => {
               >
                 <PostItem>
                   <LeftSide>
-                    <PostNum>{item.id}</PostNum>
+                    <PostNum>
+                      {`000000${
+                        data && data.totalElements - idx * pageNum
+                      }`.slice(-6)}
+                    </PostNum>
                     <DivGap>
                       <span>{item.title}</span>
                       <CommentNum>{`[${item.commentNum}]`}</CommentNum>
