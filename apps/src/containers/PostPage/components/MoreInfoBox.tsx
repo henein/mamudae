@@ -3,24 +3,28 @@ import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import { useRouter } from "next/router";
+import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
 
 const MoreInfoBox = () => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
   const totalPages = 38; // 백엔드에서 받을때 이부분을 totalpages.length 느낌으로 받으면됨
+  const { refetch } = useEachPost();
 
   const handlePageNumClick = (pageNum: number) => {
     router.push(`${router.query.post}/?page=${pageNum}`);
+    refetch();
   };
 
   const handlePrevPageBtnClick = () => {
     router.push(`${router.query.post}/?page=${pageNum - 10}`);
+    refetch();
   };
 
   const handleNextPageBtnClick = () => {
     router.push(`${router.query.post}/?page=${pageNum + 10}`);
+    refetch();
   };
-
   // 아래의 함수는 나중에 SSR로 처리
   const getPageNums = () => {
     const pageNums: number[] = [];
@@ -31,7 +35,6 @@ const MoreInfoBox = () => {
     }
     return pageNums;
   };
-
   return (
     <>
       <MoreInfo>
