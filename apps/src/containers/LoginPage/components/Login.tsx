@@ -6,9 +6,11 @@ import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
+import useKaKaoHooks from "../../../hooks/kakao/useKakaoHooks";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const { login } = useKaKaoHooks();
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
   };
@@ -37,8 +39,8 @@ const Login = () => {
         <MidLineTextDiv>또는</MidLineTextDiv>
         <Line />
       </Lines>
-      <KaKaoBtn>
-        <KaKaoDiv>
+      <KaKaoBtn type="button">
+        <KaKaoDiv onClick={login}>
           <KaKaoImg src={kaKao} alt="s" />
           <span>KaKao로 로그인하기</span>
         </KaKaoDiv>
