@@ -24,5 +24,4 @@ const Container = styled.div<ILabel>`
   font-size: 12px;
   background-color: ${({ type }) => handleColor(type)};
   border-radius: 8px;
-  margin-right: 4px;
 `;

@@ -24,6 +24,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 40px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
 `;
 const LikeImg = styled(Image)`
   &:hover {

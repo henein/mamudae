@@ -97,6 +97,8 @@ const Container = styled.form`
   flex-direction: column;
   border-radius: 32px;
   padding: 20px 24px;
+  position: absolute;
+  top: calc(16% + 30px);
 `;
 const Title = styled.span`
   padding: 8px;
