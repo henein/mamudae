@@ -10,12 +10,14 @@ import { useDetail } from "../../hooks/detailPageHooks/useDetail";
 import styled from "styled-components";
 import { customColor } from "../../constants/customColor";
 import Announcement from "../../component/AnnounceComponent/Announcement";
+import CompleteLogin from "../../component/CompleteLogin";
 
 const DetailPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
+  const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, name, views } = useDetail({ id });
+  const { title, text, recommend, name, views } = useDetail({ id, options });
 
   return (
     <Container>
@@ -23,16 +25,14 @@ const DetailPage = () => {
       <WriteBox>
         <Wrapper>
           <Title title={title} name={name} views={views} />
-          <Content>
-            {text}
-            <Like recommend={recommend} />
-          </Content>
+          <Content>{text}</Content>
+          <Like recommend={recommend} />
         </Wrapper>
       </WriteBox>
 
       <SideBox>
-        {/* <CompleteLogin /> */}
-        <Login />
+        <CompleteLogin />
+        {/* <Login /> */}
         <Board />
       </SideBox>
 
@@ -57,6 +57,8 @@ const Comments = styled.div`
   padding: 20px 24px;
 `;
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   min-height: calc(100% + 21px);
   position: relative;
 `;

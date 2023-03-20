@@ -65,6 +65,7 @@ const Floor = styled.div`
 `;
 const Honours = styled.div`
   display: flex;
+  gap: 4px;
 `;
 const Nickname = styled.div`
   font-size: 16px;

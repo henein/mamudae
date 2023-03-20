@@ -76,12 +76,14 @@ const Container = styled.form`
   justify-content: space-between;
   border: 1px solid ${customColor.whiteGray};
   width: 380px;
-  height: 450px;
+  height: 380px;
   background-color: ${customColor.white};
   display: flex;
   flex-direction: column;
   border-radius: 32px;
   padding: 20px 24px;
+  position: absolute;
+  top: calc(16% + 30px);
 `;
 const Title = styled.span`
   padding: 8px;
