@@ -6,11 +6,11 @@ import Image from "next/image";
 import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
-import useKaKaoHooks from "../../../hooks/kakao/useKakaoHooks";
+import useKaKao from "../../../hooks/kakao/useKaKao";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const { login } = useKaKaoHooks();
+  const { login } = useKaKao();
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
   };

@@ -1,25 +1,21 @@
-import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 import React, { useEffect } from "react";
+import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
 
 const KaKao = () => {
   const router = useRouter();
-  const { code }: ParsedUrlQuery = router.query;
-
-  // 인자코드 넘기는 API refetch로 react-query 실행하면 될듯?
-  // const givePrintCode = () => {};
-  // useMutation
-
+  const code = router.query.code as string;
+  const { data, refetch } = usePrintCode({ code });
 
   useEffect(() => {
     if (!router.isReady) return;
     if (!code) {
       alert("카카오에서 인자코드를 받지 못함");
     } else {
-      // givePrintCode();
+      refetch();
     }
-  }, [router.isReady, code]);
+    console.log(data)
+  }, [router.isReady, code, data, refetch]);
 
   return (
     <div>
