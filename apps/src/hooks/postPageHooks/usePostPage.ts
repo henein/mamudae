@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { getApi } from "../../api/postpage";
 
 const title: { [key: string]: string } = {
-  전체: "entireboard",
+  전체: "E",
   자유: "F",
   유머: "H",
   보스: "B",

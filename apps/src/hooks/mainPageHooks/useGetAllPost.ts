@@ -5,7 +5,7 @@ import { useQueries } from "react-query";
 export const useGetAllPost = () => {
   return useQueries([
     {
-      queryKey: "entire",
+      queryKey: "E",
       queryFn: () => getEntireBoard(),
     },
     {
