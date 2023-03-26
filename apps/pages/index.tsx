@@ -10,7 +10,7 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("entire", () => getEntireBoard());
+  await queryClient.prefetchQuery("E", () => getEntireBoard());
   await queryClient.prefetchQuery("F", () => getApi("F"));
   await queryClient.prefetchQuery("B", () => getApi("B"));
   await queryClient.prefetchQuery("H", () => getApi("H"));

@@ -14,6 +14,7 @@ const UserPostList = () => {
 
   const { data } = useEachPost();
 
+  console.log(data);
   type ItmePost = {
     id: string;
     title: string;
