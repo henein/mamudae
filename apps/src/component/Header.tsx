@@ -3,15 +3,34 @@ import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 import { customColor } from "../constants/customColor";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { toggleDarkMode } from "../../store/darkmodeSlice/darkmode";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const darkModeState = useSelector(
+    (state: RootState) => state.darkMode.isDarkMode
+  );
+
+  console.log(darkModeState);
   return (
     <Layout>
       <LayoutTop>
         <TitleBox>
-          <Link href='/'>
-            <Title>Henein</Title>
-          </Link>
+          <SetDisplay>
+            <Link href='/'>
+              <Title>Henein</Title>
+            </Link>
+            <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
+              <Image
+                src='/headerCompoImages/light_mode.svg'
+                width='18'
+                height='18'
+                alt='light_mode'
+              />
+            </DarkModeBtn>
+          </SetDisplay>
           <InputBox>
             <InlineInput></InlineInput>
             <SubmitBtn>
@@ -59,6 +78,12 @@ const TitleBox = styled.div`
   padding-bottom: 12px;
   height: 116px;
   width: 1140px;
+  margin: 0 auto;
+`;
+const SetDisplay = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `;
 const Title = styled.h1`
   font-size: 32px;
@@ -92,11 +117,23 @@ const SubmitBtn = styled.button`
   border: 0;
   position: relative;
   left: 10px;
-  background-color: white;
+  background-color: ${customColor.white};
   &:hover {
     cursor: pointer;
   }
 `;
+const DarkModeBtn = styled.button`
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  margin: 0;
+  border: 0;
+  background-color: ${customColor.backgroundGray};
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const LayoutBottom = styled.div`
   display: flex;
   justify-content: center;
