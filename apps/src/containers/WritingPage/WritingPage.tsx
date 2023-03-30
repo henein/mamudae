@@ -12,11 +12,16 @@ import { useCreateBoard } from "../../hooks/writingPageHooks/useCreateBoard";
 const WritingPage = () => {
   const [value, setValue] = useState("");
   const { register, handleSubmit } = useForm();
-  const { mutate } = useCreateBoard("ds");
+  const { mutate } = useCreateBoard();
 
   const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data) + value);
     console.log(value);
+    mutate({
+      title: data["title"],
+      boardType: data["selectBoard"],
+      text: value,
+      name: "임송재", // 로컬스토리지에 저장한 닉네임넣기
+    });
   };
 
   const handleChange = (value: any) => {

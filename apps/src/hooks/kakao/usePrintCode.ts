@@ -10,11 +10,15 @@ export const usePrintCode = ({ code, options }: IUsePrintCode) => {
     console.log("인자코드가 아직 안불러와졌음");
   }
 
-  const { data, refetch } = useQuery(["getToken"], () => getPrintCode(code), {
-    ...options,
-    enabled: false,
-    onSuccess: () => console.log("post요청 성공"),
-  });
+  const { data, refetch: receivePrintCode } = useQuery(
+    ["getToken"],
+    () => getPrintCode(code),
+    {
+      ...options,
+      enabled: false,
+      onSuccess: (res) => console.log(res),
+    }
+  );
 
-  return { data, refetch };
+  return { data, receivePrintCode };
 };

@@ -4,14 +4,16 @@ import time from "/public/detailPageImages/schedule.png";
 import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
+import timeDifference from "../../../utils/timeDifference";
 
 interface ITitle {
   title: string;
   name: string;
   views: number;
+  createTime: string;
 }
 
-const Title = ({ title, name, views }: ITitle) => {
+const Title = ({ title, name, views, createTime }: ITitle) => {
   return (
     <Container>
       <Name>{title}</Name>
@@ -23,7 +25,7 @@ const Title = ({ title, name, views }: ITitle) => {
         <TimeAndWatch>
           <Time>
             <CustomImage src={time} alt="none" />
-            3일 전
+            {timeDifference(createTime)}
           </Time>
           <Watch>
             <CustomImage src={watch} alt="none" />

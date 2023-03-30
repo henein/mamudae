@@ -5,17 +5,16 @@ import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
 const KaKao = () => {
   const router = useRouter();
   const code = router.query.code as string;
-  const { data, refetch } = usePrintCode({ code });
+  const { receivePrintCode } = usePrintCode({ code });
 
   useEffect(() => {
     if (!router.isReady) return;
     if (!code) {
       alert("카카오에서 인자코드를 받지 못함");
     } else {
-      refetch();
+      receivePrintCode();
     }
-    console.log(data)
-  }, [router.isReady, code, data, refetch]);
+  }, [router.isReady, code, receivePrintCode]);
 
   return (
     <div>

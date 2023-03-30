@@ -17,14 +17,22 @@ const DetailPage = () => {
   const id = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, name, views } = useDetail({ id, options });
+  const { title, text, recommend, name, views, createTime } = useDetail({
+    id,
+    options,
+  });
 
   return (
     <Container>
       <Announcement />
       <WriteBox>
         <Wrapper>
-          <Title title={title} name={name} views={views} />
+          <Title
+            title={title}
+            name={name}
+            views={views}
+            createTime={createTime}
+          />
           <Content>{text}</Content>
           <Like recommend={recommend} />
         </Wrapper>
