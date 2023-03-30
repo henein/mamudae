@@ -18,6 +18,8 @@ export type customColorType = {
   floor: string;
   level: string;
   job: string;
+  boardShadow: string;
+  borderColor: string;
 };
 
 export const customColor: customColorType = {
@@ -40,4 +42,6 @@ export const customColor: customColorType = {
   floor: "#4B79EF",
   level: "#D36F13",
   job: "#7354B5",
+  boardShadow: "rgba(0, 0, 0, 0.05)",
+  borderColor: "rgba(0, 0, 0, 0.1)",
 };

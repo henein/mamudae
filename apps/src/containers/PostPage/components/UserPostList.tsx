@@ -134,7 +134,7 @@ const RightSide = styled.div`
 const Time = styled.span`
   display: flex;
   justify-content: center;
-  width: 38px;
+  width: 40px;
 `;
 const ViewDiv = styled.div`
   display: flex;

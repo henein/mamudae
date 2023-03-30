@@ -2,9 +2,11 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from "react-query/devtools";
 import { useRouter } from "next/router";
 import Layout from "../src/component/Layout";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
@@ -15,15 +17,17 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          {shouldRenderLayout ? (
-            <Layout>
+          <Provider store={store}>
+            {shouldRenderLayout ? (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            ) : (
               <Component {...pageProps} />
-            </Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
+          </Provider>
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
     </>
   );
