@@ -30,11 +30,10 @@ const BoardHeader = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-radius: 32px;
-  border: 1px solid ${customColor.whiteGray};
-  box-sizing: border-box;
+  border-radius: 16px;
+  border-bottom: 1px solid ${customColor.borderColor};
   z-index: 1;
-  box-shadow: 0 2px 3px ${customColor.shadow};
+  box-shadow: 0px 4px 8px ${customColor.boardShadow};
   padding-left: 24px;
 `;
 const Title = styled.h3`

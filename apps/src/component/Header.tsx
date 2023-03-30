@@ -18,19 +18,48 @@ const Header = () => {
     <Layout>
       <LayoutTop>
         <TitleBox>
-          <SetDisplay>
+          <SetContent>
             <Link href='/'>
               <Title>Henein</Title>
             </Link>
             <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
-              <Image
-                src='/headerCompoImages/light_mode.svg'
-                width='18'
-                height='18'
-                alt='light_mode'
-              />
+              <LightImg darkModeState={darkModeState}>
+                <Image
+                  src='/headerCompoImages/light_mode.svg'
+                  width='20'
+                  height='20'
+                  alt='light_mode'
+                />
+              </LightImg>
+              <DarkImg darkModeState={darkModeState}>
+                <Image
+                  src='/headerCompoImages/dark_mode.svg'
+                  width='20'
+                  height='20'
+                  alt='dark_mode'
+                />
+              </DarkImg>
             </DarkModeBtn>
-          </SetDisplay>
+          </SetContent>
+        </TitleBox>
+      </LayoutTop>
+
+      <LayoutBottom>
+        <SetContent>
+          <NavList>
+            <Link href='/'>
+              <Listdiv>홈</Listdiv>
+            </Link>
+            <Link href='/'>
+              <Listdiv>공지</Listdiv>
+            </Link>
+            <Link href='/'>
+              <Listdiv>정보</Listdiv>
+            </Link>
+            <Link href='/'>
+              <Listdiv>커뮤니티</Listdiv>
+            </Link>
+          </NavList>
           <InputBox>
             <InlineInput></InlineInput>
             <SubmitBtn>
@@ -42,14 +71,7 @@ const Header = () => {
               />
             </SubmitBtn>
           </InputBox>
-        </TitleBox>
-      </LayoutTop>
-
-      <LayoutBottom>
-        <NavList>
-          <Link href='/'>홈</Link>
-          <Link href='/'>더치트</Link>
-        </NavList>
+        </SetContent>
       </LayoutBottom>
     </Layout>
   );
@@ -59,12 +81,6 @@ export default Header;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  height: 180px;
-  a {
-    text-decoration: none;
-    color: ${customColor.orange};
-    margin: 0px, 10px;
-  }
 `;
 const LayoutTop = styled.div`
   display: flex;
@@ -80,20 +96,69 @@ const TitleBox = styled.div`
   width: 1140px;
   margin: 0 auto;
 `;
-const SetDisplay = styled.div`
+const SetContent = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
+  width: 1140px;
 `;
 const Title = styled.h1`
   font-size: 32px;
   font-weight: 900;
+  color: ${customColor.orange};
+`;
+const DarkModeBtn = styled.button`
+  display: flex;
+  padding: 2px;
+  background-color: ${customColor.boardHeaderGray};
+  border: 1px solid ${customColor.borderColor};
+  border-radius: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const LightImg = styled.div<{ darkModeState: boolean }>`
+  padding: 8px;
+  border-radius: 8px;
+  background-color: ${({ darkModeState }) =>
+    darkModeState ? "none" : customColor.white};
+  border: ${({ darkModeState }) =>
+    darkModeState
+      ? `1px solid ${customColor.boardHeaderGray}`
+      : `1px solid ${customColor.borderColor}`};
+`;
+const DarkImg = styled.div<{ darkModeState: boolean }>`
+  padding: 8px;
+  border-radius: 8px;
+  background-color: ${({ darkModeState }) =>
+    darkModeState ? customColor.white : "none"};
+  border: ${({ darkModeState }) =>
+    darkModeState
+      ? `1px solid ${customColor.borderColor}`
+      : `1px solid ${customColor.boardHeaderGray}`};
+`;
+const LayoutBottom = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 56px;
+  z-index: 999;
+  border: 1px solid ${customColor.whiteGray};
+  background-color: ${customColor.white};
+`;
+const NavList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Listdiv = styled.div`
+  text-decoration: none;
+  color: ${customColor.black};
+  padding: 18.5px 16px;
 `;
 const InputBox = styled.form`
-  background-color: white;
+  background-color: ${customColor.white};
   width: 240px;
   height: 32px;
-  border-radius: 40px;
+  border-radius: 8px;
   border: none;
   display: flex;
   justify-content: center;
@@ -101,7 +166,7 @@ const InputBox = styled.form`
   border: 1px solid ${customColor.whiteGray};
 `;
 const InlineInput = styled.input`
-  width: 180px;
+  width: 200px;
   height: 30px;
   border: none;
   box-sizing: border-box;
@@ -115,38 +180,8 @@ const SubmitBtn = styled.button`
   padding: 2px;
   margin: 0;
   border: 0;
-  position: relative;
-  left: 10px;
   background-color: ${customColor.white};
   &:hover {
     cursor: pointer;
   }
-`;
-const DarkModeBtn = styled.button`
-  width: 24px;
-  height: 24px;
-  padding: 2px;
-  margin: 0;
-  border: 0;
-  background-color: ${customColor.backgroundGray};
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const LayoutBottom = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 64px;
-  z-index: 999;
-  border: 1px solid ${customColor.whiteGray};
-  background-color: white;
-`;
-const NavList = styled.div`
-  display: flex;
-  align-items: center;
-  height: 63px;
-  width: 1140px;
-  border-bottom: 1px solid ${customColor.whiteGray};
-  gap: 24px;
 `;
