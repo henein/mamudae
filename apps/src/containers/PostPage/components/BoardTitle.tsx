@@ -20,10 +20,10 @@ const BoardTit = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 64px;
-  border-radius: 32px;
-  border: 1px solid ${customColor.whiteGray};
+  border-radius: 16px;
+  border-bottom: 1px solid ${customColor.borderColor};
   z-index: 1;
-  box-shadow: 0 2px 3px ${customColor.shadow};
+  box-shadow: 0 2px 3px ${customColor.boardShadow};
 `;
 const TitleText = styled.div`
   color: ${customColor.black};

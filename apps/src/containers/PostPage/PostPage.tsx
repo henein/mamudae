@@ -76,8 +76,7 @@ const BoardContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid ${customColor.whiteGray};
-  border-top: none;
-  border-radius: 32px;
+  border-radius: 16px;
   width: 808px;
   height: 872px;
   box-sizing: border-box;
