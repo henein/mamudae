@@ -33,7 +33,7 @@ const DetailPage = () => {
             views={views}
             createTime={createTime}
           />
-          <Content>{text}</Content>
+          <Content dangerouslySetInnerHTML={{ __html: text }} />
           <Like recommend={recommend} />
         </Wrapper>
       </WriteBox>
