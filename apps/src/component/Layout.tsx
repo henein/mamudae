@@ -3,9 +3,10 @@ import Footer from "./Footer";
 import Header from "./Header";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
-import { lightMode, darkMode } from "../constants/customColor";
+import { lightMode, darkMode } from "../constants/DefaultTheme";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import GlobalStyles from "../../styles/GlobalStyles";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
   const isDarkMode = useSelector(
@@ -26,9 +27,11 @@ const Layout = ({ children }: React.PropsWithChildren) => {
     window.scrollY > 16 ? setStickyTop(true) : setStickyTop(false);
   };
 
+  const theme = isDarkMode ? darkMode : lightMode;
   return (
     <>
-      <ThemeProvider theme={isDarkMode ? darkMode : lightMode}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
         <Head stickyTop={stickyTop}>
           <Header stickyTop={stickyTop} />
         </Head>
