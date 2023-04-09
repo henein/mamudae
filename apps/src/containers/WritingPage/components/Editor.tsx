@@ -51,7 +51,6 @@ const Editor = ({ value, onChange }: EditorProps) => {
   return (
     <Wrapper>
       <CustomReactQuill
-        theme="snow"
         value={editorHtml}
         onChange={handleChange}
         modules={modules}
@@ -82,7 +81,7 @@ const CustomReactQuill = styled(ReactQuill)`
     background-color: ${customColor.white};
   }
   .ql-container {
-    height: calc(100% - 141px);
+    height: calc(100% - 48px);
     border: none;
     padding: 20px 40px;
   }

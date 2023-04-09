@@ -23,8 +23,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
   }, []);
 
   const handleScroll = () => {
-    console.log(window.scrollY);
-    window.scrollY > 16 ? setStickyTop(true) : setStickyTop(false);
+    // window.scrollY > 16 ? setStickyTop(true) : setStickyTop(false);
   };
 
   const theme = isDarkMode ? darkMode : lightMode;

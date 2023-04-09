@@ -22,8 +22,8 @@ export const usePrintCode = ({ code, options }: IUsePrintCode) => {
       enabled: false,
       onSuccess: (data) => {
         console.log(data);
-        // setLocalStorage("access", headers["access_token"].substring(5));
-        // setLocalStorage("refresh", headers["refresh_token"].substring(5));
+        setLocalStorage("access", data["access_token"].substring(7));
+        setLocalStorage("refresh", data["refresh_token"].substring(7));
         router.push("/");
       },
     }

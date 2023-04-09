@@ -52,12 +52,16 @@ const Login = () => {
 export default Login;
 
 export const FormInputCss = css`
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   border-radius: 32px;
   width: 100%;
   height: 41px;
   padding: 12px 16px;
   font-size: 14px;
+  background-color: ${(prop) => prop.theme.input};
+  ::placeholder {
+    color: ${(prop) => prop.theme.subText};
+  }
 `;
 
 const KaKaoImg = styled(Image)`
@@ -79,7 +83,7 @@ const Container = styled.form`
   border: 1px solid ${customColor.whiteGray};
   width: 380px;
   height: 380px;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
   border-radius: 32px;
@@ -91,6 +95,7 @@ const Title = styled.span`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
+  color: ${(prop) => prop.theme.Text};
 `;
 const Id = styled.input`
   ${FormInputCss}

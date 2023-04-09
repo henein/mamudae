@@ -8,7 +8,6 @@ import Write from "./components/Write";
 import Comment from "./components/Comment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
 import styled from "styled-components";
-import { customColor } from "../../constants/customColor";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import CompleteLogin from "../../component/CompleteLogin";
 
@@ -34,14 +33,14 @@ const DetailPage = () => {
             createTime={createTime}
           />
           <Content dangerouslySetInnerHTML={{ __html: text }} />
-          <Like recommend={recommend} />
+          <Like recommend={recommend} id={id} />
         </Wrapper>
       </WriteBox>
 
       <SideBox>
         <CompleteLogin />
         {/* <Login /> */}
-        <Board />
+        {/* <Board /> */}
       </SideBox>
 
       <CommentBox>
@@ -76,6 +75,7 @@ const Content = styled.div`
   font-weight: 500;
   padding: 0 8px;
   line-height: 18px;
+  color: ${(prop) => prop.theme.Text};
 `;
 
 const SideBox = styled.div`
@@ -88,20 +88,20 @@ const SideBox = styled.div`
 
 const CommentBox = styled.div`
   margin-top: 20px;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.card};
   width: 808px;
   border-radius: 32px;
   ::-webkit-scrollbar {
     display: none;
   }
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   display: flex;
   flex-direction: column;
 `;
 const WriteBox = styled.div`
   border-radius: 32px;
-  background-color: ${customColor.white};
-  border: 1px solid ${customColor.whiteGray};
+  background-color: ${(prop) => prop.theme.card};
+  border: 1px solid ${(prop) => prop.theme.border};
   ::-webkit-scrollbar {
     display: none;
   }

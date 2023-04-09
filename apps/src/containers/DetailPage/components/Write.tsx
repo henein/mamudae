@@ -26,11 +26,16 @@ const WriteComment = styled.input`
   padding: 12px 8px;
   border-radius: 16px;
   border: 1px solid ${customColor.whiteGray};
+  background-color: ${(prop) => prop.theme.input};
+  ::placeholder {
+    color: ${(prop) => prop.theme.subText};
+  }
 `;
 const NumberOfComments = styled.p`
   font-weight: 900;
   font-size: 16px;
   margin-bottom: 16px;
+  color: ${(prop) => prop.theme.Text  };
 `;
 const WriteForm = styled.form`
   z-index: 1;
@@ -44,5 +49,5 @@ const WriteForm = styled.form`
   border-bottom: 1px solid ${customColor.whiteGray};
   padding: 0 24px;
   position: sticky;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.cardHeader};
 `;

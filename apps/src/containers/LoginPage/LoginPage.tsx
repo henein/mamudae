@@ -4,6 +4,7 @@ import { customColor } from "../../constants/customColor";
 import Login from "./components/Login";
 
 const LoginPage = () => {
+  
   return (
     <Container>
       <LoginTitle>Henein</LoginTitle>

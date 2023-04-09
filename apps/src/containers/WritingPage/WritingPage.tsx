@@ -16,12 +16,15 @@ const WritingPage = () => {
 
   const submit = (data: FieldValues) => {
     console.log(value);
-    mutate({
-      title: data["title"],
-      boardType: data["selectBoard"],
-      text: value,
-      name: "임송재", // 로컬스토리지에 저장한 닉네임넣기
-    });
+    console.log(data);
+    if (value !== "") {
+      mutate({
+        title: data["title"],
+        boardType: data["selectBoard"],
+        text: value,
+        name: "임송재", // 로컬스토리지에 저장한 닉네임넣기
+      });
+    }
   };
 
   const handleChange = (value: any) => {
@@ -39,7 +42,11 @@ const WritingPage = () => {
         </SelectBoard>
 
         <Line src={line} alt="none" />
-        <Title placeholder="제목" type="text" {...register("title")} />
+        <Title
+          placeholder="제목"
+          type="text"
+          {...register("title", { required: true })}
+        />
       </TitleBox>
 
       <EditorBox>
