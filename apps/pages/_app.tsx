@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Layout from "../src/component/Layout";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
+import SecondLayout from "../src/component/SecondLayout";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
@@ -23,11 +24,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
               </Layout>
             ) : (
-              <Component {...pageProps} />
+              <SecondLayout>
+                <Component {...pageProps} />
+              </SecondLayout>
             )}
           </Provider>
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </>
   );
