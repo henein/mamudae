@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import Login from "./components/Login";
+import Profile from "./components/Profile";
 
-const LoginPage = () => {
-  
+const RegisterPage = () => {
   return (
     <Container>
-      <LoginTitle>Henein</LoginTitle>
-      <Login />
+      <Title>Henein</Title>
+      <Profile />
     </Container>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
 
-const LoginTitle = styled.span`
+const Title = styled.span`
   position: absolute;
   top: 16%;
   left: 50%;

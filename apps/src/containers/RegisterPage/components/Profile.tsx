@@ -36,6 +36,7 @@ const Title = styled.div`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
+  color: ${(prop) => prop.theme.Text};
 `;
 const ProfileImg = styled(Image)`
   margin: 0 auto;
@@ -49,12 +50,14 @@ const CompletionBtn = styled(Button)``;
 const Container = styled.form`
   z-index: 1;
   justify-content: space-between;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
   height: 383px;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
   border-radius: 32px;
   padding: 20px 24px;
+  position: absolute;
+  top: calc(16% + 30px);
 `;

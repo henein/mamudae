@@ -33,7 +33,7 @@ const Comment = () => {
 export default Comment;
 
 const ReCommentBtn = styled.button`
-  color: ${customColor.darkGray};
+  color: ${(prop) => prop.theme.subText};
   font-size: 12px;
   text-align: start;
   &:hover {
@@ -59,7 +59,7 @@ const Job = styled.div`
   background-color: ${customColor.labelBlack};
 `;
 const Time = styled.div`
-  color: ${customColor.darkGray};
+  color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
 const Floor = styled.div`
@@ -71,7 +71,7 @@ const Floor = styled.div`
   background-color: ${customColor.floor};
 `;
 const NickName = styled.div`
-  color: ${customColor.darkGray};
+  color: ${(prop) => prop.theme.Text};
   margin-right: 4px;
   font-size: 12px;
 `;
@@ -96,4 +96,5 @@ const UserInfo = styled.div`
 const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
+  color: ${(prop) => prop.theme.Text};
 `;

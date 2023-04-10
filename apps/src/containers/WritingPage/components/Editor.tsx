@@ -51,7 +51,6 @@ const Editor = ({ value, onChange }: EditorProps) => {
   return (
     <Wrapper>
       <CustomReactQuill
-        theme="snow"
         value={editorHtml}
         onChange={handleChange}
         modules={modules}
@@ -65,15 +64,16 @@ export default Editor;
 const CustomReactQuill = styled(ReactQuill)`
   height: 100%;
   .ql-toolbar {
-    border-radius: 32px;
-    border: none;
-    border-bottom: 1px solid ${customColor.whiteGray};
-    padding: 20px 24px;
+    padding: 8px 20px;
     box-shadow: 0 2px 4px ${customColor.shadow};
     width: 100%;
-    height: 141px;
+    height: 48px;
     margin: 0 auto;
     z-index: 1;
+    border-radius: 32px;
+    border: none;
+    display: flex;
+    align-items: center;
     top: 0;
     left: 0;
     right: 0;
@@ -81,8 +81,12 @@ const CustomReactQuill = styled(ReactQuill)`
     background-color: ${customColor.white};
   }
   .ql-container {
-    height: calc(100% - 141px);
+    height: calc(100% - 48px);
     border: none;
+    padding: 20px 40px;
+  }
+  .ql-editor {
+    padding: 0;
   }
 `;
 

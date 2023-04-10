@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(["detailPageData", `${id}`], async () => {
     const json = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/board/F/${id}`
+      `${process.env.NEXT_PUBLIC_API_URL}/board/${id}`
     );
     const data = json.data;
     console.log(data);

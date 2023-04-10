@@ -1,7 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { usePostRecommend } from "../../../hooks/detailPageHooks/usePostRecommend";
+import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 
-const LikeIcon = () => {
+interface ILikeIcon {
+  id: string;
+}
+
+const LikeIcon = ({ id }: ILikeIcon) => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { recommend } = usePostRecommend({ id, accessToken });
+  
   return (
     <>
       <Svg
@@ -10,8 +20,9 @@ const LikeIcon = () => {
         viewBox="0 0 40 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        onClick={recommend}
       >
-        <Rect x="0.5" y="0.5" width="39" height="39" rx="19.5" fill="white" />
+        <Rect x="0.5" y="0.5" width="39" height="39" rx="19.5" />
         <mask
           id="mask0_132_572"
           maskUnits="userSpaceOnUse"
@@ -47,6 +58,7 @@ const Rect = styled.rect`
   &:hover {
     fill: red;
   }
+  fill: ${(prop) => prop.theme.card};
 `;
 
 const Svg = styled.svg`
