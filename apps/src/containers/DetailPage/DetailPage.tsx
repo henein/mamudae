@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import Board from "../../component/Board";
-import Login from "../../component/Login";
+import React from "react";
 import Like from "./components/Like";
 import Title from "./components/Title";
 import Write from "./components/Write";
@@ -39,8 +37,6 @@ const DetailPage = () => {
 
       <SideBox>
         <CompleteLogin />
-        {/* <Login /> */}
-        {/* <Board /> */}
       </SideBox>
 
       <CommentBox>

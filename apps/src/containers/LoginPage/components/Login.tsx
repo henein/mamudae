@@ -80,7 +80,7 @@ const KaKaoDiv = styled.div`
 const Container = styled.form`
   z-index: 1;
   justify-content: space-between;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
   height: 380px;
   background-color: ${(prop) => prop.theme.cardHeader};
