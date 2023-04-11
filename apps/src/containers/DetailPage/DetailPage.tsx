@@ -1,14 +1,11 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import Board from "../../component/Board";
-import Login from "../../component/Login";
+import React from "react";
 import Like from "./components/Like";
 import Title from "./components/Title";
 import Write from "./components/Write";
 import Comment from "./components/Comment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
 import styled from "styled-components";
-import { customColor } from "../../constants/customColor";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import CompleteLogin from "../../component/CompleteLogin";
 
@@ -17,23 +14,29 @@ const DetailPage = () => {
   const id = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, name, views } = useDetail({ id, options });
+  const { title, text, recommend, name, views, createTime } = useDetail({
+    id,
+    options,
+  });
 
   return (
     <Container>
       <Announcement />
       <WriteBox>
         <Wrapper>
-          <Title title={title} name={name} views={views} />
-          <Content>{text}</Content>
-          <Like recommend={recommend} />
+          <Title
+            title={title}
+            name={name}
+            views={views}
+            createTime={createTime}
+          />
+          <Content dangerouslySetInnerHTML={{ __html: text }} />
+          <Like recommend={recommend} id={id} />
         </Wrapper>
       </WriteBox>
 
       <SideBox>
         <CompleteLogin />
-        {/* <Login /> */}
-        <Board />
       </SideBox>
 
       <CommentBox>
@@ -68,6 +71,7 @@ const Content = styled.div`
   font-weight: 500;
   padding: 0 8px;
   line-height: 18px;
+  color: ${(prop) => prop.theme.Text};
 `;
 
 const SideBox = styled.div`
@@ -80,20 +84,20 @@ const SideBox = styled.div`
 
 const CommentBox = styled.div`
   margin-top: 20px;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.card};
   width: 808px;
   border-radius: 32px;
   ::-webkit-scrollbar {
     display: none;
   }
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   display: flex;
   flex-direction: column;
 `;
 const WriteBox = styled.div`
   border-radius: 32px;
-  background-color: ${customColor.white};
-  border: 1px solid ${customColor.whiteGray};
+  background-color: ${(prop) => prop.theme.card};
+  border: 1px solid ${(prop) => prop.theme.border};
   ::-webkit-scrollbar {
     display: none;
   }

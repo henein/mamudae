@@ -89,10 +89,10 @@ const KaKaoDiv = styled.div`
 const Container = styled.form`
   z-index: 1;
   justify-content: space-between;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
   height: 450px;
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
   border-radius: 32px;
@@ -104,6 +104,7 @@ const Title = styled.span`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
+  color: ${(prop) => prop.theme.Text};
 `;
 const Id = styled.input`
   ${FormInputCss}
@@ -114,7 +115,9 @@ const PassWord = styled.input`
 const ConfirmPassWord = styled.input`
   ${FormInputCss}
 `;
-const LoginBtn = styled(Button)``;
+const LoginBtn = styled(Button)`
+  border: 1px solid ${(prop) => prop.theme.border};
+`;
 
 const SignUpContents = styled.div`
   width: 100%;
@@ -141,7 +144,7 @@ const MidLineTextDiv = styled.div`
 `;
 const KaKaoBtn = styled.button`
   border-radius: 16px;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${(prop) => prop.theme.border};
   background-color: ${customColor.yellow};
   font-size: 14px;
   color: ${customColor.black};
@@ -156,7 +159,7 @@ const KaKaoBtn = styled.button`
 `;
 const LeftBtn = styled.button`
   font-size: 12px;
-  color: ${customColor.darkGray};
+  color: ${(prop) => prop.theme.subText};
 `;
 const RightBtn = styled.button`
   font-size: 12px;

@@ -4,14 +4,16 @@ import time from "/public/detailPageImages/schedule.png";
 import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
+import timeDifference from "../../../utils/timeDifference";
 
 interface ITitle {
   title: string;
   name: string;
   views: number;
+  createTime: string;
 }
 
-const Title = ({ title, name, views }: ITitle) => {
+const Title = ({ title, name, views, createTime }: ITitle) => {
   return (
     <Container>
       <Name>{title}</Name>
@@ -23,7 +25,7 @@ const Title = ({ title, name, views }: ITitle) => {
         <TimeAndWatch>
           <Time>
             <CustomImage src={time} alt="none" />
-            3일 전
+            {timeDifference(createTime)}
           </Time>
           <Watch>
             <CustomImage src={watch} alt="none" />
@@ -45,11 +47,11 @@ const Container = styled.div`
   justify-content: center;
   border-radius: 32px;
   min-height: 97px;
-  border-bottom: 1px solid ${customColor.whiteGray};
+  border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
   position: sticky;
   backdrop-filter: blur(30px);
-  background-color: ${customColor.white};
+  background-color: ${(prop) => prop.theme.cardHeader};
 `;
 
 const CustomImage = styled(Image)`
@@ -59,7 +61,7 @@ const CustomImage = styled(Image)`
 const Nickname = styled.div`
   margin-right: 4px;
   font-size: 12px;
-  color: ${customColor.gray};
+  color: ${(prop) => prop.theme.subText};
 `;
 const Floor = styled.div`
   padding: 2px 4px;
@@ -77,13 +79,13 @@ const Time = styled.div`
   align-items: center;
   margin-right: 12px;
   font-size: 12px;
-  color: ${customColor.gray};
+  color: ${(prop) => prop.theme.subText};
 `;
 const Watch = styled.div`
   display: flex;
   align-items: center;
   font-size: 12px;
-  color: ${customColor.gray};
+  color: ${(prop) => prop.theme.subText};
 `;
 const NicknameAndFloor = styled.div`
   display: flex;
@@ -93,6 +95,7 @@ const Name = styled.div`
   font-size: 24px;
   font-weight: 900;
   margin-bottom: 8px;
+  color: ${(prop) => prop.theme.Text};
 `;
 const WriteState = styled.div`
   align-items: center;

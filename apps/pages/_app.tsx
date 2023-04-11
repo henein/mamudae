@@ -12,7 +12,9 @@ import SecondLayout from "../src/component/SecondLayout";
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
   const router = useRouter();
-  const shouldRenderLayout = !["/login", "/signUp"].includes(router.pathname);
+  const shouldRenderLayout = !["/login", "/signUp", "/register"].includes(
+    router.pathname
+  );
 
   return (
     <>

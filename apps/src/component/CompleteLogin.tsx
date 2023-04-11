@@ -31,7 +31,7 @@ export default CompleteLogin;
 const MyInfo = styled.div`
   font-size: 12px;
   font-weight: 900;
-  color: ${customColor.darkGray};
+  color: ${(prop) => prop.theme.subText};
   &:hover {
     cursor: pointer;
   }
@@ -39,7 +39,7 @@ const MyInfo = styled.div`
 const LogOut = styled.div`
   font-size: 12px;
   font-weight: 900;
-  color: ${customColor.orange};
+  color: ${(prop) => prop.theme.Brand};
   &:hover {
     cursor: pointer;
   }
@@ -71,6 +71,7 @@ const Nickname = styled.div`
   font-size: 16px;
   font-weight: 900;
   margin-bottom: 8px;
+  color: ${(prop) => prop.theme.Text};
 `;
 const Profile = styled.div`
   display: flex;
