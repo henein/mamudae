@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import TextRolling from "./TextRolling";
-import { customColor } from "../../constants/customColor";
 
 const Announcement = () => {
   return (
@@ -21,11 +20,11 @@ const Layout = styled.div`
 const ContentBox = styled.div`
   width: 1140px;
   height: 40px;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   box-sizing: border-box;
   margin: 0 auto;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.card};
 `;
 const ViewZone = styled.div`
   margin: 8px 0;

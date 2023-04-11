@@ -1,23 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import Image from "next/image";
 import { BoardInfoType } from "../MainPage";
-import { customColor } from "../../../constants/customColor";
+import SvgIcon from "@mui/material/SvgIcon";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 const BoardHead = ({ board_title }: BoardInfoType) => {
+  const darkModeState = useDarkMode();
+
   return (
-    <BoardHeader>
+    <BoardHeader darkModeState={darkModeState}>
       <Link href={`board/${board_title}`}>
         <Title>
           {board_title}
           <ImgDiv>
-            <Image
-              src='/mainPageImages/chevron_right.svg'
-              width='7'
-              height='10'
-              alt=''
-            />
+            <SvgIcon component={ChevronRightIcon} />
           </ImgDiv>
         </Title>
       </Link>
@@ -26,19 +24,21 @@ const BoardHead = ({ board_title }: BoardInfoType) => {
 };
 export default BoardHead;
 
-const BoardHeader = styled.div`
+const BoardHeader = styled.div<{ darkModeState: boolean }>`
   display: flex;
   align-items: center;
   height: 60px;
   border-radius: 16px;
-  border-bottom: 1px solid ${customColor.borderColor};
+  border-bottom: 1px solid ${({ theme }) => theme.border};
+  background-color: ${({ theme }) => theme.cardHeader};
   z-index: 1;
-  box-shadow: 0px 4px 8px ${customColor.boardShadow};
+  box-shadow: 0px 4px 8px
+    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.border)};
   padding-left: 24px;
 `;
 const Title = styled.h3`
   display: flex;
-  color: ${customColor.black};
+  color: ${({ theme }) => theme.Text};
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -50,4 +50,5 @@ const ImgDiv = styled.div`
   align-items: center;
   width: 20px;
   height: 20px;
+  color: ${({ theme }) => theme.Brand};
 `;

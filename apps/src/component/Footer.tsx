@@ -15,7 +15,7 @@ const Footer = () => {
 export default Footer;
 
 const Bottom = styled.div`
-  background-color: #edebf2;
+  background-color: ${({ theme }) => theme.footer};
   height: 144px;
   display: flex;
   justify-content: center;
@@ -28,14 +28,14 @@ const InlineBox = styled.div`
   width: 1140px;
 `;
 const Title = styled.h1`
+  color: ${({ theme }) => theme.footerText};
   font-size: 24px;
   font-weight: 900;
   line-height: 29.05px;
-  color: rgba(0, 0, 0, 0.6);
   margin-bottom: 4px;
 `;
 const CopyRight = styled.span`
+  color: ${({ theme }) => theme.footerSubText};
   font-size: 12px;
   line-height: 14.52px;
-  color: rgba(0, 0, 0, 0.3);
 `;
