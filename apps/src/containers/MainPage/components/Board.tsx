@@ -3,7 +3,6 @@ import styled from "styled-components";
 import UserPostList from "./UserPostList";
 import BoardHead from "./BoardHead";
 import { BoardInfoType } from "../MainPage";
-import { customColor } from "../../../constants/customColor";
 
 function Board({ board_title, isLarge }: BoardInfoType) {
   return (
@@ -21,8 +20,8 @@ const Layout = styled.div`
   box-sizing: border-box;
 `;
 const BoardContent = styled.div<{ isLarge?: boolean }>`
-  border: 1px solid ${customColor.whiteGray};
-  background-color: ${customColor.white};
+  border: 1px solid ${({ theme }) => theme.border};
+  background-color: ${({ theme }) => theme.card};
   border-radius: 16px;
   width: ${(props) => (props.isLarge ? "816px" : "396px")};
   height: 332px;

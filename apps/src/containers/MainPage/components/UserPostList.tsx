@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { customColor } from "../../../constants/customColor";
 import { useGetAllPost } from "../../../hooks/mainPageHooks/useGetAllPost";
 import { BoardInfoType } from "../MainPage";
 
@@ -54,7 +53,7 @@ const PostList = styled.div`
   margin-top: 20px;
   font-size: 12px;
   a {
-    color: ${customColor.black};
+    color: ${({ theme }) => theme.Text};
   }
 `;
 const PostItem = styled.div`
@@ -62,5 +61,5 @@ const PostItem = styled.div`
   justify-content: space-between;
 `;
 const NickName = styled.span`
-  color: ${customColor.darkGray};
+  color: ${({ theme }) => theme.subText};
 `;

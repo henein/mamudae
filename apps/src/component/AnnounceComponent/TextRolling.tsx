@@ -1,7 +1,8 @@
 import Slider from "react-slick";
-import Image from "next/image";
 import styled from "styled-components";
 import { useGetAnnounce } from "../../hooks/announce/useGetAnnounce";
+import SvgIcon from "@mui/material/SvgIcon";
+import CampaignIcon from "@mui/icons-material/Campaign";
 
 type SlidePropType = {
   txt: string;
@@ -15,12 +16,7 @@ const CustomSlide = ({ txt, ...props }: SlidePropType) => {
   return (
     <TextSet {...props}>
       <ImgDiv>
-        <Image
-          src='/announceCompoImages/campaign.svg'
-          width='20'
-          height='16'
-          alt='campaignimg'
-        />
+        <SvgIcon component={CampaignIcon} inheritViewBox />;
       </ImgDiv>
       <InfoText>{txt}</InfoText>
     </TextSet>
@@ -75,8 +71,10 @@ const ImgDiv = styled.div`
   height: 24px;
   border: none;
   margin-right: 4px;
+  color: ${({ theme }) => theme.Brand};
 `;
 const InfoText = styled.span`
+  color: ${({ theme }) => theme.Text};
   font-size: 14px;
   font-weight: 400;
 `;

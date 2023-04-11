@@ -22,5 +22,6 @@ declare module "styled-components" {
     button: string;
     toolButton: string;
     chatSelfText: string;
+    headerButtonHover: string;
   }
 }
