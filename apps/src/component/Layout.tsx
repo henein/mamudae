@@ -1,37 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import { lightMode, darkMode } from "../constants/DefaultTheme";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import GlobalStyles from "../../styles/GlobalStyles";
+import useDarkMode from "../hooks/reduxHooks/useDarkMode";
+import useScroll from "../hooks/scrollHooks/useScroll";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
-  const isDarkMode = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
-
-  const [stickyTop, setStickyTop] = useState<boolean>(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    window.scrollY > 16 ? setStickyTop(true) : setStickyTop(false);
-  };
+  const isDarkMode = useDarkMode();
+  const { isScrollDown, stickyTop } = useScroll();
 
   const theme = isDarkMode ? darkMode : lightMode;
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <Head stickyTop={stickyTop}>
+        <Head isScrollDown={isScrollDown} stickyTop={stickyTop}>
           <Header stickyTop={stickyTop} />
         </Head>
         {children}
@@ -43,8 +29,11 @@ const Layout = ({ children }: React.PropsWithChildren) => {
 
 export default Layout;
 
-const Head = styled.header<{ stickyTop: boolean }>`
+const Head = styled.header<{ isScrollDown: boolean; stickyTop: boolean }>`
   position: ${({ stickyTop }) => stickyTop && "sticky"};
   top: 0;
   z-index: 1000;
+  transform: ${({ isScrollDown }) =>
+    isScrollDown ? "translateY(-73px)" : "none"};
+  transition: transform 0.2s ease-in-out;
 `;
