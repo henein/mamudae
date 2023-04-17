@@ -14,7 +14,7 @@ export const usePostRecommend = ({
 }: IPostRecommend) => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation(
-    ["getRecommend"],
+    ["postRecommend", id],
     () => postRecommend({ id, accessToken }),
     {
       ...options,

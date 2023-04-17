@@ -4,8 +4,14 @@ import { customColor } from "../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import Label from "./Label";
+import { useUserInfo } from "../hooks/user/useUserInfo";
+import { useLocalStorage } from "../hooks/storage/useLocalStorage";
 
 const CompleteLogin = () => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data } = useUserInfo({ accessToken });
+
   return (
     <LoginContainer>
       <LoginHeader>
