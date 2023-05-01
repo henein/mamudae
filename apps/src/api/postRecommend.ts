@@ -12,7 +12,7 @@ export const postRecommend = async ({ id, accessToken }: IPostRecommend) => {
     {},
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`, // Include the accessToken in the Authorization header
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );

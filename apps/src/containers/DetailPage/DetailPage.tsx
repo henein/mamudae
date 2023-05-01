@@ -8,6 +8,9 @@ import { useDetail } from "../../hooks/detailPageHooks/useDetail";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import CompleteLogin from "../../component/CompleteLogin";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import Login from "../../component/Login";
 
 const DetailPage = () => {
   const router = useRouter();
@@ -18,6 +21,9 @@ const DetailPage = () => {
     id,
     options,
   });
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data } = useUserInfo({ accessToken });
 
   return (
     <Container>
@@ -36,7 +42,7 @@ const DetailPage = () => {
       </WriteBox>
 
       <SideBox>
-        <CompleteLogin />
+        {data?.username ? <CompleteLogin {...data} /> : <Login />}
       </SideBox>
 
       <CommentBox>
