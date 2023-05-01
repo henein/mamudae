@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { customColor } from "../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import Label from "./Label";
-import { useUserInfo } from "../hooks/user/useUserInfo";
 import { useLocalStorage } from "../hooks/storage/useLocalStorage";
 
-const CompleteLogin = () => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
-
+const CompleteLogin = ({ username }: any) => {
+  const { removeLocalStorage } = useLocalStorage();
+  const logout = () => {
+    removeLocalStorage("access");
+    removeLocalStorage("refresh");
+    window.location.reload();
+  };
   return (
     <LoginContainer>
       <LoginHeader>
         <RepresentativeImage src={circle} alt="none"></RepresentativeImage>
         <Profile>
-          <Nickname>프돔이</Nickname>
+          <Nickname>{username}</Nickname>
           <Honours>
             <Label type="level">2150</Label>
             <Label type="floor">49층</Label>
@@ -27,7 +28,7 @@ const CompleteLogin = () => {
       </LoginHeader>
       <LoginFooter>
         <MyInfo>내 정보</MyInfo>
-        <LogOut>로그아웃</LogOut>
+        <LogOut onClick={logout}>로그아웃</LogOut>
       </LoginFooter>
     </LoginContainer>
   );

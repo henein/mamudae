@@ -24,11 +24,11 @@ export const usePrintCode = ({ code, options }: IUsePrintCode) => {
         console.log(data);
         setLocalStorage("access", data["access_token"].substring(7));
         setLocalStorage("refresh", data["refresh_token"].substring(7));
-        // 첫 로그인일 시
-        // router.push("/register");
-
-        // 첫 로그인이 아닐 시
-        router.push("/");
+        data["status"]
+          ? // 첫 로그인일 시
+            router.push("/register")
+          : // 첫 로그인이 아닐 시
+            router.push("/");
       },
       onError: (err) => {
         console.log(err);
