@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import CommentMenuIcon from "./CommentMenuIcon";
+import Image from "next/image";
+import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
-import ReComments from "./ReComments";
+import CommentMenuIcon from "./CommentMenuIcon";
 
-const Comment = () => {
-  // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+const ReComments = () => {
   return (
-    <Comments>
+    <Container>
+      <ReComment src={reComment} alt="none" />
       <CommentBox>
         <CommentHeader>
           <UserInfo>
@@ -21,15 +22,19 @@ const Comment = () => {
         <CommentContent>안녕하세요</CommentContent>
         <div>
           <ReCommentBtn>답글</ReCommentBtn>
-          <ReComments />
         </div>
       </CommentBox>
-    </Comments>
+    </Container>
   );
 };
 
-export default Comment;
-
+export default ReComments;
+const Container = styled.div`
+  display: flex;
+  margin-top: 12px;
+  gap: 12px;
+`;
+const ReComment = styled(Image)``;
 const ReCommentBtn = styled.button`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
@@ -38,11 +43,6 @@ const ReCommentBtn = styled.button`
     color: ${customColor.moreDarkGray};
     font-weight: 900;
   }
-`;
-
-const Comments = styled.div`
-  display: flex;
-  margin-top: 20px;
 `;
 
 const Job = styled.div`
@@ -75,8 +75,6 @@ const CommentBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding-bottom: 14px;
-  border-bottom: 1px solid ${customColor.divider};
 `;
 const CommentHeader = styled.div`
   display: flex;

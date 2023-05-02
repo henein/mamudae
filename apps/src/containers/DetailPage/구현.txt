@@ -1,0 +1,6 @@
+1. Comment 컴포넌트
+props 종류
+1. userInfo: 댓글쓰는 사람의 정보
+2. isReply: 대댓글인지 state 불리언값?
+
+<Comment userInfo={userInfo} isReply={isReply}/>
