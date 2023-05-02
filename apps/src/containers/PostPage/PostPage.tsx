@@ -8,10 +8,15 @@ import Login from "../../component/Login";
 import Button from "../../component/Button";
 import { customColor } from "../../constants/customColor";
 import { useRouter } from "next/router";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import CompleteLogin from "../../component/CompleteLogin";
 
 const PostPage = () => {
   const router = useRouter();
-
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data } = useUserInfo({ accessToken });
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -32,7 +37,7 @@ const PostPage = () => {
       <Announcement />
       <PostPageSet>
         <Aside>
-          <Login />
+          {data?.username ? <CompleteLogin {...data} /> : <Login />}
         </Aside>
         <BoardContent>
           <ContentSet>
@@ -44,12 +49,12 @@ const PostPage = () => {
       </PostPageSet>
 
       <WriteBtn
-        type='submit'
-        sort='main'
-        width='81px'
-        height='41px'
+        type="submit"
+        sort="main"
+        width="81px"
+        height="41px"
         size={14}
-        fontWeight='700'
+        fontWeight="700"
       >
         작성하기
       </WriteBtn>
