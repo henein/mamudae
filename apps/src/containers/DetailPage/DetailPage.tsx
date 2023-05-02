@@ -92,7 +92,7 @@ const CommentBox = styled.div`
   margin-top: 20px;
   background-color: ${(prop) => prop.theme.card};
   width: 808px;
-  border-radius: 32px;
+  border-radius: 16px;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -101,7 +101,7 @@ const CommentBox = styled.div`
   flex-direction: column;
 `;
 const WriteBox = styled.div`
-  border-radius: 32px;
+  border-radius: 16px;
   background-color: ${(prop) => prop.theme.card};
   border: 1px solid ${(prop) => prop.theme.border};
   ::-webkit-scrollbar {

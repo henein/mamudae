@@ -5,6 +5,7 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
+import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 interface ITitle {
   title: string;
@@ -14,8 +15,10 @@ interface ITitle {
 }
 
 const Title = ({ title, name, views, createTime }: ITitle) => {
+  const darkModeState = useDarkMode();
+
   return (
-    <Container>
+    <Container darkModeState={darkModeState}>
       <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
@@ -38,19 +41,19 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 };
 
 export default Title;
-const Container = styled.div`
+const Container = styled.div<{ darkModeState: boolean }>`
   z-index: 1;
   top: 0;
-  box-shadow: 0 2px 4px ${customColor.shadow};
+  box-shadow: 0px 4px 8px
+    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.border)};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 32px;
+  border-radius: 16px;
   min-height: 97px;
   border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
   position: sticky;
-  backdrop-filter: blur(30px);
   background-color: ${(prop) => prop.theme.cardHeader};
 `;
 
