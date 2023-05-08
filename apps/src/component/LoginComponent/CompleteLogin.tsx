@@ -103,7 +103,7 @@ const LoginContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   border: 1px solid ${({ theme }) => theme.border};
-  border-radius: 32px;
+  border-radius: 16px;
   width: 300px;
   height: 118px;
 `;
