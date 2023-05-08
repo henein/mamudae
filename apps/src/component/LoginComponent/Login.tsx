@@ -29,16 +29,15 @@ const Login = () => {
 
 export default Login;
 const Text = styled.span`
-  color: ${customColor.darkGray};
+  color: ${({ theme }) => theme.subText};
   font-size: 12px;
-  font-weight: 900;
 `;
 const SignUpBtn = styled.button`
-  color: ${customColor.orange};
+  color: ${({ theme }) => theme.Brand};
   border: none;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.card};
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 700;
   &:hover {
     cursor: pointer;
   }
@@ -57,10 +56,10 @@ const LoginContainer = styled.div`
   padding: 20px 24px;
   display: flex;
   align-items: center;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.card};
   justify-content: center;
   flex-direction: column;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 32px;
   width: 300px;
   height: 118px;

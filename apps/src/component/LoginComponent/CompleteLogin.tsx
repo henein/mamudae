@@ -37,7 +37,6 @@ const CompleteLogin = ({ username }: any) => {
 export default CompleteLogin;
 const MyInfo = styled.div`
   font-size: 12px;
-  font-weight: 900;
   color: ${(prop) => prop.theme.subText};
   &:hover {
     cursor: pointer;
@@ -45,7 +44,7 @@ const MyInfo = styled.div`
 `;
 const LogOut = styled.div`
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 700;
   color: ${(prop) => prop.theme.Brand};
   &:hover {
     cursor: pointer;
@@ -76,7 +75,7 @@ const Honours = styled.div`
 `;
 const Nickname = styled.div`
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 700;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.Text};
 `;
@@ -97,12 +96,13 @@ const LoginHeader = styled.div`
   margin-bottom: 16px;
 `;
 const LoginContainer = styled.div`
+  background-color: ${({ theme }) => theme.card};
   padding: 20px 24px;
   display: flex;
   align-items: initial;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 32px;
   width: 300px;
   height: 118px;
