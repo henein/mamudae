@@ -80,13 +80,13 @@ const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 808px;
   height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.card};
 `;
 const ContentSet = styled.div`
   display: flex;
