@@ -13,10 +13,13 @@ const Profile = () => {
   const { getLocalStorage } = useLocalStorage();
 
   const accessToken = getLocalStorage("access");
+  const { mutate } = useSetUserName({
+    setName: "",
+    accessToken,
+  });
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
-    const newName = JSON.stringify(data);
-    // useSetUserName({ newName, accessToken });
+    mutate(data.nickname);
   };
 
   return (

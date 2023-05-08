@@ -7,16 +7,18 @@ import Button from "../Button";
 const Login = () => {
   return (
     <LoginContainer>
-      <LoginBtn
-        type="submit"
-        sort="main"
-        width="252px"
-        height="39px"
-        size={12}
-        fontWeight="900"
-      >
-        로그인
-      </LoginBtn>
+      <Link href="/login">
+        <LoginBtn
+          type="submit"
+          sort="main"
+          width="252px"
+          height="39px"
+          size={12}
+          fontWeight="900"
+        >
+          로그인
+        </LoginBtn>
+      </Link>
       <LoginFooter>
         <Text>로그인이 안 되시나요?</Text>
         <Link href="/signUp">

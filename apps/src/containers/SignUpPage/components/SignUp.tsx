@@ -7,8 +7,10 @@ import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
+import useKaKao from "../../../hooks/kakao/useKaKao";
 
 const SignUp = () => {
+  const { login } = useKaKao();
   const { register, handleSubmit } = useForm();
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
@@ -47,7 +49,7 @@ const SignUp = () => {
         <Line />
       </Lines>
       <KaKaoBtn type="button">
-        <KaKaoDiv>
+        <KaKaoDiv onClick={login}>
           <KaKaoImg src={kaKao} alt="s" />
           <span>KaKao로 가입하기</span>
         </KaKaoDiv>

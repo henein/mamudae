@@ -5,11 +5,6 @@ interface IUseUserInfo {
   accessToken: string | undefined;
   options?: any;
 }
-interface IUseSetUserName {
-  setName: string;
-  accessToken: string | undefined;
-  options?: any;
-}
 
 export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
   const { data } = useQuery("userInfo", () => userInfo(accessToken), {
@@ -21,19 +16,21 @@ export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
   return { data };
 };
 
+interface IUseSetUserName {
+  setName: string;
+  accessToken: string | undefined;
+  options?: any;
+}
+
 export const useSetUserName = ({
   setName,
   accessToken,
   options,
 }: IUseSetUserName) => {
-  const { mutate } = useMutation(
-    "setUserName",
-    () => setUserName(setName, accessToken),
-    {
-      ...options,
-      enabled: !!accessToken,
-    }
-  );
+  const { mutate } = useMutation(() => setUserName(setName, accessToken), {
+    ...options,
+    enabled: !!accessToken,
+  });
 
   return { mutate };
 };
