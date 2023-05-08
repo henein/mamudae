@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { customColor } from "../constants/customColor";
+import { customColor } from "../../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
-import Label from "./Label";
-import { useLocalStorage } from "../hooks/storage/useLocalStorage";
+import Label from "../Label";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 
 const CompleteLogin = ({ username }: any) => {
   const { removeLocalStorage } = useLocalStorage();

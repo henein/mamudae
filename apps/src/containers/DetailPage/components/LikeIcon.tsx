@@ -11,7 +11,7 @@ const LikeIcon = ({ id }: ILikeIcon) => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
   const { recommend } = usePostRecommend({ id, accessToken });
-  
+
   return (
     <>
       <Svg

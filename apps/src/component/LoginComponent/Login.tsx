@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor } from "../constants/customColor";
+import { customColor } from "../../constants/customColor";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "../Button";
 
 const Login = () => {
   return (

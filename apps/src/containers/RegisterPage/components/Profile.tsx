@@ -1,17 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../../component/Button";
-import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import { FieldValues, useForm } from "react-hook-form";
 import { FormInputCss } from "../../LoginPage/components/Login";
+import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
+import { useSetUserName } from "../../../hooks/user/useUserInfo";
 
 const Profile = () => {
   const { register, handleSubmit } = useForm();
+  const { getLocalStorage } = useLocalStorage();
+
+  const accessToken = getLocalStorage("access");
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
+    const newName = JSON.stringify(data);
+    // useSetUserName({ newName, accessToken });
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>프로필</Title>

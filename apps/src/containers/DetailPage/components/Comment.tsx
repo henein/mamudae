@@ -4,8 +4,9 @@ import CommentMenuIcon from "./CommentMenuIcon";
 import { customColor } from "../../../constants/customColor";
 import ReComments from "./ReComments";
 
-const Comment = () => {
+const Comment = ({ commentdata }: any) => {
   // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+  // console.log(commentdata);
   return (
     <Comments>
       <CommentBox>
@@ -21,7 +22,9 @@ const Comment = () => {
         <CommentContent>안녕하세요</CommentContent>
         <div>
           <ReCommentBtn>답글</ReCommentBtn>
-          <ReComments />
+          {/* {replies && replies.map((item: CommentType, idx: number) => {
+            
+          })} */}
         </div>
       </CommentBox>
     </Comments>

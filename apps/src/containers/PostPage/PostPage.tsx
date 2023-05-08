@@ -4,13 +4,13 @@ import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/Login";
+import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
 import { customColor } from "../../constants/customColor";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
-import CompleteLogin from "../../component/CompleteLogin";
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 
 const PostPage = () => {
   const router = useRouter();
