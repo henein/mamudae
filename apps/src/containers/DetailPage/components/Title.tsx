@@ -95,8 +95,8 @@ const NicknameAndFloor = styled.div`
   align-items: center;
 `;
 const Name = styled.div`
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.Text};
 `;

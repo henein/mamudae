@@ -86,10 +86,10 @@ const Wrapper = styled.div`
   position: relative;
 `;
 const Content = styled.div`
-  margin-top: 8px;
+  margin-top: 20px;
   font-size: 16px;
-  font-weight: 500;
-  padding: 0 8px;
+  font-weight: 400;
+  padding: 0 24px;
   line-height: 18px;
   color: ${(prop) => prop.theme.Text};
 `;
