@@ -43,10 +43,10 @@ const Header = ({ stickyTop }: HeaderPropType) => {
         <RightDiv>
           <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
             <LightImg darkModeState={darkModeState}>
-              <SvgIcon component={LightModeIcon} />
+              <SvgIcon component={LightModeIcon} fontSize="small" />
             </LightImg>
             <DarkImg darkModeState={darkModeState}>
-              <SvgIcon component={DarkModeIcon} />
+              <SvgIcon component={DarkModeIcon} fontSize="small" />
             </DarkImg>
           </DarkModeBtn>
           <InputBox>
@@ -111,7 +111,7 @@ const DarkModeBtn = styled.button`
 `;
 const LightImg = styled.div<{ darkModeState: boolean }>`
   color: ${({ theme }) => theme.footerText};
-  padding: 6px;
+  padding: 5px;
   border-radius: 8px;
   background-color: ${({ darkModeState, theme }) =>
     darkModeState ? "none" : theme.cardHeader};
@@ -123,7 +123,7 @@ const LightImg = styled.div<{ darkModeState: boolean }>`
 `;
 const DarkImg = styled.div<{ darkModeState: boolean }>`
   color: ${({ theme }) => theme.footerText};
-  padding: 6px;
+  padding: 5px;
   border-radius: 8px;
   background-color: ${({ darkModeState, theme }) =>
     darkModeState ? theme.cardHeader : "none"};
@@ -131,6 +131,7 @@ const DarkImg = styled.div<{ darkModeState: boolean }>`
     darkModeState
       ? `1px solid ${theme.border}`
       : `1px solid ${theme.chatBackground}`};
+  box-sizing: border-box;
 `;
 const NavList = styled.div`
   display: flex;
