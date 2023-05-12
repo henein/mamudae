@@ -45,10 +45,10 @@ const MoreInfoBox = () => {
           disabled={0 < pageNum && pageNum < 11}
         >
           <Image
-            src='/postPageImages/keyboard_arrow_left.svg'
-            width='6'
-            height='10'
-            alt=''
+            src="/postPageImages/keyboard_arrow_left.svg"
+            width="6"
+            height="10"
+            alt=""
           />
         </NextPageBtn>
 
@@ -67,10 +67,10 @@ const MoreInfoBox = () => {
           disabled={pageNum + 9 >= totalPages}
         >
           <Image
-            src='/postPageImages/keyboard_arrow_right.svg'
-            width='6'
-            height='10'
-            alt=''
+            src="/postPageImages/keyboard_arrow_right.svg"
+            width="6"
+            height="10"
+            alt=""
           />
         </NextPageBtn>
       </MoreInfo>
@@ -86,13 +86,13 @@ const MoreInfo = styled.div`
   align-items: center;
   padding: 20px 24px;
   height: 64px;
-  border-top: 1px solid ${customColor.whiteGray};
+  border-top: 1px solid ${({ theme }) => theme.border};
 `;
 
 const NextPageBtn = styled.button`
   width: 32px;
   height: 32px;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.subText};
   border: none;
   &:hover {
     cursor: pointer;
@@ -112,7 +112,7 @@ const PageNumBtn = styled.button<PageNumBtnProps>`
   color: ${(props) =>
     props.active ? customColor.white : customColor.darkGray};
   background-color: ${(props) =>
-    props.active ? customColor.orange : customColor.white};
+    props.active ? props.theme.Brand : customColor.white};
   border-radius: ${(props) => props.active && "32px"};
   border: none;
   font-weight: 400;

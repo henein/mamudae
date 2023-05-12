@@ -4,14 +4,19 @@ import BoardTitle from "./components/BoardTitle";
 import UserPostList from "./components/UserPostList";
 import MoreInfoBox from "./components/MoreInfoBox";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/Login";
+import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
 import { customColor } from "../../constants/customColor";
 import { useRouter } from "next/router";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 
 const PostPage = () => {
   const router = useRouter();
-
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data } = useUserInfo({ accessToken });
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -32,7 +37,7 @@ const PostPage = () => {
       <Announcement />
       <PostPageSet>
         <Aside>
-          <Login />
+          {data?.username ? <CompleteLogin {...data} /> : <Login />}
         </Aside>
         <BoardContent>
           <ContentSet>
@@ -44,12 +49,12 @@ const PostPage = () => {
       </PostPageSet>
 
       <WriteBtn
-        type='submit'
-        sort='main'
-        width='81px'
-        height='41px'
+        type="submit"
+        sort="main"
+        width="81px"
+        height="41px"
         size={14}
-        fontWeight='700'
+        fontWeight="700"
       >
         작성하기
       </WriteBtn>
@@ -75,13 +80,13 @@ const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 808px;
   height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
-  background-color: ${customColor.white};
+  background-color: ${({ theme }) => theme.card};
 `;
 const ContentSet = styled.div`
   display: flex;

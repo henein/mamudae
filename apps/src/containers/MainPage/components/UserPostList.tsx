@@ -49,8 +49,7 @@ const PostList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 30px;
-  margin-top: 20px;
+  margin: 20px 30px 0px 24px;
   font-size: 12px;
   a {
     color: ${({ theme }) => theme.Text};

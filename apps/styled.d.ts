@@ -23,5 +23,6 @@ declare module "styled-components" {
     toolButton: string;
     chatSelfText: string;
     headerButtonHover: string;
+    mentionText: string;
   }
 }

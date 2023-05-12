@@ -60,7 +60,7 @@ const StyledButton = styled.button<IButton>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   &:active {
     transform: scale(0.98);

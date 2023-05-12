@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/Login";
+import Login from "../../component/LoginComponent/Login";
 import CharSelectBox from "./components/CharSelectBox";
 import LabelSelectBox from "./components/LabelSelectBox";
 

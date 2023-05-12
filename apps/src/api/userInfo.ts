@@ -8,3 +8,21 @@ export const userInfo = async (accessToken: string | undefined) => {
   });
   return res.data;
 };
+
+export const setUserName = async (
+  setName: string,
+  accessToken: string | undefined
+) => {
+  const res = await axios.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/userinfo/set-name`,
+    {
+      username: setName,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  return res.data;
+};

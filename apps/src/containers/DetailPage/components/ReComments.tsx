@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import CommentMenuIcon from "./CommentMenuIcon";
+import Image from "next/image";
+import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
-import ReComments from "./ReComments";
+import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
-import { CommentType } from "../DetailPage";
 
-// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
-const Comment = ({ ...data }) => {
-  console.log(data.replies);
+const ReComments = ({ ...data }) => {
+  console.log(data);
   return (
-    <Comments>
+    <Container>
+      <ReComment src={reComment} alt="none" />
       <CommentBox>
         <CommentHeader>
           <UserInfo>
@@ -21,28 +21,31 @@ const Comment = ({ ...data }) => {
           </UserInfo>
           <CommentMenuIcon />
         </CommentHeader>
-        <CommentContent>{data.comment}</CommentContent>
+        <CommentContent>
+          {data.tag ? (
+            <NormalSpan>
+              <TagSpan>{"@" + data.tag}</TagSpan>
+              {data.comment}
+            </NormalSpan>
+          ) : (
+            data.comment
+          )}
+        </CommentContent>
         <div>
           <ReCommentBtn>답글</ReCommentBtn>
-          {data.replies.map((item: CommentType) => {
-            return (
-              <ReComments
-                comment={item.comment}
-                userId={item.userId}
-                modifiedDate={item.modifiedDate}
-                tag={item.tag}
-                key={item.commentId}
-              />
-            );
-          })}
         </div>
       </CommentBox>
-    </Comments>
+    </Container>
   );
 };
 
-export default Comment;
-
+export default ReComments;
+const Container = styled.div`
+  display: flex;
+  margin-top: 12px;
+  gap: 12px;
+`;
+const ReComment = styled(Image)``;
 const ReCommentBtn = styled.button`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
@@ -51,11 +54,6 @@ const ReCommentBtn = styled.button`
     color: ${customColor.moreDarkGray};
     font-weight: 900;
   }
-`;
-
-const Comments = styled.div`
-  display: flex;
-  margin-top: 20px;
 `;
 
 const Job = styled.div`
@@ -88,8 +86,6 @@ const CommentBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding-bottom: 14px;
-  border-bottom: 1px solid ${customColor.divider};
 `;
 const CommentHeader = styled.div`
   display: flex;
@@ -105,4 +101,9 @@ const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.Text};
+`;
+const NormalSpan = styled.span``;
+const TagSpan = styled.span`
+  color: ${({ theme }) => theme.mentionText};
+  margin-right: 4px;
 `;

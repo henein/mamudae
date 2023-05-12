@@ -7,10 +7,20 @@ import Comment from "./components/Comment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import CompleteLogin from "../../component/CompleteLogin";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
-import Login from "../../component/Login";
+import Login from "../../component/LoginComponent/Login";
+import { useGetComment } from "../../hooks/detailPageHooks/useComment";
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+
+export type CommentType = {
+  comment: string;
+  commentId: number;
+  modifiedDate: string;
+  userId: string;
+  tag: string;
+  replies?: any;
+};
 
 const DetailPage = () => {
   const router = useRouter();
@@ -25,37 +35,46 @@ const DetailPage = () => {
   const accessToken = getLocalStorage("access");
   const { data } = useUserInfo({ accessToken });
 
+  const commentdata = useGetComment({ id }).data;
+  console.log(commentdata);
   return (
     <Container>
       <Announcement />
-      <WriteBox>
-        <Wrapper>
-          <Title
-            title={title}
-            name={name}
-            views={views}
-            createTime={createTime}
-          />
-          <Content dangerouslySetInnerHTML={{ __html: text }} />
-          <Like recommend={recommend} id={id} />
-        </Wrapper>
-      </WriteBox>
-
       <SideBox>
         {data?.username ? <CompleteLogin {...data} /> : <Login />}
       </SideBox>
+      <div>
+        <WriteBox>
+          <Wrapper>
+            <Title
+              title={title}
+              name={name}
+              views={views}
+              createTime={createTime}
+            />
+            <Content dangerouslySetInnerHTML={{ __html: text }} />
+            <Like recommend={recommend} id={id} />
+          </Wrapper>
+        </WriteBox>
 
-      <CommentBox>
-        <Write />
-        {/*
-            총 댓글 정보들 받아서 map핑 ㄱㄱ
-          */}
-        <Comments>
-          <Comment />
-          <Comment />
-          <Comment />
-        </Comments>
-      </CommentBox>
+        <CommentBox>
+          <Write />
+          <Comments>
+            {commentdata &&
+              commentdata.map((item: CommentType) => {
+                return (
+                  <Comment
+                    comment={item.comment}
+                    userId={item.userId}
+                    modifiedDate={item.modifiedDate}
+                    replies={item.replies}
+                    key={item.commentId}
+                  />
+                );
+              })}
+          </Comments>
+        </CommentBox>
+      </div>
     </Container>
   );
 };
@@ -72,10 +91,10 @@ const Wrapper = styled.div`
   position: relative;
 `;
 const Content = styled.div`
-  margin-top: 8px;
+  margin-top: 20px;
   font-size: 16px;
-  font-weight: 500;
-  padding: 0 8px;
+  font-weight: 400;
+  padding: 0 24px;
   line-height: 18px;
   color: ${(prop) => prop.theme.Text};
 `;
@@ -83,25 +102,22 @@ const Content = styled.div`
 const SideBox = styled.div`
   display: flex;
   flex-direction: column;
-  > * {
-    margin-bottom: 12px;
-  }
 `;
 
 const CommentBox = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 20px;
   background-color: ${(prop) => prop.theme.card};
   width: 808px;
-  border-radius: 32px;
+  border-radius: 16px;
   ::-webkit-scrollbar {
     display: none;
   }
   border: 1px solid ${(prop) => prop.theme.border};
-  display: flex;
-  flex-direction: column;
 `;
 const WriteBox = styled.div`
-  border-radius: 32px;
+  border-radius: 16px;
   background-color: ${(prop) => prop.theme.card};
   border: 1px solid ${(prop) => prop.theme.border};
   ::-webkit-scrollbar {

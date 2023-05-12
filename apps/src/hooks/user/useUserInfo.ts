@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import { userInfo } from "../../api/userInfo";
+import { useMutation, useQuery } from "react-query";
+import { userInfo, setUserName } from "../../api/userInfo";
 
 interface IUseUserInfo {
   accessToken: string | undefined;
@@ -14,4 +14,23 @@ export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
 
   console.log(data);
   return { data };
+};
+
+interface IUseSetUserName {
+  setName: string;
+  accessToken: string | undefined;
+  options?: any;
+}
+
+export const useSetUserName = ({
+  setName,
+  accessToken,
+  options,
+}: IUseSetUserName) => {
+  const { mutate } = useMutation(() => setUserName(setName, accessToken), {
+    ...options,
+    enabled: !!accessToken,
+  });
+
+  return { mutate };
 };
