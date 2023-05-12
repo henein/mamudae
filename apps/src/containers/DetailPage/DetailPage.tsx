@@ -33,15 +33,13 @@ const DetailPage = () => {
   });
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
-
+  const userData = useUserInfo({ accessToken });
   const commentdata = useGetComment({ id }).data;
-  console.log(commentdata);
   return (
     <Container>
       <Announcement />
       <SideBox>
-        {data?.username ? <CompleteLogin {...data} /> : <Login />}
+        {userData ? <CompleteLogin {...userData.data} /> : <Login />}
       </SideBox>
       <div>
         <WriteBox>
