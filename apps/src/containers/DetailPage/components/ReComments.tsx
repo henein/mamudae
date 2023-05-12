@@ -4,22 +4,33 @@ import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
+import timeDifference from "../../../utils/timeDifference";
 
-const ReComments = () => {
+const ReComments = ({ ...data }) => {
+  console.log(data);
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
       <CommentBox>
         <CommentHeader>
           <UserInfo>
-            <NickName>임송재</NickName>
+            <NickName>{data.userId}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
-            <Time>ㆍ3일 전</Time>
+            <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
           <CommentMenuIcon />
         </CommentHeader>
-        <CommentContent>안녕하세요</CommentContent>
+        <CommentContent>
+          {data.tag ? (
+            <NormalSpan>
+              <TagSpan>{"@" + data.tag}</TagSpan>
+              {data.comment}
+            </NormalSpan>
+          ) : (
+            data.comment
+          )}
+        </CommentContent>
         <div>
           <ReCommentBtn>답글</ReCommentBtn>
         </div>
@@ -90,4 +101,9 @@ const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.Text};
+`;
+const NormalSpan = styled.span``;
+const TagSpan = styled.span`
+  color: ${({ theme }) => theme.mentionText};
+  margin-right: 4px;
 `;

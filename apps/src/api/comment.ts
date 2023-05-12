@@ -11,7 +11,7 @@ export const getComment = async ({ id }: IComment) => {
     `${process.env.NEXT_PUBLIC_API_URL}/board/${id}/comment`
   );
 
-  return res.data;
+  return res;
 };
 
 export const postComment = async (id: string) => {

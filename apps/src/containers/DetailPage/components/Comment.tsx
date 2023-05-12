@@ -3,28 +3,38 @@ import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
 import { customColor } from "../../../constants/customColor";
 import ReComments from "./ReComments";
+import timeDifference from "../../../utils/timeDifference";
+import { CommentType } from "../DetailPage";
 
-const Comment = ({ commentdata }: any) => {
-  // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
-  // console.log(commentdata);
+// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+const Comment = ({ ...data }) => {
+  console.log(data.replies);
   return (
     <Comments>
       <CommentBox>
         <CommentHeader>
           <UserInfo>
-            <NickName>임송재</NickName>
+            <NickName>{data.userId}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
-            <Time>ㆍ3일 전</Time>
+            <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
           <CommentMenuIcon />
         </CommentHeader>
-        <CommentContent>안녕하세요</CommentContent>
+        <CommentContent>{data.comment}</CommentContent>
         <div>
           <ReCommentBtn>답글</ReCommentBtn>
-          {/* {replies && replies.map((item: CommentType, idx: number) => {
-            
-          })} */}
+          {data.replies.map((item: CommentType) => {
+            return (
+              <ReComments
+                comment={item.comment}
+                userId={item.userId}
+                modifiedDate={item.modifiedDate}
+                tag={item.tag}
+                key={item.commentId}
+              />
+            );
+          })}
         </div>
       </CommentBox>
     </Comments>

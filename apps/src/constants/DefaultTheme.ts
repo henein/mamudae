@@ -88,6 +88,7 @@ export const lightMode: DefaultTheme = {
   toolButton: paletteColor.grey100,
   chatSelfText: paletteColor.secondary600,
   headerButtonHover: paletteColor.grey200,
+  mentionText: paletteColor.secondary600,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
@@ -110,4 +111,5 @@ export const darkMode: DefaultTheme = {
   toolButton: paletteColor.grey800,
   chatSelfText: paletteColor.secondary500,
   headerButtonHover: paletteColor.grey700,
+  mentionText: paletteColor.secondary500,
 };

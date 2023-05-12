@@ -18,6 +18,7 @@ export type CommentType = {
   commentId: number;
   modifiedDate: string;
   userId: string;
+  tag: string;
   replies?: any;
 };
 
@@ -34,9 +35,8 @@ const DetailPage = () => {
   const accessToken = getLocalStorage("access");
   const { data } = useUserInfo({ accessToken });
 
-  const commentdata = useGetComment({ id });
+  const commentdata = useGetComment({ id }).data;
   console.log(commentdata);
-  // console.log(commentdata.map((item: any) => item));
   return (
     <Container>
       <Announcement />
@@ -58,15 +58,20 @@ const DetailPage = () => {
         </WriteBox>
 
         <CommentBox>
-          {/* commentdata.length */}
           <Write />
-          {/*
-            총 댓글 정보들 받아서 map핑 ㄱㄱ
-          */}
           <Comments>
-            {/* {commentdata.map((item: CommentType, idx: number) => {
-            return <Comment data={item} key={idx} />;
-          })} */}
+            {commentdata &&
+              commentdata.map((item: CommentType) => {
+                return (
+                  <Comment
+                    comment={item.comment}
+                    userId={item.userId}
+                    modifiedDate={item.modifiedDate}
+                    replies={item.replies}
+                    key={item.commentId}
+                  />
+                );
+              })}
           </Comments>
         </CommentBox>
       </div>
