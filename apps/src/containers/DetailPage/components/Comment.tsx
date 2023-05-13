@@ -7,6 +7,7 @@ import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 
 // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+// 마지막 댓글인지?
 const Comment = ({ ...data }) => {
   console.log(data.replies);
   return (
@@ -55,7 +56,6 @@ const ReCommentBtn = styled.button`
 
 const Comments = styled.div`
   display: flex;
-  margin-top: 20px;
 `;
 
 const Job = styled.div`
@@ -90,6 +90,7 @@ const CommentBox = styled.div`
   flex-direction: column;
   padding-bottom: 14px;
   border-bottom: 1px solid ${customColor.divider};
+  margin-bottom: 20px;
 `;
 const CommentHeader = styled.div`
   display: flex;
