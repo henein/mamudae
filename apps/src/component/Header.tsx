@@ -11,12 +11,16 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 
 type HeaderPropType = {
   stickyTop: boolean;
+  setCookie: any;
 };
 const Header = ({ stickyTop }: HeaderPropType) => {
   const dispatch = useDispatch();
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
   );
+  const onClick = () => {
+    dispatch(toggleDarkMode());
+  };
 
   return (
     <Layout darkModeState={darkModeState} stickyTop={stickyTop}>
@@ -41,7 +45,7 @@ const Header = ({ stickyTop }: HeaderPropType) => {
           </NavList>
         </LeftDiv>
         <RightDiv>
-          <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
+          <DarkModeBtn onClick={onClick}>
             <LightImg darkModeState={darkModeState}>
               <SvgIcon component={LightModeIcon} fontSize="small" />
             </LightImg>
@@ -69,10 +73,8 @@ const Layout = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
     stickyTop ? theme.card : "none"};
   border-bottom: ${({ stickyTop, theme }) =>
     stickyTop ? `1px solid ${theme.border}` : "none"};
-  box-shadow: ${({ stickyTop, theme, darkModeState }) =>
-    stickyTop
-      ? `0px 4px 8px ${darkModeState == false && theme.border}`
-      : "none"};
+  box-shadow: ${({ stickyTop, theme }) =>
+    stickyTop && `0px 4px 8px ${theme.boxShadow}`};
 `;
 const LeftDiv = styled.div`
   display: flex;

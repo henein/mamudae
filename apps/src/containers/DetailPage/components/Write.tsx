@@ -17,7 +17,6 @@ const Write = ({ id, userData }: postinfos) => {
     comment: "",
     userId: "",
   });
-  const darkModeState = useDarkMode();
   const { mutate } = usePostComment(formData);
 
   const { register, handleSubmit } = useForm();
@@ -38,7 +37,7 @@ const Write = ({ id, userData }: postinfos) => {
   };
 
   return (
-    <WriteForm onSubmit={handleSubmit(submit)} darkModeState={darkModeState}>
+    <WriteForm onSubmit={handleSubmit(submit)}>
       <NumberOfComments>댓글 2개</NumberOfComments>
       <WriteComment
         {...register("comment")}
@@ -68,11 +67,10 @@ const NumberOfComments = styled.p`
   margin-top: 20px;
   color: ${(prop) => prop.theme.Text};
 `;
-const WriteForm = styled.form<{ darkModeState: boolean }>`
+const WriteForm = styled.form`
   z-index: 1;
   top: 0;
-  box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.border)};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
   justify-content: center;
