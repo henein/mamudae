@@ -58,7 +58,7 @@ const DetailPage = () => {
         </WriteBox>
 
         <CommentBox>
-          <Write />
+          <Write id={id} userData={userData} />
           <Comments>
             {commentdata &&
               commentdata.map((item: CommentType) => {

@@ -14,9 +14,22 @@ export const getComment = async ({ id }: IComment) => {
   return res;
 };
 
-export const postComment = async (id: string) => {
+interface IPostComment {
+  id: string;
+  comment: string;
+  commentId: null;
+  userId: string;
+  accessToken?: string | undefined;
+}
+export const postComment = async ({ id, comment, userId }: IPostComment) => {
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`
+    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    {
+      boardId: id,
+      comment: comment,
+      commentId: null,
+      userId: userId,
+    }
   );
 
   return res.data;

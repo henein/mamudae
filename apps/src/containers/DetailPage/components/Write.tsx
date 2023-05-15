@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { customColor } from "../../../constants/customColor";
+import { usePostComment } from "../../../hooks/detailPageHooks/useComment";
 import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
-const Write = () => {
+interface postinfos {
+  id: string;
+  userData: any;
+}
+const Write = ({ id, userData }: postinfos) => {
+  // formdata로 id,commet,userId 받음
+  // id=boardId, userId=userInfo에 username, comment=입력받은것
+  // commentId는 불필요하다고 생각하여 뺌 -> 백엔드와 논의 필요
+  const [formData, setFormData] = useState({
+    id: "",
+    comment: "",
+    userId: "",
+  });
   const darkModeState = useDarkMode();
+  const { mutate } = usePostComment(formData);
 
   const { register, handleSubmit } = useForm();
+
   const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+    if (!userData) {
+      alert("로그인해야 이용할 수 있습니다.");
+      return;
+    } else {
+      setFormData({
+        id: id,
+        comment: JSON.stringify(data),
+        userId: userData.username,
+      });
+      // alert(JSON.stringify(data));
+      mutate();
+    }
   };
 
   return (

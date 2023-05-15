@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "react-query";
-import { getComment } from "../../api/comment";
+import { getComment, postComment } from "../../api/comment";
 
 interface IUseComment {
   id: string;
@@ -15,6 +15,27 @@ export function useGetComment({ id, options }: IUseComment) {
   return { ...data };
 }
 
-// export function useDeleteComment({ }) {
-//   return useMutation(deleteComment, );
-// }
+interface IPostUseComment {
+  id: string;
+  comment: string;
+  // commentId: string;
+  userId: string;
+  options?: any;
+  accessToken?: string | undefined;
+}
+
+export function usePostComment({
+  id,
+  comment,
+  // commentId,
+  userId,
+}: IPostUseComment) {
+  return useMutation("postComment", () =>
+    postComment({
+      id,
+      comment,
+      // commentId,
+      userId,
+    })
+  );
+}

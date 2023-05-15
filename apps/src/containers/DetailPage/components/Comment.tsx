@@ -9,7 +9,7 @@ import { CommentType } from "../DetailPage";
 // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
 // 마지막 댓글인지?
 const Comment = ({ ...data }) => {
-  console.log(data.replies);
+  console.log(data);
   return (
     <Comments>
       <CommentBox>
