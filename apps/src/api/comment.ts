@@ -18,7 +18,7 @@ export const getComment = async ({ id }: IComment) => {
 interface IPostComment {
   boardId: string;
   comment: string;
-  commentId?: null;
+  commentId?: string | null;
   tag: string;
   accessToken?: string | undefined;
 }
@@ -44,7 +44,7 @@ export const postReComment = async ({
   tag,
 }: IPostComment) => {
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/comment/child`,
     {
       boardId: boardId,
       comment: comment,

@@ -60,7 +60,7 @@ const DetailPage = () => {
           <Write boardId={id} userData={userData} />
           <Comments>
             {commentdata &&
-              commentdata.map((item: CommentType) => {
+              commentdata.map((item: CommentType, idx: number) => {
                 return (
                   <Comment
                     comment={item.comment}
@@ -68,6 +68,9 @@ const DetailPage = () => {
                     modifiedDate={item.modifiedDate}
                     replies={item.replies}
                     key={item.commentId}
+                    boardId={id}
+                    userData={userData}
+                    isLastComment={idx + 1 == commentdata.length}
                   />
                 );
               })}

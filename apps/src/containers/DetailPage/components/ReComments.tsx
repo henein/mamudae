@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
+import CommentForm from "./CommentForm";
 
 const ReComments = ({ ...data }) => {
-  console.log(data);
+  const [isClick, setIsClick] = useState<boolean>(false);
+
+  const replyBtnClick = () => {
+    setIsClick(true);
+  };
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
@@ -31,9 +36,18 @@ const ReComments = ({ ...data }) => {
             data.comment
           )}
         </CommentContent>
-        <div>
-          <ReCommentBtn>답글</ReCommentBtn>
-        </div>
+        <FormDisplay>
+          <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
+          {isClick && (
+            <CommentForm
+              setIsClick={setIsClick}
+              userData={data.userData}
+              boardId={data.boardId}
+              commentId={data.commentId}
+              isRecomment={true}
+            />
+          )}
+        </FormDisplay>
       </CommentBox>
     </Container>
   );
@@ -54,6 +68,11 @@ const ReCommentBtn = styled.button`
     color: ${customColor.moreDarkGray};
     font-weight: 900;
   }
+`;
+const FormDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Job = styled.div`

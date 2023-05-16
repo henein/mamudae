@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "react-query";
-import { getComment, postComment } from "../../api/comment";
+import { getComment, postComment, postReComment } from "../../api/comment";
 
 interface IUseComment {
   id: string;
@@ -18,7 +18,7 @@ export function useGetComment({ id, options }: IUseComment) {
 interface IPostUseComment {
   boardId: string;
   comment: string;
-  // commentId: string;
+  commentId?: string;
   tag: string;
   options?: any;
   accessToken?: string | undefined;
@@ -27,47 +27,63 @@ interface IPostUseComment {
 export function usePostComment({
   boardId,
   comment,
-  // commentId,
+  commentId,
   tag,
 }: IPostUseComment) {
   return useMutation("postComment", () =>
     postComment({
       boardId,
       comment,
-      // commentId,
+      commentId,
       tag,
     })
   );
 }
 
-export function usePutComment({
+export function usePostReComment({
   boardId,
   comment,
-  // commentId,
+  commentId,
   tag,
 }: IPostUseComment) {
   return useMutation("postComment", () =>
-    postComment({
+    postReComment({
       boardId,
       comment,
-      // commentId,
+      commentId,
       tag,
     })
   );
 }
 
-export function useDeleteComment({
-  boardId,
-  comment,
-  // commentId,
-  tag,
-}: IPostUseComment) {
-  return useMutation("postComment", () =>
-    postComment({
-      boardId,
-      comment,
-      // commentId,
-      tag,
-    })
-  );
-}
+// export function usePutComment({
+//   boardId,
+//   comment,
+//   // commentId,
+//   tag,
+// }: IPostUseComment) {
+//   return useMutation("postComment", () =>
+//     postComment({
+//       boardId,
+//       comment,
+//       // commentId,
+//       tag,
+//     })
+//   );
+// }
+
+// export function useDeleteComment({
+//   boardId,
+//   comment,
+//   // commentId,
+//   tag,
+// }: IPostUseComment) {
+//   return useMutation("postComment", () =>
+//     postComment({
+//       boardId,
+//       comment,
+//       // commentId,
+//       tag,
+//     })
+//   );
+// }
