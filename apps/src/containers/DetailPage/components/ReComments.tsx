@@ -14,7 +14,7 @@ const ReComments = ({ ...data }) => {
       <CommentBox>
         <CommentHeader>
           <UserInfo>
-            <NickName>{data.userId}</NickName>
+            <NickName>{data.userName}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
             <Time>{timeDifference(data.modifiedDate)}</Time>

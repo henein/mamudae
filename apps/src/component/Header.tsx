@@ -56,7 +56,7 @@ const Header = ({ stickyTop, setTheme }: HeaderPropType) => {
             </DarkImg>
           </DarkModeBtn>
           <InputBox>
-            <InlineInput></InlineInput>
+            <InlineInput placeholder="검색"></InlineInput>
             <SubmitBtn>
               <SvgIcon component={SearchIcon} inheritViewBox />
             </SubmitBtn>
@@ -171,6 +171,8 @@ const InlineInput = styled.input`
   height: 38px;
   border: none;
   box-sizing: border-box;
+  padding-left: 8px;
+  color: ${({ theme }) => theme.subText};
   &:focus {
     outline: none;
   }

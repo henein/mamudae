@@ -17,7 +17,7 @@ export type CommentType = {
   comment: string;
   commentId: number;
   modifiedDate: string;
-  userId: string;
+  userName: string;
   tag: string;
   replies?: any;
 };
@@ -64,7 +64,7 @@ const DetailPage = () => {
                 return (
                   <Comment
                     comment={item.comment}
-                    userId={item.userId}
+                    userName={item.userName}
                     modifiedDate={item.modifiedDate}
                     replies={item.replies}
                     key={item.commentId}
