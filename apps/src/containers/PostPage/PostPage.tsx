@@ -37,7 +37,7 @@ const PostPage = () => {
       <Announcement />
       <PostPageSet>
         <Aside>
-          {data?.username ? <CompleteLogin {...data} /> : <Login />}
+          <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
         </Aside>
         <BoardContent>
           <ContentSet>

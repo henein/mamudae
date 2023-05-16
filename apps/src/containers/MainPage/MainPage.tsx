@@ -20,9 +20,7 @@ const MainPage = () => {
     <Layout>
       <Announcement />
       <MainPageSet>
-        <Aside>
-          {data?.username ? <CompleteLogin {...data} /> : <Login />}
-        </Aside>
+        <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
         <BoardSet>
           <div>
             <Board board_title="전체" isLarge={true} />
