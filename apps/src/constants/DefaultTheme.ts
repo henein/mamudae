@@ -101,7 +101,7 @@ export const darkMode: DefaultTheme = {
   Brand: paletteColor.primary500,
   footer: paletteColor.black900,
   cardHeader: paletteColor.grey700A,
-  subText: paletteColor.white600,
+  subText: paletteColor.white500,
   chatBackground: paletteColor.grey800,
   chatBubble: paletteColor.grey700,
   footerText: paletteColor.white500,

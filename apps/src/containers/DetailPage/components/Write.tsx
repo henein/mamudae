@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { usePostComment } from "../../../hooks/detailPageHooks/useComment";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 interface postinfos {
-  id: string;
+  boardId: string;
   userData: any;
 }
-const Write = ({ id, userData }: postinfos) => {
+const Write = ({ boardId, userData }: postinfos) => {
   // formdata로 id,commet,userId 받음
   // id=boardId, userId=userInfo에 username, comment=입력받은것
   // commentId는 불필요하다고 생각하여 뺌 -> 백엔드와 논의 필요
+
   const [formData, setFormData] = useState({
-    id: "",
+    boardId: "",
     comment: "",
-    userId: "",
+    tag: "",
   });
   const { mutate } = usePostComment(formData);
 
@@ -27,9 +27,9 @@ const Write = ({ id, userData }: postinfos) => {
       return;
     } else {
       setFormData({
-        id: id,
+        boardId: boardId,
         comment: JSON.stringify(data),
-        userId: userData.username,
+        tag: userData.username,
       });
       // alert(JSON.stringify(data));
       mutate();
@@ -56,6 +56,7 @@ const WriteComment = styled.input`
   border: 1px solid ${(prop) => prop.theme.border};
   background-color: ${(prop) => prop.theme.input};
   margin-bottom: 20px;
+  color: ${({ theme }) => theme.Text};
   ::placeholder {
     color: ${(prop) => prop.theme.subText};
   }

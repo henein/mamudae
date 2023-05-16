@@ -5,7 +5,6 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 interface ITitle {
   title: string;

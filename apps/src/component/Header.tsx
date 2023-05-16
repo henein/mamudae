@@ -11,14 +11,16 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 
 type HeaderPropType = {
   stickyTop: boolean;
-  setCookie: any;
+  setTheme: any;
 };
-const Header = ({ stickyTop }: HeaderPropType) => {
+const Header = ({ stickyTop, setTheme }: HeaderPropType) => {
   const dispatch = useDispatch();
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
   );
+
   const onClick = () => {
+    darkModeState ? setTheme("light") : setTheme("dark");
     dispatch(toggleDarkMode());
   };
 

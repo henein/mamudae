@@ -16,26 +16,58 @@ export function useGetComment({ id, options }: IUseComment) {
 }
 
 interface IPostUseComment {
-  id: string;
+  boardId: string;
   comment: string;
   // commentId: string;
-  userId: string;
+  tag: string;
   options?: any;
   accessToken?: string | undefined;
 }
 
 export function usePostComment({
-  id,
+  boardId,
   comment,
   // commentId,
-  userId,
+  tag,
 }: IPostUseComment) {
   return useMutation("postComment", () =>
     postComment({
-      id,
+      boardId,
       comment,
       // commentId,
-      userId,
+      tag,
+    })
+  );
+}
+
+export function usePutComment({
+  boardId,
+  comment,
+  // commentId,
+  tag,
+}: IPostUseComment) {
+  return useMutation("postComment", () =>
+    postComment({
+      boardId,
+      comment,
+      // commentId,
+      tag,
+    })
+  );
+}
+
+export function useDeleteComment({
+  boardId,
+  comment,
+  // commentId,
+  tag,
+}: IPostUseComment) {
+  return useMutation("postComment", () =>
+    postComment({
+      boardId,
+      comment,
+      // commentId,
+      tag,
     })
   );
 }

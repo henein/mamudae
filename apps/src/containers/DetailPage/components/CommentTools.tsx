@@ -2,7 +2,6 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 
-
 const CommentTools = () => {
   return (
     <Container>
@@ -36,6 +35,7 @@ const Functions = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  color: ${({ theme }) => theme.Text};
 `;
 const Container = styled.div`
   width: 62px;
@@ -50,6 +50,8 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.card};
 
   &:after {
     content: "";

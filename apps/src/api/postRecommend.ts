@@ -18,6 +18,5 @@ export const postRecommend = async ({ id, accessToken }: IPostRecommend) => {
       },
     }
   );
-
-  return res.data;
+  return res;
 };

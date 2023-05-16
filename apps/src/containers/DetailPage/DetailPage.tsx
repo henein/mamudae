@@ -27,7 +27,7 @@ const DetailPage = () => {
   const id = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, name, views, createTime } = useDetail({
+  const { title, text, recommend, userName, views, createTime } = useDetail({
     id,
     options,
   });
@@ -36,7 +36,6 @@ const DetailPage = () => {
   const userData = useUserInfo({ accessToken }).data;
   const commentdata = useGetComment({ id }).data;
 
-  console.log(userData);
   return (
     <Container>
       <Announcement />
@@ -48,7 +47,7 @@ const DetailPage = () => {
           <Wrapper>
             <Title
               title={title}
-              name={name}
+              name={userName}
               views={views}
               createTime={createTime}
             />
@@ -58,7 +57,7 @@ const DetailPage = () => {
         </WriteBox>
 
         <CommentBox>
-          <Write id={id} userData={userData} />
+          <Write boardId={id} userData={userData} />
           <Comments>
             {commentdata &&
               commentdata.map((item: CommentType) => {

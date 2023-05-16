@@ -19,7 +19,7 @@ const CompleteLogin = ({ ...data }: any) => {
       <LoginHeader>
         <RepresentativeImage src={circle} alt="none"></RepresentativeImage>
         <Profile>
-          <Nickname>{data.username}</Nickname>
+          <Nickname>{data.userName}</Nickname>
           <Honours>
             <Label type="level">{data.userLevel || "미등록"}</Label>
             <Label type="floor">{data.floor || "미등록"}</Label>

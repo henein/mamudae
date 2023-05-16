@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import styled from "styled-components";
@@ -12,13 +12,14 @@ const Layout = ({ children }: React.PropsWithChildren) => {
   const isDarkMode = useDarkMode();
   const { isScrollDown, stickyTop } = useScroll();
 
-  const theme = isDarkMode ? darkMode : lightMode;
+  const [theme, setTheme] = useState("light");
+  const themes = isDarkMode ? darkMode : lightMode;
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme === "light" ? lightMode : darkMode}>
         <GlobalStyles />
         <Head isScrollDown={isScrollDown} stickyTop={stickyTop}>
-          <Header stickyTop={stickyTop} />
+          <Header stickyTop={stickyTop} setTheme={setTheme} />
         </Head>
         {children}
         <Footer />
