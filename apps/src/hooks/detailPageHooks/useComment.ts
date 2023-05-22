@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getComment, postComment, postReComment } from "../../api/comment";
 
 interface IUseComment {
@@ -30,13 +30,21 @@ export function usePostComment({
   commentId,
   tag,
 }: IPostUseComment) {
-  return useMutation("postComment", () =>
-    postComment({
-      boardId,
-      comment,
-      commentId,
-      tag,
-    })
+  const queryClient = useQueryClient();
+  return useMutation(
+    "postComment",
+    () =>
+      postComment({
+        boardId,
+        comment,
+        commentId,
+        tag,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 postComment 갱신
+      },
+    }
   );
 }
 
@@ -46,13 +54,21 @@ export function usePostReComment({
   commentId,
   tag,
 }: IPostUseComment) {
-  return useMutation("postComment", () =>
-    postReComment({
-      boardId,
-      comment,
-      commentId,
-      tag,
-    })
+  const queryClient = useQueryClient();
+  return useMutation(
+    "postReComment",
+    () =>
+      postReComment({
+        boardId,
+        comment,
+        commentId,
+        tag,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 postComment 갱신
+      },
+    }
   );
 }
 

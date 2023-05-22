@@ -29,7 +29,7 @@ export const postComment = async ({ boardId, comment, tag }: IPostComment) => {
       boardId: boardId,
       comment: comment,
       commentId: null,
-      tag: tag,
+      tag: null,
     }
   );
 

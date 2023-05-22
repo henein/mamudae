@@ -8,7 +8,14 @@ import {
 } from "../../../hooks/detailPageHooks/useComment";
 
 // props => setIsClick?, userData, boardId,commentId?,isRecomment
-const CommentForm = ({ ...props }: any) => {
+interface ICommentFormProps {
+  setIsClick: (arg: boolean) => void;
+  userData: any;
+  boardId: string;
+  commentId?: string;
+  isRecomment: boolean;
+}
+const CommentForm = ({ ...props }: ICommentFormProps) => {
   const [isFocusInput, setIsFocusInput] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
@@ -22,31 +29,32 @@ const CommentForm = ({ ...props }: any) => {
   const mutateRe = usePostReComment(formData).mutate; // 대댓글 post api
   const mutate = usePostComment(formData).mutate; // 댓글 post api
 
-  const submit = (data: FieldValues) => {
+  const submit = async (data: FieldValues) => {
     if (!props.userData) {
       alert("로그인해야 이용할 수 있습니다.");
       reset();
       return;
     } else {
       setFormData({
+        ...formData,
         boardId: props.boardId,
-        comment: JSON.stringify(data),
-        commentId: props.commentId,
+        comment: data.comment,
+        commentId: props.commentId ?? "",
         tag: props.userData.username,
       });
-      if (props.isRecomment) {
-        mutateRe();
-      } else {
-        mutate();
-      }
+
+      (await props.isRecomment) ? mutateRe() : mutate();
       reset();
     }
   };
+
+  // 대댓글일때 취소버튼
   const cancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     reset();
     props.setIsClick(false);
   };
+  // 댓글일때 취소버튼
   const cancelClick2 = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     reset();
