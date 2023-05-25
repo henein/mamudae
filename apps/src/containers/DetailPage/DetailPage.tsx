@@ -33,7 +33,13 @@ const DetailPage = () => {
   });
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const userData = useUserInfo({ accessToken }).data;
+  const userData = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  }).data;
   const commentdata = useGetComment({ id }).data;
 
   return (

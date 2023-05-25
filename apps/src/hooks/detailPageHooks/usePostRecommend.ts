@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { postRecommend } from "../../api/postRecommend";
+import handleTokenError from "../../utils/handleTokenError";
 
 interface IPostRecommend {
   id: string;
@@ -13,16 +14,27 @@ export const usePostRecommend = ({
   options,
 }: IPostRecommend) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
+
+  const { mutate, error } = useMutation(
     ["postRecommend", id],
     () => postRecommend({ id, accessToken }),
     {
       ...options,
+      enabled: !!accessToken,
       onSuccess: (data) => {
         console.log(data);
-        queryClient.invalidateQueries(["detailPageData", id]); // onSuccess 시에 useDetail 쿼리 갱신
+        queryClient.invalidateQueries(["detailPageData", id]); // onSuccess 시에 useDetail 쿼리 무효화
+        queryClient.refetchQueries(["detailPageData", id]); // refetch
       },
-      onError: (err) => console.log(err),
+      onError: (err: any) => {
+        handleTokenError(err)
+          .then(() => {
+            mutate();
+          })
+          .catch((error) => {
+            console.error("Error handling failed");
+          });
+      },
     }
   );
 
@@ -34,5 +46,5 @@ export const usePostRecommend = ({
     }
   };
 
-  return { recommend };
+  return { recommend, error };
 };
