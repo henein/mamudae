@@ -15,7 +15,13 @@ export type BoardInfoType = {
 const MainPage = () => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
+  const { data } = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  });
   return (
     <Layout>
       <Announcement />
