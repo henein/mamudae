@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getComment, postComment, postReComment } from "../../api/comment";
+import handleTokenError from "../../utils/handleTokenError";
 
 interface IUseComment {
   id: string;
@@ -19,9 +20,9 @@ interface IPostUseComment {
   boardId: string;
   comment: string;
   commentId?: string;
-  tag: string;
+  tag?: string;
   options?: any;
-  accessToken?: string | undefined;
+  accessToken: string | undefined;
 }
 
 export function usePostComment({
@@ -29,9 +30,10 @@ export function usePostComment({
   comment,
   commentId,
   tag,
+  accessToken,
 }: IPostUseComment) {
   const queryClient = useQueryClient();
-  return useMutation(
+  const { mutate } = useMutation(
     "postComment",
     () =>
       postComment({
@@ -39,13 +41,33 @@ export function usePostComment({
         comment,
         commentId,
         tag,
+        accessToken,
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 postComment 갱신
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+      },
+      onError: (err: any) => {
+        handleTokenError(err)
+          .then(() => {
+            mutate();
+          })
+          .catch((error: any) => {
+            console.error("Error handling failed");
+          });
       },
     }
   );
+
+  const postComments = () => {
+    if (accessToken) {
+      mutate();
+    } else {
+      console.log("아직 accessToken을 가져오지 못함");
+    }
+  };
+
+  return { postComments };
 }
 
 export function usePostReComment({
@@ -53,9 +75,10 @@ export function usePostReComment({
   comment,
   commentId,
   tag,
+  accessToken,
 }: IPostUseComment) {
   const queryClient = useQueryClient();
-  return useMutation(
+  const { mutate } = useMutation(
     "postReComment",
     () =>
       postReComment({
@@ -63,13 +86,33 @@ export function usePostReComment({
         comment,
         commentId,
         tag,
+        accessToken,
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 postComment 갱신
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
       },
+      // onError: (err: any) => {
+      //   handleTokenError(err)
+      //     .then(() => {
+      //       mutate();
+      //     })
+      //     .catch((error: any) => {
+      //       console.error("Error handling failed");
+      //     });
+      // },
     }
   );
+
+  const postReComments = () => {
+    if (accessToken) {
+      mutate();
+    } else {
+      console.log("아직 accessToken을 가져오지 못함");
+    }
+  };
+
+  return { postReComments };
 }
 
 // export function usePutComment({

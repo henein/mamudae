@@ -11,6 +11,7 @@ const Write = ({ ...data }: postinfos) => {
     <Container>
       <NumberOfComments>댓글 2개</NumberOfComments>
       <CommentForm
+        setIsClick={() => {}}
         userData={data.userData}
         boardId={data.boardId}
         isRecomment={false}

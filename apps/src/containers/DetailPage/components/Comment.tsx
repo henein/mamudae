@@ -16,7 +16,7 @@ const Comment = ({ ...data }) => {
     setIsClick(true);
   };
   return (
-    <Comments>
+    <Container>
       <CommentBox isLastComment={data.isLastComment}>
         <CommentHeader>
           <UserInfo>
@@ -38,17 +38,19 @@ const Comment = ({ ...data }) => {
                 boardId={data.boardId}
                 commentId={data.commentId}
                 isRecomment={true}
+                userName={data.userName}
               />
             )}
           </FormDisplay>
-          {data.replies.map((item: CommentType) => {
+          {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments
                 comment={item.comment}
                 userName={item.userName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
-                key={item.commentId}
+                parentCommentId={data.commentId}
+                key={idx}
                 userData={data.userData}
                 boardId={data.boardId}
               />
@@ -56,7 +58,7 @@ const Comment = ({ ...data }) => {
           })}
         </div>
       </CommentBox>
-    </Comments>
+    </Container>
   );
 };
 
@@ -77,7 +79,7 @@ const FormDisplay = styled.div`
   gap: 10px;
 `;
 
-const Comments = styled.div`
+const Container = styled.div`
   display: flex;
 `;
 

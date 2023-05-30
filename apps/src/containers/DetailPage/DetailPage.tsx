@@ -41,7 +41,6 @@ const DetailPage = () => {
     },
   }).data;
   const commentdata = useGetComment({ id }).data;
-
   return (
     <Container>
       <Announcement />
@@ -73,7 +72,8 @@ const DetailPage = () => {
                     userName={item.userName}
                     modifiedDate={item.modifiedDate}
                     replies={item.replies}
-                    key={item.commentId}
+                    key={idx}
+                    commentId={item.commentId}
                     boardId={id}
                     userData={userData}
                     isLastComment={idx + 1 == commentdata.length}

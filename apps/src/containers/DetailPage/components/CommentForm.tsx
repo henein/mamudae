@@ -6,6 +6,7 @@ import {
   usePostComment,
   usePostReComment,
 } from "../../../hooks/detailPageHooks/useComment";
+import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 
 // props => setIsClick?, userData, boardId,commentId?,isRecomment
 interface ICommentFormProps {
@@ -14,20 +15,32 @@ interface ICommentFormProps {
   boardId: string;
   commentId?: string;
   isRecomment: boolean;
+  userName?: string;
+}
+interface IFormType {
+  boardId: string;
+  comment: string;
+  commentId: string;
+  tag?: string;
+  accessToken: string | undefined;
 }
 const CommentForm = ({ ...props }: ICommentFormProps) => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
   const [isFocusInput, setIsFocusInput] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IFormType>({
     boardId: "",
     comment: "",
     commentId: "",
     tag: "",
+    accessToken,
   });
 
-  const mutateRe = usePostReComment(formData).mutate; // 대댓글 post api
-  const mutate = usePostComment(formData).mutate; // 댓글 post api
+  const { postReComments } = usePostReComment(formData); // 대댓글 post api
+  const { postComments } = usePostComment(formData); // 댓글 post api
 
   const submit = async (data: FieldValues) => {
     if (!props.userData) {
@@ -35,15 +48,18 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
       reset();
       return;
     } else {
+      const commentWithoutTag = data.comment.replace("@" + props.userName, "");
+
       setFormData({
         ...formData,
         boardId: props.boardId,
-        comment: data.comment,
+        comment: commentWithoutTag.trim(),
         commentId: props.commentId ?? "",
-        tag: props.userData.username,
+        tag: data.comment.includes("@" + props.userName) ? props.userName : "",
       });
 
-      (await props.isRecomment) ? mutateRe() : mutate();
+      // 대댓글이라면 앞쪽 mutate, 부모댓글이라면 뒷쪽 mutate
+      (await props.isRecomment) ? postReComments() : postComments();
       reset();
     }
   };
@@ -70,7 +86,8 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
           placeholder="댓글 쓰기"
           rows={1}
           {...register("comment")}
-          onClick={() => setIsFocusInput(true)}
+          onFocus={() => setIsFocusInput(true)}
+          defaultValue={props.isRecomment ? `@${props.userName} ` : ""}
         />
         <InputFunc isRecomment={props.isRecomment} isFocusInput={isFocusInput}>
           <CancelBtn onClick={props.isRecomment ? cancelClick : cancelClick2}>

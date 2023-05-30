@@ -14,15 +14,19 @@ export const getComment = async ({ id }: IComment) => {
   return res;
 };
 
-// 댓글 작성
+// 부모댓글 작성 -> commentId, tag가 필요없음
 interface IPostComment {
   boardId: string;
   comment: string;
   commentId?: string | null;
-  tag: string;
+  tag?: string;
   accessToken?: string | undefined;
 }
-export const postComment = async ({ boardId, comment, tag }: IPostComment) => {
+export const postComment = async ({
+  boardId,
+  comment,
+  accessToken,
+}: IPostComment) => {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
     {
@@ -30,18 +34,23 @@ export const postComment = async ({ boardId, comment, tag }: IPostComment) => {
       comment: comment,
       commentId: null,
       tag: null,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
-
   return res.data;
 };
 
-// 대댓글 작성 => commentId 작성 해야함
+// 대댓글 작성 => 부모댓글의 commentId, 부모댓글userName or 자식댓글useName or null의 tag가 필요함
 export const postReComment = async ({
   boardId,
   comment,
   commentId,
   tag,
+  accessToken,
 }: IPostComment) => {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board/comment/child`,
@@ -50,6 +59,11 @@ export const postReComment = async ({
       comment: comment,
       commentId: commentId,
       tag: tag,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 
