@@ -4,6 +4,7 @@ import { ModeColorType } from "./src/constants/DefaultTheme";
 declare module "styled-components" {
   export interface DefaultTheme {
     background: string;
+    shadow: string
     border: string;
     card: string;
     divider: string;

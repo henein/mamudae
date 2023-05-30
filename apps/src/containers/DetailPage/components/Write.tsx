@@ -45,7 +45,7 @@ const WriteForm = styled.form<{ darkModeState: boolean }>`
   z-index: 1;
   top: 0;
   box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.border)};
+    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.shadow)};
   display: flex;
   flex-direction: column;
   justify-content: center;

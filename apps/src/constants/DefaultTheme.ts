@@ -44,6 +44,7 @@ export const paletteColor = {
   black200: "#0000004D",
   black100: "#00000033",
   black050: "#0000001A",
+  black025: "#0000000D",
   white900: "#FFFFFF",
   white800: "#FFFFFFE6",
   white700: "#FFFFFFCC",
@@ -54,6 +55,7 @@ export const paletteColor = {
   white200: "#FFFFFF4D",
   white100: "#FFFFFF33",
   white050: "#FFFFFF1A",
+  white025: "#FFFFFF0D",
   white900A: "#FFFFFFE5",
   secondary900: "#273DB4",
   secondary800: "#265ED3",
@@ -69,6 +71,7 @@ export const paletteColor = {
 
 export const lightMode: DefaultTheme = {
   background: paletteColor.grey050,
+  shadow: paletteColor.black025,
   border: paletteColor.black050,
   card: paletteColor.white900,
   divider: paletteColor.black100,
@@ -92,6 +95,7 @@ export const lightMode: DefaultTheme = {
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
+  shadow: paletteColor.black025,
   border: paletteColor.white050,
   card: paletteColor.grey800,
   divider: paletteColor.white100,
