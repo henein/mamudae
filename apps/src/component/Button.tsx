@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { customColor } from "../constants/customColor";
+import React from 'react';
+import styled, { DefaultTheme } from 'styled-components';
+import { customColor } from '../constants/customColor';
 
-type SortBtnType = "sub" | "main";
-type BtnType = "reset" | "submit" | "button";
+type SortBtnType = 'sub' | 'main';
+type BtnType = 'reset' | 'submit' | 'button';
 
 interface IButton {
   sort: SortBtnType;
@@ -14,26 +14,23 @@ interface IButton {
   type?: BtnType;
 }
 
-const SORT = {
+const SORT: {
+  [key: string]: { background: keyof DefaultTheme; color: keyof DefaultTheme };
+} = {
   main: {
-    background: customColor.orange,
-    color: customColor.white,
-    hoverBackground: customColor.darkOrange,
+    background: 'Brand',
+    color: 'Text',
   },
   sub: {
-    background: customColor.white,
-    color: customColor.black,
-    hoverBackground: "#ccc",
+    background: 'button',
+    color: 'Text',
   },
 };
 
-const getButtonStyle = (sort: SortBtnType) => {
+const getButtonStyle = (theme: DefaultTheme, sort: SortBtnType) => {
   return `
-      background-color: ${SORT[sort].background};
-      color: ${SORT[sort].color};
-      &:hover {
-        background-color: ${SORT[sort].hoverBackground};
-      }
+      background-color: ${theme[SORT[sort].background]};
+      color: ${theme[SORT[sort].color]};
     `;
 };
 
@@ -52,8 +49,8 @@ const Button = ({
 export default Button;
 
 const StyledButton = styled.button<IButton>`
-  ${({ sort }) => getButtonStyle(sort)}
-  font-size: ${({ size }) => (size ? size + "px" : "14px")};
+  ${({ theme, sort }) => getButtonStyle(theme, sort)}
+  font-size: ${({ size }) => (size ? size + 'px' : '14px')};
   font-weight: ${({ fontWeight }) => fontWeight};
   width: ${({ width }) => width};
   height: ${({ height }) => height};
@@ -61,7 +58,7 @@ const StyledButton = styled.button<IButton>`
   align-items: center;
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.border};
-  border-radius: 16px;
+  border-radius: 8px;
   &:active {
     transform: scale(0.98);
   }
