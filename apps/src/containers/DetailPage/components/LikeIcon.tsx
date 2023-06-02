@@ -6,13 +6,13 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import Favorite from "@mui/icons-material/Favorite";
 import SvgIcon from "@mui/material/SvgIcon";
 interface ILikeIcon {
-  id: string;
+  boardId: string;
 }
 
-const LikeIcon = ({ id }: ILikeIcon) => {
+const LikeIcon = ({ boardId }: ILikeIcon) => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { recommend } = usePostRecommend({ id, accessToken });
+  const { recommend } = usePostRecommend({ boardId, accessToken });
 
   const [isLikeClick, setIsLikeClick] = useState(false);
 

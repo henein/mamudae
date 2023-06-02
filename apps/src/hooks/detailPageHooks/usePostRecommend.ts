@@ -3,28 +3,28 @@ import { postRecommend } from "../../api/postRecommend";
 import handleTokenError from "../../utils/handleTokenError";
 
 interface IPostRecommend {
-  id: string;
+  boardId: string;
   accessToken: string | undefined;
   options?: any;
 }
 
 export const usePostRecommend = ({
-  id,
+  boardId,
   accessToken,
   options,
 }: IPostRecommend) => {
   const queryClient = useQueryClient();
 
   const { mutate, error } = useMutation(
-    ["postRecommend", id],
-    () => postRecommend({ id, accessToken }),
+    ["postRecommend", boardId],
+    () => postRecommend({ boardId, accessToken }),
     {
       ...options,
       enabled: !!accessToken,
       onSuccess: (data) => {
         console.log(data);
-        queryClient.invalidateQueries(["detailPageData", id]); // onSuccess 시에 useDetail 쿼리 무효화
-        queryClient.refetchQueries(["detailPageData", id]); // refetch
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 useDetail 쿼리 무효화
+        queryClient.refetchQueries(["detailPageData", boardId]); // refetch
       },
       onError: (err: any) => {
         handleTokenError(err)

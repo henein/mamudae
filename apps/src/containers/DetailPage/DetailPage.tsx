@@ -24,11 +24,11 @@ export type CommentType = {
 
 const DetailPage = () => {
   const router = useRouter();
-  const id = router.query.id as string;
+  const boardId = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
   const { title, text, recommend, userName, views, createTime } = useDetail({
-    id,
+    boardId,
     options,
   });
   const { getLocalStorage } = useLocalStorage();
@@ -40,7 +40,7 @@ const DetailPage = () => {
       retry: 0,
     },
   }).data;
-  const commentdata = useGetComment({ id }).data;
+  const commentdata = useGetComment({ boardId }).data;
   return (
     <Container>
       <Announcement />
@@ -57,12 +57,12 @@ const DetailPage = () => {
               createTime={createTime}
             />
             <Content dangerouslySetInnerHTML={{ __html: text }} />
-            <Like recommend={recommend} id={id} />
+            <Like recommend={recommend} boardId={boardId} />
           </Wrapper>
         </WriteBox>
 
         <CommentBox>
-          <Write boardId={id} userData={userData} />
+          <Write boardId={boardId} userData={userData} />
           <Comments>
             {commentdata &&
               commentdata.map((item: CommentType, idx: number) => {
@@ -74,7 +74,7 @@ const DetailPage = () => {
                     replies={item.replies}
                     key={idx}
                     commentId={item.commentId}
-                    boardId={id}
+                    boardId={boardId}
                     userData={userData}
                     isLastComment={idx + 1 == commentdata.length}
                   />
