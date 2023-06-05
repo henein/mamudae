@@ -1,28 +1,40 @@
 import { useMutation, useQueryClient } from "react-query";
 import { postRecommend } from "../../api/postRecommend";
+import handleTokenError from "../../utils/handleTokenError";
 
 interface IPostRecommend {
-  id: string;
+  boardId: string;
   accessToken: string | undefined;
   options?: any;
 }
 
 export const usePostRecommend = ({
-  id,
+  boardId,
   accessToken,
   options,
 }: IPostRecommend) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
-    ["postRecommend", id],
-    () => postRecommend({ id, accessToken }),
+
+  const { mutate, error } = useMutation(
+    ["postRecommend", boardId],
+    () => postRecommend({ boardId, accessToken }),
     {
       ...options,
+      enabled: !!accessToken,
       onSuccess: (data) => {
         console.log(data);
-        queryClient.invalidateQueries(["detailPageData", id]); // onSuccess 시에 useDetail 쿼리 갱신
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 useDetail 쿼리 무효화
+        queryClient.refetchQueries(["detailPageData", boardId]); // refetch
       },
-      onError: (err) => console.log(err),
+      onError: (err: any) => {
+        handleTokenError(err)
+          .then(() => {
+            mutate();
+          })
+          .catch((error) => {
+            console.error("Error handling failed");
+          });
+      },
     }
   );
 
@@ -34,5 +46,5 @@ export const usePostRecommend = ({
     }
   };
 
-  return { recommend };
+  return { recommend, error };
 };

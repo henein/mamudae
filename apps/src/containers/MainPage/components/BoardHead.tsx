@@ -32,8 +32,7 @@ const BoardHeader = styled.div<{ darkModeState: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.border};
   background-color: ${({ theme }) => theme.cardHeader};
   z-index: 1;
-  box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.shadow)};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   padding-left: 24px;
 `;
 const Title = styled.h3`

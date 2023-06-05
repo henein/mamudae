@@ -15,14 +15,18 @@ export type BoardInfoType = {
 const MainPage = () => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
+  const { data } = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  });
   return (
     <Layout>
       <Announcement />
       <MainPageSet>
-        <Aside>
-          {data?.username ? <CompleteLogin {...data} /> : <Login />}
-        </Aside>
+        <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
         <BoardSet>
           <div>
             <Board board_title="전체" isLarge={true} />

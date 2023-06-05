@@ -4,7 +4,6 @@ import { ModeColorType } from "./src/constants/DefaultTheme";
 declare module "styled-components" {
   export interface DefaultTheme {
     background: string;
-    shadow: string
     border: string;
     card: string;
     divider: string;
@@ -25,5 +24,6 @@ declare module "styled-components" {
     chatSelfText: string;
     headerButtonHover: string;
     mentionText: string;
+    boxShadow: string;
   }
 }

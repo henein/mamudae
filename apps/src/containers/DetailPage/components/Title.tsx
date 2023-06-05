@@ -5,7 +5,6 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 interface ITitle {
   title: string;
@@ -15,10 +14,8 @@ interface ITitle {
 }
 
 const Title = ({ title, name, views, createTime }: ITitle) => {
-  const darkModeState = useDarkMode();
-
   return (
-    <Container darkModeState={darkModeState}>
+    <Container>
       <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
@@ -41,11 +38,10 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 };
 
 export default Title;
-const Container = styled.div<{ darkModeState: boolean }>`
+const Container = styled.div`
   z-index: 1;
   top: 0;
-  box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.shadow)};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
   justify-content: center;

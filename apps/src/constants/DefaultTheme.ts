@@ -71,7 +71,6 @@ export const paletteColor = {
 
 export const lightMode: DefaultTheme = {
   background: paletteColor.grey050,
-  shadow: paletteColor.black025,
   border: paletteColor.black050,
   card: paletteColor.white900,
   divider: paletteColor.black100,
@@ -92,10 +91,10 @@ export const lightMode: DefaultTheme = {
   chatSelfText: paletteColor.secondary600,
   headerButtonHover: paletteColor.grey200,
   mentionText: paletteColor.secondary600,
+  boxShadow: paletteColor.black025,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
-  shadow: paletteColor.black025,
   border: paletteColor.white050,
   card: paletteColor.grey800,
   divider: paletteColor.white100,
@@ -104,7 +103,7 @@ export const darkMode: DefaultTheme = {
   Brand: paletteColor.primary500,
   footer: paletteColor.black900,
   cardHeader: paletteColor.grey700A,
-  subText: paletteColor.white600,
+  subText: paletteColor.white500,
   chatBackground: paletteColor.grey800,
   chatBubble: paletteColor.grey700,
   footerText: paletteColor.white500,
@@ -116,4 +115,5 @@ export const darkMode: DefaultTheme = {
   chatSelfText: paletteColor.secondary500,
   headerButtonHover: paletteColor.grey700,
   mentionText: paletteColor.secondary500,
+  boxShadow: paletteColor.black025,
 };

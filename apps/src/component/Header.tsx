@@ -10,12 +10,20 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import useScroll from '../hooks/scrollHooks/useScroll';
 
-const Header = () => {
-  const { isScrollDown, stickyTop } = useScroll();
+type HeaderPropType = {
+  setTheme: any;
+};
+const Header = ({ setTheme }: HeaderPropType) => {
   const dispatch = useDispatch();
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
   );
+  const { isScrollDown, stickyTop } = useScroll();
+
+  const onClick = () => {
+    darkModeState ? setTheme('light') : setTheme('dark');
+    dispatch(toggleDarkMode());
+  };
 
   return (
     <Container isScrollDown={isScrollDown} stickyTop={stickyTop}>
@@ -41,7 +49,7 @@ const Header = () => {
             </NavList>
           </LeftDiv>
           <RightDiv>
-            <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
+            <DarkModeBtn onClick={onClick}>
               <LightImg darkModeState={darkModeState}>
                 <SvgIcon component={LightModeIcon} fontSize="small" />
               </LightImg>
@@ -50,7 +58,7 @@ const Header = () => {
               </DarkImg>
             </DarkModeBtn>
             <InputBox>
-              <InlineInput></InlineInput>
+              <InlineInput placeholder="검색"></InlineInput>
               <SubmitBtn>
                 <SvgIcon component={SearchIcon} inheritViewBox />
               </SubmitBtn>
@@ -78,10 +86,8 @@ const Background = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
     stickyTop ? theme.card : 'none'};
   border-bottom: ${({ stickyTop, theme }) =>
     stickyTop ? `1px solid ${theme.border}` : 'none'};
-  box-shadow: ${({ stickyTop, theme, darkModeState }) =>
-    stickyTop
-      ? `0px 4px 8px ${darkModeState == false && theme.shadow}`
-      : 'none'};
+  box-shadow: ${({ stickyTop, theme }) =>
+    stickyTop && `0px 4px 8px ${theme.boxShadow}`};
 `;
 const LeftDiv = styled.div`
   display: flex;
@@ -155,7 +161,7 @@ const Listdiv = styled.div<{ stickyTop: boolean }>`
   font-size: 16px;
   &:hover {
     background-color: ${({ theme }) => theme.headerButtonHover};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.shadow};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.boxShadow};
     border-radius: 8px;
   }
 `;
@@ -176,6 +182,8 @@ const InlineInput = styled.input`
   height: 38px;
   border: none;
   box-sizing: border-box;
+  padding-left: 8px;
+  color: ${({ theme }) => theme.subText};
   &:focus {
     outline: none;
   }

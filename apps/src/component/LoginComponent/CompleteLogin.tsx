@@ -6,23 +6,24 @@ import circle from "/public/detailPageImages/Ellipse.png";
 import Label from "../Label";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 
-const CompleteLogin = ({ username }: any) => {
+const CompleteLogin = ({ ...data }: any) => {
   const { removeLocalStorage } = useLocalStorage();
   const logout = () => {
     removeLocalStorage("access");
     removeLocalStorage("refresh");
     window.location.reload();
   };
+  console.log(data);
   return (
     <LoginContainer>
       <LoginHeader>
         <RepresentativeImage src={circle} alt="none"></RepresentativeImage>
         <Profile>
-          <Nickname>{username}</Nickname>
+          <Nickname>{data.userName}</Nickname>
           <Honours>
-            <Label type="level">2150</Label>
-            <Label type="floor">49층</Label>
-            <Label type="job">전사</Label>
+            <Label type="level">{data.userLevel || "미등록"}</Label>
+            <Label type="floor">{data.floor || "미등록"}</Label>
+            <Label type="job">{data.job || "미등록"}</Label>
           </Honours>
         </Profile>
       </LoginHeader>

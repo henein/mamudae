@@ -1,57 +1,44 @@
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { customColor } from "../../../constants/customColor";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
+import CommentForm from "./CommentForm";
 
-const Write = () => {
-  const darkModeState = useDarkMode();
-
-  const { register, handleSubmit } = useForm();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
-  };
-
+interface postinfos {
+  boardId: string;
+  userData: any;
+}
+const Write = ({ ...data }: postinfos) => {
   return (
-    <WriteForm onSubmit={handleSubmit(submit)} darkModeState={darkModeState}>
+    <Container>
       <NumberOfComments>댓글 2개</NumberOfComments>
-      <WriteComment
-        {...register("comment")}
-        type="text"
-        placeholder="댓글 작성"
+      <CommentForm
+        setIsClick={() => {}}
+        userData={data.userData}
+        boardId={data.boardId}
+        isRecomment={false}
       />
-    </WriteForm>
+    </Container>
   );
 };
 
 export default Write;
-
-const WriteComment = styled.input`
-  padding: 12px 8px;
-  border-radius: 16px;
-  border: 1px solid ${(prop) => prop.theme.border};
-  background-color: ${(prop) => prop.theme.input};
-  ::placeholder {
-    color: ${(prop) => prop.theme.subText};
-  }
-`;
 const NumberOfComments = styled.p`
-  font-weight: 900;
+  font-weight: 700;
   font-size: 16px;
   margin-bottom: 16px;
+  margin-top: 20px;
   color: ${(prop) => prop.theme.Text};
 `;
-const WriteForm = styled.form<{ darkModeState: boolean }>`
+const Container = styled.div`
   z-index: 1;
   top: 0;
-  box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.shadow)};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 16px;
   min-height: 97px;
-  border-bottom: 1px solid ${customColor.whiteGray};
+  height: auto;
+  border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 0 24px;
   position: sticky;
   background-color: ${(prop) => prop.theme.cardHeader};

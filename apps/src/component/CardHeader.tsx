@@ -13,6 +13,6 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.cardHeader};
   outline: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
-  box-shadow: 0px 4px 8px ${({ theme }) => theme.shadow};
+  box-shadow: 0px 4px 8px ${({ theme }) => theme.boxShadow};
   backdrop-filter: blur(8px);
 `;

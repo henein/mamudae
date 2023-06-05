@@ -1,5 +1,6 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userInfo, setUserName } from "../../api/userInfo";
+import handleTokenError from "../../utils/handleTokenError";
 
 interface IUseUserInfo {
   accessToken: string | undefined;
@@ -7,12 +8,17 @@ interface IUseUserInfo {
 }
 
 export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
-  const { data } = useQuery("userInfo", () => userInfo(accessToken), {
+  const { data, refetch } = useQuery("userInfo", () => userInfo(accessToken), {
     ...options,
     enabled: !!accessToken,
-  });
 
-  console.log(data);
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err: any) => {
+      handleTokenError(err, refetch);
+    },
+  });
   return { data };
 };
 
