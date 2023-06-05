@@ -44,6 +44,7 @@ export const paletteColor = {
   black200: "#0000004D",
   black100: "#00000033",
   black050: "#0000001A",
+  black025: "#0000000D",
   white900: "#FFFFFF",
   white800: "#FFFFFFE6",
   white700: "#FFFFFFCC",
@@ -54,6 +55,7 @@ export const paletteColor = {
   white200: "#FFFFFF4D",
   white100: "#FFFFFF33",
   white050: "#FFFFFF1A",
+  white025: "#FFFFFF0D",
   white900A: "#FFFFFFE5",
   secondary900: "#273DB4",
   secondary800: "#265ED3",
@@ -89,7 +91,7 @@ export const lightMode: DefaultTheme = {
   chatSelfText: paletteColor.secondary600,
   headerButtonHover: paletteColor.grey200,
   mentionText: paletteColor.secondary600,
-  boxShadow: paletteColor.black050,
+  boxShadow: paletteColor.black025,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
@@ -113,5 +115,5 @@ export const darkMode: DefaultTheme = {
   chatSelfText: paletteColor.secondary500,
   headerButtonHover: paletteColor.grey700,
   mentionText: paletteColor.secondary500,
-  boxShadow: "none",
+  boxShadow: paletteColor.black025,
 };
