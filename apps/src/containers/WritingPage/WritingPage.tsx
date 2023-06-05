@@ -12,6 +12,7 @@ import { useCreateBoard } from '../../hooks/writingPageHooks/useCreateBoard';
 import { FormInputCss } from '../LoginPage/components/Login';
 import { Editor } from './components/Editor';
 import { ToolBarDivider } from './components/ToolBarDivider';
+import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
 
 const WritingPage = () => {
   const editor = useEditor({
@@ -26,9 +27,13 @@ const WritingPage = () => {
   const { register, handleSubmit } = useForm();
   const { mutate } = useCreateBoard();
 
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
   const submit = (data: FieldValues) => {
     if (editor !== null && !editor.isEmpty) {
       mutate({
+        accessToken,
         title: data['title'],
         boardType: data['selectBoard'],
         text: JSON.stringify(editor?.getJSON()),

@@ -2,6 +2,7 @@ import { useMutation } from "react-query";
 import { createBoard } from "../../api/createBoard";
 
 export interface ICreateBoard {
+  accessToken?: string | undefined;
   boardType: string;
   text: string;
   title: string;

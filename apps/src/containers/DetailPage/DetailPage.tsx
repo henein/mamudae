@@ -41,7 +41,7 @@ const DetailPage = () => {
     });
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage('access');
-  const [context, setContext] = useState('s');
+  const [context, setContext] = useState('');
   const userData = useUserInfo({
     accessToken,
     options: {
@@ -61,6 +61,8 @@ const DetailPage = () => {
       Underline,
       Image,
     ]);
+
+    setContext(html);
   }, [text]);
 
   console.log(commentdata);
