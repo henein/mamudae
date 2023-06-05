@@ -5,7 +5,7 @@ import Underline from '@tiptap/extension-underline';
 import { generateHTML } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Announcement from '../../component/AnnounceComponent/Announcement';
 import CompleteLogin from '../../component/LoginComponent/CompleteLogin';
@@ -40,6 +40,21 @@ const DetailPage = () => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage('access');
   const { data } = useUserInfo({ accessToken });
+  const [context, setContext] = useState('s');
+
+  useEffect(() => {
+    const html = generateHTML(JSON.parse(text), [
+      StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      Placeholder.configure({
+        placeholder: '내용을 입력해주세요...',
+      }),
+      Underline,
+      Image,
+    ]);
+
+    setContext(html);
+  }, [text]);
 
   const commentdata = useGetComment({ id }).data;
   console.log(commentdata);
@@ -60,15 +75,7 @@ const DetailPage = () => {
             />
             <Content
               dangerouslySetInnerHTML={{
-                __html: generateHTML(JSON.parse(text), [
-                  StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-                  TextAlign.configure({ types: ['heading', 'paragraph'] }),
-                  Placeholder.configure({
-                    placeholder: '내용을 입력해주세요...',
-                  }),
-                  Underline,
-                  Image,
-                ]),
+                __html: context,
               }}
             />
             <Like recommend={recommend} id={id} />
