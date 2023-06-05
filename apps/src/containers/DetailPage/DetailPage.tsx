@@ -19,6 +19,7 @@ export type CommentType = {
   modifiedDate: string;
   userName: string;
   tag: string;
+  replyId: string;
   replies?: any;
 };
 
@@ -27,10 +28,11 @@ const DetailPage = () => {
   const boardId = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, userName, views, createTime } = useDetail({
-    boardId,
-    options,
-  });
+  const { title, text, recommend, views, createTime, userInfoResponseDto } =
+    useDetail({
+      boardId,
+      options,
+    });
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
   const userData = useUserInfo({
@@ -41,6 +43,8 @@ const DetailPage = () => {
     },
   }).data;
   const commentdata = useGetComment({ boardId }).data;
+
+  console.log(commentdata);
   return (
     <Container>
       <Announcement />
@@ -52,7 +56,7 @@ const DetailPage = () => {
           <Wrapper>
             <Title
               title={title}
-              name={userName}
+              name={userInfoResponseDto.userName}
               views={views}
               createTime={createTime}
             />

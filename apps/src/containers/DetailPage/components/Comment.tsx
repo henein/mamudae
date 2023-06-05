@@ -25,7 +25,11 @@ const Comment = ({ ...data }) => {
             <Job>겸마 격수</Job>
             <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
-          <CommentMenuIcon />
+          <CommentMenuIcon
+            boardId={data.boardId}
+            comment={data.comment}
+            commentId={data.commentId}
+          />
         </CommentHeader>
         <CommentContent>{data.comment}</CommentContent>
         <div>
@@ -34,7 +38,6 @@ const Comment = ({ ...data }) => {
             {isClick && (
               <CommentForm
                 setIsClick={setIsClick}
-                userData={data.userData}
                 boardId={data.boardId}
                 commentId={data.commentId}
                 isRecomment={true}
@@ -45,14 +48,14 @@ const Comment = ({ ...data }) => {
           {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments
+                boardId={data.boardId}
                 comment={item.comment}
                 userName={item.userName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
+                replyId={item.replyId}
                 parentCommentId={data.commentId}
                 key={idx}
-                userData={data.userData}
-                boardId={data.boardId}
               />
             );
           })}

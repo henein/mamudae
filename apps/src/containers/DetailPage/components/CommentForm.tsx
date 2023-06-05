@@ -7,22 +7,14 @@ import {
   usePostReComment,
 } from "../../../hooks/detailPageHooks/useComment";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
+import { PComment, RComment } from "../../../api/comment";
 
-// props => setIsClick?, userData, boardId,commentId?,isRecomment
 interface ICommentFormProps {
   setIsClick: (arg: boolean) => void;
-  userData: any;
   boardId: string;
   commentId?: string;
   isRecomment: boolean;
   userName?: string;
-}
-interface IFormType {
-  boardId: string;
-  comment: string;
-  commentId: string;
-  tag?: string;
-  accessToken: string | undefined;
 }
 const CommentForm = ({ ...props }: ICommentFormProps) => {
   const { getLocalStorage } = useLocalStorage();
@@ -31,35 +23,55 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
   const [isFocusInput, setIsFocusInput] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
-  const [formData, setFormData] = useState<IFormType>({
+
+  const [PFormData, setPFormData] = useState<PComment>({
     boardId: "",
     comment: "",
     commentId: "",
+    accessToken,
+  });
+  const [RFormData, setRFormData] = useState<RComment>({
+    boardId: "",
+    comment: "",
+    commentId: "",
+    replyId: "",
     tag: "",
     accessToken,
   });
 
-  const { postReComments } = usePostReComment(formData); // 대댓글 post api
-  const { postComments } = usePostComment(formData); // 댓글 post api
+  const { postReComments } = usePostReComment(RFormData); // 대댓글 post api
+  const { postComments } = usePostComment(PFormData); // 댓글 post api
 
   const submit = async (data: FieldValues) => {
-    if (!props.userData) {
+    if (!localStorage.getItem("refresh")) {
       alert("로그인해야 이용할 수 있습니다.");
       reset();
       return;
     } else {
       const commentWithoutTag = data.comment.replace("@" + props.userName, "");
 
-      setFormData({
-        ...formData,
-        boardId: props.boardId,
-        comment: commentWithoutTag.trim(),
-        commentId: props.commentId ?? "",
-        tag: data.comment.includes("@" + props.userName) ? props.userName : "",
-      });
-
       // 대댓글이라면 앞쪽 mutate, 부모댓글이라면 뒷쪽 mutate
-      (await props.isRecomment) ? postReComments() : postComments();
+      if (props.isRecomment) {
+        await setRFormData({
+          ...RFormData,
+          boardId: props.boardId,
+          comment: commentWithoutTag.trim(),
+          commentId: props.commentId ?? "",
+          tag: data.comment.includes("@" + props.userName)
+            ? props.userName
+            : "",
+        });
+        await postReComments();
+      } else {
+        await setPFormData({
+          ...PFormData,
+          boardId: props.boardId,
+          comment: data.comment,
+          commentId: props.commentId ?? "",
+        });
+        await postComments();
+      }
+
       reset();
     }
   };

@@ -1,67 +1,73 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getComment, postComment, postReComment } from "../../api/comment";
+import {
+  getComment,
+  postComment,
+  postReComment,
+  putComment,
+  putReComment,
+  deleteComment,
+  deleteReComment,
+} from "../../api/comment";
 import handleTokenError from "../../utils/handleTokenError";
+import { GetComment, PComment, RComment } from "../../api/comment";
 
-interface IUseComment {
-  id: string;
+interface useGetComment extends GetComment {
   options?: any;
-  accessToken?: string | undefined;
+}
+// 부모댓글 타입
+interface usePComment extends PComment {
+  options?: any;
+}
+// 대댓글 타입
+interface useRComment extends RComment {
+  options?: any;
 }
 
-export function useGetComment({ id, options }: IUseComment) {
-  const { data } = useQuery(["comment", id], () => getComment({ id }), {
-    ...options,
-  });
+// 댓글 조회
+export function useGetComment({ boardId, options }: useGetComment) {
+  const { data } = useQuery(
+    ["comment", boardId],
+    () => getComment({ boardId }),
+    {
+      ...options,
+    }
+  );
 
   return { ...data };
 }
 
-interface IPostUseComment {
-  boardId: string;
-  comment: string;
-  commentId?: string;
-  tag?: string;
-  options?: any;
-  accessToken: string | undefined;
-}
-
+// 부모 댓글 작성
 export function usePostComment({
   boardId,
   comment,
   commentId,
-  tag,
   accessToken,
-}: IPostUseComment) {
+}: usePComment) {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
+  const postCommentMutation = useMutation(
     "postComment",
     () =>
       postComment({
         boardId,
         comment,
         commentId,
-        tag,
         accessToken,
       }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
       },
-      onError: (err: any) => {
-        handleTokenError(err)
-          .then(() => {
-            mutate();
-          })
-          .catch((error: any) => {
-            console.error("Error handling failed");
-          });
-      },
     }
   );
 
-  const postComments = () => {
+  const postComments = async () => {
     if (accessToken) {
-      mutate();
+      try {
+        await postCommentMutation.mutateAsync();
+      } catch (err: any) {
+        await handleTokenError(err);
+        await postCommentMutation.mutateAsync();
+      }
     } else {
       console.log("아직 accessToken을 가져오지 못함");
     }
@@ -69,22 +75,24 @@ export function usePostComment({
 
   return { postComments };
 }
-
+// 대댓글 작성
 export function usePostReComment({
   boardId,
   comment,
   commentId,
+  replyId,
   tag,
   accessToken,
-}: IPostUseComment) {
+}: useRComment) {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
+  const postReCommentMutation = useMutation(
     "postReComment",
     () =>
       postReComment({
         boardId,
         comment,
         commentId,
+        replyId,
         tag,
         accessToken,
       }),
@@ -92,21 +100,17 @@ export function usePostReComment({
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
       },
-      // onError: (err: any) => {
-      //   handleTokenError(err)
-      //     .then(() => {
-      //       mutate();
-      //     })
-      //     .catch((error: any) => {
-      //       console.error("Error handling failed");
-      //     });
-      // },
     }
   );
 
-  const postReComments = () => {
+  const postReComments = async () => {
     if (accessToken) {
-      mutate();
+      try {
+        await postReCommentMutation.mutateAsync();
+      } catch (err: any) {
+        await handleTokenError(err);
+        await postReCommentMutation.mutateAsync();
+      }
     } else {
       console.log("아직 accessToken을 가져오지 못함");
     }
@@ -118,31 +122,149 @@ export function usePostReComment({
 // export function usePutComment({
 //   boardId,
 //   comment,
-//   // commentId,
-//   tag,
-// }: IPostUseComment) {
-//   return useMutation("postComment", () =>
-//     postComment({
-//       boardId,
-//       comment,
-//       // commentId,
-//       tag,
-//     })
+//   commentId,
+//   accessToken,
+// }: IPutUseComment) {
+//   const queryClient = useQueryClient();
+//   const { mutate } = useMutation(
+//     "putComment",
+//     () =>
+//       putComment({
+//         boardId,
+//         comment,
+//         commentId,
+//       }),
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+//       },
+//     }
 //   );
+
+//   const putComments = () => {
+//     if (accessToken) {
+//       mutate();
+//     } else {
+//       console.log("아직 accessToken을 가져오지 못함");
+//     }
+//   };
+
+//   return { putComments };
 // }
 
-// export function useDeleteComment({
+// export function usePutReComment({
 //   boardId,
 //   comment,
-//   // commentId,
+//   commentId,
 //   tag,
-// }: IPostUseComment) {
-//   return useMutation("postComment", () =>
-//     postComment({
-//       boardId,
-//       comment,
-//       // commentId,
-//       tag,
-//     })
+//   accessToken,
+// }: IPutUseComment) {
+//   const queryClient = useQueryClient();
+//   const { mutate } = useMutation(
+//     "putReComment",
+//     () =>
+//       putReComment({
+//         boardId,
+//         comment,
+//         commentId,
+//         tag,
+//       }),
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+//       },
+//     }
 //   );
+
+//   const putReComments = () => {
+//     if (accessToken) {
+//       mutate();
+//     } else {
+//       console.log("아직 accessToken을 가져오지 못함");
+//     }
+//   };
+
+//   return { putReComments };
 // }
+
+export function useDelComment({
+  boardId,
+  comment,
+  commentId,
+  accessToken,
+}: usePComment) {
+  const queryClient = useQueryClient();
+  const delCommentMutation = useMutation(
+    "postComment",
+    () =>
+      postComment({
+        boardId,
+        comment,
+        commentId,
+        accessToken,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+      },
+    }
+  );
+
+  const delComments = async () => {
+    if (accessToken) {
+      try {
+        await delCommentMutation.mutateAsync();
+      } catch (err: any) {
+        await handleTokenError(err);
+        await delCommentMutation.mutateAsync();
+      }
+    } else {
+      console.log("아직 accessToken을 가져오지 못함");
+    }
+  };
+
+  return { delComments };
+}
+
+export function useDelReComment({
+  boardId,
+  comment,
+  commentId,
+  replyId,
+  tag,
+  accessToken,
+}: useRComment) {
+  const queryClient = useQueryClient();
+  const delReCommentMutation = useMutation(
+    "delReComment",
+    () =>
+      deleteReComment({
+        boardId,
+        comment,
+        commentId,
+        replyId,
+        tag,
+        accessToken,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+      },
+    }
+  );
+
+  const delReComments = async () => {
+    if (accessToken) {
+      try {
+        await delReCommentMutation.mutateAsync();
+      } catch (err: any) {
+        await handleTokenError(err);
+        await delReCommentMutation.mutateAsync();
+      }
+    } else {
+      console.log("아직 accessToken을 가져오지 못함");
+    }
+  };
+
+  return { delReComments };
+}

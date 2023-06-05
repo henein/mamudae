@@ -1,13 +1,22 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
+import {
+  useDelComment,
+  useDelReComment,
+} from "../../../hooks/detailPageHooks/useComment";
+import { PComment, RComment } from "../../../api/comment";
 
-const CommentTools = () => {
+// boardId, comment, commentId, accessToken;
+const CommentTools = ({ ...props }: any) => {
+  // const { delComments } = useDelComment(); // 댓글 del api
+
   return (
     <Container>
       <Functions>
         <Modify>수정</Modify>
         <Delete>삭제</Delete>
+        {/* <Delete onClick={() => delComments()}>삭제</Delete> */}
         <Report>신고</Report>
       </Functions>
     </Container>

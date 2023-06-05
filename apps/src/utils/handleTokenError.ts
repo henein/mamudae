@@ -1,14 +1,14 @@
 import { AxiosError } from "axios";
 import { getAtByRT } from "../api/getPrintCode";
 
-// - AT 만료시 ( 30분 )  code : 101
-// - RT 만료시 ( 4일 ) → 로그아웃 code : 102
-// - AT가 망가졌을때 → 로그아웃 code : 103
+// - AT 만료시 ( 30분 )  code : 101 => refresh 요청 후 새로 발급받은 AT localStorage "access"에 저장 => 후에 자동 refetch
+// - RT 만료시 ( 4일 ) → 로그아웃 code : 102 => 101번을 요청 한 후에 refresh가 실패했을때(refresh토큰 만료시) localStorage에 있는 "access" "refresh" 삭제
+// - AT가 망가졌을때 → 로그아웃 code : 103 => localStorage에 있는 "access" "refresh" 삭제
 
 const handleTokenError = async (error: AxiosError, refetch?: any) => {
   const exception = error.response?.headers.exception;
-  // console.log(exception);
   const resController = (res: any) => {
+    console.log(res);
     if (res.headers && res.headers.exception == undefined) {
       localStorage.setItem("access", res.headers.authorization.substring(7));
       if (
@@ -34,7 +34,6 @@ const handleTokenError = async (error: AxiosError, refetch?: any) => {
       const refreshToken = localStorage.getItem("refresh");
       const res = await getAtByRT(refreshToken);
       // headers 확인 후 success면 AT 세팅, error면 102에러처리
-      console.log(res);
       await resController(res);
       break;
     case "103":

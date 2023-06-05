@@ -24,7 +24,13 @@ const ReComments = ({ ...data }) => {
             <Job>겸마 격수</Job>
             <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
-          <CommentMenuIcon />
+          <CommentMenuIcon
+            boardId={data.boardId}
+            comment={data.comment}
+            commentId={data.commentId}
+            // replyId="1"
+            // tag="1"
+          />
         </CommentHeader>
         <CommentContent>
           {data.tag ? (
@@ -41,7 +47,6 @@ const ReComments = ({ ...data }) => {
           {isClick && (
             <CommentForm
               setIsClick={setIsClick}
-              userData={data.userData}
               boardId={data.boardId}
               commentId={data.parentCommentId}
               isRecomment={true}
