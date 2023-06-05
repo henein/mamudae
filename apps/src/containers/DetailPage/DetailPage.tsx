@@ -17,58 +17,70 @@ export type CommentType = {
   comment: string;
   commentId: number;
   modifiedDate: string;
-  userId: string;
+  userName: string;
   tag: string;
+  replyId: string;
   replies?: any;
 };
 
 const DetailPage = () => {
   const router = useRouter();
-  const id = router.query.id as string;
+  const boardId = router.query.id as string;
   const options = { enabled: false };
   // Hybrid Rendering
-  const { title, text, recommend, name, views, createTime } = useDetail({
-    id,
-    options,
-  });
+  const { title, text, recommend, views, createTime, userInfoResponseDto } =
+    useDetail({
+      boardId,
+      options,
+    });
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
+  const userData = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  }).data;
+  const commentdata = useGetComment({ boardId }).data;
 
-  const commentdata = useGetComment({ id }).data;
   console.log(commentdata);
   return (
     <Container>
       <Announcement />
       <SideBox>
-        {data?.username ? <CompleteLogin {...data} /> : <Login />}
+        {userData ? <CompleteLogin {...userData} /> : <Login />}
       </SideBox>
       <div>
         <WriteBox>
           <Wrapper>
             <Title
               title={title}
-              name={name}
+              name={userInfoResponseDto.userName}
               views={views}
               createTime={createTime}
             />
             <Content dangerouslySetInnerHTML={{ __html: text }} />
-            <Like recommend={recommend} id={id} />
+            <Like recommend={recommend} boardId={boardId} />
           </Wrapper>
         </WriteBox>
 
         <CommentBox>
-          <Write />
+          <Write boardId={boardId} userData={userData} />
           <Comments>
             {commentdata &&
-              commentdata.map((item: CommentType) => {
+              commentdata.map((item: CommentType, idx: number) => {
                 return (
                   <Comment
                     comment={item.comment}
-                    userId={item.userId}
+                    userName={item.userName}
                     modifiedDate={item.modifiedDate}
                     replies={item.replies}
-                    key={item.commentId}
+                    key={idx}
+                    commentId={item.commentId}
+                    boardId={boardId}
+                    userData={userData}
+                    isLastComment={idx + 1 == commentdata.length}
                   />
                 );
               })}

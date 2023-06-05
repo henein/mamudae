@@ -8,6 +8,7 @@ import Layout from "../src/component/Layout";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import SecondLayout from "../src/component/SecondLayout";
+import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
@@ -18,22 +19,24 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Provider store={store}>
-            {shouldRenderLayout ? (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            ) : (
-              <SecondLayout>
-                <Component {...pageProps} />
-              </SecondLayout>
-            )}
-          </Provider>
-        </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      </QueryClientProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Provider store={store}>
+              {shouldRenderLayout ? (
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              ) : (
+                <SecondLayout>
+                  <Component {...pageProps} />
+                </SecondLayout>
+              )}
+            </Provider>
+          </Hydrate>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </ThemeProvider>
     </>
   );
 }

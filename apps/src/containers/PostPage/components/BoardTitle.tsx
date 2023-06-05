@@ -24,7 +24,7 @@ const BoardTit = styled.div`
   border-radius: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.border};
   z-index: 1;
-  box-shadow: 0 2px 3px ${customColor.boardShadow};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
 `;
 const TitleText = styled.div`
   color: ${({ theme }) => theme.Text};

@@ -1,25 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
+import CommentForm from "./CommentForm";
 
 const ReComments = ({ ...data }) => {
-  console.log(data);
+  const [isClick, setIsClick] = useState<boolean>(false);
+
+  const replyBtnClick = () => {
+    setIsClick(true);
+  };
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
       <CommentBox>
         <CommentHeader>
           <UserInfo>
-            <NickName>{data.userId}</NickName>
+            <NickName>{data.userName}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
             <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
-          <CommentMenuIcon />
+          <CommentMenuIcon
+            boardId={data.boardId}
+            comment={data.comment}
+            commentId={data.commentId}
+            // replyId="1"
+            // tag="1"
+          />
         </CommentHeader>
         <CommentContent>
           {data.tag ? (
@@ -31,9 +42,18 @@ const ReComments = ({ ...data }) => {
             data.comment
           )}
         </CommentContent>
-        <div>
-          <ReCommentBtn>답글</ReCommentBtn>
-        </div>
+        <FormDisplay>
+          <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
+          {isClick && (
+            <CommentForm
+              setIsClick={setIsClick}
+              boardId={data.boardId}
+              commentId={data.parentCommentId}
+              isRecomment={true}
+              userName={data.userName}
+            />
+          )}
+        </FormDisplay>
       </CommentBox>
     </Container>
   );
@@ -54,6 +74,11 @@ const ReCommentBtn = styled.button`
     color: ${customColor.moreDarkGray};
     font-weight: 900;
   }
+`;
+const FormDisplay = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Job = styled.div`

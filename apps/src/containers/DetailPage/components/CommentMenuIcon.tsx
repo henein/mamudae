@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CommentTools from "./CommentTools";
 
-const CommentMenuIcon = () => {
+export interface CommentMenuProps {
+  boardId: string;
+  comment: string;
+  commentId: string;
+  replyId?: string;
+  tag?: string;
+}
+const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
   const [isHover, setIsHover] = useState(false);
 
   return (
@@ -32,7 +39,9 @@ const CommentMenuIcon = () => {
           />
         </g>
       </Svg>
-      {isHover && <CommentTools />}
+      {isHover && (
+        <CommentTools boardId={props.boardId} commentId={props.commentId} />
+      )}
     </Wrap>
   );
 };

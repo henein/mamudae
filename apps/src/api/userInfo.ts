@@ -16,7 +16,7 @@ export const setUserName = async (
   const res = await axios.put(
     `${process.env.NEXT_PUBLIC_API_URL}/userinfo/set-name`,
     {
-      username: setName,
+      userName: setName,
     },
     {
       headers: {

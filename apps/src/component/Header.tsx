@@ -11,12 +11,18 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 
 type HeaderPropType = {
   stickyTop: boolean;
+  setTheme: any;
 };
-const Header = ({ stickyTop }: HeaderPropType) => {
+const Header = ({ stickyTop, setTheme }: HeaderPropType) => {
   const dispatch = useDispatch();
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
   );
+
+  const onClick = () => {
+    darkModeState ? setTheme("light") : setTheme("dark");
+    dispatch(toggleDarkMode());
+  };
 
   return (
     <Layout darkModeState={darkModeState} stickyTop={stickyTop}>
@@ -41,7 +47,7 @@ const Header = ({ stickyTop }: HeaderPropType) => {
           </NavList>
         </LeftDiv>
         <RightDiv>
-          <DarkModeBtn onClick={() => dispatch(toggleDarkMode())}>
+          <DarkModeBtn onClick={onClick}>
             <LightImg darkModeState={darkModeState}>
               <SvgIcon component={LightModeIcon} fontSize="small" />
             </LightImg>
@@ -50,7 +56,7 @@ const Header = ({ stickyTop }: HeaderPropType) => {
             </DarkImg>
           </DarkModeBtn>
           <InputBox>
-            <InlineInput></InlineInput>
+            <InlineInput placeholder="검색"></InlineInput>
             <SubmitBtn>
               <SvgIcon component={SearchIcon} inheritViewBox />
             </SubmitBtn>
@@ -69,10 +75,8 @@ const Layout = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
     stickyTop ? theme.card : "none"};
   border-bottom: ${({ stickyTop, theme }) =>
     stickyTop ? `1px solid ${theme.border}` : "none"};
-  box-shadow: ${({ stickyTop, theme, darkModeState }) =>
-    stickyTop
-      ? `0px 4px 8px ${darkModeState == false && theme.border}`
-      : "none"};
+  box-shadow: ${({ stickyTop, theme }) =>
+    stickyTop && `0px 4px 8px ${theme.boxShadow}`};
 `;
 const LeftDiv = styled.div`
   display: flex;
@@ -167,6 +171,8 @@ const InlineInput = styled.input`
   height: 38px;
   border: none;
   box-sizing: border-box;
+  padding-left: 8px;
+  color: ${({ theme }) => theme.subText};
   &:focus {
     outline: none;
   }

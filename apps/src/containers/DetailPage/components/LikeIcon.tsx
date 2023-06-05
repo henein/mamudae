@@ -6,30 +6,24 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import Favorite from "@mui/icons-material/Favorite";
 import SvgIcon from "@mui/material/SvgIcon";
 interface ILikeIcon {
-  id: string;
+  boardId: string;
 }
 
-const LikeIcon = ({ id }: ILikeIcon) => {
+const LikeIcon = ({ boardId }: ILikeIcon) => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { recommend } = usePostRecommend({ id, accessToken });
+  const { recommend } = usePostRecommend({ boardId, accessToken });
 
-  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isLikeClick, setIsLikeClick] = useState(false);
 
-  const handleMouseOver = () => {
-    setIsMouseOver(true);
-  };
-  const handleMouseLeave = () => {
-    setIsMouseOver(false);
+  const onLikeClick = () => {
+    recommend();
+    setIsLikeClick((curr) => !curr);
   };
   return (
     <>
-      <IconDiv
-        onClick={recommend}
-        onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
-      >
-        {isMouseOver ? (
+      <IconDiv onClick={onLikeClick} isLikeClick={isLikeClick}>
+        {isLikeClick ? (
           <SvgIcon component={Favorite} />
         ) : (
           <SvgIcon component={FavoriteBorderOutlinedIcon} />
@@ -41,12 +35,13 @@ const LikeIcon = ({ id }: ILikeIcon) => {
 
 export default LikeIcon;
 
-const IconDiv = styled.div`
+const IconDiv = styled.div<{ isLikeClick: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.card};
-  color: ${({ theme }) => theme.Brand};
+  background-color: ${({ theme, isLikeClick }) =>
+    isLikeClick ? theme.Brand : theme.card};
+  color: ${({ theme, isLikeClick }) => (isLikeClick ? "white" : theme.Brand)};
   border: 1px solid ${({ theme }) => theme.border};
   width: 40px;
   height: 40px;
@@ -54,7 +49,5 @@ const IconDiv = styled.div`
   margin-bottom: 4px;
   &:hover {
     cursor: pointer;
-    background-color: ${({ theme }) => theme.Brand};
-    color: white;
   }
 `;

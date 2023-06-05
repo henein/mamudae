@@ -5,6 +5,21 @@ export async function getPrintCode(code: string) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login/kakao?code=${code}`
   );
-  console.log(res);
-  return res.data;
+  return res.headers;
+}
+
+export async function getAtByRT(refreshToken: string | null) {
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+      {
+        headers: {
+          RefreshToken: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+    return res;
+  } catch (error: any) {
+    return error.response;
+  }
 }

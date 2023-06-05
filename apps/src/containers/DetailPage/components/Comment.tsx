@@ -1,43 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
 import { customColor } from "../../../constants/customColor";
 import ReComments from "./ReComments";
 import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
+import CommentForm from "./CommentForm";
 
 // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+// 마지막 댓글인지?
 const Comment = ({ ...data }) => {
-  console.log(data.replies);
+  const [isClick, setIsClick] = useState<boolean>(false);
+
+  const replyBtnClick = () => {
+    setIsClick(true);
+  };
   return (
-    <Comments>
-      <CommentBox>
+    <Container>
+      <CommentBox isLastComment={data.isLastComment}>
         <CommentHeader>
           <UserInfo>
-            <NickName>{data.userId}</NickName>
+            <NickName>{data.userName}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
             <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
-          <CommentMenuIcon />
+          <CommentMenuIcon
+            boardId={data.boardId}
+            comment={data.comment}
+            commentId={data.commentId}
+          />
         </CommentHeader>
         <CommentContent>{data.comment}</CommentContent>
         <div>
-          <ReCommentBtn>답글</ReCommentBtn>
-          {data.replies.map((item: CommentType) => {
+          <FormDisplay>
+            <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
+            {isClick && (
+              <CommentForm
+                setIsClick={setIsClick}
+                boardId={data.boardId}
+                commentId={data.commentId}
+                isRecomment={true}
+                userName={data.userName}
+              />
+            )}
+          </FormDisplay>
+          {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments
+                boardId={data.boardId}
                 comment={item.comment}
-                userId={item.userId}
+                userName={item.userName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
-                key={item.commentId}
+                replyId={item.replyId}
+                parentCommentId={data.commentId}
+                key={idx}
               />
             );
           })}
         </div>
       </CommentBox>
-    </Comments>
+    </Container>
   );
 };
 
@@ -52,10 +76,14 @@ const ReCommentBtn = styled.button`
     font-weight: 900;
   }
 `;
-
-const Comments = styled.div`
+const FormDisplay = styled.div`
   display: flex;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Container = styled.div`
+  display: flex;
 `;
 
 const Job = styled.div`
@@ -84,12 +112,14 @@ const NickName = styled.div`
   font-size: 12px;
 `;
 
-const CommentBox = styled.div`
+const CommentBox = styled.div<{ isLastComment: boolean }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding-bottom: 14px;
-  border-bottom: 1px solid ${customColor.divider};
+  padding-bottom: ${({ isLastComment }) => !isLastComment && "14px"};
+  border-bottom: ${({ theme, isLastComment }) =>
+    !isLastComment && `1px solid ${theme.divider}`};
+  margin-bottom: ${({ isLastComment }) => !isLastComment && "20px"};
 `;
 const CommentHeader = styled.div`
   display: flex;

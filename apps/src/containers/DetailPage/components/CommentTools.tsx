@@ -1,14 +1,22 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
+import {
+  useDelComment,
+  useDelReComment,
+} from "../../../hooks/detailPageHooks/useComment";
+import { PComment, RComment } from "../../../api/comment";
 
+// boardId, comment, commentId, accessToken;
+const CommentTools = ({ ...props }: any) => {
+  // const { delComments } = useDelComment(); // 댓글 del api
 
-const CommentTools = () => {
   return (
     <Container>
       <Functions>
         <Modify>수정</Modify>
         <Delete>삭제</Delete>
+        {/* <Delete onClick={() => delComments()}>삭제</Delete> */}
         <Report>신고</Report>
       </Functions>
     </Container>
@@ -36,6 +44,7 @@ const Functions = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  color: ${({ theme }) => theme.Text};
 `;
 const Container = styled.div`
   width: 62px;
@@ -50,6 +59,8 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
+  z-index: 1;
+  background-color: ${({ theme }) => theme.card};
 
   &:after {
     content: "";

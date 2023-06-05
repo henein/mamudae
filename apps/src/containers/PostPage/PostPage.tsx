@@ -16,7 +16,13 @@ const PostPage = () => {
   const router = useRouter();
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({ accessToken });
+  const { data } = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  });
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -37,7 +43,7 @@ const PostPage = () => {
       <Announcement />
       <PostPageSet>
         <Aside>
-          {data?.username ? <CompleteLogin {...data} /> : <Login />}
+          <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
         </Aside>
         <BoardContent>
           <ContentSet>

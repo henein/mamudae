@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../../component/Button";
 import Image from "next/image";
@@ -8,18 +8,26 @@ import { FormInputCss } from "../../LoginPage/components/Login";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 import { useSetUserName } from "../../../hooks/user/useUserInfo";
 
+interface IUserName {
+  setName: string;
+  accessToken: string | undefined;
+}
 const Profile = () => {
   const { register, handleSubmit } = useForm();
   const { getLocalStorage } = useLocalStorage();
 
   const accessToken = getLocalStorage("access");
-  const { mutate } = useSetUserName({
+  const [userName, setUserName] = useState<IUserName>({
     setName: "",
     accessToken,
   });
-  const submit = (data: FieldValues) => {
+  const { mutate } = useSetUserName(userName);
+
+  // 2~15 사이 문자열 전달
+  const submit = async (data: FieldValues) => {
     alert(JSON.stringify(data));
-    mutate(data.nickname);
+    await setUserName({ ...userName, setName: data.nickname });
+    await mutate();
   };
 
   return (
