@@ -1,17 +1,23 @@
-import { useRouter } from "next/router";
-import React from "react";
-import Like from "./components/Like";
-import Title from "./components/Title";
-import Write from "./components/Write";
-import Comment from "./components/Comment";
-import { useDetail } from "../../hooks/detailPageHooks/useDetail";
-import styled from "styled-components";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import Login from "../../component/LoginComponent/Login";
-import { useGetComment } from "../../hooks/detailPageHooks/useComment";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import Image from '@tiptap/extension-image';
+import Placeholder from '@tiptap/extension-placeholder';
+import TextAlign from '@tiptap/extension-text-align';
+import Underline from '@tiptap/extension-underline';
+import { generateHTML } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { useRouter } from 'next/router';
+import React from 'react';
+import styled from 'styled-components';
+import Announcement from '../../component/AnnounceComponent/Announcement';
+import CompleteLogin from '../../component/LoginComponent/CompleteLogin';
+import Login from '../../component/LoginComponent/Login';
+import { useGetComment } from '../../hooks/detailPageHooks/useComment';
+import { useDetail } from '../../hooks/detailPageHooks/useDetail';
+import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
+import { useUserInfo } from '../../hooks/user/useUserInfo';
+import Comment from './components/Comment';
+import Like from './components/Like';
+import Title from './components/Title';
+import Write from './components/Write';
 
 export type CommentType = {
   comment: string;
@@ -32,7 +38,7 @@ const DetailPage = () => {
     options,
   });
   const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
+  const accessToken = getLocalStorage('access');
   const { data } = useUserInfo({ accessToken });
 
   const commentdata = useGetComment({ id }).data;
@@ -52,7 +58,19 @@ const DetailPage = () => {
               views={views}
               createTime={createTime}
             />
-            <Content dangerouslySetInnerHTML={{ __html: text }} />
+            <Content
+              dangerouslySetInnerHTML={{
+                __html: generateHTML(JSON.parse(text), [
+                  StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
+                  TextAlign.configure({ types: ['heading', 'paragraph'] }),
+                  Placeholder.configure({
+                    placeholder: '내용을 입력해주세요...',
+                  }),
+                  Underline,
+                  Image,
+                ]),
+              }}
+            />
             <Like recommend={recommend} id={id} />
           </Wrapper>
         </WriteBox>

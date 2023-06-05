@@ -5,7 +5,6 @@ export interface ICreateBoard {
   boardType: string;
   text: string;
   title: string;
-  name: string;
 }
 
 export const useCreateBoard = (options?: object) => {

@@ -105,7 +105,32 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         <FormatAlignJustify fontSize="small" />
       </ToolBarButton>
       <ToolBarDivider />
-      <ToolBarButton onClick={() => editor?.chain().focus().run()}>
+      <ToolBarButton
+        onClick={() => {
+          editor?.commands.focus();
+
+          const input = document.createElement('input');
+
+          input.type = 'file';
+          input.multiple = true;
+          input.onchange = (_) => {
+            if (!input.files) {
+              return;
+            }
+
+            const files = Array.from(input.files);
+
+            files.forEach((file) => {
+              editor
+                ?.chain()
+                .focus()
+                .setImage({ src: URL.createObjectURL(file) })
+                .run();
+            });
+          };
+          input.click();
+        }}
+      >
         <ImageIcon fontSize="small" />
       </ToolBarButton>
       <ToolBarButton onClick={() => editor?.chain().focus().run()}>

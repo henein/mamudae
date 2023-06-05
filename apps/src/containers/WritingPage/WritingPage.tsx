@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Button from '../../component/Button';
-import { customColor } from '../../constants/customColor';
-import { FormInputCss } from '../LoginPage/components/Login';
-import { Editor } from './components/Editor';
-import Image from 'next/image';
-import line from '/public/writingPageImages/Line.png';
-import { FieldValues, useForm } from 'react-hook-form';
-import { useCreateBoard } from '../../hooks/writingPageHooks/useCreateBoard';
-import StarterKit from '@tiptap/starter-kit';
-import TextAlign from '@tiptap/extension-text-align';
+import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
+import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import React from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import Button from '../../component/Button';
+import { useCreateBoard } from '../../hooks/writingPageHooks/useCreateBoard';
+import { FormInputCss } from '../LoginPage/components/Login';
+import { Editor } from './components/Editor';
+import { ToolBarDivider } from './components/ToolBarDivider';
 
 const WritingPage = () => {
   const editor = useEditor({
@@ -21,6 +20,7 @@ const WritingPage = () => {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       Placeholder.configure({ placeholder: '내용을 입력해주세요...' }),
       Underline,
+      Image,
     ],
   });
   const { register, handleSubmit } = useForm();
@@ -32,7 +32,6 @@ const WritingPage = () => {
         title: data['title'],
         boardType: data['selectBoard'],
         text: JSON.stringify(editor?.getJSON()),
-        name: '임송재', // 로컬스토리지에 저장한 닉네임넣기
       });
     }
   };
@@ -46,7 +45,8 @@ const WritingPage = () => {
           <option>유머</option>
         </SelectBoard>
 
-        <Line src={line} alt="none" />
+        <ToolBarDivider />
+
         <Title
           placeholder="제목"
           type="text"
@@ -76,11 +76,6 @@ export default WritingPage;
 const Container = styled.form`
   width: 1140px;
   margin: 0 auto;
-`;
-
-const Line = styled(Image)`
-  margin: auto 29px;
-  z-index: 1;
 `;
 
 const SelectBoard = styled.select`
