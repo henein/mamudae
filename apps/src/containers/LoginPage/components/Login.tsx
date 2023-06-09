@@ -59,6 +59,7 @@ export const FormInputCss = css`
   padding: 12px 16px;
   font-size: 14px;
   background-color: ${(prop) => prop.theme.input};
+  color: ${({ theme }) => theme.Text};
   ::placeholder {
     color: ${(prop) => prop.theme.subText};
   }

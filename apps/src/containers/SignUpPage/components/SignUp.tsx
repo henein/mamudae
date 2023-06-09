@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
@@ -10,22 +10,30 @@ import { FormInputCss } from "../../LoginPage/components/Login";
 import useKaKao from "../../../hooks/kakao/useKaKao";
 
 const SignUp = () => {
+  const [comparePw, setComparePw] = useState(true);
+
   const { login } = useKaKao();
   const { register, handleSubmit } = useForm();
+
   const submit = (data: FieldValues) => {
     alert(JSON.stringify(data));
+    setComparePw(
+      JSON.stringify(data.password) == JSON.stringify(data.confirmPassword)
+    );
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>회원가입</Title>
       <Id type="text" placeholder="이메일" {...register("id")} />
       <PassWord type="text" placeholder="비밀번호" {...register("password")} />
       <ConfirmBox>
-        <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>
+        {!comparePw && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>}
         <ConfirmPassWord
           type="text"
           placeholder="비밀번호 확인"
           {...register("confirmPassword")}
+          comparePw={comparePw}
         />
       </ConfirmBox>
       <LoginBtn
@@ -114,8 +122,10 @@ const Id = styled.input`
 const PassWord = styled.input`
   ${FormInputCss}
 `;
-const ConfirmPassWord = styled.input`
+const ConfirmPassWord = styled.input<{ comparePw: boolean }>`
   ${FormInputCss}
+  border: ${({ comparePw, theme }) =>
+    comparePw ? `1px solid ${theme.border}` : `2px solid ${theme.inputDanger}`};
 `;
 const LoginBtn = styled(Button)`
   border: 1px solid ${(prop) => prop.theme.border};
