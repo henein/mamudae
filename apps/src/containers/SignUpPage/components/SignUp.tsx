@@ -105,7 +105,7 @@ const Container = styled.form`
   background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 20px 24px;
   position: absolute;
   top: calc(16% + 30px);

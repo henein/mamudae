@@ -53,7 +53,7 @@ export default Login;
 
 export const FormInputCss = css`
   border: 1px solid ${(prop) => prop.theme.border};
-  border-radius: 32px;
+  border-radius: 8px;
   width: 100%;
   height: 41px;
   padding: 12px 16px;
@@ -87,7 +87,7 @@ const Container = styled.form`
   background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 20px 24px;
   position: absolute;
   top: calc(16% + 30px);
