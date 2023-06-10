@@ -25,7 +25,6 @@ const Profile = () => {
 
   // 2~15 사이 문자열 전달
   const submit = async (data: FieldValues) => {
-    alert(JSON.stringify(data));
     await setUserName({ ...userName, setName: data.nickname });
     await mutate();
   };
@@ -34,7 +33,12 @@ const Profile = () => {
     <Container onSubmit={handleSubmit(submit)}>
       <Title>프로필</Title>
       <ProfileImg src={circle} alt="none"></ProfileImg>
-      <Nickname type="text" placeholder="닉네임" {...register("nickname")} />
+      <Nickname
+        type="text"
+        placeholder="닉네임"
+        {...register("nickname")}
+        autoComplete="off"
+      />
       <CompletionBtn
         type="submit"
         sort="main"
