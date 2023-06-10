@@ -8,25 +8,50 @@ import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
 import useKaKao from "../../../hooks/kakao/useKaKao";
+import { useLocalSignUp } from "../../../hooks/localLogin/useLocalLogin";
+import { LocalLoginProps } from "../../../api/localLogin";
 
 const SignUp = () => {
   const [comparePw, setComparePw] = useState(true);
-
   const { login } = useKaKao();
   const { register, handleSubmit } = useForm();
+  const [localSignUpForm, setLocalSignUpForm] = useState<LocalLoginProps>({
+    userEmail: "",
+    password: "",
+  });
+  const { mutate } = useLocalSignUp(localSignUpForm);
 
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  const submit = async (data: FieldValues) => {
     setComparePw(
       JSON.stringify(data.password) == JSON.stringify(data.confirmPassword)
     );
+    if (comparePw) {
+      console.log(data.id, data.password);
+      await setLocalSignUpForm({
+        userEmail: data.id,
+        password: data.password,
+      });
+      await mutate();
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
   };
 
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>회원가입</Title>
-      <Id type="text" placeholder="이메일" {...register("id")} />
-      <PassWord type="text" placeholder="비밀번호" {...register("password")} />
+      <Id
+        type="text"
+        placeholder="이메일"
+        {...register("id")}
+        autoComplete="off"
+      />
+      <PassWord
+        type="text"
+        placeholder="비밀번호"
+        {...register("password")}
+        autoComplete="off"
+      />
       <ConfirmBox>
         {!comparePw && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>}
         <ConfirmPassWord
@@ -34,6 +59,7 @@ const SignUp = () => {
           placeholder="비밀번호 확인"
           {...register("confirmPassword")}
           comparePw={comparePw}
+          autoComplete="off"
         />
       </ConfirmBox>
       <LoginBtn
