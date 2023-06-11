@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
@@ -8,24 +8,58 @@ import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
 import useKaKao from "../../../hooks/kakao/useKaKao";
+import { useLocalSignUp } from "../../../hooks/localLogin/useLocalLogin";
+import { LocalLoginProps } from "../../../api/localLogin";
 
 const SignUp = () => {
+  const [comparePw, setComparePw] = useState(true);
   const { login } = useKaKao();
   const { register, handleSubmit } = useForm();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  const [localSignUpForm, setLocalSignUpForm] = useState<LocalLoginProps>({
+    userEmail: "",
+    password: "",
+  });
+  const { mutate } = useLocalSignUp(localSignUpForm);
+
+  const submit = async (data: FieldValues) => {
+    setComparePw(
+      JSON.stringify(data.password) == JSON.stringify(data.confirmPassword)
+    );
+    if (comparePw) {
+      console.log(data.id, data.password);
+      await setLocalSignUpForm({
+        userEmail: data.id,
+        password: data.password,
+      });
+      await mutate();
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>회원가입</Title>
-      <Id type="text" placeholder="이메일" {...register("id")} />
-      <PassWord type="text" placeholder="비밀번호" {...register("password")} />
+      <Id
+        type="text"
+        placeholder="이메일"
+        {...register("id")}
+        autoComplete="off"
+      />
+      <PassWord
+        type="text"
+        placeholder="비밀번호"
+        {...register("password")}
+        autoComplete="off"
+      />
       <ConfirmBox>
-        <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>
+        {!comparePw && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>}
         <ConfirmPassWord
           type="text"
           placeholder="비밀번호 확인"
           {...register("confirmPassword")}
+          comparePw={comparePw}
+          autoComplete="off"
         />
       </ConfirmBox>
       <LoginBtn
@@ -97,7 +131,7 @@ const Container = styled.form`
   background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 20px 24px;
   position: absolute;
   top: calc(16% + 30px);
@@ -114,8 +148,10 @@ const Id = styled.input`
 const PassWord = styled.input`
   ${FormInputCss}
 `;
-const ConfirmPassWord = styled.input`
+const ConfirmPassWord = styled.input<{ comparePw: boolean }>`
   ${FormInputCss}
+  border: ${({ comparePw, theme }) =>
+    comparePw ? `1px solid ${theme.border}` : `2px solid ${theme.inputDanger}`};
 `;
 const LoginBtn = styled(Button)`
   border: 1px solid ${(prop) => prop.theme.border};

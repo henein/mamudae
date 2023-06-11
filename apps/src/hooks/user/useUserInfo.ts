@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { userInfo, setUserName } from "../../api/userInfo";
 import handleTokenError from "../../utils/handleTokenError";
@@ -33,9 +34,17 @@ export const useSetUserName = ({
   accessToken,
   options,
 }: IUseSetUserName) => {
+  const router = useRouter();
   const { mutate } = useMutation(() => setUserName(setName, accessToken), {
     ...options,
     enabled: !!accessToken,
+    onSuccess: (data) => {
+      router.push("/");
+    },
+    onError: (err) => {
+      alert("set-userName 에러입니다.");
+      console.log(err);
+    },
   });
 
   return { mutate };

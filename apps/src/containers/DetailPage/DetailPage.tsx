@@ -1,23 +1,23 @@
-import Image from '@tiptap/extension-image';
-import Placeholder from '@tiptap/extension-placeholder';
-import TextAlign from '@tiptap/extension-text-align';
-import Underline from '@tiptap/extension-underline';
-import { generateHTML } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Announcement from '../../component/AnnounceComponent/Announcement';
-import CompleteLogin from '../../component/LoginComponent/CompleteLogin';
-import Login from '../../component/LoginComponent/Login';
-import { useGetComment } from '../../hooks/detailPageHooks/useComment';
-import { useDetail } from '../../hooks/detailPageHooks/useDetail';
-import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
-import { useUserInfo } from '../../hooks/user/useUserInfo';
-import Comment from './components/Comment';
-import Like from './components/Like';
-import Title from './components/Title';
-import Write from './components/Write';
+import Image from "@tiptap/extension-image";
+import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import { generateHTML } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Announcement from "../../component/AnnounceComponent/Announcement";
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import Login from "../../component/LoginComponent/Login";
+import { useGetComment } from "../../hooks/detailPageHooks/useComment";
+import { useDetail } from "../../hooks/detailPageHooks/useDetail";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import Comment from "./components/Comment";
+import Like from "./components/Like";
+import Title from "./components/Title";
+import Write from "./components/Write";
 
 export type CommentType = {
   comment: string;
@@ -31,17 +31,31 @@ export type CommentType = {
 
 const DetailPage = () => {
   const router = useRouter();
+  const { getLocalStorage } = useLocalStorage();
+
   const boardId = router.query.id as string;
   const options = { enabled: false };
+  const accessToken = getLocalStorage("access");
   // Hybrid Rendering
-  const { title, text, recommend, views, createTime, userInfoResponseDto } =
-    useDetail({
-      boardId,
-      options,
-    });
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage('access');
-  const [context, setContext] = useState('');
+
+  const {
+    title,
+    text,
+    recommend,
+    views,
+    createTime,
+    userInfoResponseDto,
+    recommended,
+    refetch,
+  } = useDetail({
+    boardId,
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+    },
+  });
+
+  const [context, setContext] = useState("");
   const userData = useUserInfo({
     accessToken,
     options: {
@@ -49,14 +63,19 @@ const DetailPage = () => {
       retry: 0,
     },
   }).data;
-  const commentdata = useGetComment({ boardId }).data;
+  const commentdata = useGetComment({
+    boardId,
+    options: {
+      refetchOnWindowFocus: false,
+    },
+  }).data;
 
   useEffect(() => {
     const html = generateHTML(JSON.parse(text), [
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({
-        placeholder: '내용을 입력해주세요...',
+        placeholder: "내용을 입력해주세요...",
       }),
       Underline,
       Image,
@@ -65,7 +84,16 @@ const DetailPage = () => {
     setContext(html);
   }, [text]);
 
-  console.log(commentdata);
+  const [isInAT, setIsInAT] = useState(false);
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem("access");
+    if (storedValue) {
+      setIsInAT(true);
+    }
+    refetch();
+  }, [isInAT, refetch]);
+
   return (
     <Container>
       <Announcement />
@@ -82,7 +110,11 @@ const DetailPage = () => {
               createTime={createTime}
             />
             <Content dangerouslySetInnerHTML={{ __html: context }} />
-            <Like recommend={recommend} boardId={boardId} />
+            <Like
+              recommend={recommend}
+              boardId={boardId}
+              recommended={recommended}
+            />
           </Wrapper>
         </WriteBox>
 

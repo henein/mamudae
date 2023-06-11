@@ -6,12 +6,13 @@ import LikeIcon from "./LikeIcon";
 interface ILike {
   recommend: number;
   boardId: string;
+  recommended: boolean;
 }
 
-const Like = ({ recommend, boardId }: ILike) => {
+const Like = ({ recommend, boardId, recommended }: ILike) => {
   return (
     <Container>
-      <LikeIcon boardId={boardId} />
+      <LikeIcon boardId={boardId} recommended={recommended} />
       <RecommendNum>{recommend}</RecommendNum>
     </Container>
   );
