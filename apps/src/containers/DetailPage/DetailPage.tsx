@@ -50,7 +50,9 @@ const DetailPage = () => {
   } = useDetail({
     boardId,
     accessToken,
-    options,
+    options: {
+      refetchOnWindowFocus: false,
+    },
   });
 
   const [context, setContext] = useState("");
@@ -61,7 +63,12 @@ const DetailPage = () => {
       retry: 0,
     },
   }).data;
-  const commentdata = useGetComment({ boardId }).data;
+  const commentdata = useGetComment({
+    boardId,
+    options: {
+      refetchOnWindowFocus: false,
+    },
+  }).data;
 
   useEffect(() => {
     const html = generateHTML(JSON.parse(text), [

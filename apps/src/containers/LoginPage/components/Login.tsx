@@ -24,7 +24,6 @@ const Login = () => {
       userEmail: data.id,
       password: data.password,
     });
-    console.log(localLoginForm);
     await mutate();
   };
 

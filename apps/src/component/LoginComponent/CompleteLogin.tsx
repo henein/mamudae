@@ -13,7 +13,6 @@ const CompleteLogin = ({ ...data }: any) => {
     removeLocalStorage("refresh");
     window.location.reload();
   };
-  console.log(data);
   return (
     <LoginContainer>
       <LoginHeader>
