@@ -15,7 +15,7 @@ export const usePostRecommend = ({
 }: IPostRecommend) => {
   const queryClient = useQueryClient();
 
-  const { mutate, error } = useMutation(
+  const recommendMutation = useMutation(
     ["postRecommend", boardId],
     () => postRecommend({ boardId, accessToken }),
     {
@@ -26,25 +26,21 @@ export const usePostRecommend = ({
         queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 useDetail 쿼리 무효화
         queryClient.refetchQueries(["detailPageData", boardId]); // refetch
       },
-      onError: (err: any) => {
-        handleTokenError(err)
-          .then(() => {
-            mutate();
-          })
-          .catch((error) => {
-            console.error("Error handling failed");
-          });
-      },
     }
   );
 
-  const recommend = () => {
+  const recommend = async () => {
     if (accessToken) {
-      mutate();
+      try {
+        await recommendMutation.mutateAsync();
+      } catch (err: any) {
+        await handleTokenError(err);
+        await recommendMutation.mutateAsync();
+      }
     } else {
       console.log("아직 accessToken을 가져오지 못함");
     }
   };
 
-  return { recommend, error };
+  return { recommend };
 };
