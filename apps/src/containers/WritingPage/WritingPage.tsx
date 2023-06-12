@@ -28,7 +28,7 @@ const WritingPage = () => {
   const { mutate } = useCreateBoard();
 
   const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
+  const accessToken = getLocalStorage('access');
 
   const submit = (data: FieldValues) => {
     if (editor !== null && !editor.isEmpty) {
@@ -62,10 +62,10 @@ const WritingPage = () => {
       <Editor editor={editor} />
 
       <ButtonBox>
-        <Button sort="sub" width="81px" height="41px">
+        <Button type="button" sort="sub" width="81px" height="41px">
           저장하기
         </Button>
-        <Button sort="sub" width="81px" height="41px">
+        <Button type="button" sort="sub" width="81px" height="41px">
           불러오기
         </Button>
         <Button type="submit" sort="main" width="81px" height="41px">

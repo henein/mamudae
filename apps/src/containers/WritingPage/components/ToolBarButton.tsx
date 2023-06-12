@@ -8,7 +8,11 @@ export interface ToolBarButtonProps extends React.PropsWithChildren {
 
 export const ToolBarButton: React.FC<ToolBarButtonProps> = (props) => {
   return (
-    <Container isChecked={props.isChecked} onClick={props.onClick}>
+    <Container
+      type="button"
+      isChecked={props.isChecked}
+      onClick={props.onClick}
+    >
       {props.children}
     </Container>
   );
