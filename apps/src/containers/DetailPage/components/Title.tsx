@@ -94,7 +94,7 @@ const Name = styled.div`
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const WriteState = styled.div`
   align-items: center;

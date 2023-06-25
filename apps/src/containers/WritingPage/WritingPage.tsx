@@ -1,25 +1,25 @@
-import Image from '@tiptap/extension-image';
-import Placeholder from '@tiptap/extension-placeholder';
-import TextAlign from '@tiptap/extension-text-align';
-import Underline from '@tiptap/extension-underline';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import React from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import Button from '../../component/Button';
-import { useCreateBoard } from '../../hooks/writingPageHooks/useCreateBoard';
-import { FormInputCss } from '../LoginPage/components/Login';
-import { Editor } from './components/Editor';
-import { ToolBarDivider } from './components/ToolBarDivider';
-import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
+import Image from "@tiptap/extension-image";
+import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import React from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import styled from "styled-components";
+import Button from "../../component/Button";
+import { useCreateBoard } from "../../hooks/writingPageHooks/useCreateBoard";
+import { FormInputCss } from "../LoginPage/components/Login";
+import { Editor } from "./components/Editor";
+import { ToolBarDivider } from "./components/ToolBarDivider";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 
 const WritingPage = () => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Placeholder.configure({ placeholder: '내용을 입력해주세요...' }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Placeholder.configure({ placeholder: "내용을 입력해주세요..." }),
       Underline,
       Image,
     ],
@@ -34,8 +34,8 @@ const WritingPage = () => {
     if (editor !== null && !editor.isEmpty) {
       mutate({
         accessToken,
-        title: data['title'],
-        boardType: data['selectBoard'],
+        title: data["title"],
+        boardType: data["selectBoard"],
         text: JSON.stringify(editor?.getJSON()),
       });
     }
@@ -44,7 +44,7 @@ const WritingPage = () => {
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <TitleBox>
-        <SelectBoard {...register('selectBoard', { required: true })}>
+        <SelectBoard {...register("selectBoard", { required: true })}>
           <option value="F">자유</option>
           <option value="I">정보</option>
           <option>유머</option>
@@ -55,7 +55,7 @@ const WritingPage = () => {
         <Title
           placeholder="제목"
           type="text"
-          {...register('title', { required: true })}
+          {...register("title", { required: true })}
         />
       </TitleBox>
 
@@ -90,7 +90,7 @@ const SelectBoard = styled.select`
   background-color: transparent;
   outline: none;
   z-index: 1;
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
 `;
 
 const TitleBox = styled.div`
@@ -110,7 +110,7 @@ const Title = styled.input`
   border-radius: 16px;
   position: absolute;
   line-height: 100%;
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
 
   ::placeholder {
     color: ${({ theme }) => theme.subText};

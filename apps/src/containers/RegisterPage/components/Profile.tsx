@@ -39,13 +39,7 @@ const Profile = () => {
         {...register("nickname")}
         autoComplete="off"
       />
-      <CompletionBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="38px"
-        fontWeight="900"
-      >
+      <CompletionBtn type="submit" sort="primary" width="100%" fontWeight="700">
         완료
       </CompletionBtn>
     </Container>
@@ -58,7 +52,7 @@ const Title = styled.div`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const ProfileImg = styled(Image)`
   margin: 0 auto;

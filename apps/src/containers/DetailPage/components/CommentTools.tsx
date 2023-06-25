@@ -11,13 +11,15 @@ import { PComment, RComment } from "../../../api/comment";
 const CommentTools = ({ ...props }: any) => {
   // const { delComments } = useDelComment(); // 댓글 del api
 
+  // 자기자신의 댓글이면 수정하기,삭제하기
+  // 다른사람의 댓글이면 신고하기
   return (
     <Container>
       <Functions>
-        <Modify>수정</Modify>
-        <Delete>삭제</Delete>
+        <Modify>수정하기</Modify>
+        <Delete>삭제하기</Delete>
         {/* <Delete onClick={() => delComments()}>삭제</Delete> */}
-        <Report>신고</Report>
+        <Report>신고하기</Report>
       </Functions>
     </Container>
   );
@@ -26,16 +28,18 @@ const CommentTools = ({ ...props }: any) => {
 export default CommentTools;
 
 const FunctionsCss = css`
-  padding: 4px 12px;
-  font-size: 10px;
+  padding: 4px 16px;
+  font-size: 13px;
   width: 100%;
   text-align: center;
 `;
 const Report = styled.div`
   ${FunctionsCss}
+  color: ${({ theme }) => theme.danger};
 `;
 const Delete = styled.div`
   ${FunctionsCss}
+  color: ${({ theme }) => theme.danger};
 `;
 const Modify = styled.div`
   ${FunctionsCss}
@@ -43,34 +47,20 @@ const Modify = styled.div`
 const Functions = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
-  color: ${({ theme }) => theme.Text};
+  gap: 4px;
+  padding: 8px 0px;
+  color: ${({ theme }) => theme.text};
 `;
 const Container = styled.div`
-  width: 62px;
-  height: 71px;
+  width: 81px;
   border: 1px solid ${customColor.whiteGray};
-  box-shadow: 0 2px 4px ${customColor.shadow};
-  border-radius: 16px;
+  box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.boxShadow};
+  border-radius: 16px 16px 0px 16px;
   align-items: center;
   justify-content: center;
   display: flex;
-  bottom: -109px;
-  left: 50%;
-  transform: translate(-50%, -50%);
   position: absolute;
   z-index: 1;
-  background-color: ${({ theme }) => theme.card};
-
-  &:after {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid ${customColor.whiteGray};
-    position: absolute;
-    top: -8px;
-    left: calc(50% - 8px);
-  }
+  background-color: ${({ theme }) => theme.cardHeader};
+  box-sizing: border-box;
 `;

@@ -38,8 +38,8 @@ const IconDiv = styled.div<{ recommended: boolean }>`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme, recommended }) =>
-    recommended ? theme.Brand : theme.card};
-  color: ${({ theme, recommended }) => (recommended ? "white" : theme.Brand)};
+    recommended ? theme.brand : theme.card};
+  color: ${({ theme, recommended }) => (recommended ? "white" : theme.brand)};
   border: 1px solid ${({ theme }) => theme.border};
   width: 40px;
   height: 40px;

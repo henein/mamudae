@@ -161,7 +161,7 @@ const Content = styled.div`
   font-weight: 400;
   padding: 0 24px;
   line-height: 18px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 
 const SideBox = styled.div`

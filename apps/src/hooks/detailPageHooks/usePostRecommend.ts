@@ -38,7 +38,7 @@ export const usePostRecommend = ({
         await recommendMutation.mutateAsync();
       }
     } else {
-      console.log("아직 accessToken을 가져오지 못함");
+      alert("로그인을 해주세요.");
     }
   };
 

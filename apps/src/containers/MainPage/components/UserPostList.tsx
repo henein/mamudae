@@ -52,7 +52,7 @@ const PostList = styled.div`
   margin: 20px 30px 0px 24px;
   font-size: 12px;
   a {
-    color: ${({ theme }) => theme.Text};
+    color: ${({ theme }) => theme.text};
   }
 `;
 const PostItem = styled.div`

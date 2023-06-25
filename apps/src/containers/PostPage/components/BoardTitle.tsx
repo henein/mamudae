@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { customColor } from "../../../constants/customColor";
 
 const BoardTitle = () => {
   const router = useRouter();
@@ -27,7 +26,7 @@ const BoardTit = styled.div`
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
 `;
 const TitleText = styled.div`
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
