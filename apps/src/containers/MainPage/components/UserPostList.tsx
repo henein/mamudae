@@ -7,7 +7,7 @@ export type ItemType = {
   id: number;
   title: string;
   commentNum: number;
-  name: string;
+  userName: string;
   createTime: string;
   views: number;
   recomment: number;
@@ -27,6 +27,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
 
   const boardData = data[board_title];
 
+  console.log(boardData);
   return (
     <PostList>
       {boardData.map((item: ItemType) => {
@@ -35,7 +36,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
             <Link href={`board/${board_title}/${item.id}`} key={item.id}>
               <span>{item.title}</span>
             </Link>
-            <NickName>{item.name}</NickName>
+            <NickName>{item.userName}</NickName>
           </PostItem>
         );
       })}
