@@ -59,10 +59,10 @@ const CharSelectBox = () => {
           </CharBox>
         </BoxLayout>
         <Buttons>
-          <AddBtn type="submit" sort="secondary" width="81px" fontWeight="500">
+          <AddBtn type="submit" sort="secondary">
             추가하기
           </AddBtn>
-          <SaveBtn type="submit" sort="primary" width="81px" fontWeight="500">
+          <SaveBtn type="submit" sort="primary">
             저장하기
           </SaveBtn>
         </Buttons>

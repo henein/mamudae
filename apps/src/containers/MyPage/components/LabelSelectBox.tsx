@@ -39,7 +39,7 @@ const LabelSelectBox = () => {
           </InnerBox>
         </BoxLayout>
         <Buttons>
-          <SaveBtn type="submit" sort="primary" width="81px" fontWeight="500">
+          <SaveBtn type="submit" sort="primary">
             저장하기
           </SaveBtn>
         </Buttons>
