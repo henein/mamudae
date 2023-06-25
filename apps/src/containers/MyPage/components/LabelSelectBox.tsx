@@ -10,42 +10,36 @@ const LabelSelectBox = () => {
         <Title>라벨</Title>
         <BoxLayout>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='level'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="level">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='floor'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="floor">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='job'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="job">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='job'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="job">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='level'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="level">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='floor'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="floor">48층</Labels>
           </InnerBox>
           <InnerBox>
-            <CheckBox type='checkbox' />
-            <Labels type='job'>48층</Labels>
+            <CheckBox type="checkbox" />
+            <Labels type="job">48층</Labels>
           </InnerBox>
         </BoxLayout>
         <Buttons>
-          <SaveBtn
-            type='submit'
-            sort='main'
-            width='81px'
-            height='41px'
-            fontWeight='500'
-          >
+          <SaveBtn type="submit" sort="primary" width="81px" fontWeight="500">
             저장하기
           </SaveBtn>
         </Buttons>

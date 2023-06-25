@@ -54,14 +54,7 @@ const PostPage = () => {
         </BoardContent>
       </PostPageSet>
 
-      <WriteBtn
-        type="submit"
-        sort="main"
-        width="81px"
-        height="41px"
-        size={14}
-        fontWeight="700"
-      >
+      <WriteBtn type="submit" sort="primary" width="81px" fontWeight="700">
         작성하기
       </WriteBtn>
     </Layout>
