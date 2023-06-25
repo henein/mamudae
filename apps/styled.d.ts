@@ -7,9 +7,9 @@ declare module "styled-components" {
     border: string;
     card: string;
     divider: string;
-    inputDanger: string;
-    Text: string;
-    Brand: string;
+    danger: string;
+    text: string;
+    brand: string;
     footer: string;
     cardHeader: string;
     subText: string;
@@ -25,5 +25,10 @@ declare module "styled-components" {
     headerButtonHover: string;
     mentionText: string;
     boxShadow: string;
+    brandHover: string;
+    brandActive: string;
+    danger: string;
+    dangerHover: string;
+    dangerActive: string;
   }
 }

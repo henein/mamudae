@@ -1,8 +1,8 @@
-import { EditorContent, Editor as RawEditor } from '@tiptap/react';
-import React from 'react';
-import styled from 'styled-components';
-import { Card } from '../../../component/Card';
-import { ToolBar } from './ToolBar';
+import { EditorContent, Editor as RawEditor } from "@tiptap/react";
+import React from "react";
+import styled from "styled-components";
+import { Card } from "../../../component/Card";
+import { ToolBar } from "./ToolBar";
 
 export interface EditorProps {
   editor: RawEditor | null;
@@ -16,7 +16,7 @@ export const Editor: React.FC<EditorProps> = ({ editor }) => {
         <EditorContent
           editor={editor}
           onKeyDown={(event) => {
-            if (event.key !== 'Enter' || !event.nativeEvent.isComposing) {
+            if (event.key !== "Enter" || !event.nativeEvent.isComposing) {
               return;
             }
 
@@ -33,7 +33,7 @@ const Container = styled.div`
     min-height: 678px;
     padding: 24px;
     font-size: 14px;
-    color: ${({ theme }) => theme.Text};
+    color: ${({ theme }) => theme.text};
 
     h1,
     h2,

@@ -102,7 +102,7 @@ const Floor = styled.div`
   background-color: ${customColor.floor};
 `;
 const NickName = styled.div`
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
   margin-right: 4px;
   font-size: 12px;
 `;
@@ -125,7 +125,7 @@ const UserInfo = styled.div`
 const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const NormalSpan = styled.span``;
 const TagSpan = styled.span`

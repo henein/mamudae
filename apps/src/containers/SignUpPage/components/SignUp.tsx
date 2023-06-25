@@ -140,7 +140,7 @@ const Title = styled.span`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const Id = styled.input`
   ${FormInputCss}
@@ -151,7 +151,7 @@ const PassWord = styled.input`
 const ConfirmPassWord = styled.input<{ comparePw: boolean }>`
   ${FormInputCss}
   border: ${({ comparePw, theme }) =>
-    comparePw ? `1px solid ${theme.border}` : `2px solid ${theme.inputDanger}`};
+    comparePw ? `1px solid ${theme.border}` : `2px solid ${theme.danger}`};
 `;
 const LoginBtn = styled(Button)`
   border: 1px solid ${(prop) => prop.theme.border};

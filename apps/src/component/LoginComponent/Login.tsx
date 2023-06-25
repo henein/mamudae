@@ -35,7 +35,7 @@ const Text = styled.span`
   font-size: 12px;
 `;
 const SignUpBtn = styled.button`
-  color: ${({ theme }) => theme.Brand};
+  color: ${({ theme }) => theme.brand};
   border: none;
   background-color: ${({ theme }) => theme.card};
   font-size: 12px;

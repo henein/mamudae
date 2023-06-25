@@ -93,7 +93,7 @@ const PostList = styled.div`
   margin-top: 12px;
   margin-bottom: 12px;
   a {
-    color: ${({ theme }) => theme.Text};
+    color: ${({ theme }) => theme.text};
   }
 `;
 const PostItem = styled.div`
@@ -120,7 +120,7 @@ const PostNum = styled.span`
   width: 43px;
 `;
 const CommentNum = styled.span`
-  color: ${({ theme }) => theme.Brand};
+  color: ${({ theme }) => theme.brand};
 `;
 const RightSide = styled.div`
   display: flex;

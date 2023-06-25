@@ -12,7 +12,6 @@ const Write = ({ ...data }: postinfos) => {
       <NumberOfComments>댓글 2개</NumberOfComments>
       <CommentForm
         setIsClick={() => {}}
-        userData={data.userData}
         boardId={data.boardId}
         isRecomment={false}
       />
@@ -26,7 +25,7 @@ const NumberOfComments = styled.p`
   font-size: 16px;
   margin-bottom: 16px;
   margin-top: 20px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const Container = styled.div`
   z-index: 1;

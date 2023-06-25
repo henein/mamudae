@@ -112,7 +112,7 @@ const PageNumBtn = styled.button<PageNumBtnProps>`
   color: ${(props) =>
     props.active ? customColor.white : customColor.darkGray};
   background-color: ${(props) =>
-    props.active ? props.theme.Brand : customColor.white};
+    props.active ? props.theme.brand : customColor.white};
   border-radius: ${(props) => props.active && "32px"};
   border: none;
   font-weight: 400;

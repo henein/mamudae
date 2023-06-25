@@ -58,7 +58,7 @@ const Title = styled.div`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const ProfileImg = styled(Image)`
   margin: 0 auto;

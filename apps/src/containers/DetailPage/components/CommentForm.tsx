@@ -128,7 +128,7 @@ const WriteDiv = styled.div`
 const StyledTextareaAutosize = styled(TextAreaAutoResize)`
   font-size: 14px;
   resize: none;
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   background-color: ${(prop) => prop.theme.input};
   border: none;
   padding: 0px;
@@ -155,7 +155,7 @@ const CancelBtn = styled.button`
 `;
 const SubmitBtn = styled.button`
   padding: 4px 8px;
-  color: ${({ theme }) => theme.Brand};
+  color: ${({ theme }) => theme.brand};
   font-weight: 700;
   font-size: 12px;
 `;
