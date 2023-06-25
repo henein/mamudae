@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
 import { customColor } from "../../../constants/customColor";
@@ -15,6 +15,15 @@ const Comment = ({ ...data }) => {
   const replyBtnClick = () => {
     setIsClick(true);
   };
+
+  const [isMyComment, setIsMyComment] = useState<boolean>(false);
+
+  const onClick = () => {
+    if (data.userData.userName == data.userName) {
+      setIsMyComment(true);
+    }
+  };
+  console.log();
   return (
     <Container>
       <CommentBox isLastComment={data.isLastComment}>
@@ -29,6 +38,8 @@ const Comment = ({ ...data }) => {
             boardId={data.boardId}
             comment={data.comment}
             commentId={data.commentId}
+            isMyComment={isMyComment}
+            onClick={onClick}
           />
         </CommentHeader>
         <CommentContent>{data.comment}</CommentContent>
@@ -55,6 +66,7 @@ const Comment = ({ ...data }) => {
                 tag={item.tag}
                 replyId={item.replyId}
                 parentCommentId={data.commentId}
+                userData={data.userData}
                 key={idx}
               />
             );
