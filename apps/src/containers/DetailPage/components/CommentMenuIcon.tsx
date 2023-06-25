@@ -6,6 +6,8 @@ export interface CommentMenuProps {
   boardId: string;
   comment: string;
   commentId: string;
+  isMyComment: boolean;
+  onClick: () => void;
   replyId?: string;
   tag?: string;
 }
@@ -14,8 +16,18 @@ const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
 
   return (
     <Wrap>
+      {isHover && (
+        <CommentTools
+          boardId={props.boardId}
+          commentId={props.commentId}
+          isMyComment={props.isMyComment}
+        />
+      )}
       <Svg
-        onClick={() => setIsHover((prev) => !prev)}
+        onClick={() => {
+          setIsHover((prev) => !prev);
+          props.onClick();
+        }}
         width="20"
         height="20"
         viewBox="0 0 20 20"
@@ -39,9 +51,6 @@ const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
           />
         </g>
       </Svg>
-      {isHover && (
-        <CommentTools boardId={props.boardId} commentId={props.commentId} />
-      )}
     </Wrap>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import {
@@ -7,19 +7,21 @@ import {
 } from "../../../hooks/detailPageHooks/useComment";
 import { PComment, RComment } from "../../../api/comment";
 
-// boardId, comment, commentId, accessToken;
+// boardId, comment, commentId, accessToken,userData;
 const CommentTools = ({ ...props }: any) => {
   // const { delComments } = useDelComment(); // 댓글 del api
 
-  // 자기자신의 댓글이면 수정하기,삭제하기
-  // 다른사람의 댓글이면 신고하기
   return (
-    <Container>
+    <Container isMyComment={props.isMyComment}>
       <Functions>
-        <Modify>수정하기</Modify>
-        <Delete>삭제하기</Delete>
-        {/* <Delete onClick={() => delComments()}>삭제</Delete> */}
-        <Report>신고하기</Report>
+        {props.isMyComment ? (
+          <>
+            <Modify>수정하기</Modify>
+            <Delete>삭제하기</Delete>
+          </>
+        ) : (
+          <Report>신고하기</Report>
+        )}
       </Functions>
     </Container>
   );
@@ -51,7 +53,7 @@ const Functions = styled.div`
   padding: 8px 0px;
   color: ${({ theme }) => theme.text};
 `;
-const Container = styled.div`
+const Container = styled.div<{ isMyComment: boolean }>`
   width: 81px;
   border: 1px solid ${customColor.whiteGray};
   box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.boxShadow};
@@ -60,6 +62,8 @@ const Container = styled.div`
   justify-content: center;
   display: flex;
   position: absolute;
+  top: ${({ isMyComment }) => (isMyComment ? "-65px" : "-40px")};
+  left: -61px;
   z-index: 1;
   background-color: ${({ theme }) => theme.cardHeader};
   box-sizing: border-box;

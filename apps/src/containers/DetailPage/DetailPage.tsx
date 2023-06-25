@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
+import Button from "../../component/Button";
 import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import Login from "../../component/LoginComponent/Login";
 import { useGetComment } from "../../hooks/detailPageHooks/useComment";
@@ -34,7 +35,6 @@ const DetailPage = () => {
   const { getLocalStorage } = useLocalStorage();
 
   const boardId = router.query.id as string;
-  const options = { enabled: false };
   const accessToken = getLocalStorage("access");
   // Hybrid Rendering
 
@@ -101,6 +101,19 @@ const DetailPage = () => {
         {userData ? <CompleteLogin {...userData} /> : <Login />}
       </SideBox>
       <div>
+        <BoardOptionBox>
+          <Button type="button" sort="secondary">
+            목록
+          </Button>
+          <RightItems>
+            <Button type="button" sort="secondary">
+              수정하기
+            </Button>
+            <Button type="button" sort="danger">
+              삭제하기
+            </Button>
+          </RightItems>
+        </BoardOptionBox>
         <WriteBox>
           <Wrapper>
             <Title
@@ -145,7 +158,15 @@ const DetailPage = () => {
 };
 
 export default DetailPage;
-
+const BoardOptionBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+const RightItems = styled.div`
+  display: flex;
+  gap: 8px;
+`;
 const Comments = styled.div`
   padding: 20px 24px;
 `;

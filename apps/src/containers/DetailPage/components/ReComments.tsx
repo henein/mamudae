@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
@@ -13,6 +13,14 @@ const ReComments = ({ ...data }) => {
   const replyBtnClick = () => {
     setIsClick(true);
   };
+
+  const [isMyComment, setIsMyComment] = useState<boolean>(false);
+
+  const onClick = () => {
+    if (data.userData.userName == data.userName) {
+      setIsMyComment(true);
+    }
+  };
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
@@ -25,11 +33,11 @@ const ReComments = ({ ...data }) => {
             <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
           <CommentMenuIcon
+            onClick={onClick}
             boardId={data.boardId}
             comment={data.comment}
             commentId={data.commentId}
-            // replyId="1"
-            // tag="1"
+            isMyComment={isMyComment}
           />
         </CommentHeader>
         <CommentContent>
