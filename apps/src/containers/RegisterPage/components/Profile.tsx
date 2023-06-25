@@ -39,13 +39,7 @@ const Profile = () => {
         {...register("nickname")}
         autoComplete="off"
       />
-      <CompletionBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="38px"
-        fontWeight="900"
-      >
+      <CompletionBtn type="submit" sort="primary" width="100%" fontWeight="700">
         완료
       </CompletionBtn>
     </Container>

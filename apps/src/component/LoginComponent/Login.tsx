@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor } from "../../constants/customColor";
 import Link from "next/link";
 import Button from "../Button";
 
@@ -8,14 +7,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <Link href="/login">
-        <LoginBtn
-          type="submit"
-          sort="main"
-          width="252px"
-          height="39px"
-          size={12}
-          fontWeight="900"
-        >
+        <LoginBtn type="submit" sort="primary" width="252px" fontWeight="700">
           로그인
         </LoginBtn>
       </Link>
@@ -50,10 +42,7 @@ const LoginFooter = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const LoginBtn = styled(Button)`
-  margin-bottom: 16px;
-`;
-
+const LoginBtn = styled(Button)``;
 const LoginContainer = styled.div`
   padding: 20px 24px;
   display: flex;
@@ -65,4 +54,5 @@ const LoginContainer = styled.div`
   border-radius: 16px;
   width: 300px;
   height: 118px;
+  gap: 16px;
 `;

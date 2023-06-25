@@ -62,13 +62,7 @@ const SignUp = () => {
           autoComplete="off"
         />
       </ConfirmBox>
-      <LoginBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="41px"
-        fontWeight="900"
-      >
+      <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
         이메일로 가입하기
       </LoginBtn>
       <SignUpContents>
@@ -95,7 +89,6 @@ const SignUp = () => {
 export default SignUp;
 
 const ErrorMessage = styled.p`
-  /* opacity: 0; */
   padding: 2px 0 2px 8px;
   width: 100%;
   color: ${customColor.danger};
@@ -139,7 +132,7 @@ const Container = styled.form`
 const Title = styled.span`
   padding: 8px;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 700;
   color: ${(prop) => prop.theme.text};
 `;
 const Id = styled.input`
@@ -181,7 +174,7 @@ const MidLineTextDiv = styled.div`
   text-align: center;
 `;
 const KaKaoBtn = styled.button`
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid ${(prop) => prop.theme.border};
   background-color: ${customColor.yellow};
   font-size: 14px;

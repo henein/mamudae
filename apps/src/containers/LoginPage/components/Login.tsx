@@ -42,13 +42,7 @@ const Login = () => {
         {...register("password")}
         autoComplete="off"
       />
-      <LoginBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="41px"
-        fontWeight="900"
-      >
+      <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
         로그인
       </LoginBtn>
       <SignUpContents>
@@ -118,7 +112,7 @@ const Container = styled.form`
 const Title = styled.span`
   padding: 8px;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 700;
   color: ${(prop) => prop.theme.text};
 `;
 const Id = styled.input`
@@ -153,7 +147,7 @@ const MidLineTextDiv = styled.div`
 `;
 
 const KaKaoBtn = styled.button`
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid ${customColor.whiteGray};
   background-color: ${customColor.yellow};
   font-size: 14px;
