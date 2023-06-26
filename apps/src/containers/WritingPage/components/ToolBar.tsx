@@ -144,7 +144,7 @@ const Container = styled(CardHeader)<{ isScrollDown: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   padding: 8px 20px;
   position: sticky;
   top: ${({ isScrollDown }) => (isScrollDown ? '16px' : '88px')};

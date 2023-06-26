@@ -62,13 +62,13 @@ const WritingPage = () => {
       <Editor editor={editor} />
 
       <ButtonBox>
-        <Button type="button" sort="sub" width="81px" height="41px">
+        <Button type="button" sort="secondary">
           저장하기
         </Button>
-        <Button type="button" sort="sub" width="81px" height="41px">
+        <Button type="button" sort="secondary">
           불러오기
         </Button>
-        <Button type="submit" sort="main" width="81px" height="41px">
+        <Button type="submit" sort="primary">
           등록하기
         </Button>
       </ButtonBox>
