@@ -11,70 +11,58 @@ const CharSelectBox = () => {
         <BoxLayout>
           <CharBox>
             <Image
-              src='/myPageImages/character1.svg'
+              src="/myPageImages/character1.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
           <CharBox>
             <Image
-              src='/myPageImages/character2.svg'
+              src="/myPageImages/character2.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
           <CharBox>
             <Image
-              src='/myPageImages/character2.svg'
+              src="/myPageImages/character2.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
           <CharBox>
             <Image
-              src='/myPageImages/character2.svg'
+              src="/myPageImages/character2.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
           <CharBox>
             <Image
-              src='/myPageImages/character2.svg'
+              src="/myPageImages/character2.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
           <CharBox>
             <Image
-              src='/myPageImages/character2.svg'
+              src="/myPageImages/character2.svg"
               width={120}
               height={120}
-              alt=''
+              alt=""
             />
           </CharBox>
         </BoxLayout>
         <Buttons>
-          <AddBtn
-            type='submit'
-            sort='sub'
-            width='81px'
-            height='41px'
-            fontWeight='500'
-          >
+          <AddBtn type="submit" sort="secondary">
             추가하기
           </AddBtn>
-          <SaveBtn
-            type='submit'
-            sort='main'
-            width='81px'
-            height='41px'
-            fontWeight='500'
-          >
+          <SaveBtn type="submit" sort="primary">
             저장하기
           </SaveBtn>
         </Buttons>

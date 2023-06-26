@@ -52,25 +52,25 @@ const UserPostList = () => {
                   <RightSide>
                     <DivGap>
                       <span>{item.name}</span>
-                      <Label type='floor'>
+                      <Label type="floor">
                         {item.rank == undefined ? "48층" : item.rank}
                       </Label>
                     </DivGap>
                     <DivGap>
                       <Image
-                        src='/postPageImages/schedule.svg'
-                        width='16'
-                        height='16'
-                        alt=''
+                        src="/postPageImages/schedule.svg"
+                        width="16"
+                        height="16"
+                        alt=""
                       />
                       <Time>{timeAgo}</Time>
                     </DivGap>
                     <ViewDiv>
                       <Image
-                        src='/postPageImages/visibility.svg'
-                        width='16'
-                        height='16'
-                        alt=''
+                        src="/postPageImages/visibility.svg"
+                        width="16"
+                        height="16"
+                        alt=""
                       />
                       <Views>{item.views}</Views>
                     </ViewDiv>
@@ -93,7 +93,7 @@ const PostList = styled.div`
   margin-top: 12px;
   margin-bottom: 12px;
   a {
-    color: ${customColor.black};
+    color: ${({ theme }) => theme.text};
   }
 `;
 const PostItem = styled.div`
@@ -120,13 +120,13 @@ const PostNum = styled.span`
   width: 43px;
 `;
 const CommentNum = styled.span`
-  color: ${customColor.orange};
+  color: ${({ theme }) => theme.brand};
 `;
 const RightSide = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  color: ${customColor.darkGray};
+  color: ${({ theme }) => theme.subText};
   span {
     font-size: 12px;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
@@ -7,32 +7,62 @@ import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
+import useKaKao from "../../../hooks/kakao/useKaKao";
+import { useLocalSignUp } from "../../../hooks/localLogin/useLocalLogin";
+import { LocalLoginProps } from "../../../api/localLogin";
 
 const SignUp = () => {
+  const [comparePw, setComparePw] = useState(true);
+  const { login } = useKaKao();
   const { register, handleSubmit } = useForm();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  const [localSignUpForm, setLocalSignUpForm] = useState<LocalLoginProps>({
+    userEmail: "",
+    password: "",
+  });
+  const { mutate } = useLocalSignUp(localSignUpForm);
+
+  const submit = async (data: FieldValues) => {
+    setComparePw(
+      JSON.stringify(data.password) == JSON.stringify(data.confirmPassword)
+    );
+    if (comparePw) {
+      console.log(data.id, data.password);
+      await setLocalSignUpForm({
+        userEmail: data.id,
+        password: data.password,
+      });
+      await mutate();
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>회원가입</Title>
-      <Id type="text" placeholder="이메일" {...register("id")} />
-      <PassWord type="text" placeholder="비밀번호" {...register("password")} />
+      <Id
+        type="text"
+        placeholder="이메일"
+        {...register("id")}
+        autoComplete="off"
+      />
+      <PassWord
+        type="text"
+        placeholder="비밀번호"
+        {...register("password")}
+        autoComplete="off"
+      />
       <ConfirmBox>
-        <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>
+        {!comparePw && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>}
         <ConfirmPassWord
           type="text"
           placeholder="비밀번호 확인"
           {...register("confirmPassword")}
+          comparePw={comparePw}
+          autoComplete="off"
         />
       </ConfirmBox>
-      <LoginBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="41px"
-        fontWeight="900"
-      >
+      <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
         이메일로 가입하기
       </LoginBtn>
       <SignUpContents>
@@ -47,7 +77,7 @@ const SignUp = () => {
         <Line />
       </Lines>
       <KaKaoBtn type="button">
-        <KaKaoDiv>
+        <KaKaoDiv onClick={login}>
           <KaKaoImg src={kaKao} alt="s" />
           <span>KaKao로 가입하기</span>
         </KaKaoDiv>
@@ -59,7 +89,6 @@ const SignUp = () => {
 export default SignUp;
 
 const ErrorMessage = styled.p`
-  /* opacity: 0; */
   padding: 2px 0 2px 8px;
   width: 100%;
   color: ${customColor.danger};
@@ -95,7 +124,7 @@ const Container = styled.form`
   background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 20px 24px;
   position: absolute;
   top: calc(16% + 30px);
@@ -103,8 +132,8 @@ const Container = styled.form`
 const Title = styled.span`
   padding: 8px;
   font-size: 20px;
-  font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  font-weight: 700;
+  color: ${(prop) => prop.theme.text};
 `;
 const Id = styled.input`
   ${FormInputCss}
@@ -112,8 +141,10 @@ const Id = styled.input`
 const PassWord = styled.input`
   ${FormInputCss}
 `;
-const ConfirmPassWord = styled.input`
+const ConfirmPassWord = styled.input<{ comparePw: boolean }>`
   ${FormInputCss}
+  border: ${({ comparePw, theme }) =>
+    comparePw ? `1px solid ${theme.border}` : `2px solid ${theme.danger}`};
 `;
 const LoginBtn = styled(Button)`
   border: 1px solid ${(prop) => prop.theme.border};
@@ -143,7 +174,7 @@ const MidLineTextDiv = styled.div`
   text-align: center;
 `;
 const KaKaoBtn = styled.button`
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid ${(prop) => prop.theme.border};
   background-color: ${customColor.yellow};
   font-size: 14px;

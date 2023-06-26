@@ -1,32 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
-import Image from "next/image";
-import reComment from "/public/detailPageImages/reComment.png";
 import { customColor } from "../../../constants/customColor";
+import ReComments from "./ReComments";
+import timeDifference from "../../../utils/timeDifference";
+import { CommentType } from "../DetailPage";
+import CommentForm from "./CommentForm";
 
-const Comment = () => {
-  // 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
+// 마지막 댓글인지?
+const Comment = ({ ...data }) => {
+  const [isClick, setIsClick] = useState<boolean>(false);
+
+  const replyBtnClick = () => {
+    setIsClick(true);
+  };
+
+  const [isMyComment, setIsMyComment] = useState<boolean>(false);
+
+  const onClick = () => {
+    if (data.userData.userName == data.userName) {
+      setIsMyComment(true);
+    }
+  };
+  console.log();
   return (
-    <Comments>
-      <ReComment src={reComment} alt="none" />
-
-      <CommentBox>
+    <Container>
+      <CommentBox isLastComment={data.isLastComment}>
         <CommentHeader>
           <UserInfo>
-            <NickName>임송재</NickName>
+            <NickName>{data.userName}</NickName>
             <Floor>48층</Floor>
             <Job>겸마 격수</Job>
-            <Time>ㆍ3일 전</Time>
+            <Time>{timeDifference(data.modifiedDate)}</Time>
           </UserInfo>
-          <CommentMenuIcon />
+          <CommentMenuIcon
+            boardId={data.boardId}
+            comment={data.comment}
+            commentId={data.commentId}
+            isMyComment={isMyComment}
+            onClick={onClick}
+          />
         </CommentHeader>
-        <CommentContent>안녕하세요</CommentContent>
+        <CommentContent>{data.comment}</CommentContent>
         <div>
-          <ReCommentBtn>답글</ReCommentBtn>
+          <FormDisplay>
+            <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
+            {isClick && (
+              <CommentForm
+                setIsClick={setIsClick}
+                boardId={data.boardId}
+                commentId={data.commentId}
+                isRecomment={true}
+                userName={data.userName}
+              />
+            )}
+          </FormDisplay>
+          {data.replies.map((item: CommentType, idx: number) => {
+            return (
+              <ReComments
+                boardId={data.boardId}
+                comment={item.comment}
+                userName={item.userName}
+                modifiedDate={item.modifiedDate}
+                tag={item.tag}
+                replyId={item.replyId}
+                parentCommentId={data.commentId}
+                userData={data.userData}
+                key={idx}
+              />
+            );
+          })}
         </div>
       </CommentBox>
-    </Comments>
+    </Container>
   );
 };
 
@@ -41,13 +88,14 @@ const ReCommentBtn = styled.button`
     font-weight: 900;
   }
 `;
-
-const Comments = styled.div`
+const FormDisplay = styled.div`
   display: flex;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
 `;
-const ReComment = styled(Image)`
-  margin-right: 12px;
+
+const Container = styled.div`
+  display: flex;
 `;
 
 const Job = styled.div`
@@ -71,17 +119,19 @@ const Floor = styled.div`
   background-color: ${customColor.floor};
 `;
 const NickName = styled.div`
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
   margin-right: 4px;
   font-size: 12px;
 `;
 
-const CommentBox = styled.div`
+const CommentBox = styled.div<{ isLastComment: boolean }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding-bottom: 14px;
-  border-bottom: 1px solid ${customColor.divider};
+  padding-bottom: ${({ isLastComment }) => !isLastComment && "14px"};
+  border-bottom: ${({ theme, isLastComment }) =>
+    !isLastComment && `1px solid ${theme.divider}`};
+  margin-bottom: ${({ isLastComment }) => !isLastComment && "20px"};
 `;
 const CommentHeader = styled.div`
   display: flex;
@@ -96,5 +146,5 @@ const UserInfo = styled.div`
 const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;

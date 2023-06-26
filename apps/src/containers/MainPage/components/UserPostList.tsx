@@ -7,7 +7,7 @@ export type ItemType = {
   id: number;
   title: string;
   commentNum: number;
-  name: string;
+  userName: string;
   createTime: string;
   views: number;
   recomment: number;
@@ -35,7 +35,7 @@ const UserPostList = ({ board_title }: BoardInfoType) => {
             <Link href={`board/${board_title}/${item.id}`} key={item.id}>
               <span>{item.title}</span>
             </Link>
-            <NickName>{item.name}</NickName>
+            <NickName>{item.userName}</NickName>
           </PostItem>
         );
       })}
@@ -49,11 +49,10 @@ const PostList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 30px;
-  margin-top: 20px;
+  margin: 20px 30px 0px 24px;
   font-size: 12px;
   a {
-    color: ${({ theme }) => theme.Text};
+    color: ${({ theme }) => theme.text};
   }
 `;
 const PostItem = styled.div`

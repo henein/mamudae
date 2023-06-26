@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/Login";
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import Login from "../../component/LoginComponent/Login";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
 import Board from "./components/Board";
 
 export type BoardInfoType = {
@@ -10,22 +13,29 @@ export type BoardInfoType = {
 };
 
 const MainPage = () => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data } = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  });
   return (
     <Layout>
       <Announcement />
       <MainPageSet>
-        <Aside>
-          <Login />
-        </Aside>
+        <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
         <BoardSet>
           <div>
-            <Board board_title='전체' isLarge={true} />
+            <Board board_title="전체" isLarge={true} />
           </div>
           <SmallBoard>
-            <Board board_title='자유' isLarge={false} />
-            <Board board_title='유머' isLarge={false} />
-            <Board board_title='보스' isLarge={false} />
-            <Board board_title='직업' isLarge={false} />
+            <Board board_title="자유" isLarge={false} />
+            <Board board_title="유머" isLarge={false} />
+            <Board board_title="보스" isLarge={false} />
+            <Board board_title="직업" isLarge={false} />
           </SmallBoard>
         </BoardSet>
       </MainPageSet>

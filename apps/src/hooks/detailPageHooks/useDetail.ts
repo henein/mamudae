@@ -2,15 +2,20 @@ import { useQuery } from "react-query";
 import { detail } from "../../api/detail";
 
 interface IUseDetail {
-  id: string;
+  boardId: string;
+  accessToken?: string;
   options?: any;
 }
 
-export function useDetail({ id, options }: IUseDetail) {
-  const { data } = useQuery(["detailPageData", id], () => detail(id), {
-    ...options,
-  });
+export function useDetail({ boardId, accessToken, options }: IUseDetail) {
+  const { data, refetch } = useQuery(
+    ["detailPageData", boardId],
+    () => detail(boardId, accessToken),
+    {
+      ...options,
+    }
+  );
 
   console.log(data);
-  return { ...data };
+  return { ...data, refetch };
 }

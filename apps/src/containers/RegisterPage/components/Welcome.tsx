@@ -13,20 +13,13 @@ const Welcome = () => {
       <CertifiedOrPass>
         <CertifiedBtn
           type="button"
-          sort="main"
+          sort="primary"
           width="100%"
-          height="38px"
-          fontWeight="900"
+          fontWeight="700"
         >
           캐릭터 인증하기
         </CertifiedBtn>
-        <PassBtn
-          type="button"
-          sort="sub"
-          width="100%"
-          height="38px"
-          fontWeight="900"
-        >
+        <PassBtn type="button" sort="secondary" width="100%" fontWeight="500">
           건너뛰기
         </PassBtn>
       </CertifiedOrPass>
@@ -42,7 +35,7 @@ const PassBtn = styled(Button)``;
 const CertifiedOrPass = styled.div``;
 const Greeting = styled.div`
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 700;
   text-align: center;
 `;
 

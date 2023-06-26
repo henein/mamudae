@@ -32,13 +32,12 @@ const BoardHeader = styled.div<{ darkModeState: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.border};
   background-color: ${({ theme }) => theme.cardHeader};
   z-index: 1;
-  box-shadow: 0px 4px 8px
-    ${({ darkModeState, theme }) => (darkModeState ? "none" : theme.border)};
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   padding-left: 24px;
 `;
 const Title = styled.h3`
   display: flex;
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -50,5 +49,5 @@ const ImgDiv = styled.div`
   align-items: center;
   width: 20px;
   height: 20px;
-  color: ${({ theme }) => theme.Brand};
+  color: ${({ theme }) => theme.brand};
 `;
