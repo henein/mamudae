@@ -195,9 +195,9 @@ export function useDelComment({
 }: usePComment) {
   const queryClient = useQueryClient();
   const delCommentMutation = useMutation(
-    "postComment",
+    "delComment",
     () =>
-      postComment({
+      deleteComment({
         boardId,
         comment,
         commentId,

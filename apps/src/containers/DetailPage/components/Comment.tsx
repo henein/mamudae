@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CommentMenuIcon from "./CommentMenuIcon";
 import { customColor } from "../../../constants/customColor";
@@ -7,8 +7,6 @@ import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
 
-// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
-// 마지막 댓글인지?
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
 
@@ -19,11 +17,11 @@ const Comment = ({ ...data }) => {
   const [isMyComment, setIsMyComment] = useState<boolean>(false);
 
   const onClick = () => {
-    if (data.userData.userName == data.userName) {
+    if (data.userData && data.userData.userName == data.userName) {
       setIsMyComment(true);
     }
   };
-  console.log();
+
   return (
     <Container>
       <CommentBox isLastComment={data.isLastComment}>

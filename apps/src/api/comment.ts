@@ -110,6 +110,9 @@ export const deleteComment = async ({ ...props }: PComment) => {
         comment: props.comment,
         commentId: props.commentId,
       },
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
+      },
     }
   );
 
@@ -127,6 +130,9 @@ export const deleteReComment = async ({ ...props }: RComment) => {
         commentId: props.commentId,
         replyId: props.replyId,
         tag: props.tag,
+      },
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
       },
     }
   );
