@@ -5,11 +5,12 @@ import CommentForm from "./CommentForm";
 interface postinfos {
   boardId: string;
   userData: any;
+  totalComment: string;
 }
 const Write = ({ ...data }: postinfos) => {
   return (
     <Container>
-      <NumberOfComments>댓글 2개</NumberOfComments>
+      <NumberOfComments>댓글 {data.totalComment}개</NumberOfComments>
       <CommentForm
         setIsClick={() => {}}
         boardId={data.boardId}
@@ -28,7 +29,7 @@ const NumberOfComments = styled.p`
   color: ${(prop) => prop.theme.text};
 `;
 const Container = styled.div`
-  z-index: 1;
+  position: sticky;
   top: 0;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
@@ -39,6 +40,5 @@ const Container = styled.div`
   height: auto;
   border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 0 24px;
-  position: sticky;
   background-color: ${(prop) => prop.theme.cardHeader};
 `;

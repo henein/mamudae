@@ -19,6 +19,8 @@ import Comment from "./components/Comment";
 import Like from "./components/Like";
 import Title from "./components/Title";
 import Write from "./components/Write";
+import Warning from "../../component/Warning";
+import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
 
 export type CommentType = {
   comment: string;
@@ -46,6 +48,7 @@ const DetailPage = () => {
     createTime,
     userInfoResponseDto,
     recommended,
+    commentNum,
     refetch,
   } = useDetail({
     boardId,
@@ -94,6 +97,8 @@ const DetailPage = () => {
     refetch();
   }, [isInAT, refetch]);
 
+  const { isWarning, warningType } = useOnWarning();
+
   return (
     <Container>
       <Announcement />
@@ -132,7 +137,11 @@ const DetailPage = () => {
         </WriteBox>
 
         <CommentBox>
-          <Write boardId={boardId} userData={userData} />
+          <Write
+            boardId={boardId}
+            userData={userData}
+            totalComment={commentNum}
+          />
           <Comments>
             {commentdata &&
               commentdata.map((item: CommentType, idx: number) => {
@@ -152,12 +161,21 @@ const DetailPage = () => {
               })}
           </Comments>
         </CommentBox>
+        {isWarning && (
+          <StickyView>
+            <Warning type={warningType} />
+          </StickyView>
+        )}
       </div>
     </Container>
   );
 };
 
 export default DetailPage;
+const StickyView = styled.div`
+  position: sticky;
+  z-index: 1001;
+`;
 const BoardOptionBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -174,7 +192,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: calc(100% + 21px);
-  position: relative;
 `;
 const Content = styled.div`
   margin-top: 20px;
@@ -197,18 +214,12 @@ const CommentBox = styled.div`
   background-color: ${(prop) => prop.theme.card};
   width: 808px;
   border-radius: 16px;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   border: 1px solid ${(prop) => prop.theme.border};
 `;
 const WriteBox = styled.div`
   border-radius: 16px;
   background-color: ${(prop) => prop.theme.card};
   border: 1px solid ${(prop) => prop.theme.border};
-  ::-webkit-scrollbar {
-    display: none;
-  }
   display: flex;
   flex-direction: column;
   width: 808px;

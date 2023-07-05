@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
-import {
-  useDelComment,
-  useDelReComment,
-} from "../../../hooks/detailPageHooks/useComment";
-import { PComment, RComment } from "../../../api/comment";
+import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
+import { onWarnings } from "../../../../store/warningSlice/onWarning";
+import { useDispatch } from "react-redux";
 
-// boardId, comment, commentId, accessToken,userData;
 const CommentTools = ({ ...props }: any) => {
-  // const { delComments } = useDelComment(); // 댓글 del api
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
+  const dispatch = useDispatch();
+
+  const btnClick = (btnType: string) => {
+    if (!accessToken) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      dispatch(onWarnings(btnType));
+    }
+  };
 
   return (
     <Container isMyComment={props.isMyComment}>
       <Functions>
         {props.isMyComment ? (
           <>
-            <Modify>수정하기</Modify>
-            <Delete>삭제하기</Delete>
+            <Modify onClick={() => btnClick("modify")}>수정하기</Modify>
+            <Delete onClick={() => btnClick("delete")}>삭제하기</Delete>
           </>
         ) : (
-          <Report>신고하기</Report>
+          <>
+            <Report onClick={() => btnClick("report")}>신고하기</Report>
+          </>
         )}
       </Functions>
     </Container>
@@ -28,12 +39,14 @@ const CommentTools = ({ ...props }: any) => {
 };
 
 export default CommentTools;
-
 const FunctionsCss = css`
   padding: 4px 16px;
   font-size: 13px;
   width: 100%;
   text-align: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const Report = styled.div`
   ${FunctionsCss}
