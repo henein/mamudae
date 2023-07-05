@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import reComment from "/public/detailPageImages/reComment.png";
@@ -21,6 +21,7 @@ const ReComments = ({ ...data }) => {
       setIsMyComment(true);
     }
   };
+
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
@@ -37,6 +38,7 @@ const ReComments = ({ ...data }) => {
             boardId={data.boardId}
             comment={data.comment}
             commentId={data.commentId}
+            replyId={data.replyId}
             isMyComment={isMyComment}
           />
         </CommentHeader>

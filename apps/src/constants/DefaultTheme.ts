@@ -96,6 +96,7 @@ export const lightMode: DefaultTheme = {
   danger: paletteColor.danger300,
   dangerHover: paletteColor.danger200,
   dangerActive: paletteColor.danger400,
+  modalBackdrop: paletteColor.black200,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
@@ -124,4 +125,5 @@ export const darkMode: DefaultTheme = {
   danger: paletteColor.danger400,
   dangerHover: paletteColor.danger200,
   dangerActive: paletteColor.danger400,
+  modalBackdrop: paletteColor.black200,
 };

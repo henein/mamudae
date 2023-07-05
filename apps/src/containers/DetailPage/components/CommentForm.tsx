@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import TextAreaAutoResize from "react-textarea-autosize";
 import { FieldValues, useForm } from "react-hook-form";
-import {
-  usePostComment,
-  usePostReComment,
-} from "../../../hooks/detailPageHooks/useComment";
-import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
-import { PComment, RComment } from "../../../api/comment";
+import { usePostForm } from "../../../hooks/detailPageHooks/useCommentForm";
+import useGetLoginUser from "../../../hooks/reduxHooks/useGetLoginUser";
 
 interface ICommentFormProps {
   setIsClick: (arg: boolean) => void;
@@ -17,61 +13,26 @@ interface ICommentFormProps {
   userName?: string;
 }
 const CommentForm = ({ ...props }: ICommentFormProps) => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-
   const [isFocusInput, setIsFocusInput] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
 
-  const [PFormData, setPFormData] = useState<PComment>({
-    boardId: "",
-    comment: "",
-    commentId: "",
-    accessToken,
-  });
-  const [RFormData, setRFormData] = useState<RComment>({
-    boardId: "",
-    comment: "",
-    commentId: "",
-    replyId: "",
-    tag: "",
-    accessToken,
+  const loginUser = useGetLoginUser();
+
+  const { postLogic } = usePostForm({
+    isRecomment: props.isRecomment,
+    boardId: props.boardId,
+    commentId: props.commentId,
+    loginUser: loginUser,
   });
 
-  const { postReComments } = usePostReComment(RFormData); // 대댓글 post api
-  const { postComments } = usePostComment(PFormData); // 댓글 post api
-
-  const submit = async (data: FieldValues) => {
+  const submit = (data: FieldValues) => {
     if (!localStorage.getItem("refresh")) {
       alert("로그인해야 이용할 수 있습니다.");
       reset();
       return;
     } else {
-      const commentWithoutTag = data.comment.replace("@" + props.userName, "");
-
-      // 대댓글이라면 앞쪽 mutate, 부모댓글이라면 뒷쪽 mutate
-      if (props.isRecomment) {
-        await setRFormData({
-          ...RFormData,
-          boardId: props.boardId,
-          comment: commentWithoutTag.trim(),
-          commentId: props.commentId ?? "",
-          tag: data.comment.includes("@" + props.userName)
-            ? props.userName
-            : "",
-        });
-        await postReComments();
-      } else {
-        await setPFormData({
-          ...PFormData,
-          boardId: props.boardId,
-          comment: data.comment,
-          commentId: props.commentId ?? "",
-        });
-        await postComments();
-      }
-
+      postLogic(data);
       reset();
     }
   };

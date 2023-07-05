@@ -30,5 +30,6 @@ declare module "styled-components" {
     danger: string;
     dangerHover: string;
     dangerActive: string;
+    modalBackdrop: string;
   }
 }

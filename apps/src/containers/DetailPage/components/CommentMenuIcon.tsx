@@ -14,6 +14,11 @@ export interface CommentMenuProps {
 const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
   const [isHover, setIsHover] = useState(false);
 
+  const iconClick = () => {
+    setIsHover((prev) => !prev);
+    props.onClick();
+  };
+
   return (
     <Wrap>
       {isHover && (
@@ -24,10 +29,7 @@ const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
         />
       )}
       <Svg
-        onClick={() => {
-          setIsHover((prev) => !prev);
-          props.onClick();
-        }}
+        onClick={iconClick}
         width="20"
         height="20"
         viewBox="0 0 20 20"

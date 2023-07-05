@@ -39,7 +39,7 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 
 export default Title;
 const Container = styled.div`
-  z-index: 1;
+  position: sticky;
   top: 0;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
@@ -49,7 +49,6 @@ const Container = styled.div`
   min-height: 97px;
   border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
-  position: sticky;
   background-color: ${(prop) => prop.theme.cardHeader};
 `;
 
