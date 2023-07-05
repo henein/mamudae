@@ -21,6 +21,8 @@ import Title from "./components/Title";
 import Write from "./components/Write";
 import Warning from "../../component/Warning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
+import { useDispatch } from "react-redux";
+import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
 
 export type CommentType = {
   comment: string;
@@ -66,6 +68,14 @@ const DetailPage = () => {
       retry: 0,
     },
   }).data;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userData) {
+      dispatch(saveUserInfo(userData.userName));
+    }
+  }, [userData, dispatch]);
+
   const commentdata = useGetComment({
     boardId,
     options: {
