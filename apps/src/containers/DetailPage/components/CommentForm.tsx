@@ -26,14 +26,17 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
     loginUser: loginUser,
   });
 
-  const submit = (data: FieldValues) => {
+  const submit = async (data: FieldValues) => {
     if (!localStorage.getItem("refresh")) {
       alert("로그인해야 이용할 수 있습니다.");
       reset();
       return;
     } else {
-      postLogic(data);
-      reset();
+      await postLogic(data);
+      await reset();
+      (await props.isRecomment)
+        ? props.setIsClick(false)
+        : setIsFocusInput(false); // post시에 댓글 작성창 닫기
     }
   };
 
