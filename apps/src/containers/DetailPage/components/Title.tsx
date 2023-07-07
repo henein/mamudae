@@ -5,6 +5,7 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
+import useScroll from "../../../hooks/scrollHooks/useScroll";
 
 interface ITitle {
   title: string;
@@ -14,8 +15,10 @@ interface ITitle {
 }
 
 const Title = ({ title, name, views, createTime }: ITitle) => {
+  const { isScrollDown } = useScroll();
+
   return (
-    <Container>
+    <Container isScrollDown={isScrollDown}>
       <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
@@ -38,9 +41,10 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 };
 
 export default Title;
-const Container = styled.div`
+const Container = styled.div<{ isScrollDown: boolean }>`
   position: sticky;
-  top: 0;
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  transition: top 0.2s ease-in-out;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
