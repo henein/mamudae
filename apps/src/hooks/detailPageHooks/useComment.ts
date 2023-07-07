@@ -37,12 +37,7 @@ export function useGetComment({ boardId, options }: useGetComment) {
 }
 
 // 부모 댓글 작성
-export function usePostComment({
-  boardId,
-  comment,
-  commentId,
-  accessToken,
-}: usePComment) {
+export function usePostComment({ boardId, comment, accessToken }: usePComment) {
   const queryClient = useQueryClient();
   const postCommentMutation = useMutation(
     "postComment",
@@ -50,12 +45,12 @@ export function usePostComment({
       postComment({
         boardId,
         comment,
-        commentId,
         accessToken,
       }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
       },
     }
   );
@@ -80,7 +75,6 @@ export function usePostReComment({
   boardId,
   comment,
   commentId,
-  replyId,
   tag,
   accessToken,
 }: useRComment) {
@@ -92,13 +86,13 @@ export function usePostReComment({
         boardId,
         comment,
         commentId,
-        replyId,
         tag,
         accessToken,
       }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
       },
     }
   );
@@ -189,7 +183,6 @@ export function usePostReComment({
 
 export function useDelComment({
   boardId,
-  comment,
   commentId,
   accessToken,
 }: usePComment) {
@@ -199,13 +192,13 @@ export function useDelComment({
     () =>
       deleteComment({
         boardId,
-        comment,
         commentId,
         accessToken,
       }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
       },
     }
   );
@@ -228,10 +221,7 @@ export function useDelComment({
 
 export function useDelReComment({
   boardId,
-  comment,
-  commentId,
   replyId,
-  tag,
   accessToken,
 }: useRComment) {
   const queryClient = useQueryClient();
@@ -240,15 +230,13 @@ export function useDelReComment({
     () =>
       deleteReComment({
         boardId,
-        comment,
-        commentId,
         replyId,
-        tag,
         accessToken,
       }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
       },
     }
   );

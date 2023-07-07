@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 import { onWarnings } from "../../../../store/warningSlice/onWarning";
 import { useDispatch } from "react-redux";
+import { commentInfoSet } from "../../../../store/warningSlice/commentInfo";
 
-const CommentTools = ({ ...props }: any) => {
+interface CommentToolsType {
+  boardId: string;
+  commentId: string;
+  isMyComment: boolean;
+  commentInfo: any;
+  setIsHover: Dispatch<SetStateAction<boolean>>;
+}
+const CommentTools = ({ ...props }: CommentToolsType) => {
+  console.log(props);
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
 
@@ -17,8 +26,15 @@ const CommentTools = ({ ...props }: any) => {
       return;
     } else {
       dispatch(onWarnings(btnType));
+      props.setIsHover(false);
     }
   };
+
+  useEffect(() => {
+    if (props.commentInfo) {
+      dispatch(commentInfoSet(props.commentInfo));
+    }
+  }, [props, dispatch]);
 
   return (
     <Container isMyComment={props.isMyComment}>

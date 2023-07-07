@@ -7,16 +7,15 @@ export interface CommentMenuProps {
   comment: string;
   commentId: string;
   isMyComment: boolean;
-  onClick: () => void;
   replyId?: string;
   tag?: string;
+  isRecomment: boolean;
 }
 const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
   const [isHover, setIsHover] = useState(false);
 
   const iconClick = () => {
     setIsHover((prev) => !prev);
-    props.onClick();
   };
 
   return (
@@ -26,6 +25,8 @@ const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
           boardId={props.boardId}
           commentId={props.commentId}
           isMyComment={props.isMyComment}
+          commentInfo={props}
+          setIsHover={setIsHover}
         />
       )}
       <Svg
