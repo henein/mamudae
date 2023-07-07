@@ -5,27 +5,30 @@ import WarningIcon from "@mui/icons-material/Warning";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { offWarnings } from "../../store/warningSlice/onWarning";
-import {
-  useDelComment,
-  useDelReComment,
-} from "../hooks/detailPageHooks/useComment";
+import { useDeleteForm } from "../hooks/detailPageHooks/useCommentForm";
+import useCommentInfoSet from "../hooks/reduxHooks/useCommentInfoSet";
 
 interface WarningProps {
   type: "modify" | "delete" | "report";
 }
 
 const Warning = ({ type }: WarningProps) => {
+  const commentInfo = useCommentInfoSet();
+
+  console.log(commentInfo);
+  const { deleteLogic } = useDeleteForm(commentInfo);
+
   const dispatch = useDispatch();
 
   const modalOff = () => {
     dispatch(offWarnings());
   };
-  const submitData = () => {
-    alert("submit");
+  const submitData = async () => {
+    if (type == "delete") {
+      await deleteLogic();
+      await modalOff();
+    }
   };
-
-  // const { delComments } = useDelComment(del); // 댓글 del api
-  // const { delReComments } = useDelReComment(redel); // 댓글 del api
 
   const korean = {
     modify: "수정",
@@ -42,16 +45,12 @@ const Warning = ({ type }: WarningProps) => {
           <Phrases>정말로 이 댓글을 {korean[type]}하시겠습니까?</Phrases>
         </Content>
         <BtnList>
-          <div onClick={modalOff}>
-            <Button type="button" sort="secondary">
-              취소
-            </Button>
-          </div>
-          <div onClick={submitData}>
-            <Button type="submit" sort="danger">
-              {korean[type]}하기
-            </Button>
-          </div>
+          <Button type="button" sort="secondary" onClick={() => modalOff()}>
+            취소
+          </Button>
+          <Button type="submit" sort="danger" onClick={() => submitData()}>
+            {korean[type]}하기
+          </Button>
         </BtnList>
       </Container>
     </View>
