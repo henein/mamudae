@@ -7,6 +7,7 @@ type infoType = {
     commentId: string;
     isMyComment: boolean;
     isRecomment: boolean;
+    replyId?: string;
     tag?: string;
   };
 };
@@ -18,6 +19,7 @@ const initialState: infoType = {
     commentId: "",
     isMyComment: false,
     isRecomment: false,
+    replyId: "",
     tag: "",
   },
 };

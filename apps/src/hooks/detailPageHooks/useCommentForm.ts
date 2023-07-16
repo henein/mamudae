@@ -4,12 +4,12 @@ import { useLocalStorage } from "../storage/useLocalStorage";
 import {
   usePostComment,
   usePostReComment,
-} from "../../hooks/detailPageHooks/useComment";
-import { FieldValues } from "react-hook-form";
-import {
   useDelComment,
   useDelReComment,
+  usePutComment,
+  usePutReComment,
 } from "../../hooks/detailPageHooks/useComment";
+import { FieldValues } from "react-hook-form";
 
 // post,put,delete 요청에 대한 각각의 form 만들어주는 hook
 
@@ -23,7 +23,7 @@ export const usePostForm = ({
   isRecomment,
   boardId,
   commentId,
-  loginUser,
+  commentedUser,
 }: any) => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
@@ -47,10 +47,7 @@ export const usePostForm = ({
   // post시, 돌아가는 로직
   // data : react-hook-form의 input register 이름
   const postLogic = async (data: FieldValues) => {
-    const commentWithoutTag = data.comment.replace(
-      "@" + loginUser.userName,
-      ""
-    );
+    const commentWithoutTag = data.comment.replace("@" + commentedUser, "");
 
     if (isRecomment) {
       await setRFormData({
@@ -58,9 +55,7 @@ export const usePostForm = ({
         boardId: boardId,
         comment: commentWithoutTag.trim(),
         commentId: commentId ?? "",
-        tag: data.comment.includes("@" + loginUser.userName)
-          ? loginUser.userName
-          : "",
+        tag: data.comment.includes("@" + commentedUser) ? commentedUser : "",
       });
       return await postReComments();
     } else {
@@ -126,4 +121,66 @@ export const useDeleteForm = ({
   };
 
   return { deleteLogic };
+};
+
+/**
+ * isRecomment : 댓글, 대댓글 판별
+ * boardId : 게시글 id
+ * commentId : 부모 댓글 id
+ * replyId,
+ * tag,
+ */
+export const usePutForm = ({
+  isRecomment,
+  boardId,
+  replyId,
+  tag,
+  commentId,
+}: any) => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
+  const [PFormData, setPFormData] = useState<PComment>({
+    boardId: "",
+    comment: "",
+    commentId: "",
+    accessToken,
+  });
+  const [RFormData, setRFormData] = useState<RComment>({
+    boardId: "",
+    comment: "",
+    replyId: "",
+    tag: "",
+    accessToken,
+  });
+
+  const { putComments } = usePutComment(PFormData); // 대댓글 put api
+  const { putReComments } = usePutReComment(RFormData); // 댓글 put api
+
+  // put 요청 시, 돌아가는 로직
+  const putLogic = async (data: FieldValues) => {
+    const commentWithoutTag = data.comment.replace("@" + tag, "");
+
+    if (isRecomment) {
+      await setRFormData({
+        ...RFormData,
+        boardId: boardId,
+        comment: commentWithoutTag.trim(),
+        replyId: replyId,
+        tag: data.comment.includes("@" + tag) ? tag : "",
+      });
+      console.log(RFormData);
+      return await putReComments();
+    } else {
+      await setPFormData({
+        ...PFormData,
+        boardId: boardId,
+        comment: data.comment,
+        commentId: commentId,
+      });
+      return await putComments();
+    }
+  };
+
+  return { putLogic };
 };
