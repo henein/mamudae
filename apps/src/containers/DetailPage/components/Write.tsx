@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import useScroll from "../../../hooks/scrollHooks/useScroll";
 import CommentForm from "./CommentForm";
 
 interface postinfos {
@@ -8,8 +9,9 @@ interface postinfos {
   totalComment: string;
 }
 const Write = ({ ...data }: postinfos) => {
+  const { isScrollDown } = useScroll();
   return (
-    <Container>
+    <Container isScrollDown={isScrollDown}>
       <NumberOfComments>댓글 {data.totalComment}개</NumberOfComments>
       <CommentForm
         setIsClick={() => {}}
@@ -28,9 +30,11 @@ const NumberOfComments = styled.p`
   margin-top: 20px;
   color: ${(prop) => prop.theme.text};
 `;
-const Container = styled.div`
+const Container = styled.div<{ isScrollDown: boolean }>`
   position: sticky;
-  top: 0;
+  z-index: 2;
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  transition: top 0.2s ease-in-out;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;

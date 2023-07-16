@@ -1,24 +1,44 @@
-import React from "react";
+import React, { useEffect, Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 import { onWarnings } from "../../../../store/warningSlice/onWarning";
 import { useDispatch } from "react-redux";
+import { commentInfoSet } from "../../../../store/warningSlice/commentInfo";
 
-const CommentTools = ({ ...props }: any) => {
+interface CommentToolsType {
+  boardId: string;
+  commentId: string;
+  isMyComment: boolean;
+  commentInfo: any;
+  setIsHover: Dispatch<SetStateAction<boolean>>;
+  setIsModifyClick: Dispatch<SetStateAction<boolean>>;
+}
+const CommentTools = ({ ...props }: CommentToolsType) => {
+  console.log(props);
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
 
   const dispatch = useDispatch();
 
+  console.log(props.commentInfo);
   const btnClick = (btnType: string) => {
     if (!accessToken) {
-      alert("로그인 후 이용 가능합니다.");
+      // alert("로그인 후 이용 가능합니다.");
+      window.location.reload();
       return;
     } else {
-      dispatch(onWarnings(btnType));
+      if (btnType == "modify") props.setIsModifyClick(true);
+      else dispatch(onWarnings(btnType));
+      props.setIsHover(false); // commentTools 닫힘
     }
   };
+
+  useEffect(() => {
+    if (props.commentInfo) {
+      dispatch(commentInfoSet(props.commentInfo));
+    }
+  }, [props.commentInfo, dispatch]);
 
   return (
     <Container isMyComment={props.isMyComment}>
@@ -77,7 +97,6 @@ const Container = styled.div<{ isMyComment: boolean }>`
   position: absolute;
   top: ${({ isMyComment }) => (isMyComment ? "-65px" : "-40px")};
   left: -61px;
-  z-index: 1;
   background-color: ${({ theme }) => theme.cardHeader};
   box-sizing: border-box;
 `;
