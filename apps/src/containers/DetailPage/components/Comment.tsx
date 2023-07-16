@@ -6,14 +6,11 @@ import ReComments from "./ReComments";
 import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
+import ModifyCommentForm from "./ModifyCommentForm";
 
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
-
-  const replyBtnClick = () => {
-    setIsClick(true);
-  };
-
+  const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
   const [isMyComment, setIsMyComment] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,35 +22,48 @@ const Comment = ({ ...data }) => {
   return (
     <Container>
       <CommentBox isLastComment={data.isLastComment}>
-        <CommentHeader>
-          <UserInfo>
-            <NickName>{data.userName}</NickName>
-            <Floor>48층</Floor>
-            <Job>겸마 격수</Job>
-            <Time>{timeDifference(data.modifiedDate)}</Time>
-          </UserInfo>
-          <CommentMenuIcon
-            boardId={data.boardId}
-            comment={data.comment}
-            commentId={data.commentId}
-            isMyComment={isMyComment}
-            isRecomment={false}
-          />
-        </CommentHeader>
-        <CommentContent>{data.comment}</CommentContent>
-        <div>
-          <FormDisplay>
-            <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
-            {isClick && (
-              <CommentForm
-                setIsClick={setIsClick}
+        {isModifyClick ? (
+          <>
+            <ModifyCommentForm
+              setIsModifyClick={setIsModifyClick}
+              isRecomment={false}
+            />
+          </>
+        ) : (
+          <>
+            <CommentHeader>
+              <UserInfo>
+                <NickName>{data.userName}</NickName>
+                <Floor>48층</Floor>
+                <Job>겸마 격수</Job>
+                <Time>{timeDifference(data.modifiedDate)}</Time>
+              </UserInfo>
+              <CommentMenuIcon
                 boardId={data.boardId}
+                comment={data.comment}
                 commentId={data.commentId}
-                isRecomment={true}
-                userName={data.userName}
+                isMyComment={isMyComment}
+                isRecomment={false}
+                setIsModifyClick={setIsModifyClick}
               />
-            )}
-          </FormDisplay>
+            </CommentHeader>
+            <CommentContent>{data.comment}</CommentContent>
+            <FormDisplay>
+              <ReCommentBtn onClick={() => setIsClick(true)}>답글</ReCommentBtn>
+              {isClick && (
+                <CommentForm
+                  setIsClick={setIsClick}
+                  boardId={data.boardId}
+                  commentId={data.commentId}
+                  isRecomment={true}
+                  userName={data.userName}
+                />
+              )}
+            </FormDisplay>
+          </>
+        )}
+
+        <div>
           {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments

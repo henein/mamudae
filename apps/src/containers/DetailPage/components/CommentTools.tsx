@@ -12,6 +12,7 @@ interface CommentToolsType {
   isMyComment: boolean;
   commentInfo: any;
   setIsHover: Dispatch<SetStateAction<boolean>>;
+  setIsModifyClick: Dispatch<SetStateAction<boolean>>;
 }
 const CommentTools = ({ ...props }: CommentToolsType) => {
   console.log(props);
@@ -20,13 +21,16 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
 
   const dispatch = useDispatch();
 
+  console.log(props.commentInfo);
   const btnClick = (btnType: string) => {
     if (!accessToken) {
-      alert("로그인 후 이용 가능합니다.");
+      // alert("로그인 후 이용 가능합니다.");
+      window.location.reload();
       return;
     } else {
-      dispatch(onWarnings(btnType));
-      props.setIsHover(false);
+      if (btnType == "modify") props.setIsModifyClick(true);
+      else dispatch(onWarnings(btnType));
+      props.setIsHover(false); // commentTools 닫힘
     }
   };
 
@@ -34,7 +38,7 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
     if (props.commentInfo) {
       dispatch(commentInfoSet(props.commentInfo));
     }
-  }, [props, dispatch]);
+  }, [props.commentInfo, dispatch]);
 
   return (
     <Container isMyComment={props.isMyComment}>
@@ -93,7 +97,6 @@ const Container = styled.div<{ isMyComment: boolean }>`
   position: absolute;
   top: ${({ isMyComment }) => (isMyComment ? "-65px" : "-40px")};
   left: -61px;
-  z-index: 1;
   background-color: ${({ theme }) => theme.cardHeader};
   box-sizing: border-box;
 `;

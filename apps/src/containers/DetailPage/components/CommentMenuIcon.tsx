@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import CommentTools from "./CommentTools";
 
@@ -10,13 +10,10 @@ export interface CommentMenuProps {
   replyId?: string;
   tag?: string;
   isRecomment: boolean;
+  setIsModifyClick: Dispatch<SetStateAction<boolean>>;
 }
-const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
+const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
   const [isHover, setIsHover] = useState(false);
-
-  const iconClick = () => {
-    setIsHover((prev) => !prev);
-  };
 
   return (
     <Wrap>
@@ -27,10 +24,11 @@ const CommentMenuIcon = ({ ...props }: CommentMenuProps) => {
           isMyComment={props.isMyComment}
           commentInfo={props}
           setIsHover={setIsHover}
+          setIsModifyClick={setIsModifyClick}
         />
       )}
       <Svg
-        onClick={iconClick}
+        onClick={() => setIsHover((prev) => !prev)}
         width="20"
         height="20"
         viewBox="0 0 20 20"
@@ -62,6 +60,7 @@ export default CommentMenuIcon;
 
 const Wrap = styled.div`
   position: relative;
+  z-index: 1;
 `;
 const Svg = styled.svg`
   &:hover {

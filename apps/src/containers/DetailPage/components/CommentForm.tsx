@@ -3,7 +3,6 @@ import styled from "styled-components";
 import TextAreaAutoResize from "react-textarea-autosize";
 import { FieldValues, useForm } from "react-hook-form";
 import { usePostForm } from "../../../hooks/detailPageHooks/useCommentForm";
-import useGetLoginUser from "../../../hooks/reduxHooks/useGetLoginUser";
 
 interface ICommentFormProps {
   setIsClick: (arg: boolean) => void;
@@ -17,13 +16,11 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
 
   const { register, handleSubmit, reset } = useForm();
 
-  const loginUser = useGetLoginUser();
-
   const { postLogic } = usePostForm({
     isRecomment: props.isRecomment,
     boardId: props.boardId,
     commentId: props.commentId,
-    loginUser: loginUser,
+    commentedUser: props.userName,
   });
 
   const submit = async (data: FieldValues) => {

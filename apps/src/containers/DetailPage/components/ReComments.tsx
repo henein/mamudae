@@ -6,14 +6,11 @@ import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
 import CommentForm from "./CommentForm";
+import ModifyCommentForm from "./ModifyCommentForm";
 
 const ReComments = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
-
-  const replyBtnClick = () => {
-    setIsClick(true);
-  };
-
+  const [isModifyRClick, setIsModifyRClick] = useState<boolean>(false);
   const [isMyComment, setIsMyComment] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,45 +23,57 @@ const ReComments = ({ ...data }) => {
     <Container>
       <ReComment src={reComment} alt="none" />
       <CommentBox>
-        <CommentHeader>
-          <UserInfo>
-            <NickName>{data.userName}</NickName>
-            <Floor>48층</Floor>
-            <Job>겸마 격수</Job>
-            <Time>{timeDifference(data.modifiedDate)}</Time>
-          </UserInfo>
-          <CommentMenuIcon
-            boardId={data.boardId}
-            comment={data.comment}
-            commentId={data.commentId}
-            replyId={data.replyId}
-            isMyComment={isMyComment}
-            isRecomment={true}
-            tag={data.tag}
-          />
-        </CommentHeader>
-        <CommentContent>
-          {data.tag ? (
-            <NormalSpan>
-              <TagSpan>{"@" + data.tag}</TagSpan>
-              {data.comment}
-            </NormalSpan>
-          ) : (
-            data.comment
-          )}
-        </CommentContent>
-        <FormDisplay>
-          <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
-          {isClick && (
-            <CommentForm
-              setIsClick={setIsClick}
-              boardId={data.boardId}
-              commentId={data.parentCommentId}
+        {isModifyRClick ? (
+          <>
+            <ModifyCommentForm
+              setIsModifyClick={setIsModifyRClick}
               isRecomment={true}
-              userName={data.userName}
             />
-          )}
-        </FormDisplay>
+          </>
+        ) : (
+          <>
+            <CommentHeader>
+              <UserInfo>
+                <NickName>{data.userName}</NickName>
+                <Floor>48층</Floor>
+                <Job>겸마 격수</Job>
+                <Time>{timeDifference(data.modifiedDate)}</Time>
+              </UserInfo>
+              <CommentMenuIcon
+                boardId={data.boardId}
+                comment={data.comment}
+                commentId={data.commentId}
+                replyId={data.replyId}
+                isMyComment={isMyComment}
+                isRecomment={true}
+                tag={data.tag}
+                setIsModifyClick={setIsModifyRClick}
+              />
+            </CommentHeader>
+            <CommentContent>
+              {data.tag ? (
+                <NormalSpan>
+                  <TagSpan>{"@" + data.tag}</TagSpan>
+                  {data.comment}
+                </NormalSpan>
+              ) : (
+                data.comment
+              )}
+            </CommentContent>
+            <FormDisplay>
+              <ReCommentBtn onClick={() => setIsClick(true)}>답글</ReCommentBtn>
+              {isClick && (
+                <CommentForm
+                  setIsClick={setIsClick}
+                  boardId={data.boardId}
+                  commentId={data.parentCommentId}
+                  isRecomment={true}
+                  userName={data.userName}
+                />
+              )}
+            </FormDisplay>
+          </>
+        )}
       </CommentBox>
     </Container>
   );

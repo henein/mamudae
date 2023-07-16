@@ -32,6 +32,7 @@ const NumberOfComments = styled.p`
 `;
 const Container = styled.div<{ isScrollDown: boolean }>`
   position: sticky;
+  z-index: 2;
   top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
   transition: top 0.2s ease-in-out;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
