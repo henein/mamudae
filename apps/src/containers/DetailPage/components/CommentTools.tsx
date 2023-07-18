@@ -90,13 +90,13 @@ const Container = styled.div<{ isMyComment: boolean }>`
   width: 81px;
   border: 1px solid ${customColor.whiteGray};
   box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.boxShadow};
-  border-radius: 16px 16px 0px 16px;
+  border-radius: 0px 16px 16px 16px;
   align-items: center;
   justify-content: center;
   display: flex;
   position: absolute;
-  top: ${({ isMyComment }) => (isMyComment ? "-65px" : "-40px")};
-  left: -61px;
+  /* top: ${({ isMyComment }) => (isMyComment ? "-65px" : "-40px")}; */
+  right: -80px;
   background-color: ${({ theme }) => theme.cardHeader};
   box-sizing: border-box;
 `;
