@@ -12,11 +12,12 @@ const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
   const [isMyComment, setIsMyComment] = useState<boolean>(false);
-
+  const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
   useEffect(() => {
     if (data.userData && data.userData.userName == data.userName) {
       setIsMyComment(true);
     }
+    if (data.userName == "알 수 없음") setIsDeleteComment(true);
   }, [isMyComment, data]);
 
   return (
@@ -33,29 +34,44 @@ const Comment = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName>{data.userName}</NickName>
+                <NickName isDeleteComment={isDeleteComment}>
+                  {data.userName}
+                </NickName>
                 <Floor>48층</Floor>
                 <Job>겸마 격수</Job>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
-              <CommentMenuIcon
-                boardId={data.boardId}
-                comment={data.comment}
-                commentId={data.commentId}
-                isMyComment={isMyComment}
-                isRecomment={false}
-                setIsModifyClick={setIsModifyClick}
-              />
+              {isDeleteComment ? (
+                <></>
+              ) : (
+                <CommentMenuIcon
+                  boardId={data.boardId}
+                  comment={data.comment}
+                  commentId={data.commentId}
+                  isMyComment={isMyComment}
+                  isRecomment={false}
+                  setIsModifyClick={setIsModifyClick}
+                />
+              )}
             </CommentHeader>
-            <CommentContent>{data.comment}</CommentContent>
+            <CommentContent isDeleteComment={isDeleteComment}>
+              {data.comment}
+            </CommentContent>
             <FormDisplay>
-              <ReCommentBtn onClick={() => setIsClick(true)}>답글</ReCommentBtn>
+              {isDeleteComment ? (
+                <></>
+              ) : (
+                <ReCommentBtn onClick={() => setIsClick(true)}>
+                  답글
+                </ReCommentBtn>
+              )}
               {isClick && (
                 <CommentForm
                   setIsClick={setIsClick}
                   boardId={data.boardId}
                   commentId={data.commentId}
                   isRecomment={true}
+                  firstRecomment={true}
                   userName={data.userName}
                 />
               )}
@@ -126,8 +142,9 @@ const Floor = styled.div`
   color: ${customColor.white};
   background-color: ${customColor.floor};
 `;
-const NickName = styled.div`
-  color: ${(prop) => prop.theme.text};
+const NickName = styled.div<{ isDeleteComment: boolean }>`
+  color: ${({ theme, isDeleteComment }) =>
+    isDeleteComment ? theme.subText : theme.text};
   margin-right: 4px;
   font-size: 12px;
 `;
@@ -151,8 +168,9 @@ const UserInfo = styled.div`
   align-items: center;
   margin-bottom: 8px;
 `;
-const CommentContent = styled.div`
+const CommentContent = styled.div<{ isDeleteComment: boolean }>`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.text};
+  color: ${({ theme, isDeleteComment }) =>
+    isDeleteComment ? theme.subText : theme.text};
 `;

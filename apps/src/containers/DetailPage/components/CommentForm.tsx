@@ -10,8 +10,10 @@ interface ICommentFormProps {
   commentId?: string;
   isRecomment: boolean;
   userName?: string;
+  firstRecomment?: boolean;
 }
 const CommentForm = ({ ...props }: ICommentFormProps) => {
+  console.log(props.firstRecomment);
   const [isFocusInput, setIsFocusInput] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
@@ -60,7 +62,13 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
           rows={1}
           {...register("comment")}
           onFocus={() => setIsFocusInput(true)}
-          defaultValue={props.isRecomment ? `@${props.userName} ` : ""}
+          defaultValue={
+            props.isRecomment
+              ? props.firstRecomment
+                ? ""
+                : `@${props.userName} `
+              : ""
+          }
         />
         <InputFunc isRecomment={props.isRecomment} isFocusInput={isFocusInput}>
           <CancelBtn onClick={props.isRecomment ? cancelClick : cancelClick2}>
