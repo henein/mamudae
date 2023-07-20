@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/Login";
-import CharSelectBox from "./components/CharSelectBox";
-import LabelSelectBox from "./components/LabelSelectBox";
-
+import SelectOptions from "./components/SelectOptions";
+import Profile from "./components/Profile";
+import Character from "./components/Character";
+import Activity from "./components/Activity";
 const MyPage = () => {
+  let option;
+  const getOptionNum = (optionNum: number) => {
+    option = optionNum;
+  };
+
   return (
     <Layout>
       <Announcement />
@@ -14,8 +20,14 @@ const MyPage = () => {
           <Login />
         </Aside>
         <BoardContent>
-          <CharSelectBox />
-          <LabelSelectBox />
+          <SelectOptions getOptionNum={getOptionNum} />
+          {option == 1 ? (
+            <Profile />
+          ) : option == 2 ? (
+            <Character />
+          ) : (
+            <Activity />
+          )}
         </BoardContent>
       </MyPageSet>
     </Layout>
