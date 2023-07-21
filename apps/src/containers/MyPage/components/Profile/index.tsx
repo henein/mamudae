@@ -7,7 +7,7 @@ const index = () => {
       <div>profile</div>
       <HistoryList>
         <UserCreateDate title="가입한 날짜" history="2023.03.07" />
-        <UserPostNum title="작성한 게시글 수" history="5" />
+        <UserPostNum title="작성한 게시글 수" history="10" />
         <UserCommentNum title="작성한 댓글 수" history="10" />
       </HistoryList>
     </Container>
