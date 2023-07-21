@@ -1,53 +1,48 @@
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { customColor } from "../../../constants/customColor";
+import useScroll from "../../../hooks/scrollHooks/useScroll";
+import CommentForm from "./CommentForm";
 
-const Write = () => {
-  const { register, handleSubmit } = useForm();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
-  };
+interface postinfos {
+  boardId: string;
+  userData: any;
+  totalComment: string;
+}
+const Write = ({ ...data }: postinfos) => {
+  const { isScrollDown } = useScroll();
   return (
-    <WriteForm onSubmit={handleSubmit(submit)}>
-      <NumberOfComments>댓글 2개</NumberOfComments>
-      <WriteComment
-        {...register("comment")}
-        type="text"
-        placeholder="댓글 작성"
+    <Container isScrollDown={isScrollDown}>
+      <NumberOfComments>댓글 {data.totalComment}개</NumberOfComments>
+      <CommentForm
+        setIsClick={() => {}}
+        boardId={data.boardId}
+        isRecomment={false}
       />
-    </WriteForm>
+    </Container>
   );
 };
 
 export default Write;
-
-const WriteComment = styled.input`
-  padding: 12px 8px;
-  border-radius: 16px;
-  border: 1px solid ${customColor.whiteGray};
-  background-color: ${(prop) => prop.theme.input};
-  ::placeholder {
-    color: ${(prop) => prop.theme.subText};
-  }
-`;
 const NumberOfComments = styled.p`
-  font-weight: 900;
+  font-weight: 700;
   font-size: 16px;
   margin-bottom: 16px;
-  color: ${(prop) => prop.theme.Text  };
+  margin-top: 20px;
+  color: ${(prop) => prop.theme.text};
 `;
-const WriteForm = styled.form`
-  z-index: 1;
-  top: 0;
-  box-shadow: 0 2px 4px ${customColor.shadow};
+const Container = styled.div<{ isScrollDown: boolean }>`
+  position: sticky;
+  z-index: 2;
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  transition: top 0.2s ease-in-out;
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 32px;
+  border-radius: 16px;
   min-height: 97px;
-  border-bottom: 1px solid ${customColor.whiteGray};
+  height: auto;
+  border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 0 24px;
-  position: sticky;
   background-color: ${(prop) => prop.theme.cardHeader};
 `;

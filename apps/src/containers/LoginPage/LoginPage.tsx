@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Login from "./components/Login";
 
 const LoginPage = () => {
-  
   return (
     <Container>
       <LoginTitle>Henein</LoginTitle>
@@ -20,7 +19,7 @@ const LoginTitle = styled.span`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 128px;
-  color: ${(prop) => prop.theme.Brand};
+  color: ${(prop) => prop.theme.brand};
 `;
 
 const Container = styled.div`

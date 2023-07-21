@@ -1,29 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../../component/Button";
-import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import { FieldValues, useForm } from "react-hook-form";
 import { FormInputCss } from "../../LoginPage/components/Login";
+import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
+import { useSetUserName } from "../../../hooks/user/useUserInfo";
 
+interface IUserName {
+  setName: string;
+  accessToken: string | undefined;
+}
 const Profile = () => {
   const { register, handleSubmit } = useForm();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  const { getLocalStorage } = useLocalStorage();
+
+  const accessToken = getLocalStorage("access");
+  const [userName, setUserName] = useState<IUserName>({
+    setName: "",
+    accessToken,
+  });
+  const { mutate } = useSetUserName(userName);
+
+  // 2~15 사이 문자열 전달
+  const submit = async (data: FieldValues) => {
+    await setUserName({ ...userName, setName: data.nickname });
+    await mutate();
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>프로필</Title>
       <ProfileImg src={circle} alt="none"></ProfileImg>
-      <Nickname type="text" placeholder="닉네임" {...register("nickname")} />
-      <CompletionBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="38px"
-        fontWeight="900"
-      >
+      <Nickname
+        type="text"
+        placeholder="닉네임"
+        {...register("nickname")}
+        autoComplete="off"
+      />
+      <CompletionBtn type="submit" sort="primary" width="100%" fontWeight="700">
         완료
       </CompletionBtn>
     </Container>
@@ -36,7 +52,7 @@ const Title = styled.div`
   padding: 8px;
   font-size: 20px;
   font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const ProfileImg = styled(Image)`
   margin: 0 auto;

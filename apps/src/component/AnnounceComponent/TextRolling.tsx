@@ -71,10 +71,10 @@ const ImgDiv = styled.div`
   height: 24px;
   border: none;
   margin-right: 4px;
-  color: ${({ theme }) => theme.Brand};
+  color: ${({ theme }) => theme.brand};
 `;
 const InfoText = styled.span`
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   font-size: 14px;
   font-weight: 400;
 `;

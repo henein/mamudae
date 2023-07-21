@@ -2,18 +2,18 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import LikeIcon from "./LikeIcon";
-import { usePostRecommend } from "../../../hooks/detailPageHooks/usePostRecommend";
 
 interface ILike {
   recommend: number;
-  id: string;
+  boardId: string;
+  recommended: boolean;
 }
 
-const Like = ({ recommend, id }: ILike) => {
+const Like = ({ recommend, boardId, recommended }: ILike) => {
   return (
     <Container>
-      <LikeIcon id={id} />
-      {recommend}
+      <LikeIcon boardId={boardId} recommended={recommended} />
+      <RecommendNum>{recommend}</RecommendNum>
     </Container>
   );
 };
@@ -27,10 +27,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
 `;
-const LikeImg = styled(Image)`
-  &:hover {
-    fill: red;
-    cursor: pointer;
-  }
-  padding: 8px 8px;
+const RecommendNum = styled.span`
+  color: #757575;
 `;

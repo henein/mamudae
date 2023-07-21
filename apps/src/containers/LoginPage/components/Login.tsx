@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
@@ -7,25 +7,42 @@ import kaKao from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import useKaKao from "../../../hooks/kakao/useKaKao";
+import { LocalLoginProps } from "../../../api/localLogin";
+import { useLocalLogin } from "../../../hooks/localLogin/useLocalLogin";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const { login } = useKaKao();
-  const submit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  const [localLoginForm, setLocalLoginForm] = useState<LocalLoginProps>({
+    userEmail: "",
+    password: "",
+  });
+  const { mutate } = useLocalLogin(localLoginForm);
+
+  const submit = async (data: FieldValues) => {
+    await setLocalLoginForm({
+      userEmail: data.id,
+      password: data.password,
+    });
+    await mutate();
   };
+
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>로그인</Title>
-      <Id type="text" placeholder="이메일" {...register("id")} />
-      <PassWord type="text" placeholder="비밀번호" {...register("password")} />
-      <LoginBtn
-        type="submit"
-        sort="main"
-        width="100%"
-        height="41px"
-        fontWeight="900"
-      >
+      <Id
+        type="text"
+        placeholder="이메일"
+        {...register("id")}
+        autoComplete="off"
+      />
+      <PassWord
+        type="text"
+        placeholder="비밀번호"
+        {...register("password")}
+        autoComplete="off"
+      />
+      <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
         로그인
       </LoginBtn>
       <SignUpContents>
@@ -53,12 +70,13 @@ export default Login;
 
 export const FormInputCss = css`
   border: 1px solid ${(prop) => prop.theme.border};
-  border-radius: 32px;
+  border-radius: 8px;
   width: 100%;
   height: 41px;
   padding: 12px 16px;
   font-size: 14px;
   background-color: ${(prop) => prop.theme.input};
+  color: ${({ theme }) => theme.text};
   ::placeholder {
     color: ${(prop) => prop.theme.subText};
   }
@@ -86,7 +104,7 @@ const Container = styled.form`
   background-color: ${(prop) => prop.theme.cardHeader};
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 16px;
   padding: 20px 24px;
   position: absolute;
   top: calc(16% + 30px);
@@ -94,8 +112,8 @@ const Container = styled.form`
 const Title = styled.span`
   padding: 8px;
   font-size: 20px;
-  font-weight: 900;
-  color: ${(prop) => prop.theme.Text};
+  font-weight: 700;
+  color: ${(prop) => prop.theme.text};
 `;
 const Id = styled.input`
   ${FormInputCss}
@@ -129,7 +147,7 @@ const MidLineTextDiv = styled.div`
 `;
 
 const KaKaoBtn = styled.button`
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid ${customColor.whiteGray};
   background-color: ${customColor.yellow};
   font-size: 14px;

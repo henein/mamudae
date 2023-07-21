@@ -1,49 +1,48 @@
 import React from "react";
-import styled from "styled-components";
-import { customColor } from "../constants/customColor";
+import styled, { DefaultTheme } from "styled-components";
 
-type SortBtnType = "sub" | "main";
+type BtnStyle = "primary" | "secondary" | "danger";
 type BtnType = "reset" | "submit" | "button";
 
 interface IButton {
-  sort: SortBtnType;
-  width: string;
-  height: string;
-  fontWeight?: string;
-  size?: number;
+  sort: BtnStyle;
   type?: BtnType;
+  width?: string;
+  fontWeight?: string;
+  onClick?: () => void;
 }
 
-const SORT = {
-  main: {
-    background: customColor.orange,
-    color: customColor.white,
-    hoverBackground: customColor.darkOrange,
+const SORT: {
+  [key: string]: {
+    background: keyof DefaultTheme;
+  };
+} = {
+  primary: {
+    background: "brand",
   },
-  sub: {
-    background: customColor.white,
-    color: customColor.black,
-    hoverBackground: "#ccc",
+  secondary: {
+    background: "button",
+  },
+  danger: {
+    background: "danger",
   },
 };
 
-const getButtonStyle = (sort: SortBtnType) => {
+const getButtonStyle = (theme: DefaultTheme, sort: BtnStyle) => {
   return `
-      background-color: ${SORT[sort].background};
-      color: ${SORT[sort].color};
-      &:hover {
-        background-color: ${SORT[sort].hoverBackground};
-      }
+      background-color: ${theme[SORT[sort].background]};
     `;
 };
 
 const Button = ({
+  sort,
   children,
   type,
+  onClick,
   ...props
 }: React.PropsWithChildren<IButton>) => {
   return (
-    <StyledButton type={type} {...props}>
+    <StyledButton sort={sort} type={type} onClick={onClick} {...props}>
       {children}
     </StyledButton>
   );
@@ -52,17 +51,37 @@ const Button = ({
 export default Button;
 
 const StyledButton = styled.button<IButton>`
-  ${({ sort }) => getButtonStyle(sort)}
-  font-size: ${({ size }) => (size ? size + "px" : "14px")};
-  font-weight: ${({ fontWeight }) => fontWeight};
+  ${({ theme, sort }) => getButtonStyle(theme, sort)}
   width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  height: 40px;
+  font-size: 14px;
+  font-weight: ${({ fontWeight }) => fontWeight};
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${customColor.whiteGray};
-  border-radius: 16px;
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: ${({ theme, sort }) => (sort === "secondary" ? theme.text : "white")};
+  &:hover {
+    transition: all ease-out 200ms;
+    background-color: ${({ theme, sort }) =>
+      sort === "primary"
+        ? theme.brandHover
+        : sort === "danger" && theme.dangerHover};
+    color: ${({ theme, sort }) => sort === "secondary" && theme.brandHover};
+    box-shadow: 0px 0px 0px 4px ${({ theme }) => theme.boxShadow};
+  }
   &:active {
-    transform: scale(0.98);
+    background-color: ${({ theme, sort }) =>
+      sort === "primary"
+        ? theme.brandActive
+        : sort === "danger" && theme.dangerActive};
+    color: ${({ theme, sort }) => sort === "secondary" && theme.brandActive};
+    box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.border};
+  }
+  &:disabled {
+    background-color: #f4f5fa;
+    color: rgba(0, 0, 0, 0.4);
   }
 `;

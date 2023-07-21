@@ -19,7 +19,7 @@ const Title = styled.span`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 128px;
-  color: ${(prop) => prop.theme.Brand};
+  color: ${(prop) => prop.theme.brand};
 `;
 
 const Container = styled.div`

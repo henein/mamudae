@@ -5,6 +5,7 @@ import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
 import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
+import useScroll from "../../../hooks/scrollHooks/useScroll";
 
 interface ITitle {
   title: string;
@@ -14,8 +15,10 @@ interface ITitle {
 }
 
 const Title = ({ title, name, views, createTime }: ITitle) => {
+  const { isScrollDown } = useScroll();
+
   return (
-    <Container>
+    <Container isScrollDown={isScrollDown}>
       <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
@@ -38,19 +41,18 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 };
 
 export default Title;
-const Container = styled.div`
-  z-index: 1;
-  top: 0;
-  box-shadow: 0 2px 4px ${customColor.shadow};
+const Container = styled.div<{ isScrollDown: boolean }>`
+  position: sticky;
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  transition: top 0.2s ease-in-out;
+  box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 32px;
+  border-radius: 16px;
   min-height: 97px;
   border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
-  position: sticky;
-  backdrop-filter: blur(30px);
   background-color: ${(prop) => prop.theme.cardHeader};
 `;
 
@@ -92,10 +94,10 @@ const NicknameAndFloor = styled.div`
   align-items: center;
 `;
 const Name = styled.div`
-  font-size: 24px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.Text};
+  color: ${(prop) => prop.theme.text};
 `;
 const WriteState = styled.div`
   align-items: center;
