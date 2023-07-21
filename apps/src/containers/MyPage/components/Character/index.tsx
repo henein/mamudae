@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CharSelectBox from "./CharSelectBox";
 import Button from "../../../../component/Button";
-import QuestionSvg from "../../../../public/myPageImages/question.svg";
+import Image from "next/image";
 const MyChar = () => {
   return (
     <Container>
@@ -11,17 +11,16 @@ const MyChar = () => {
 
       <UserAuthLine>
         <QuestionBtn>
-          <QuestionSvg />
+          <Image
+            src="/myPageImages/question.svg"
+            width="20"
+            height="21"
+            alt=""
+          />
         </QuestionBtn>
         <form>
           <InputBox placeholder="토큰"></InputBox>
-          <AuthBtn
-            type="submit"
-            sort="main"
-            width="81px"
-            height="41px"
-            fontWeight="500"
-          >
+          <AuthBtn sort="primary" type="submit" width="81px" fontWeight="500">
             인증하기
           </AuthBtn>
         </form>

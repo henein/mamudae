@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/Login";
 import SelectOptions from "./components/SelectOptions";
 import Profile from "./components/Profile";
 import Character from "./components/Character";
 import Activity from "./components/Activity";
-const MyPage = () => {
-  let option;
-  const getOptionNum = (optionNum: number) => {
-    option = optionNum;
-  };
+import Login from "../../component/LoginComponent/Login";
 
+const MyPage = () => {
+  const [option, setOption] = useState<number>(1);
+
+  const getOptionNum = (optionNum: number) => {
+    setOption(optionNum);
+  };
   return (
     <Layout>
       <Announcement />

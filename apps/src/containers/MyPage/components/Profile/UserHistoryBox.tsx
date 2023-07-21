@@ -24,9 +24,11 @@ const Container = styled.div`
   width: 248px;
   padding: 20px 24px;
   gap: 16px;
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 16px;
 `;
 const fontStyle = css`
-  color: ${({ theme }) => theme.Text};
+  color: ${({ theme }) => theme.text};
   font-style: normal;
   font-weight: 700;
   line-height: normal;

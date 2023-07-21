@@ -34,6 +34,9 @@ const CharSelectBox = ({ type }: CharSelectBoxType) => {
           <CharBox type={type} />
           <CharBox type={type} />
           <CharBox type={type} />
+          <CharBox type={type} />
+          <CharBox type={type} />
+          <CharBox type={type} />
         </InnerAllChar>
       </BoxLayout>
     </BoxContent>
@@ -45,7 +48,7 @@ export const BoxContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 20px 24px;
+  /* padding: 20px 24px; */
 `;
 export const Title = styled.h1`
   color: #000;
@@ -68,7 +71,7 @@ const btnStyle = css<{ isSelect: boolean }>`
   padding: 8px 12px;
   color: ${({ isSelect, theme }) => (isSelect ? "white" : theme.subText)};
   background-color: ${({ isSelect, theme }) =>
-    isSelect ? "#212225" : theme.subText};
+    isSelect ? "#212225" : "white"};
   font-size: 12px;
   font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
   line-height: normal;
@@ -86,5 +89,5 @@ const NameSort = styled.button`
 const InnerAllChar = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 22px 16px;
+  gap: 16px 22px;
 `;

@@ -28,6 +28,7 @@ const SelectOptions = ({ getOptionNum }: SelectOptions) => {
 
 export default SelectOptions;
 const Container = styled.div`
+  display: flex;
   width: 100%;
   padding: 0px 8px;
   border-radius: 16px;
@@ -37,14 +38,14 @@ const Container = styled.div`
 `;
 const buttonStyle = css<{ isSelect: boolean }>`
   padding: 20px 24px;
-  color: ${({ isSelect, theme }) => (isSelect ? theme.Text : theme.subText)};
+  color: ${({ isSelect, theme }) => (isSelect ? theme.text : theme.subText)};
   font-size: 16px;
   font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
   line-height: normal;
   border-bottom: ${({ isSelect, theme }) =>
     isSelect
       ? `2px solid
-    ${theme.Brand}`
+    ${theme.brand}`
       : ""};
 `;
 
