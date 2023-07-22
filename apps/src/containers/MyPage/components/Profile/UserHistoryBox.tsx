@@ -26,6 +26,7 @@ const Container = styled.div`
   gap: 16px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  background-color: ${({ theme }) => theme.card};
 `;
 const fontStyle = css`
   color: ${({ theme }) => theme.text};
