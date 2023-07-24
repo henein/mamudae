@@ -1,12 +1,5 @@
 import { useMutation } from "react-query";
-import { createBoard } from "../../api/createBoard";
-
-export interface ICreateBoard {
-  accessToken?: string | undefined;
-  boardType: string;
-  text: string;
-  title: string;
-}
+import { ICreateBoard, createBoard } from "../../api/board";
 
 export const useCreateBoard = (options?: object) => {
   const { mutate } = useMutation(
