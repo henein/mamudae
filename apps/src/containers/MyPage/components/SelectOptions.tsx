@@ -49,7 +49,7 @@ const buttonStyle = css<{ isSelect: boolean }>`
       : ""};
 `;
 
-const OptionBtn = styled.div`
+const OptionBtn = styled.button`
   ${buttonStyle}
   background-color: none;
 `;
