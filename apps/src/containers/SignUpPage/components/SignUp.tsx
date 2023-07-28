@@ -116,7 +116,6 @@ const KaKaoDiv = styled.div`
   justify-content: center;
 `;
 const Container = styled.form`
-  z-index: 1;
   justify-content: space-between;
   border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
@@ -126,8 +125,6 @@ const Container = styled.form`
   flex-direction: column;
   border-radius: 16px;
   padding: 20px 24px;
-  position: absolute;
-  top: calc(16% + 30px);
 `;
 const Title = styled.span`
   padding: 8px;
