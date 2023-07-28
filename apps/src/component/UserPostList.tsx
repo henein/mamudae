@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { customColor } from "../../../constants/customColor";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
-import Label from "../../../component/Label";
-import timeDifference from "../../../utils/timeDifference";
+import { useEachPost } from "../hooks/postPageHooks/usePostPage";
+import timeDifference from "../utils/timeDifference";
+
 const UserPostList = () => {
   const router = useRouter();
   const { page } = router.query;
@@ -18,8 +17,7 @@ const UserPostList = () => {
   type ItmePost = {
     id: string;
     title: string;
-    name: string;
-    rank?: string;
+    userName: string;
     views: number;
     createTime: string;
     commentNum: number;
@@ -51,10 +49,7 @@ const UserPostList = () => {
                   </LeftSide>
                   <RightSide>
                     <DivGap>
-                      <span>{item.name}</span>
-                      <Label type="floor">
-                        {item.rank == undefined ? "48층" : item.rank}
-                      </Label>
+                      <span>{item.userName}</span>
                     </DivGap>
                     <DivGap>
                       <Image

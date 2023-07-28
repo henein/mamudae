@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { customColor } from "../../../constants/customColor";
+import { customColor } from "../constants/customColor";
 import { useRouter } from "next/router";
-import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
+import { useEachPost } from "../hooks/postPageHooks/usePostPage";
 
 const MoreInfoBox = () => {
   const router = useRouter();
