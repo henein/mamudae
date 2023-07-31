@@ -1,49 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../constants/customColor";
 import { useRouter } from "next/router";
 
-const MoreInfoBox = ({ pathType, data, refetch }: any) => {
+const MoreInfoBox = ({ pageType, data, refetch }: any) => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
+  const [pageNums, setPageNums] = useState(1);
 
   const totalPages = data && data.totalPages;
 
-  const path = pathType === "postPage" ? router.query.post : router.pathname;
   // 페이지 숫자 버튼 클릭시 라우팅
   const handlePageNumClick = (pageNum: number) => {
-    router.push(`${path}/?page=${pageNum}`);
+    if (pageType == "postPage")
+      router.push(`${router.query.post}/?page=${pageNum}`);
+    else setPageNums(pageNum);
     refetch();
   };
 
   // < 버튼 클릭 시 10 페이지 감소
   const handlePrevPageBtnClick = () => {
-    router.push(`${path}/?page=${pageNum - 10}`);
+    if (pageType == "postPage")
+      router.push(`${router.query.post}/?page=${pageNum - 10}`);
+    else setPageNums((prevPageNum) => Math.max(prevPageNum - 10, 1));
     refetch();
   };
 
   // > 버튼 클릭 시 10 페이지 증가
   const handleNextPageBtnClick = () => {
-    router.push(`${path}/?page=${pageNum + 10}`);
+    if (pageType == "postPage")
+      router.push(`${router.query.post}/?page=${pageNum + 10}`);
+    else setPageNums((prevPageNum) => Math.max(prevPageNum + 10, 1));
     refetch();
   };
 
   const getPageNums = () => {
-    const pageNums: number[] = [];
-    const startNum: number = Math.floor((pageNum - 1) / 10) * 10 + 1; // pageGroup역할을 함
-    const endNum: number = Math.min(startNum + 9, totalPages);
-    for (let i = startNum; i <= endNum; i++) {
-      pageNums.push(i);
+    if (pageType == "postPage") {
+      const pageNumArr: number[] = [];
+      const startNum: number = Math.floor((pageNum - 1) / 10) * 10 + 1; // pageGroup역할을 함
+      const endNum: number = Math.min(startNum + 9, totalPages);
+      for (let i = startNum; i <= endNum; i++) {
+        pageNumArr.push(i);
+      }
+      return pageNumArr;
+    } else {
+      const pageNumArr = [];
+      const startNum = Math.floor((pageNums - 1) / 10) * 10 + 1;
+      const endNum = Math.min(startNum + 9, totalPages);
+      for (let i = startNum; i <= endNum; i++) {
+        pageNumArr.push(i);
+      }
+      return pageNumArr;
     }
-    return pageNums;
   };
   return (
     <>
       <MoreInfo>
         <NextPageBtn
           onClick={handlePrevPageBtnClick}
-          disabled={0 < pageNum && pageNum < 11}
+          disabled={
+            pageType == "postPage"
+              ? 0 < pageNum && pageNum < 11
+              : 0 < pageNums && pageNums < 11
+          }
         >
           <Image
             src="/postPageImages/keyboard_arrow_left.svg"
@@ -57,7 +77,7 @@ const MoreInfoBox = ({ pathType, data, refetch }: any) => {
           <PageNumBtn
             key={num}
             onClick={() => handlePageNumClick(num)}
-            active={pageNum === num}
+            active={pageType == "postPage" ? pageNum === num : pageNums === num}
           >
             {num}
           </PageNumBtn>
@@ -65,7 +85,11 @@ const MoreInfoBox = ({ pathType, data, refetch }: any) => {
 
         <NextPageBtn
           onClick={handleNextPageBtnClick}
-          disabled={pageNum + 9 >= totalPages}
+          disabled={
+            pageType == "postPage"
+              ? pageNum + 9 >= totalPages
+              : pageNums + 9 >= totalPages
+          }
         >
           <Image
             src="/postPageImages/keyboard_arrow_right.svg"
@@ -102,11 +126,7 @@ const NextPageBtn = styled.button`
   }
 `;
 
-interface PageNumBtnProps {
-  active: boolean;
-}
-
-const PageNumBtn = styled.button<PageNumBtnProps>`
+const PageNumBtn = styled.button<{ active: boolean }>`
   width: 32px;
   height: 32px;
   color: ${(props) =>
