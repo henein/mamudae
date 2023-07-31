@@ -1,16 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import ContentBox from "./ContentBox";
-const index = () => {
+const Activity = () => {
+  const data = {
+    content: [],
+    totalPages: 100,
+  };
+  const refetch = () => {
+    console.log("myPage pageNation");
+  };
   return (
     <Container>
-      <MyBoard type="게시글" />
-      <MyComment type="댓글 단 게시글" />
+      <MyBoard type="게시글" data={data} refetch={refetch} />
+      <MyComment type="댓글 단 게시글" data={data} refetch={refetch} />
     </Container>
   );
 };
 
-export default index;
+export default Activity;
 
 const Container = styled.div`
   display: flex;

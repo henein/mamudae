@@ -4,27 +4,28 @@ import Image from "next/image";
 import { customColor } from "../constants/customColor";
 import { useRouter } from "next/router";
 
-const MoreInfoBox = ({ data, refetch }: any) => {
+const MoreInfoBox = ({ pathType, data, refetch }: any) => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
 
   const totalPages = data && data.totalPages;
 
+  const path = pathType === "postPage" ? router.query.post : router.pathname;
   // 페이지 숫자 버튼 클릭시 라우팅
   const handlePageNumClick = (pageNum: number) => {
-    router.push(`${router.query.post}/?page=${pageNum}`);
+    router.push(`${path}/?page=${pageNum}`);
     refetch();
   };
 
   // < 버튼 클릭 시 10 페이지 감소
   const handlePrevPageBtnClick = () => {
-    router.push(`${router.query.post}/?page=${pageNum - 10}`);
+    router.push(`${path}/?page=${pageNum - 10}`);
     refetch();
   };
 
   // > 버튼 클릭 시 10 페이지 증가
   const handleNextPageBtnClick = () => {
-    router.push(`${router.query.post}/?page=${pageNum + 10}`);
+    router.push(`${path}/?page=${pageNum + 10}`);
     refetch();
   };
 
