@@ -10,18 +10,22 @@ import { useRouter } from "next/router";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
 import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
 
 const PostPage = () => {
   const router = useRouter();
+
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({
+
+  const userData = useUserInfo({
     accessToken,
     options: {
       refetchOnWindowFocus: false,
       retry: 0,
     },
-  });
+  }).data;
+
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -37,19 +41,23 @@ const PostPage = () => {
     }
   }, [router.isReady, router.query.post, router]);
 
+  const { data, refetch } = useEachPost();
+  console.log(data);
   return (
     <Layout>
       <Announcement />
       <PostPageSet>
         <Aside>
-          <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
+          <Aside>
+            {userData ? <CompleteLogin {...userData} /> : <Login />}
+          </Aside>
         </Aside>
         <BoardContent>
           <ContentSet>
             <BoardTitle />
-            <UserPostList />
+            <UserPostList data={data} />
           </ContentSet>
-          <MoreInfoBox />
+          <MoreInfoBox data={data} refetch={refetch} />
         </BoardContent>
       </PostPageSet>
 
