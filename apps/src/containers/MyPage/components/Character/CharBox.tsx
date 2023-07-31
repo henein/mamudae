@@ -70,8 +70,8 @@ const Container = styled.div`
 const MoveImage = styled(Image)`
   position: relative;
   z-index: 1;
-  top: -47px;
-  left: -15px;
+  top: -33px;
+  left: -17px;
 `;
 const CharInfoBox = styled.div<{
   isRepresent: boolean;
@@ -96,7 +96,7 @@ const CharInfoBox = styled.div<{
         : ""};
   background-color: white;
   position: relative;
-  top: -88px;
+  top: -83px;
   z-index: 2;
 `;
 const Top = styled.div`
