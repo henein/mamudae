@@ -21,7 +21,7 @@ const ContentBox = ({ type, data, refetch }: ContentBoxType) => {
           <UserPostList data={data} />
         </ContentSet>
         {/* 페이지네이션 데이터를 data로 받기 */}
-        <MoreInfoBox pathType={"myPage"} data={data} refetch={refetch} />
+        <MoreInfoBox pageType={"myPage"} data={data} refetch={refetch} />
       </Content>
     </Container>
   );

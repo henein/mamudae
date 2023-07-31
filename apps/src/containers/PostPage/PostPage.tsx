@@ -57,7 +57,7 @@ const PostPage = () => {
             <BoardTitle />
             <UserPostList data={data} />
           </ContentSet>
-          <MoreInfoBox pathType={"postPage"} data={data} refetch={refetch} />
+          <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
         </BoardContent>
       </PostPageSet>
 
