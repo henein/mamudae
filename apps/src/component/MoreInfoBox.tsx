@@ -3,26 +3,26 @@ import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../constants/customColor";
 import { useRouter } from "next/router";
-import { useEachPost } from "../hooks/postPageHooks/usePostPage";
 
-const MoreInfoBox = () => {
+const MoreInfoBox = ({ data, refetch }: any) => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
 
-  const { data, refetch } = useEachPost();
   const totalPages = data && data.totalPages;
 
-  console.log(data);
+  // 페이지 숫자 버튼 클릭시 라우팅
   const handlePageNumClick = (pageNum: number) => {
     router.push(`${router.query.post}/?page=${pageNum}`);
     refetch();
   };
 
+  // < 버튼 클릭 시 10 페이지 감소
   const handlePrevPageBtnClick = () => {
     router.push(`${router.query.post}/?page=${pageNum - 10}`);
     refetch();
   };
 
+  // > 버튼 클릭 시 10 페이지 증가
   const handleNextPageBtnClick = () => {
     router.push(`${router.query.post}/?page=${pageNum + 10}`);
     refetch();
@@ -92,7 +92,6 @@ const MoreInfo = styled.div`
 const NextPageBtn = styled.button`
   width: 32px;
   height: 32px;
-  background-color: ${({ theme }) => theme.subText};
   border: none;
   &:hover {
     cursor: pointer;
