@@ -6,20 +6,32 @@ import Profile from "./components/Profile";
 import Character from "./components/Character";
 import Activity from "./components/Activity";
 import Login from "../../component/LoginComponent/Login";
-
+import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 const MyPage = () => {
   const [option, setOption] = useState<number>(1);
 
   const getOptionNum = (optionNum: number) => {
     setOption(optionNum);
   };
+
+  const { getLocalStorage } = useLocalStorage();
+
+  const accessToken = getLocalStorage("access");
+  const userData = useUserInfo({
+    accessToken,
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  }).data;
+
   return (
     <Layout>
       <Announcement />
       <MyPageSet>
-        <Aside>
-          <Login />
-        </Aside>
+        <Aside>{userData ? <CompleteLogin {...userData} /> : <Login />}</Aside>
         <BoardContent>
           <SelectOptions getOptionNum={getOptionNum} />
           {option == 1 ? (
@@ -58,5 +70,4 @@ const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 808px;
-  gap: 24px;
 `;
