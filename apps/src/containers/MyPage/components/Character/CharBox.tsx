@@ -13,9 +13,11 @@ const CharBox = ({ type }: CharBoxType) => {
   return (
     <Container
       onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onMouseLeave={() => {
+        setIsHover(false);
+        setIsActive(false);
+      }}
       onMouseDown={() => setIsActive(true)}
-      onMouseUp={() => setIsActive(false)}
       onClick={() =>
         type == "인증"
           ? setIsCharBoxClick((prev) => !prev)
