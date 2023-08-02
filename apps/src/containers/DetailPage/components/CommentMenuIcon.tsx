@@ -17,16 +17,6 @@ const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
 
   return (
     <Wrap>
-      {isHover && (
-        <CommentTools
-          boardId={props.boardId}
-          commentId={props.commentId}
-          isMyComment={props.isMyComment}
-          commentInfo={props}
-          setIsHover={setIsHover}
-          setIsModifyClick={setIsModifyClick}
-        />
-      )}
       <Svg
         onClick={() => setIsHover((prev) => !prev)}
         width="20"
@@ -52,6 +42,16 @@ const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
           />
         </g>
       </Svg>
+      {isHover && (
+        <CommentTools
+          boardId={props.boardId}
+          commentId={props.commentId}
+          isMyComment={props.isMyComment}
+          commentInfo={props}
+          setIsHover={setIsHover}
+          setIsModifyClick={setIsModifyClick}
+        />
+      )}
     </Wrap>
   );
 };
