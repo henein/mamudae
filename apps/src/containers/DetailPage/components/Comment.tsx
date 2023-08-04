@@ -17,6 +17,7 @@ const Comment = ({ ...data }) => {
     if (data.userData && data.userData.userName == data.userName) {
       setIsMyComment(true);
     }
+    if (data.userName == "알 수 없음") setIsDeleteComment(true);
   }, [isMyComment, data]);
 
   return (
