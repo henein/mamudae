@@ -5,12 +5,14 @@ import ColorThief from "colorthief";
 interface CharBoxType {
   type: "인증" | "미인증";
 }
+
 const CharBox = ({ type }: CharBoxType) => {
   const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(false);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
 
+  // image 배경색상 랜덤 선택
   useEffect(() => {
     const img: HTMLImageElement | null = document.querySelector("img#char");
     const colorThief = new ColorThief();
@@ -58,10 +60,11 @@ const CharBox = ({ type }: CharBoxType) => {
           : alert("미인증 캐릭터입니다.")
       }
     >
+      <ImgWrapper disable={type == "미인증"} />
       <CharImg
         src="/myPageImages/character1.png"
-        imageRandomColor={imageRandomColor}
         id="char"
+        imageRandomColor={imageRandomColor}
       />
       <CharInfoBox
         isRepresent={isCharBoxClick}
@@ -103,7 +106,15 @@ const Container = styled.div`
     transition: box-shadow 200ms;
   }
 `;
-const CharImg = styled.img<{ imageRandomColor: any }>`
+const ImgWrapper = styled.div<{ disable: boolean }>`
+  position: absolute;
+  z-index: 1;
+  width: 142px;
+  height: 120px;
+  border-radius: 16px;
+  background-color: ${({ disable }) => disable && "rgba(0, 0, 0, 0.20)"};
+`;
+const CharImg = styled.img<{ imageRandomColor: string }>`
   position: relative;
   top: -8px;
   background-color: ${({ imageRandomColor }) => imageRandomColor};
