@@ -41,9 +41,7 @@ const Comment = ({ ...data }) => {
                 <Job>겸마 격수</Job>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
-              {isDeleteComment ? (
-                <></>
-              ) : (
+              {!isDeleteComment && (
                 <CommentMenuIcon
                   boardId={data.boardId}
                   comment={data.comment}
@@ -58,9 +56,7 @@ const Comment = ({ ...data }) => {
               {data.comment}
             </CommentContent>
             <FormDisplay>
-              {isDeleteComment ? (
-                <></>
-              ) : (
+              {!isDeleteComment && (
                 <ReCommentBtn onClick={() => setIsClick(true)}>
                   답글
                 </ReCommentBtn>
