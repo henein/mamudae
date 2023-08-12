@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Image from "next/image";
+import ColorThief from "colorthief";
 
 interface CharBoxType {
   type: "인증" | "미인증";
@@ -9,6 +9,40 @@ const CharBox = ({ type }: CharBoxType) => {
   const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(false);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [imageRandomColor, setImageRandomColor] = useState<string>("");
+
+  useEffect(() => {
+    const img: HTMLImageElement | null = document.querySelector("img#char");
+    const colorThief = new ColorThief();
+
+    if (img) {
+      if (img.complete) {
+        const fetchPalette = async () => {
+          const palette = await colorThief.getPalette(img);
+
+          const randomIndex = Math.floor(Math.random() * palette.length);
+          const randomColor = palette[randomIndex];
+          const rgbString = `rgba(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]},0.4)`;
+
+          setImageRandomColor(rgbString);
+        };
+        fetchPalette();
+      } else {
+        img.addEventListener("load", () => {
+          const fetchPalette = async () => {
+            const palette = await colorThief.getPalette(img);
+
+            const randomIndex = Math.floor(Math.random() * palette.length);
+            const randomColor = palette[randomIndex];
+            const rgbString = `rgba(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]},0.4)`;
+
+            setImageRandomColor(rgbString);
+          };
+          fetchPalette();
+        });
+      }
+    }
+  }, []);
 
   return (
     <Container
@@ -24,11 +58,10 @@ const CharBox = ({ type }: CharBoxType) => {
           : alert("미인증 캐릭터입니다.")
       }
     >
-      <MoveImage
+      <CharImg
         src="/myPageImages/character1.png"
-        width={180}
-        height={180}
-        alt=""
+        imageRandomColor={imageRandomColor}
+        id="char"
       />
       <CharInfoBox
         isRepresent={isCharBoxClick}
@@ -43,6 +76,7 @@ const CharBox = ({ type }: CharBoxType) => {
           <JobnLevel>배틀메이지 / 260</JobnLevel>
         </Bottom>
       </CharInfoBox>
+      ;
     </Container>
   );
 };
@@ -69,11 +103,10 @@ const Container = styled.div`
     transition: box-shadow 200ms;
   }
 `;
-const MoveImage = styled(Image)`
+const CharImg = styled.img<{ imageRandomColor: any }>`
   position: relative;
-  z-index: 1;
-  top: -33px;
-  left: -17px;
+  top: -8px;
+  background-color: ${({ imageRandomColor }) => imageRandomColor};
 `;
 const CharInfoBox = styled.div<{
   isRepresent: boolean;
@@ -95,10 +128,10 @@ const CharInfoBox = styled.div<{
         ? theme.brandHover
         : isActive
         ? theme.brandActive
-        : ""};
+        : theme.border};
   background-color: white;
   position: relative;
-  top: -83px;
+  top: -46px;
   z-index: 2;
 `;
 const Top = styled.div`
