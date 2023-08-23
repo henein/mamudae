@@ -7,7 +7,7 @@ const MyChar = () => {
   return (
     <Container>
       <CharSelectBox type="인증" />
-      <CharSelectBox type="미인증" />
+      {/* <CharSelectBox type="미인증" /> */}
 
       <UserAuthLine>
         <QuestionBtn>

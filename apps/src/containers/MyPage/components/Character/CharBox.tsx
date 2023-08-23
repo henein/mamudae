@@ -19,28 +19,24 @@ const CharBox = ({ type }: CharBoxType) => {
 
     if (img) {
       if (img.complete) {
-        const fetchPalette = async () => {
-          const palette = await colorThief.getPalette(img);
-
-          const randomIndex = Math.floor(Math.random() * palette.length);
-          const randomColor = palette[randomIndex];
-          const rgbString = `rgba(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]},0.4)`;
+        const fetchColor = async () => {
+          const dominantColor = await colorThief.getColor(img);
+          const rgbString = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
 
           setImageRandomColor(rgbString);
+          console.log(dominantColor);
         };
-        fetchPalette();
+        fetchColor();
       } else {
+        // 돔에 맨 처음 진입했을때도 컬러 적용
         img.addEventListener("load", () => {
-          const fetchPalette = async () => {
-            const palette = await colorThief.getPalette(img);
-
-            const randomIndex = Math.floor(Math.random() * palette.length);
-            const randomColor = palette[randomIndex];
-            const rgbString = `rgba(${randomColor[0]}, ${randomColor[1]}, ${randomColor[2]},0.4)`;
+          const fetchColor = async () => {
+            const dominantColor = await colorThief.getColor(img);
+            const rgbString = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
 
             setImageRandomColor(rgbString);
           };
-          fetchPalette();
+          fetchColor();
         });
       }
     }
@@ -62,7 +58,7 @@ const CharBox = ({ type }: CharBoxType) => {
     >
       <ImgWrapper disable={type == "미인증"} />
       <CharImg
-        src="/myPageImages/character1.png"
+        src="/myPageImages/character3.png"
         id="char"
         imageRandomColor={imageRandomColor}
       />
@@ -89,7 +85,6 @@ export default CharBox;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 144px;
   height: 173px;
@@ -109,8 +104,9 @@ const Container = styled.div`
 const ImgWrapper = styled.div<{ disable: boolean }>`
   position: absolute;
   z-index: 1;
-  width: 142px;
+  width: 144px;
   height: 120px;
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   background-color: ${({ disable }) => disable && "rgba(0, 0, 0, 0.20)"};
 `;
@@ -142,7 +138,7 @@ const CharInfoBox = styled.div<{
         : theme.border};
   background-color: white;
   position: relative;
-  top: -46px;
+  top: -47px;
   z-index: 2;
 `;
 const Top = styled.div`
