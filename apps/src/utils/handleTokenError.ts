@@ -9,6 +9,10 @@ const handleTokenError = async (error: AxiosError, refetch?: any) => {
   const exception = error.response?.headers.exception;
   const resController = (res: any) => {
     console.log(res);
+    if (!res.headers.exception) {
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("access");
+    }
     if (res.headers && res.headers.exception == undefined) {
       localStorage.setItem("access", res.headers.authorization.substring(7));
       if (

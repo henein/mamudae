@@ -17,6 +17,7 @@ const Comment = ({ ...data }) => {
     if (data.userData && data.userData.userName == data.userName) {
       setIsMyComment(true);
     }
+    if (data.userName == "알 수 없음") setIsDeleteComment(true);
   }, [isMyComment, data]);
 
   return (
@@ -40,9 +41,7 @@ const Comment = ({ ...data }) => {
                 <Job>겸마 격수</Job>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
-              {isDeleteComment ? (
-                <></>
-              ) : (
+              {!isDeleteComment && (
                 <CommentMenuIcon
                   boardId={data.boardId}
                   comment={data.comment}
@@ -57,9 +56,7 @@ const Comment = ({ ...data }) => {
               {data.comment}
             </CommentContent>
             <FormDisplay>
-              {isDeleteComment ? (
-                <></>
-              ) : (
+              {!isDeleteComment && (
                 <ReCommentBtn onClick={() => setIsClick(true)}>
                   답글
                 </ReCommentBtn>
