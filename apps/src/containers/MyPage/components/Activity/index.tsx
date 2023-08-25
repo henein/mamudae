@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import ContentBox from "./ContentBox";
+import { useLocalStorage } from "../../../../hooks/storage/useLocalStorage";
+import {
+  useGetMyBoard,
+  useGetMyCommentBoard,
+} from "../../../../hooks/myPageHooks/useUserActivity";
+
 const Activity = () => {
   const data = {
     content: [],
@@ -9,6 +15,13 @@ const Activity = () => {
   const refetch = () => {
     console.log("myPage pageNation");
   };
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
+  const myBoards = useGetMyBoard({}, accessToken);
+  const myCommentBoards = useGetMyCommentBoard({}, accessToken);
+
+  console.log(myCommentBoards);
   return (
     <Container>
       <MyBoard type="게시글" data={data} refetch={refetch} />
