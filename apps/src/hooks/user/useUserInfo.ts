@@ -1,24 +1,14 @@
 import { useRouter } from "next/router";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { userInfo, setUserName } from "../../api/userInfo";
-import handleTokenError from "../../utils/handleTokenError";
 
 interface IUseUserInfo {
-  accessToken: string | undefined;
   options?: any;
 }
 
-export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
-  const { data, refetch } = useQuery("userInfo", () => userInfo(accessToken), {
+export const useUserInfo = ({ options }: IUseUserInfo) => {
+  const { data } = useQuery("userInfo", () => userInfo(), {
     ...options,
-    enabled: !!accessToken,
-
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (err: any) => {
-      handleTokenError(err, refetch);
-    },
   });
   return { data };
 };

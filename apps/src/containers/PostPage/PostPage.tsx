@@ -7,7 +7,6 @@ import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
 import { useRouter } from "next/router";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
 import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
@@ -15,11 +14,7 @@ import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
 const PostPage = () => {
   const router = useRouter();
 
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-
   const userData = useUserInfo({
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
       retry: 0,

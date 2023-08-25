@@ -1,14 +1,20 @@
 import { useQuery } from "react-query";
 import { getMyBoard, getMyCommentBoard } from "../../api/userInfo";
 
-export function useGetMyBoard(options = {}, accessToken: any) {
-  return useQuery("myBoards", () => getMyBoard(accessToken), {
-    ...options,
-  });
+interface getMyPage {
+  options?: any;
 }
 
-export function useGetMyCommentBoard(options = {}, accessToken: any) {
-  return useQuery("myCommentBoards", () => getMyCommentBoard(accessToken), {
+export function useGetMyBoard({ options }: getMyPage) {
+  const { data } = useQuery("myBoards", () => getMyBoard(), {
     ...options,
   });
+  return { ...data };
+}
+
+export function useGetMyCommentBoard({ options }: getMyPage) {
+  const { data } = useQuery("myCommentBoards", () => getMyCommentBoard(), {
+    ...options,
+  });
+  return { ...data };
 }

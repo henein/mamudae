@@ -13,7 +13,6 @@ import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import Login from "../../component/LoginComponent/Login";
 import { useGetComment } from "../../hooks/detailPageHooks/useComment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
 import Comment from "./components/Comment";
 import Like from "./components/Like";
@@ -36,10 +35,8 @@ export type CommentType = {
 
 const DetailPage = () => {
   const router = useRouter();
-  const { getLocalStorage } = useLocalStorage();
 
   const boardId = router.query.id as string;
-  const accessToken = getLocalStorage("access");
   // Hybrid Rendering
 
   const {
@@ -54,7 +51,6 @@ const DetailPage = () => {
     refetch,
   } = useDetail({
     boardId,
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
     },
@@ -62,7 +58,6 @@ const DetailPage = () => {
 
   const [context, setContext] = useState("");
   const userData = useUserInfo({
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
       retry: 0,

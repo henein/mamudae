@@ -7,7 +7,7 @@ import Activity from "./components/Activity";
 import Login from "../../component/LoginComponent/Login";
 import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import { useUserInfo } from "../../hooks/user/useUserInfo";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+
 const MyPage = () => {
   const [option, setOption] = useState<number>(1);
 
@@ -24,11 +24,7 @@ const MyPage = () => {
     setOption(num);
   };
 
-  const { getLocalStorage } = useLocalStorage();
-
-  const accessToken = getLocalStorage("access");
   const userData = useUserInfo({
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
       retry: 0,
