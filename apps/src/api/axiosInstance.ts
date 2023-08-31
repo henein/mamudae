@@ -47,7 +47,7 @@ axiosInstance.interceptors.response.use(
       const accessToken = await localStorage.getItem("access");
       error.config.headers = {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        Authorization: `Bearer ${accessToken}`,
       };
 
       const response = await axios.request(error.config);
