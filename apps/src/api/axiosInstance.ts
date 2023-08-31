@@ -44,12 +44,12 @@ axiosInstance.interceptors.response.use(
         "access",
         newAt.headers.authorization.substring(7)
       );
-
       const accessToken = await localStorage.getItem("access");
       error.config.headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: accessToken,
       };
+
       const response = await axios.request(error.config);
       return response;
     } else if (exception == 102) {
@@ -59,6 +59,13 @@ axiosInstance.interceptors.response.use(
       window.location.reload();
     } else if (exception == 103) {
       alert("토큰 값이 변경되었습니다. 다시 로그인 해주세요.");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("access");
+      window.location.reload();
+    } else if (exception == 104) {
+      alert("로그인 페이지로 이동합니다.");
+      console.log("로그인 페이지로 넘어가야 함!");
+    } else {
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
       window.location.reload();

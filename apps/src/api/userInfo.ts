@@ -1,9 +1,11 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 // 유저 정보 조회
-export const userInfo = async () => {
-  const res = await axiosInstance.get("/userinfo");
-  return res.data;
+export const userInfo = async (accessToken: string | undefined) => {
+  if (accessToken) {
+    const res = await axiosInstance.get("/userinfo");
+    return res.data;
+  }
 };
 
 // 유저 닉네임 변경
@@ -34,11 +36,12 @@ export const getAllMyChar = async () => {
 // 유저가 작성한 게시물 조회
 export const getMyBoard = async () => {
   const res = await axiosInstance.get("/userinfo/myboards");
-  return res.data;
+
+  return res;
 };
 
 // 유저가 댓글을 작성한 게시물 조회
 export const getMyCommentBoard = async () => {
   const res = await axiosInstance.get("/userinfo/mycomment-boards");
-  return res.data;
+  return res;
 };

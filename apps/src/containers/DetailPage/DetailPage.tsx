@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
@@ -5,11 +6,9 @@ import Underline from "@tiptap/extension-underline";
 import { generateHTML } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Button from "../../component/Button";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import Login from "../../component/LoginComponent/Login";
 import { useGetComment } from "../../hooks/detailPageHooks/useComment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
@@ -20,8 +19,6 @@ import Title from "./components/Title";
 import Write from "./components/Write";
 import Warning from "../../component/Warning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
-import { useDispatch } from "react-redux";
-import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
 
 export type CommentType = {
   comment: string;
@@ -64,13 +61,6 @@ const DetailPage = () => {
     },
   }).data;
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (userData) {
-      dispatch(saveUserInfo(userData.userName));
-    }
-  }, [userData, dispatch]);
-
   const commentdata = useGetComment({
     boardId,
     options: {
@@ -108,7 +98,7 @@ const DetailPage = () => {
     <Container>
       <Announcement />
       <SideBox>
-        {userData ? <CompleteLogin {...userData} /> : <Login />}
+        <Login />
       </SideBox>
       <div>
         <BoardOptionBox>

@@ -5,8 +5,6 @@ import Profile from "./components/Profile";
 import Character from "./components/Character";
 import Activity from "./components/Activity";
 import Login from "../../component/LoginComponent/Login";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
 
 const MyPage = () => {
   const [option, setOption] = useState<number>(1);
@@ -24,18 +22,14 @@ const MyPage = () => {
     setOption(num);
   };
 
-  const userData = useUserInfo({
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  }).data;
-
   return (
     <Layout>
       <Announcement />
       <MyPageSet>
-        <Aside>{userData ? <CompleteLogin {...userData} /> : <Login />}</Aside>
+        <Aside>
+          {" "}
+          <Login />
+        </Aside>
         <BoardContent>
           <SelectOption>
             <OptionBtn isSelect={option == 1} onClick={() => optionClick(1)}>

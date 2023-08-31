@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
 import { userInfo, setUserName } from "../../api/userInfo";
-
 interface IUseUserInfo {
   options?: any;
+  accessToken?: string;
 }
 
-export const useUserInfo = ({ options }: IUseUserInfo) => {
-  const { data } = useQuery("userInfo", () => userInfo(), {
+export const useUserInfo = ({ options, accessToken }: IUseUserInfo) => {
+  const { data } = useQuery("userInfo", () => userInfo(accessToken), {
     ...options,
   });
   return { data };
