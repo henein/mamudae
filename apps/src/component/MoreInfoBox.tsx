@@ -1,40 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../constants/customColor";
 import { useRouter } from "next/router";
 
-const MoreInfoBox = ({ pageType, data, refetch }: any) => {
+const MoreInfoBox = ({
+  pageType,
+  data,
+  refetch,
+  pageNums,
+  setPageNums,
+}: any) => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
-  const [pageNums, setPageNums] = useState(1);
-
+  console.log(data);
   const totalPages = data && data.totalPages;
 
-  // 페이지 숫자 버튼 클릭시 라우팅
-  const handlePageNumClick = (pageNum: number) => {
-    if (pageType == "postPage")
-      router.push(`${router.query.post}/?page=${pageNum}`);
-    else setPageNums(pageNum);
-    refetch();
-  };
-
-  // < 버튼 클릭 시 10 페이지 감소
-  const handlePrevPageBtnClick = () => {
-    if (pageType == "postPage")
-      router.push(`${router.query.post}/?page=${pageNum - 10}`);
-    else setPageNums((prevPageNum) => Math.max(prevPageNum - 10, 1));
-    refetch();
-  };
-
-  // > 버튼 클릭 시 10 페이지 증가
-  const handleNextPageBtnClick = () => {
-    if (pageType == "postPage")
-      router.push(`${router.query.post}/?page=${pageNum + 10}`);
-    else setPageNums((prevPageNum) => Math.max(prevPageNum + 10, 1));
-    refetch();
-  };
-
+  // 페이지 한줄 묶음
   const getPageNums = () => {
     if (pageType == "postPage") {
       const pageNumArr: number[] = [];
@@ -54,6 +36,39 @@ const MoreInfoBox = ({ pageType, data, refetch }: any) => {
       return pageNumArr;
     }
   };
+
+  console.log(getPageNums());
+  // 페이지 숫자 버튼 클릭시 라우팅
+  const handlePageNumClick = (pageNum: number) => {
+    if (pageType == "postPage") {
+      router.push(`${router.query.post}/?page=${pageNum}`);
+      refetch();
+    } else {
+      setPageNums(pageNum);
+    }
+  };
+
+  // < 버튼 클릭 시 10 페이지 감소
+  const handlePrevPageBtnClick = () => {
+    if (pageType == "postPage") {
+      router.push(`${router.query.post}/?page=${Math.max(pageNum - 10, 1)}`);
+      refetch();
+    } else setPageNums((prevPageNum: number) => Math.max(prevPageNum - 10, 1));
+  };
+
+  // > 버튼 클릭 시 10 페이지 증가, 10페이지 증가했을때 totalPages를 넘어가면 totalPages로 선정
+  const handleNextPageBtnClick = () => {
+    if (pageType == "postPage") {
+      router.push(
+        `${router.query.post}/?page=${Math.min(pageNum + 10, totalPages)}`
+      );
+      refetch();
+    } else
+      setPageNums((prevPageNum: number) =>
+        Math.min(prevPageNum + 10, totalPages)
+      );
+  };
+
   return (
     <>
       <MoreInfo>
@@ -88,7 +103,7 @@ const MoreInfoBox = ({ pageType, data, refetch }: any) => {
           disabled={
             pageType == "postPage"
               ? pageNum + 9 >= totalPages
-              : pageNums + 9 >= totalPages
+              : pageNums >= totalPages
           }
         >
           <Image

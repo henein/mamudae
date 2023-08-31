@@ -7,19 +7,10 @@ import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
 import { useRouter } from "next/router";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
 
 const PostPage = () => {
   const router = useRouter();
-
-  const userData = useUserInfo({
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  }).data;
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -44,13 +35,13 @@ const PostPage = () => {
       <PostPageSet>
         <Aside>
           <Aside>
-            {userData ? <CompleteLogin {...userData} /> : <Login />}
+            <Login />
           </Aside>
         </Aside>
         <BoardContent>
           <ContentSet>
             <BoardTitle />
-            <UserPostList data={data} />
+            <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
           <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
         </BoardContent>
@@ -89,7 +80,7 @@ export const BoardContent = styled.div`
   z-index: 0.5;
   background-color: ${({ theme }) => theme.card};
 `;
-export const ContentSet = styled.div`
+const ContentSet = styled.div`
   display: flex;
   flex-direction: column;
 `;
