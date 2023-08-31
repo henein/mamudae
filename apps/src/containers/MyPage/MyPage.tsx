@@ -27,7 +27,6 @@ const MyPage = () => {
       <Announcement />
       <MyPageSet>
         <Aside>
-          {" "}
           <Login />
         </Aside>
         <BoardContent>

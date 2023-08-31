@@ -13,7 +13,6 @@ const MoreInfoBox = ({
 }: any) => {
   const router = useRouter();
   const pageNum = parseInt(router.query.page as string) || 1;
-  console.log(data);
   const totalPages = data && data.totalPages;
 
   // 페이지 한줄 묶음
@@ -37,7 +36,6 @@ const MoreInfoBox = ({
     }
   };
 
-  console.log(getPageNums());
   // 페이지 숫자 버튼 클릭시 라우팅
   const handlePageNumClick = (pageNum: number) => {
     if (pageType == "postPage") {

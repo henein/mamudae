@@ -28,6 +28,7 @@ interface ItmePost {
   views: number;
   createTime: string;
   commentNum: number;
+  boardType: string;
 }
 
 const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
@@ -53,10 +54,7 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
             return (
               <Link
                 href={{
-                  pathname:
-                    type == "myPage"
-                      ? `/board/자유/${item.id}`
-                      : `/board/${router.query.post}/${item.id}`,
+                  pathname: `/board/${item.boardType}/${item.id}`,
                 }}
                 key={idx}
               >
