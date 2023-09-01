@@ -1,23 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import Button from "../Button";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import CompleteLogin from "./CompleteLogin";
+import { useDispatch } from "react-redux";
+import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
 
 const Login = () => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
+  const { data } = useUserInfo({
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+    accessToken,
+  });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data) {
+      dispatch(saveUserInfo(data.userName));
+    }
+  }, [data, dispatch]);
+
   return (
-    <LoginContainer>
-      <Link href="/login">
-        <LoginBtn type="submit" sort="primary" width="252px" fontWeight="700">
-          로그인
-        </LoginBtn>
-      </Link>
-      <LoginFooter>
-        <Text>로그인이 안 되시나요?</Text>
-        <Link href="/signUp">
-          <SignUpBtn>회원가입</SignUpBtn>
-        </Link>
-      </LoginFooter>
-    </LoginContainer>
+    <>
+      {data ? (
+        <CompleteLogin {...data} />
+      ) : (
+        <LoginContainer>
+          <Link href="/login">
+            <LoginBtn
+              type="submit"
+              sort="primary"
+              width="252px"
+              fontWeight="700"
+            >
+              로그인
+            </LoginBtn>
+          </Link>
+          <LoginFooter>
+            <Text>로그인이 안 되시나요?</Text>
+            <Link href="/signUp">
+              <SignUpBtn>회원가입</SignUpBtn>
+            </Link>
+          </LoginFooter>
+        </LoginContainer>
+      )}
+    </>
   );
 };
 

@@ -3,11 +3,19 @@ import styled from "styled-components";
 import CharSelectBox from "./CharSelectBox";
 import Button from "../../../../component/Button";
 import Image from "next/image";
+import { useLocalStorage } from "../../../../hooks/storage/useLocalStorage";
+import { useGetAllMyChar } from "../../../../hooks/myPageHooks/useUserChar";
+
 const MyChar = () => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+
+  const char = useGetAllMyChar({}, accessToken);
+  console.log(char);
   return (
     <Container>
       <CharSelectBox type="인증" />
-      <CharSelectBox type="미인증" />
+      {/* <CharSelectBox type="미인증" /> */}
 
       <UserAuthLine>
         <QuestionBtn>

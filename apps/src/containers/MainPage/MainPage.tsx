@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import Login from "../../component/LoginComponent/Login";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
 import Board from "./components/Board";
 
 export type BoardInfoType = {
@@ -13,20 +10,14 @@ export type BoardInfoType = {
 };
 
 const MainPage = () => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({
-    accessToken,
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  });
   return (
     <Layout>
       <Announcement />
       <MainPageSet>
-        <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
+        <Aside>
+          {" "}
+          <Login />
+        </Aside>
         <BoardSet>
           <div>
             <Board board_title="전체" isLarge={true} />

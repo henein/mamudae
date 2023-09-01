@@ -3,7 +3,6 @@ import styled from "styled-components";
 import time from "/public/detailPageImages/schedule.png";
 import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
-import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
 import useScroll from "../../../hooks/scrollHooks/useScroll";
 
@@ -23,10 +22,9 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
       <WriteState>
         <NicknameAndFloor>
           <Nickname>{name}</Nickname>
-          <Floor>48층</Floor>
         </NicknameAndFloor>
         <TimeAndWatch>
-          <Time>
+          <Time suppressHydrationWarning={true}>
             <CustomImage src={time} alt="none" />
             {timeDifference(createTime)}
           </Time>
@@ -64,13 +62,6 @@ const Nickname = styled.div`
   margin-right: 4px;
   font-size: 12px;
   color: ${(prop) => prop.theme.subText};
-`;
-const Floor = styled.div`
-  padding: 2px 4px;
-  color: ${customColor.white};
-  font-size: 10px;
-  background-color: ${customColor.floor};
-  border-radius: 8px;
 `;
 const TimeAndWatch = styled.div`
   display: flex;

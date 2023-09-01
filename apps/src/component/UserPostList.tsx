@@ -10,6 +10,8 @@ import timeDifference from "../utils/timeDifference";
  */
 interface UserPostListType {
   data: any;
+  type: string;
+  pageNums: number;
 }
 /**
  * id : 게시글 boardId
@@ -26,24 +28,33 @@ interface ItmePost {
   views: number;
   createTime: string;
   commentNum: number;
+  boardType: string;
 }
 
-const UserPostList = ({ data }: UserPostListType) => {
-  // 페이지에 따른 게시글 번호 설정
+const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
+  // postpage에서 페이지에 따른 게시글 번호 설정
   const router = useRouter();
   const { page } = router.query;
   const pageNum = parseInt(page as string, 10) || 1;
+
+  // mypage에서 페이지에 따른 게시글 slice idx
+  const startIndex = pageNums * 10 - 10;
+  const endIndex = startIndex + 10;
+  const usingData =
+    type == "myPage"
+      ? data && data.content.slice(startIndex, endIndex)
+      : data && data.content;
 
   return (
     <>
       <PostList>
         {data &&
-          data.content.map((item: ItmePost, idx: number) => {
+          usingData.map((item: ItmePost, idx: number) => {
             const timeAgo = timeDifference(item.createTime);
             return (
               <Link
                 href={{
-                  pathname: `/board/${router.query.post}/${item.id}`,
+                  pathname: `/board/${item.boardType}/${item.id}`,
                 }}
                 key={idx}
               >
@@ -51,7 +62,14 @@ const UserPostList = ({ data }: UserPostListType) => {
                   <LeftSide>
                     <PostNum>
                       {`000000${
-                        data && data.totalElements - idx * pageNum
+                        type == "myPage"
+                          ? data &&
+                            data.content.length -
+                              (idx + 1 - pageNums) -
+                              (pageNums - 1) * 10 -
+                              pageNums +
+                              1
+                          : data && data.totalElements - idx * pageNum
                       }`.slice(-6)}
                     </PostNum>
                     <DivGap>
@@ -60,9 +78,14 @@ const UserPostList = ({ data }: UserPostListType) => {
                     </DivGap>
                   </LeftSide>
                   <RightSide>
-                    <DivGap>
-                      <span>{item.userName}</span>
-                    </DivGap>
+                    {type == "myPage" ? (
+                      <></>
+                    ) : (
+                      <DivGap>
+                        <span>{item.userName}</span>
+                      </DivGap>
+                    )}
+
                     <DivGap>
                       <Image
                         src="/postPageImages/schedule.svg"
@@ -141,7 +164,7 @@ const RightSide = styled.div`
 const Time = styled.span`
   display: flex;
   justify-content: center;
-  width: 40px;
+  width: 50px;
 `;
 const ViewDiv = styled.div`
   display: flex;
