@@ -6,8 +6,8 @@ interface IUseUserInfo {
   accessToken?: string;
 }
 
-export const useUserInfo = ({ options, accessToken }: IUseUserInfo) => {
-  const { data } = useQuery("userInfo", () => userInfo(accessToken), {
+export const useUserInfo = ({ options }: IUseUserInfo) => {
+  const { data } = useQuery("userInfo", () => userInfo(), {
     ...options,
   });
   return { data };

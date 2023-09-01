@@ -1,11 +1,12 @@
 import axios from "axios";
 import { getAtByRT } from "./getPrintCode";
+
 const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   // timeout: 1000,
 });
 
-// req 요청 시 토큰 인증이 들어간다면, 사용될 로직
+// req 요청 시 토큰 인증이 들어간다면, 사용될 로직 -> ex) 헤더에 값을 넣어주는것
 axiosInstance.interceptors.request.use(
   //요청을 보내기 전에 수행할 일
   async (config) => {
@@ -15,7 +16,9 @@ axiosInstance.interceptors.request.use(
     } else {
       config.headers["Content-Type"] = "application/json";
     }
-    config.headers.Authorization = `Bearer ${localStorage.getItem("access")}`;
+    const accessToken = localStorage.getItem("access") || "";
+    config.headers.Authorization = `${accessToken}`;
+
     return config;
   },
   (error) => {
@@ -37,13 +40,12 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     console.log(error);
     const exception = error.response?.data.code;
+    console.log(exception);
+
     if (exception === 101) {
       const refreshToken = localStorage.getItem("refresh");
       const newAt = await getAtByRT(refreshToken);
-      await localStorage.setItem(
-        "access",
-        newAt.headers.authorization.substring(7)
-      );
+      await localStorage.setItem("access", newAt.headers.authorization);
       const accessToken = await localStorage.getItem("access");
       error.config.headers = {
         "Content-Type": "application/json",
@@ -64,7 +66,9 @@ axiosInstance.interceptors.response.use(
       window.location.reload();
     } else if (exception == 104) {
       alert("로그인 페이지로 이동합니다.");
-      console.log("로그인 페이지로 넘어가야 함!");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("access");
+      window.location.href = "/login";
     } else {
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");

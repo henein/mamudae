@@ -1,11 +1,9 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 // 유저 정보 조회
-export const userInfo = async (accessToken: string | undefined) => {
-  if (accessToken) {
-    const res = await axiosInstance.get("/userinfo");
-    return res.data;
-  }
+export const userInfo = async () => {
+  const res = await axiosInstance.get("/userinfo");
+  return res.data;
 };
 
 // 유저 닉네임 변경
