@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import BoardTitle from "./components/BoardTitle";
-import UserPostList from "./components/UserPostList";
-import MoreInfoBox from "./components/MoreInfoBox";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/LoginComponent/Login";
-import Button from "../../component/Button";
-import { customColor } from "../../constants/customColor";
-import { useRouter } from "next/router";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import BoardTitle from './components/BoardTitle';
+import UserPostList from './components/UserPostList';
+import MoreInfoBox from './components/MoreInfoBox';
+import Announcement from '../../component/AnnounceComponent/Announcement';
+import Login from '../../component/LoginComponent/Login';
+import Button from '../../component/Button';
+import { customColor } from '../../constants/customColor';
+import { useRouter } from 'next/router';
+import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
+import { useUserInfo } from '../../hooks/user/useUserInfo';
+import CompleteLogin from '../../component/LoginComponent/CompleteLogin';
+import Link from 'next/link';
 
 const PostPage = () => {
   const router = useRouter();
   const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
+  const accessToken = getLocalStorage('access');
   const { data } = useUserInfo({
     accessToken,
     options: {
@@ -26,17 +27,17 @@ const PostPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
-      case "전체":
-      case "자유":
-      case "유머":
-      case "보스":
-      case "직업":
+      case '전체':
+      case '자유':
+      case '유머':
+      case '보스':
+      case '직업':
         break;
       default:
-        router.push("/404");
+        router.push('/404');
         break;
     }
-  }, [router.isReady, router.query.post]);
+  }, [router, router.isReady, router.query.post]);
 
   return (
     <Layout>
@@ -54,9 +55,11 @@ const PostPage = () => {
         </BoardContent>
       </PostPageSet>
 
-      <WriteBtn type="submit" sort="primary">
-        작성하기
-      </WriteBtn>
+      <Link href="/write">
+        <WriteBtn type="submit" sort="primary">
+          작성하기
+        </WriteBtn>
+      </Link>
     </Layout>
   );
 };

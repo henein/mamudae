@@ -13,13 +13,13 @@ import {
 import { Editor } from '@tiptap/react';
 import React from 'react';
 import styled from 'styled-components';
-import { CardHeader } from '../../../component/CardHeader';
-import useScroll from '../../../hooks/scrollHooks/useScroll';
 import { ToolBarButton } from './ToolBarButton';
 import { ToolBarDivider } from './ToolBarDivider';
 import FormatH1 from './format_h1.svg';
 import FormatH2 from './format_h2.svg';
 import FormatH3 from './format_h3.svg';
+import useScroll from '../../hooks/scrollHooks/useScroll';
+import { CardHeader } from '../CardHeader';
 
 export interface ToolBarProps {
   editor: Editor | null;
