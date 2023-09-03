@@ -3,8 +3,8 @@ import styled from "styled-components";
 import time from "/public/detailPageImages/schedule.png";
 import watch from "/public/detailPageImages/visibility.png";
 import Image from "next/image";
-import { customColor } from "../../../constants/customColor";
 import timeDifference from "../../../utils/timeDifference";
+import useScroll from "../../../hooks/scrollHooks/useScroll";
 
 interface ITitle {
   title: string;
@@ -14,16 +14,17 @@ interface ITitle {
 }
 
 const Title = ({ title, name, views, createTime }: ITitle) => {
+  const { isScrollDown } = useScroll();
+
   return (
-    <Container>
+    <Container isScrollDown={isScrollDown}>
       <Name>{title}</Name>
       <WriteState>
         <NicknameAndFloor>
           <Nickname>{name}</Nickname>
-          <Floor>48층</Floor>
         </NicknameAndFloor>
         <TimeAndWatch>
-          <Time>
+          <Time suppressHydrationWarning={true}>
             <CustomImage src={time} alt="none" />
             {timeDifference(createTime)}
           </Time>
@@ -38,9 +39,10 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 };
 
 export default Title;
-const Container = styled.div`
-  z-index: 1;
-  top: 0;
+const Container = styled.div<{ isScrollDown: boolean }>`
+  position: sticky;
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  transition: top 0.2s ease-in-out;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;
   flex-direction: column;
@@ -49,7 +51,6 @@ const Container = styled.div`
   min-height: 97px;
   border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
-  position: sticky;
   background-color: ${(prop) => prop.theme.cardHeader};
 `;
 
@@ -61,13 +62,6 @@ const Nickname = styled.div`
   margin-right: 4px;
   font-size: 12px;
   color: ${(prop) => prop.theme.subText};
-`;
-const Floor = styled.div`
-  padding: 2px 4px;
-  color: ${customColor.white};
-  font-size: 10px;
-  background-color: ${customColor.floor};
-  border-radius: 8px;
 `;
 const TimeAndWatch = styled.div`
   display: flex;

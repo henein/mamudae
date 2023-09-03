@@ -20,6 +20,8 @@ import FormatH2 from './format_h2.svg';
 import FormatH3 from './format_h3.svg';
 import useScroll from '../../hooks/scrollHooks/useScroll';
 import { CardHeader } from '../CardHeader';
+import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
+import { uploadImage } from '../../api/board';
 
 export interface ToolBarProps {
   editor: Editor | null;
@@ -27,6 +29,9 @@ export interface ToolBarProps {
 
 export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
   const { isScrollDown } = useScroll();
+
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage('access');
 
   return (
     <Container isScrollDown={isScrollDown}>
@@ -120,12 +125,12 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
 
             const files = Array.from(input.files);
 
-            files.forEach((file) => {
-              editor
-                ?.chain()
-                .focus()
-                .setImage({ src: URL.createObjectURL(file) })
-                .run();
+            files.forEach(async (file) => {
+              const url = await uploadImage({
+                accessToken: accessToken,
+                image: file,
+              });
+              editor?.chain().focus().setImage({ src: url }).run();
             });
           };
           input.click();

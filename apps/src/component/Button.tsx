@@ -9,6 +9,7 @@ interface IButton {
   type?: BtnType;
   width?: string;
   fontWeight?: string;
+  onClick?: () => void;
 }
 
 const SORT: {
@@ -37,10 +38,11 @@ const Button = ({
   sort,
   children,
   type,
+  onClick,
   ...props
 }: React.PropsWithChildren<IButton>) => {
   return (
-    <StyledButton sort={sort} type={type} {...props}>
+    <StyledButton sort={sort} type={type} onClick={onClick} {...props}>
       {children}
     </StyledButton>
   );

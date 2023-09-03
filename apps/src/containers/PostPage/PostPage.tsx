@@ -1,29 +1,18 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import BoardTitle from './components/BoardTitle';
-import UserPostList from './components/UserPostList';
-import MoreInfoBox from './components/MoreInfoBox';
-import Announcement from '../../component/AnnounceComponent/Announcement';
-import Login from '../../component/LoginComponent/Login';
-import Button from '../../component/Button';
-import { customColor } from '../../constants/customColor';
-import { useRouter } from 'next/router';
-import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
-import { useUserInfo } from '../../hooks/user/useUserInfo';
-import CompleteLogin from '../../component/LoginComponent/CompleteLogin';
-import Link from 'next/link';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import BoardTitle from "./components/BoardTitle";
+import UserPostList from "../../component/UserPostList";
+import MoreInfoBox from "../../component/MoreInfoBox";
+import Announcement from "../../component/AnnounceComponent/Announcement";
+import Login from "../../component/LoginComponent/Login";
+import Button from "../../component/Button";
+import { useRouter } from "next/router";
+import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
+import Link from "next/link";
 
 const PostPage = () => {
   const router = useRouter();
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage('access');
-  const { data } = useUserInfo({
-    accessToken,
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  });
+
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -37,21 +26,25 @@ const PostPage = () => {
         router.push('/404');
         break;
     }
-  }, [router, router.isReady, router.query.post]);
+  }, [router.isReady, router.query.post, router]);
 
+  const { data, refetch } = useEachPost();
+  console.log(data);
   return (
     <Layout>
       <Announcement />
       <PostPageSet>
         <Aside>
-          <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
+          <Aside>
+            <Login />
+          </Aside>
         </Aside>
         <BoardContent>
           <ContentSet>
             <BoardTitle />
-            <UserPostList />
+            <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
-          <MoreInfoBox />
+          <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
         </BoardContent>
       </PostPageSet>
 
@@ -78,7 +71,7 @@ const PostPageSet = styled.div`
   display: flex;
   gap: 32px;
 `;
-const BoardContent = styled.div`
+export const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

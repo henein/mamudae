@@ -8,11 +8,11 @@ export interface GetComment extends DefaultProps {
 }
 export interface PComment extends DefaultProps {
   boardId: string;
-  comment: string;
+  comment?: string;
   commentId?: string | null;
 }
 export interface RComment extends PComment {
-  replyId: string;
+  replyId?: string;
   tag?: string;
 }
 
@@ -29,11 +29,9 @@ export const getComment = async ({ boardId }: GetComment) => {
 // 부모댓글 작성
 export const postComment = async ({ ...props }: PComment) => {
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment`,
     {
-      boardId: props.boardId,
       comment: props.comment,
-      commentId: null,
     },
     {
       headers: {
@@ -44,15 +42,12 @@ export const postComment = async ({ ...props }: PComment) => {
   return res.data;
 };
 
-// 대댓글 작성 => 부모댓글의 commentId, 부모댓글userName or 자식댓글useName or null의 tag가 필요함
+// 대댓글 작성
 export const postReComment = async ({ ...props }: RComment) => {
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment/child`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment/${props.commentId}/child`,
     {
-      boardId: props.boardId,
       comment: props.comment,
-      commentId: props.commentId,
-      replyId: props.replyId,
       tag: props.tag,
     },
     {
@@ -68,11 +63,9 @@ export const postReComment = async ({ ...props }: RComment) => {
 // 부모 댓글 수정
 export const putComment = async ({ ...props }: PComment) => {
   const res = await axios.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment/${props.commentId}`,
     {
-      boardId: props.boardId,
       comment: props.comment,
-      commentId: props.commentId,
     },
     {
       headers: {
@@ -84,12 +77,9 @@ export const putComment = async ({ ...props }: PComment) => {
 // 대댓글 수정
 export const putReComment = async ({ ...props }: RComment) => {
   const res = await axios.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment/child`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment/child/${props.replyId}`,
     {
-      boardId: props.boardId,
       comment: props.comment,
-      commentId: props.commentId,
-      replyId: props.replyId,
       tag: props.tag,
     },
     {
@@ -103,12 +93,10 @@ export const putReComment = async ({ ...props }: RComment) => {
 // 댓글 삭제
 export const deleteComment = async ({ ...props }: PComment) => {
   const res = await axios.delete(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment/${props.commentId}`,
     {
-      data: {
-        boardId: props.boardId,
-        comment: props.comment,
-        commentId: props.commentId,
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
       },
     }
   );
@@ -119,14 +107,10 @@ export const deleteComment = async ({ ...props }: PComment) => {
 // 대댓글 삭제
 export const deleteReComment = async ({ ...props }: RComment) => {
   const res = await axios.delete(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/comment`,
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${props.boardId}/comment/child/${props.replyId}`,
     {
-      data: {
-        boardId: props.boardId,
-        comment: props.comment,
-        commentId: props.commentId,
-        replyId: props.replyId,
-        tag: props.tag,
+      headers: {
+        Authorization: `Bearer ${props.accessToken}`,
       },
     }
   );

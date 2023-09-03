@@ -6,56 +6,76 @@ import ReComments from "./ReComments";
 import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
+import ModifyCommentForm from "./ModifyCommentForm";
 
-// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
-// 마지막 댓글인지?
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
-
-  const replyBtnClick = () => {
-    setIsClick(true);
-  };
-
+  const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
   const [isMyComment, setIsMyComment] = useState<boolean>(false);
-
-  const onClick = () => {
-    if (data.userData.userName == data.userName) {
+  const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
+  useEffect(() => {
+    if (data.userData && data.userData.userName == data.userName) {
       setIsMyComment(true);
     }
-  };
-  console.log();
+    if (data.userName == "알 수 없음") setIsDeleteComment(true);
+  }, [isMyComment, data]);
+
   return (
     <Container>
       <CommentBox isLastComment={data.isLastComment}>
-        <CommentHeader>
-          <UserInfo>
-            <NickName>{data.userName}</NickName>
-            <Floor>48층</Floor>
-            <Job>겸마 격수</Job>
-            <Time>{timeDifference(data.modifiedDate)}</Time>
-          </UserInfo>
-          <CommentMenuIcon
-            boardId={data.boardId}
-            comment={data.comment}
-            commentId={data.commentId}
-            isMyComment={isMyComment}
-            onClick={onClick}
-          />
-        </CommentHeader>
-        <CommentContent>{data.comment}</CommentContent>
+        {isModifyClick ? (
+          <>
+            <ModifyCommentForm
+              setIsModifyClick={setIsModifyClick}
+              isRecomment={false}
+            />
+          </>
+        ) : (
+          <>
+            <CommentHeader>
+              <UserInfo>
+                <NickName isDeleteComment={isDeleteComment}>
+                  {data.userName}
+                </NickName>
+                <Floor>48층</Floor>
+                <Job>겸마 격수</Job>
+                <Time>{timeDifference(data.modifiedDate)}</Time>
+              </UserInfo>
+              {!isDeleteComment && (
+                <CommentMenuIcon
+                  boardId={data.boardId}
+                  comment={data.comment}
+                  commentId={data.commentId}
+                  isMyComment={isMyComment}
+                  isRecomment={false}
+                  setIsModifyClick={setIsModifyClick}
+                />
+              )}
+            </CommentHeader>
+            <CommentContent isDeleteComment={isDeleteComment}>
+              {data.comment}
+            </CommentContent>
+            <FormDisplay>
+              {!isDeleteComment && (
+                <ReCommentBtn onClick={() => setIsClick(true)}>
+                  답글
+                </ReCommentBtn>
+              )}
+              {isClick && (
+                <CommentForm
+                  setIsClick={setIsClick}
+                  boardId={data.boardId}
+                  commentId={data.commentId}
+                  isRecomment={true}
+                  firstRecomment={true}
+                  userName={data.userName}
+                />
+              )}
+            </FormDisplay>
+          </>
+        )}
+
         <div>
-          <FormDisplay>
-            <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
-            {isClick && (
-              <CommentForm
-                setIsClick={setIsClick}
-                boardId={data.boardId}
-                commentId={data.commentId}
-                isRecomment={true}
-                userName={data.userName}
-              />
-            )}
-          </FormDisplay>
           {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments
@@ -118,8 +138,9 @@ const Floor = styled.div`
   color: ${customColor.white};
   background-color: ${customColor.floor};
 `;
-const NickName = styled.div`
-  color: ${(prop) => prop.theme.text};
+const NickName = styled.div<{ isDeleteComment: boolean }>`
+  color: ${({ theme, isDeleteComment }) =>
+    isDeleteComment ? theme.subText : theme.text};
   margin-right: 4px;
   font-size: 12px;
 `;
@@ -143,8 +164,9 @@ const UserInfo = styled.div`
   align-items: center;
   margin-bottom: 8px;
 `;
-const CommentContent = styled.div`
+const CommentContent = styled.div<{ isDeleteComment: boolean }>`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.text};
+  color: ${({ theme, isDeleteComment }) =>
+    isDeleteComment ? theme.subText : theme.text};
 `;

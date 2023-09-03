@@ -1,30 +1,42 @@
 import React from "react";
 import styled from "styled-components";
 import Login from "./components/Login";
-
+import Logo from "../../component/Logo";
 const LoginPage = () => {
   return (
     <Container>
-      <LoginTitle>Henein</LoginTitle>
-      <Login />
+      <LeftDiv>
+        <Logo size="big" />
+      </LeftDiv>
+      <RightDiv>
+        <Login />
+      </RightDiv>
     </Container>
   );
 };
 
 export default LoginPage;
 
-const LoginTitle = styled.span`
-  position: absolute;
-  top: 16%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 128px;
-  color: ${(prop) => prop.theme.brand};
-`;
-
 const Container = styled.div`
   height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const LeftDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 960px;
+  height: 100vh;
+  background-color: #f9faff;
+`;
+const RightDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 960px;
+  height: 100vh;
+  background-color: #e0e1e6;
 `;

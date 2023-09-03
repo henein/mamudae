@@ -1,39 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { customColor } from "../../../constants/customColor";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEachPost } from "../../../hooks/postPageHooks/usePostPage";
-import Label from "../../../component/Label";
-import timeDifference from "../../../utils/timeDifference";
-const UserPostList = () => {
+import timeDifference from "../utils/timeDifference";
+
+/**
+ * UserPostList에 필요한 postlist 데이터
+ */
+interface UserPostListType {
+  data: any;
+  type: string;
+  pageNums: number;
+}
+/**
+ * id : 게시글 boardId
+ * title : 게시글 제목
+ * userName : 게시글 작성자 닉네임
+ * views : 조회수
+ * createTime : 작성 시간
+ * commentNum : 댓글 수
+ */
+interface ItmePost {
+  id: string;
+  title: string;
+  userName: string;
+  views: number;
+  createTime: string;
+  commentNum: number;
+  boardType: string;
+}
+
+const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
+  // postpage에서 페이지에 따른 게시글 번호 설정
   const router = useRouter();
   const { page } = router.query;
   const pageNum = parseInt(page as string, 10) || 1;
 
-  const { data } = useEachPost();
+  // mypage에서 페이지에 따른 게시글 slice idx
+  const startIndex = pageNums * 10 - 10;
+  const endIndex = startIndex + 10;
+  const usingData =
+    type == "myPage"
+      ? data && data.content.slice(startIndex, endIndex)
+      : data && data.content;
 
-  console.log(data);
-  type ItmePost = {
-    id: string;
-    title: string;
-    name: string;
-    rank?: string;
-    views: number;
-    createTime: string;
-    commentNum: number;
-  };
   return (
     <>
       <PostList>
         {data &&
-          data.content.map((item: ItmePost, idx: number) => {
+          usingData.map((item: ItmePost, idx: number) => {
             const timeAgo = timeDifference(item.createTime);
             return (
               <Link
                 href={{
-                  pathname: `/board/${router.query.post}/${item.id}`,
+                  pathname: `/board/${item.boardType}/${item.id}`,
                 }}
                 key={idx}
               >
@@ -41,7 +62,14 @@ const UserPostList = () => {
                   <LeftSide>
                     <PostNum>
                       {`000000${
-                        data && data.totalElements - idx * pageNum
+                        type == "myPage"
+                          ? data &&
+                            data.content.length -
+                              (idx + 1 - pageNums) -
+                              (pageNums - 1) * 10 -
+                              pageNums +
+                              1
+                          : data && data.totalElements - idx * pageNum
                       }`.slice(-6)}
                     </PostNum>
                     <DivGap>
@@ -50,12 +78,14 @@ const UserPostList = () => {
                     </DivGap>
                   </LeftSide>
                   <RightSide>
-                    <DivGap>
-                      <span>{item.name}</span>
-                      <Label type="floor">
-                        {item.rank == undefined ? "48층" : item.rank}
-                      </Label>
-                    </DivGap>
+                    {type == "myPage" ? (
+                      <></>
+                    ) : (
+                      <DivGap>
+                        <span>{item.userName}</span>
+                      </DivGap>
+                    )}
+
                     <DivGap>
                       <Image
                         src="/postPageImages/schedule.svg"
@@ -134,7 +164,7 @@ const RightSide = styled.div`
 const Time = styled.span`
   display: flex;
   justify-content: center;
-  width: 40px;
+  width: 50px;
 `;
 const ViewDiv = styled.div`
   display: flex;
