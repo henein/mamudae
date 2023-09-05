@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CharSelectBox from "./CharSelectBox";
 import Button from "../../../../component/Button";
 import Image from "next/image";
-import { useLocalStorage } from "../../../../hooks/storage/useLocalStorage";
-import { useGetAllMyChar } from "../../../../hooks/myPageHooks/useUserChar";
+import {
+  useGetAllMyChar,
+  useGetCharName,
+} from "../../../../hooks/myPageHooks/useUserChar";
 
 const MyChar = () => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
+  const [apiKey, setApiKey] = useState<string>("");
 
-  const char = useGetAllMyChar({}, accessToken);
-  console.log(char);
+  // const char = useGetAllMyChar({});
+  // console.log(char);
+  const { mutate } = useGetCharName({
+    key: apiKey,
+  });
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    // await setApiKey(e.target.value);
+    // await mutate();
+    console.log(e.target);
+  };
+
+  console.log(apiKey);
   return (
     <Container>
       <CharSelectBox type="인증" />
@@ -26,9 +39,9 @@ const MyChar = () => {
             alt=""
           />
         </QuestionBtn>
-        <BottomForm>
-          <InputBox placeholder="토큰"></InputBox>
-          <AuthBtn sort="primary" type="submit" width="81px" fontWeight="500">
+        <BottomForm onSubmit={onSubmit}>
+          <InputBox placeholder="토큰" />
+          <AuthBtn sort="primary" type="button" width="83px" fontWeight="500">
             인증하기
           </AuthBtn>
         </BottomForm>
@@ -36,6 +49,7 @@ const MyChar = () => {
     </Container>
   );
 };
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0IjoiNTAwOjEwIiwiYWNjb3VudF9pZCI6IjExNzc3NjAyMSIsImF1dGhfaWQiOiIyIiwiZXhwIjoxNzA5MTA4NDA4LCJpYXQiOjE2OTM1NTY0MDgsIm5iZiI6MTY5MzU1NjQwOCwic2VydmljZV9pZCI6IjQzMDAxMTM5NyIsInRva2VuX3R5cGUiOiJBY2Nlc3NUb2tlbiJ9.XMOX4gvZpjUoQeKszzhvzlE0cF8KkVLvaRuoI7ByEHg
 
 export default MyChar;
 
@@ -56,6 +70,7 @@ const InputBox = styled.input`
   background-color: ${({ theme }) => theme.input};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 8px;
+  color: ${({ theme }) => theme.text};
   ::placeholder {
     color: ${({ theme }) => theme.subText};
     font-size: 14px;
