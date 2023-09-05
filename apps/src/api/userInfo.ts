@@ -45,3 +45,15 @@ export const getMyCommentBoard = async () => {
   const res = await axiosInstance.get("/userinfo/mycomment-boards");
   return res;
 };
+
+// 넥슨 토큰으로 유저 캐릭터 정보 불러오기
+export const getUserCharName = async (userApi: string) => {
+  const res = await axiosInstance.post("/userinfo/character/auth", { userApi });
+  return res;
+};
+
+// 유저 대표캐릭터 설정
+export const setRepresent = async (id: number) => {
+  const res = await axiosInstance.post("/userinfo/character/pick", { id });
+  return res;
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ColorThief from "colorthief";
-
+import Image from "next/image";
 interface CharBoxType {
   type: "인증" | "미인증";
 }
@@ -11,6 +11,7 @@ const CharBox = ({ type }: CharBoxType) => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
+  const [refreshOn, setRefreshOn] = useState<boolean>(false);
 
   // image 배경색상 랜덤 선택
   useEffect(() => {
@@ -56,12 +57,28 @@ const CharBox = ({ type }: CharBoxType) => {
           : alert("미인증 캐릭터입니다.")
       }
     >
-      <ImgWrapper disable={type == "미인증"} />
-      <CharImg
-        src="/myPageImages/character3.png"
-        id="char"
-        imageRandomColor={imageRandomColor}
+      <ImgWrapper
+        disable={type == "미인증"}
+        onMouseEnter={() => setRefreshOn(true)}
+        onMouseLeave={() => setRefreshOn(false)}
       />
+      <RefreshBtnPosition>
+        <CharImg
+          src="/myPageImages/character3.png"
+          id="char"
+          imageRandomColor={imageRandomColor}
+        />
+        {refreshOn && (
+          <ImgPosition>
+            <Image
+              src="/myPageImages/refresh.svg"
+              width="20"
+              height="20"
+              alt=""
+            />
+          </ImgPosition>
+        )}
+      </RefreshBtnPosition>
       <CharInfoBox
         isRepresent={isCharBoxClick}
         isHover={isHover}
@@ -109,6 +126,15 @@ const ImgWrapper = styled.div<{ disable: boolean }>`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   background-color: ${({ disable }) => disable && "rgba(0, 0, 0, 0.20)"};
+`;
+const RefreshBtnPosition = styled.div`
+  display: flex;
+`;
+const ImgPosition = styled.div`
+  position: relative;
+  top: 8px;
+  right: 28px;
+  z-index: 10;
 `;
 const CharImg = styled.img<{ imageRandomColor: string }>`
   position: relative;

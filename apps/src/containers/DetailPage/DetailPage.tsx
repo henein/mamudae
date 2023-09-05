@@ -42,7 +42,7 @@ const DetailPage = () => {
     recommend,
     views,
     createTime,
-    userInfoResponseDto,
+    userSimpleResponseDto,
     recommended,
     commentNum,
     refetch,
@@ -118,7 +118,7 @@ const DetailPage = () => {
           <Wrapper>
             <Title
               title={title}
-              name={userInfoResponseDto.userName}
+              name={userSimpleResponseDto.userName}
               views={views}
               createTime={createTime}
             />
