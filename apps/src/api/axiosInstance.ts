@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
       const accessToken = await localStorage.getItem("access");
       error.config.headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `${accessToken}`,
       };
 
       const response = await axios.request(error.config);
@@ -65,14 +65,14 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem("access");
       window.location.reload();
     } else if (exception == 104) {
-      alert("로그인 페이지로 이동합니다.");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("access");
+      alert("토큰이 사라져 로그인 페이지로 이동합니다.");
       window.location.href = "/login";
     } else {
+      alert("Error 500");
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
       window.location.reload();
+      return;
     }
     return Promise.reject(error);
   }

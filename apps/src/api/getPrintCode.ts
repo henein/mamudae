@@ -14,7 +14,7 @@ export async function getAtByRT(refreshToken: string | null) {
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
       {
         headers: {
-          RefreshToken: `Bearer ${refreshToken}`,
+          RefreshToken: `${refreshToken}`,
         },
       }
     );
