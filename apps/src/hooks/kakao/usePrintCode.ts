@@ -22,8 +22,8 @@ export const usePrintCode = ({ code, options }: IUsePrintCode) => {
       enabled: false,
       onSuccess: (data) => {
         console.log(data);
-        setLocalStorage("access", data["authorization"].substring(7));
-        setLocalStorage("refresh", data["refreshtoken"].substring(7));
+        setLocalStorage("access", data["authorization"]);
+        setLocalStorage("refresh", data["refreshtoken"]);
         data["status"]
           ? // 첫 로그인일 시
             router.push("/register")
