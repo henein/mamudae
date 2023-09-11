@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useGetAllPost } from "../../../hooks/mainPageHooks/useGetAllPost";
-import { BoardInfoType } from "../MainPage";
+import { BoardInfoType } from "./Board";
 
 export type ItemType = {
   id: number;
@@ -15,24 +15,24 @@ export type ItemType = {
   boardType: string;
 };
 
-const UserPostList = ({ board_title }: BoardInfoType) => {
+const UserPostList = ({ boardTitle }: BoardInfoType) => {
   const allPost = useGetAllPost();
   const data = {
     전체: allPost[0].data.content.slice(0, 8),
     자유: allPost[1].data.content.slice(0, 8),
     유머: allPost[2].data.content.slice(0, 8),
     보스: allPost[3].data.content.slice(0, 8),
-    직업: allPost[4].data.content.slice(0, 8),
+    정보: allPost[4].data.content.slice(0, 8),
   };
 
-  const boardData = data[board_title];
+  const boardData = data[boardTitle];
 
   return (
     <PostList>
       {boardData.map((item: ItemType) => {
         return (
           <PostItem key={item.id}>
-            <Link href={`board/${board_title}/${item.id}`} key={item.id}>
+            <Link href={`board/${boardTitle}/${item.id}`} key={item.id}>
               <span>{item.title}</span>
             </Link>
             <NickName>{item.userName}</NickName>

@@ -1,8 +1,15 @@
-import axios from 'axios';
+import axiosInstance from "./axiosInstance";
 
 export interface ICreateBoard {
   accessToken?: string | undefined;
   boardType: string;
+  text: string;
+  title: string;
+}
+
+export interface IUpdateBoard {
+  accessToken?: string | undefined;
+  id: string;
   text: string;
   title: string;
 }
@@ -13,8 +20,23 @@ export interface IUploadImage {
 }
 
 export async function createBoard({ accessToken, ...props }: ICreateBoard) {
-  const res = await axios.post(
+  const res = await axiosInstance.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board`,
+    {
+      ...props,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  return res.data;
+}
+
+export async function updateBoard({ accessToken, id, ...props }: IUpdateBoard) {
+  const res = await axiosInstance.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/board/${id}`,
     {
       ...props,
     },
@@ -32,7 +54,7 @@ export async function uploadImage({ accessToken, image }: IUploadImage) {
 
   formData.append("image", image)
 
-  const res = await axios.post(
+  const res = await axiosInstance.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board/image`,
     formData,
     {

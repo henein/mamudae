@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
-const BoardTitle = () => {
-  const router = useRouter();
+interface BoardTitleProps {
+  title: string;
+}
+
+const BoardTitle: React.FC<BoardTitleProps> = (props) => {
   return (
     <>
       <BoardTit>
-        <TitleText>{router.query.post}</TitleText>
+        <TitleText>{props.title}</TitleText>
       </BoardTit>
     </>
   );
