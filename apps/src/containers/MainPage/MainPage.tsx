@@ -4,29 +4,23 @@ import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import Board from "./components/Board";
 
-export type BoardInfoType = {
-  board_title: "전체" | "자유" | "유머" | "보스" | "직업";
-  isLarge?: boolean;
-};
-
 const MainPage = () => {
   return (
     <Layout>
       <Announcement />
       <MainPageSet>
         <Aside>
-          {" "}
           <Login />
         </Aside>
         <BoardSet>
           <div>
-            <Board board_title="전체" isLarge={true} />
+            <Board boardTitle="전체" isLarge={true} />
           </div>
           <SmallBoard>
-            <Board board_title="자유" isLarge={false} />
-            <Board board_title="유머" isLarge={false} />
-            <Board board_title="보스" isLarge={false} />
-            <Board board_title="직업" isLarge={false} />
+            <Board boardTitle="자유" isLarge={false} />
+            <Board boardTitle="유머" isLarge={false} />
+            <Board boardTitle="보스" isLarge={false} />
+            <Board boardTitle="정보" isLarge={false} />
           </SmallBoard>
         </BoardSet>
       </MainPageSet>
@@ -43,11 +37,11 @@ const Layout = styled.div`
 `;
 const MainPageSet = styled.div`
   display: flex;
+  gap: 32px;
 `;
 const BoardSet = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   width: 840px;
   gap: 24px;
 `;

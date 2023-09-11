@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FormInputCss } from '../../containers/LoginPage/components/Login';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { ToolBarDivider } from './ToolBarDivider';
 
 export interface EditorTitleProps {
-    register: UseFormRegister<FieldValues>
+  register: UseFormRegister<FieldValues>;
+  board?: string;
 }
 
 export const EditorTitle: React.FC<EditorTitleProps> = (props) => {
@@ -14,7 +14,9 @@ export const EditorTitle: React.FC<EditorTitleProps> = (props) => {
       <SelectBoard {...props.register('selectBoard', { required: true })}>
         <option value="F">자유</option>
         <option value="I">정보</option>
-        <option>유머</option>
+        <option value="H">유머</option>
+        <option value="B">보스</option>
+        <option value="I">직업</option>
       </SelectBoard>
 
       <ToolBarDivider />
@@ -29,33 +31,32 @@ export const EditorTitle: React.FC<EditorTitleProps> = (props) => {
 };
 
 const SelectBoard = styled.select`
-  position: relative;
-  left: 16px;
   border: none;
   background-color: transparent;
   outline: none;
-  z-index: 1;
   color: ${({ theme }) => theme.text};
+  font-size: 14px;
 `;
 
 const TitleBox = styled.div`
-  height: 59px;
-  margin-top: 24px;
-  margin-bottom: 16px;
+  width: 100%;
+  padding: 20px 24px;
   display: flex;
   position: relative;
-  z-index: 1;
   align-items: center;
+  background-color: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 16px;
 `;
 
 const Title = styled.input`
-  ${FormInputCss}
-  height: 100%;
-  padding: 0 0 0 101px;
-  border-radius: 16px;
-  position: absolute;
+  width: 100%;
   line-height: 100%;
   color: ${({ theme }) => theme.text};
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
 
   ::placeholder {
     color: ${({ theme }) => theme.subText};

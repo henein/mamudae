@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Image from "@tiptap/extension-image";
-import Placeholder from "@tiptap/extension-placeholder";
-import TextAlign from "@tiptap/extension-text-align";
-import Underline from "@tiptap/extension-underline";
-import { generateHTML } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import Button from "../../component/Button";
-import Login from "../../component/LoginComponent/Login";
-import { useGetComment } from "../../hooks/detailPageHooks/useComment";
-import { useDetail } from "../../hooks/detailPageHooks/useDetail";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import Comment from "./components/Comment";
-import Like from "./components/Like";
-import Title from "./components/Title";
-import Write from "./components/Write";
-import Warning from "../../component/Warning";
-import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
+import React, { useEffect, useState } from 'react';
+import { generateHTML } from '@tiptap/react';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+import Announcement from '../../component/AnnounceComponent/Announcement';
+import Button from '../../component/Button';
+import Login from '../../component/LoginComponent/Login';
+import { useGetComment } from '../../hooks/detailPageHooks/useComment';
+import { useDetail } from '../../hooks/detailPageHooks/useDetail';
+import { useUserInfo } from '../../hooks/user/useUserInfo';
+import Comment from './components/Comment';
+import Like from './components/Like';
+import Title from './components/Title';
+import Write from './components/Write';
+import Warning from '../../component/Warning';
+import useOnWarning from '../../hooks/reduxHooks/useOnWarning';
+import Link from 'next/link';
+import { extensions } from '../../component/Editor/Editor';
 
 export type CommentType = {
   comment: string;
@@ -42,7 +39,7 @@ const DetailPage = () => {
     recommend,
     views,
     createTime,
-    userInfoResponseDto,
+    userSimpleResponseDto,
     recommended,
     commentNum,
     refetch,
@@ -53,7 +50,7 @@ const DetailPage = () => {
     },
   });
 
-  const [context, setContext] = useState("");
+  const [context, setContext] = useState('');
   const userData = useUserInfo({
     options: {
       refetchOnWindowFocus: false,
@@ -69,15 +66,7 @@ const DetailPage = () => {
   }).data;
 
   useEffect(() => {
-    const html = generateHTML(JSON.parse(text), [
-      StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Placeholder.configure({
-        placeholder: "내용을 입력해주세요...",
-      }),
-      Underline,
-      Image,
-    ]);
+    const html = generateHTML(JSON.parse(text), extensions);
 
     setContext(html);
   }, [text]);
@@ -85,7 +74,7 @@ const DetailPage = () => {
   const [isInAT, setIsInAT] = useState(false);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("access");
+    const storedValue = localStorage.getItem('access');
     if (storedValue) {
       setIsInAT(true);
     }
@@ -101,24 +90,11 @@ const DetailPage = () => {
         <Login />
       </SideBox>
       <div>
-        <BoardOptionBox>
-          <Button type="button" sort="secondary">
-            목록
-          </Button>
-          <RightItems>
-            <Button type="button" sort="secondary">
-              수정하기
-            </Button>
-            <Button type="button" sort="danger">
-              삭제하기
-            </Button>
-          </RightItems>
-        </BoardOptionBox>
         <WriteBox>
           <Wrapper>
             <Title
               title={title}
-              name={userInfoResponseDto.userName}
+              name={userSimpleResponseDto.userName}
               views={views}
               createTime={createTime}
             />
@@ -130,6 +106,22 @@ const DetailPage = () => {
             />
           </Wrapper>
         </WriteBox>
+
+        <BoardOptionBox>
+          <Button type="button" sort="secondary">
+            목록
+          </Button>
+          <RightItems>
+            <Link href={`/update/${boardId}`}>
+              <Button type="button" sort="secondary">
+                수정하기
+              </Button>
+            </Link>
+            <Button type="button" sort="danger">
+              삭제하기
+            </Button>
+          </RightItems>
+        </BoardOptionBox>
 
         <CommentBox>
           <Write
@@ -174,7 +166,7 @@ const StickyView = styled.div`
 const BoardOptionBox = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-top: 16px;
 `;
 const RightItems = styled.div`
   display: flex;
@@ -195,6 +187,10 @@ const Content = styled.div`
   padding: 0 24px;
   line-height: 18px;
   color: ${(prop) => prop.theme.text};
+
+  img {
+    max-width: 100%;
+  }
 `;
 
 const SideBox = styled.div`
@@ -205,7 +201,7 @@ const SideBox = styled.div`
 const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 32px;
   background-color: ${(prop) => prop.theme.card};
   width: 808px;
   border-radius: 16px;

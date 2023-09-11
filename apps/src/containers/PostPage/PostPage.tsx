@@ -20,7 +20,7 @@ const PostPage = () => {
       case '자유':
       case '유머':
       case '보스':
-      case '직업':
+      case '정보':
         break;
       default:
         router.push('/404');
@@ -41,7 +41,7 @@ const PostPage = () => {
         </Aside>
         <BoardContent>
           <ContentSet>
-            <BoardTitle />
+            <BoardTitle title={router.query.post as string} />
             <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
           <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
@@ -78,7 +78,6 @@ export const BoardContent = styled.div`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 808px;
-  height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
   background-color: ${({ theme }) => theme.card};
