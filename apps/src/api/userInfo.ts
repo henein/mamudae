@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "./axiosInstance";
 // 유저 정보 조회
 export const userInfo = async (accessToken: string | undefined) => {
@@ -8,23 +7,31 @@ export const userInfo = async (accessToken: string | undefined) => {
   }
 };
 
-// 유저 닉네임 변경
-export const setUserName = async (
-  setName: string,
-  accessToken: string | undefined
-) => {
-  const res = await axios.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/userinfo/set-name`,
-    {
-      userName: setName,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  return res.data;
+// 유저(본인) Profile 조회
+export const getProfile = async () => {
+  const res = await axiosInstance.get("/userinfo/profile");
+  return res;
+};
+
+// 유저 Profile 정보 변경(프로필사진, 닉네임)
+interface UserProfileType {
+  forms: {
+    image: File | null;
+    userName: string | null;
+  };
+}
+export const setUserProfile = async ({ forms }: UserProfileType) => {
+  const formData = new FormData();
+  await formData.append("image", forms.image || "");
+  await formData.append("userName", forms.userName || "");
+  try {
+    const res = await axiosInstance.put(`/userinfo`, formData);
+    window.location.reload();
+    return res;
+  } catch (error) {
+    console.error("setUserProfile 오류:", error);
+    throw error; // 오류를 다시 던져서 상위 호출자에게 전달합니다.
+  }
 };
 
 // 현재 인증된 모든 캐릭터 조회

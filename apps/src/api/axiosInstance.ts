@@ -68,11 +68,11 @@ axiosInstance.interceptors.response.use(
       alert("토큰이 사라져 로그인 페이지로 이동합니다.");
       window.location.href = "/login";
     } else {
-      alert("Error 500");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("access");
-      window.location.reload();
-      return;
+      // alert("Error 500");
+      // localStorage.removeItem("refresh");
+      // localStorage.removeItem("access");
+      // window.location.reload();
+      // return;
     }
     return Promise.reject(error);
   }

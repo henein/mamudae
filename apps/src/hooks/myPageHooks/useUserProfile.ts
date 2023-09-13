@@ -1,28 +1,26 @@
-import { useRouter } from "next/router";
 import { useMutation, useQuery } from "react-query";
-import { setUserName } from "../../api/userInfo";
+import { getProfile, setUserProfile } from "../../api/userInfo";
 
-interface IUseSetUserName {
-  setName: string;
-  accessToken: string | undefined;
+export const useGetMyProfile = ({ options }: any) => {
+  const { data } = useQuery("myProfile", () => getProfile(), {
+    ...options,
+  });
+  return { ...data };
+};
+
+interface ISetUserInfo {
+  forms: {
+    image: File | null;
+    userName: string | null;
+  };
   options?: any;
 }
 
-export const useSetUserName = ({
-  setName,
-  accessToken,
-  options,
-}: IUseSetUserName) => {
-  const router = useRouter();
-  const { mutate } = useMutation(() => setUserName(setName, accessToken), {
+export const useSetUserInfo = ({ forms, options }: ISetUserInfo) => {
+  const { mutate } = useMutation(() => setUserProfile({ forms }), {
     ...options,
-    enabled: !!accessToken,
-    onSuccess: (data) => {
-      router.push("/");
-    },
-    onError: (err) => {
-      alert("set-userName 에러입니다.");
-      console.log(err);
+    onError: (err: any) => {
+      alert(err.response.data.errorMessage);
     },
   });
 
