@@ -2,14 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import UserPostList from "./UserPostList";
 import BoardHead from "./BoardHead";
-import { BoardInfoType } from "../MainPage";
 
-function Board({ board_title, isLarge }: BoardInfoType) {
+export type BoardInfoType = {
+  boardTitle: "전체" | "자유" | "유머" | "보스" | "정보";
+  isLarge?: boolean;
+};
+
+function Board({ boardTitle, isLarge }: BoardInfoType) {
   return (
     <Layout>
       <BoardContent isLarge={isLarge}>
-        <BoardHead board_title={board_title} />
-        <UserPostList board_title={board_title} />
+        <BoardHead boardTitle={boardTitle} />
+        <UserPostList boardTitle={boardTitle} />
       </BoardContent>
     </Layout>
   );

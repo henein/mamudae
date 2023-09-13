@@ -8,6 +8,7 @@ import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
 import { useRouter } from "next/router";
 import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
+import Link from "next/link";
 
 const PostPage = () => {
   const router = useRouter();
@@ -15,14 +16,14 @@ const PostPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
-      case "전체":
-      case "자유":
-      case "유머":
-      case "보스":
-      case "직업":
+      case '전체':
+      case '자유':
+      case '유머':
+      case '보스':
+      case '정보':
         break;
       default:
-        router.push("/404");
+        router.push('/404');
         break;
     }
   }, [router.isReady, router.query.post, router]);
@@ -40,16 +41,18 @@ const PostPage = () => {
         </Aside>
         <BoardContent>
           <ContentSet>
-            <BoardTitle />
+            <BoardTitle title={router.query.post as string} />
             <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
           <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
         </BoardContent>
       </PostPageSet>
 
-      <WriteBtn type="submit" sort="primary">
-        작성하기
-      </WriteBtn>
+      <Link href="/write">
+        <WriteBtn type="submit" sort="primary">
+          작성하기
+        </WriteBtn>
+      </Link>
     </Layout>
   );
 };
@@ -75,7 +78,6 @@ export const BoardContent = styled.div`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 808px;
-  height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
   background-color: ${({ theme }) => theme.card};

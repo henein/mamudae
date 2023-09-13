@@ -1,8 +1,21 @@
 import { EditorContent, Editor as RawEditor } from "@tiptap/react";
 import React from "react";
 import styled from "styled-components";
-import { Card } from "../../../component/Card";
+import { Card } from "../Card";
 import { ToolBar } from "./ToolBar";
+import StarterKit from "@tiptap/starter-kit";
+import TextAlign from "@tiptap/extension-text-align";
+import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
+import Image from "@tiptap/extension-image";
+
+export const extensions = [
+  StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
+  TextAlign.configure({ types: ["heading", "paragraph"] }),
+  Placeholder.configure({ placeholder: "내용을 입력해주세요..." }),
+  Underline,
+  Image,
+];
 
 export interface EditorProps {
   editor: RawEditor | null;

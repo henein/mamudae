@@ -6,7 +6,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
-const BoardHead = ({ board_title }: BoardInfoType) => {
+const BoardHead = ({ boardTitle: board_title }: BoardInfoType) => {
   const darkModeState = useDarkMode();
 
   return (
