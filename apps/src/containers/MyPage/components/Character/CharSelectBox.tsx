@@ -1,15 +1,16 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import CharBox from "./CharBox";
-
+import { CharInfo } from "./CharBox";
 interface CharSelectBoxType {
-  type: "인증" | "미인증";
+  charList: any;
 }
-const CharSelectBox = ({ type }: CharSelectBoxType) => {
+const CharSelectBox = ({ charList }: CharSelectBoxType) => {
   const [optionNum, setOptionNum] = useState<number>(1);
+
   return (
     <BoxContent>
-      <Title>{type} 캐릭터</Title>
+      <Title>캐릭터</Title>
       <BoxLayout>
         <ContentSortOption>
           <HighLevelSort
@@ -29,14 +30,21 @@ const CharSelectBox = ({ type }: CharSelectBoxType) => {
           </NameSort>
         </ContentSortOption>
         <InnerAllChar>
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
+          {charList &&
+            charList.map((item: CharInfo, idx: number) => {
+              return (
+                <CharBox
+                  avatar={item.avatar}
+                  id={item.id}
+                  job={item.job}
+                  level={item.level}
+                  nickName={item.nickName}
+                  pickByUser={item.pickByUser}
+                  world={item.world}
+                  key={idx}
+                />
+              );
+            })}
         </InnerAllChar>
       </BoxLayout>
     </BoxContent>

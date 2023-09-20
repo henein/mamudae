@@ -55,12 +55,28 @@ export const getMyCommentBoard = async () => {
 
 // 넥슨 토큰으로 유저 캐릭터 정보 불러오기
 export const getUserCharName = async (userApi: string) => {
-  const res = await axiosInstance.post("/userinfo/character/auth", { userApi });
+  const res = await axiosInstance.post("/userinfo/character/auth", {
+    userApi,
+    startDay: "2023-09-19",
+    endDay: "2023-08-20",
+  });
   return res;
 };
 
 // 유저 대표캐릭터 설정
 export const setRepresent = async (id: number) => {
-  const res = await axiosInstance.post("/userinfo/character/pick", { id });
+  const res = await axiosInstance.post(`/userinfo/character/pick?id=${id}`);
+  return res;
+};
+
+// 닉네임으로 캐릭터 정보 불러오기
+export const getCharInfo = async (name: string) => {
+  const res = await axiosInstance.get(`/userinfo/character/renew?name=${name}`);
+  return res;
+};
+
+// 캐릭터 아바타 getColor 사용하기위한 주소 받기
+export const getImgUrl = async (nexonImg: string) => {
+  const res = await axiosInstance.get(`/proxy/${nexonImg}`);
   return res;
 };

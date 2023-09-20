@@ -11,24 +11,13 @@ import {
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
 
-  // const char = useGetAllMyChar({});
-  // console.log(char);
+  const charList = useGetAllMyChar({ refetchOnWindowFocus: false });
   const { mutate } = useGetCharName({
     key: apiKey,
   });
-
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    // await setApiKey(e.target.value);
-    // await mutate();
-    console.log(e.target);
-  };
-
-  console.log(apiKey);
   return (
     <Container>
-      <CharSelectBox type="인증" />
-      {/* <CharSelectBox type="미인증" /> */}
+      <CharSelectBox charList={charList.data} />
 
       <UserAuthLine>
         <QuestionBtn>
@@ -39,9 +28,26 @@ const MyChar = () => {
             alt=""
           />
         </QuestionBtn>
-        <BottomForm onSubmit={onSubmit}>
-          <InputBox placeholder="토큰" />
-          <AuthBtn sort="primary" type="button" width="83px" fontWeight="500">
+        <BottomForm
+          onSubmit={(e: any) => {
+            e.preventDefault();
+            mutate();
+          }}
+        >
+          <InputBox
+            placeholder="토큰"
+            onChange={(e: any) => setApiKey(e.target.value)}
+          />
+          <AuthBtn
+            sort="primary"
+            type="submit"
+            width="83px"
+            fontWeight="500"
+            onClick={(e: any) => {
+              e.preventDefault();
+              mutate();
+            }}
+          >
             인증하기
           </AuthBtn>
         </BottomForm>

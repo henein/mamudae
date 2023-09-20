@@ -11,6 +11,8 @@ const CompleteLogin = ({ ...data }: any) => {
     removeLocalStorage("refresh");
     window.location.reload();
   };
+
+  console.log(data.uid);
   return (
     <LoginContainer>
       <LoginHeader>
@@ -20,9 +22,12 @@ const CompleteLogin = ({ ...data }: any) => {
         ></RepresentativeImage>
         <Profile>
           <Char>
-            <Label type="level">대표</Label>
-            <CharNickname>프돔이</CharNickname>
+            {data.pickCharacter && <Label type="level">대표</Label>}
+            <CharNickname>
+              {data.pickCharacter || "대표 캐릭터 없음"}
+            </CharNickname>
           </Char>
+
           <Nickname>{data.userName}</Nickname>
         </Profile>
       </LoginHeader>
