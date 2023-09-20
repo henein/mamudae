@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../../../component/Button";
@@ -36,18 +37,26 @@ const UserInfoBox = ({ ...props }: UserProfileType) => {
 
   useEffect(() => {
     if (src || nickname) {
-      console.log(nickname.length);
-      // if(userName == nickname && )
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }, [src, nickname]);
 
-  console.log(nickname);
   return (
     <Outer>
       <Container>
+        <EmailDiv>
+          <KakaoDiv>
+            <Image
+              src="/myPageImages/kakao.svg"
+              width={18}
+              height={18}
+              alt=""
+            />
+          </KakaoDiv>
+          <UserEmail>{userEmail}</UserEmail>
+        </EmailDiv>
         <InputDiv>
           <ImgSelect>
             <ProfileImg
@@ -98,6 +107,7 @@ const Outer = styled.div`
 `;
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: 528px;
   height: fit-content;
   padding: 20px 24px;
@@ -105,6 +115,26 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.card};
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.border};
+`;
+const EmailDiv = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid ${({ theme }) => theme.divider};
+  padding-bottom: 16px;
+`;
+const KakaoDiv = styled.div`
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  background-color: #fee500;
+  border: 1px solid ${({ theme }) => theme.divider};
+  border-radius: 8px;
+`;
+const UserEmail = styled.span`
+  font-size: 14px;
+  color: ${({ theme }) => theme.subText};
 `;
 const ImgSelect = styled.div`
   display: flex;
