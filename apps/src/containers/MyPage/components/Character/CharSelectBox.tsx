@@ -8,6 +8,51 @@ interface CharSelectBoxType {
 const CharSelectBox = ({ charList }: CharSelectBoxType) => {
   const [optionNum, setOptionNum] = useState<number>(1);
 
+  const newCharList = (optionNum: number) => {
+    if (charList) {
+      let sortedList = [...charList];
+
+      // null 값을 맨 뒤로 이동하는 정렬 함수
+      const moveNullToEnd = (array: CharInfo[]) => {
+        const withoutNull = array.filter((item) => item.world !== null);
+        const nulls = array.filter((item) => item.world === null);
+        return [...withoutNull, ...nulls];
+      };
+
+      switch (optionNum) {
+        case 1: // 높은 레벨 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.level === null) return 1;
+            if (b.level === null) return -1;
+            return b.level - a.level;
+          });
+          break;
+        case 2: // 낮은 레벨 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.level === null) return 1;
+            if (b.level === null) return -1;
+            return a.level - b.level;
+          });
+          break;
+        case 3: // 닉네임 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.nickname === null) return 1;
+            if (b.nickname === null) return -1;
+            return a.nickName.localeCompare(b.nickName);
+          });
+          break;
+        default:
+          break;
+      }
+
+      // null 값을 맨 뒤로 이동
+      sortedList = moveNullToEnd(sortedList);
+
+      return sortedList;
+    } else return;
+  };
+  const sortedCharList = newCharList(optionNum);
+
   return (
     <BoxContent>
       <Title>캐릭터</Title>
@@ -31,7 +76,7 @@ const CharSelectBox = ({ charList }: CharSelectBoxType) => {
         </ContentSortOption>
         <InnerAllChar>
           {charList &&
-            charList.map((item: CharInfo, idx: number) => {
+            sortedCharList?.map((item: CharInfo, idx: number) => {
               return (
                 <CharBox
                   avatar={item.avatar}
@@ -83,6 +128,7 @@ const btnStyle = css<{ isSelect: boolean }>`
   font-size: 12px;
   font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
   line-height: normal;
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
 `;
 const HighLevelSort = styled.button`
