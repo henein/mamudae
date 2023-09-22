@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ColorThief from "colorthief";
 import Image from "next/image";
-import { usePickChar } from "../../../../hooks/myPageHooks/useUserChar";
+import {
+  usePickChar,
+  useRefreshChar,
+} from "../../../../hooks/myPageHooks/useUserChar";
 import { getCharInfo, getImgUrl } from "../../../../api/userInfo";
 
 export interface CharInfo {
@@ -29,28 +32,13 @@ const CharBox = ({
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
-  // const [nexonImg, setNexonImg] = useState<string | null>(null);
-  // useEffect(() => {
-  //   if (avatar) {
-  //     setNexonImg(avatar.replace("https://avatar.maplestory.nexon.com/", ""));
-  //   }
-  // }, [avatar]);
-  // useEffect(() => {
-  //   if (nexonImg) {
-  //     getImgUrl(nexonImg);
-  //   }
-  // }, [nexonImg]);
-  const { mutate } = usePickChar({
+  const { mutate: pickChar } = usePickChar({
     charId: id,
     options: {},
   });
-  const pickRepChar = () => {
-    if (avatar) {
-      mutate();
-    }
-  };
-
+  const { mutate: refreshChar } = useRefreshChar({ nickName, setIsLoading });
   // image 배경색상 랜덤 선택
   // useEffect(() => {
   //   const img: HTMLImageElement | null = document.querySelector("img#char"); // => 여기 고쳐야할듯 getColor함수가 안먹음
@@ -96,8 +84,8 @@ const CharBox = ({
       />
       <RefreshBtnPosition>
         <CharImg
-          src={avatar || "/myPageImages/character1.png"}
-          // src={"/myPageImages/character1.png"}
+          disable={avatar}
+          src={avatar || "/myPageImages/defaultChar.png"}
           id="char"
           imageRandomColor={imageRandomColor}
         />
@@ -112,14 +100,14 @@ const CharBox = ({
               height="20"
               alt=""
               onClick={async () => {
-                await getCharInfo(nickName);
+                await refreshChar();
               }}
             />
           </ImgPosition>
         )}
       </RefreshBtnPosition>
       <CharInfoBox
-        onClick={() => (avatar ? mutate() : alert("미인증 캐릭터입니다."))}
+        onClick={() => (avatar ? pickChar() : alert("미인증 캐릭터입니다."))}
         isRepresent={pickByUser}
         isHover={isHover}
         isActive={isActive}
@@ -148,6 +136,7 @@ const Container = styled.div`
   width: 144px;
   height: 173px;
   box-sizing: border-box;
+  overflow: hidden;
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;
@@ -156,7 +145,6 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
   height: 120px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
-  background-color: ${({ disable }) => !disable && "rgba(0, 0, 0, 0.20)"};
 `;
 const RefreshBtnPosition = styled.div`
   display: flex;
@@ -165,14 +153,18 @@ const ImgPosition = styled.button`
   height: 20px;
   position: relative;
   top: 8px;
-  right: 28px;
+  right: 62px;
   z-index: 10;
 `;
-const CharImg = styled.img<{ imageRandomColor: string }>`
+const CharImg = styled.img<{
+  imageRandomColor: string;
+  disable: string | null;
+}>`
   position: relative;
   top: -47px;
   left: -15px;
-  background-color: ${({ imageRandomColor }) => imageRandomColor};
+  background-color: ${({ imageRandomColor, disable }) =>
+    disable ? imageRandomColor : "#E0E1E6"};
 `;
 const CharInfoBox = styled.div<{
   isRepresent: boolean;

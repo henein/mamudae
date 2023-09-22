@@ -57,8 +57,8 @@ export const getMyCommentBoard = async () => {
 export const getUserCharName = async (userApi: string) => {
   const res = await axiosInstance.post("/userinfo/character/auth", {
     userApi,
-    startDay: "2023-09-19",
-    endDay: "2023-08-20",
+    recentDay: "2023-09-19",
+    pastDay: "2023-08-20",
   });
   return res;
 };
@@ -71,8 +71,15 @@ export const setRepresent = async (id: number) => {
 
 // 닉네임으로 캐릭터 정보 불러오기
 export const getCharInfo = async (name: string) => {
-  const res = await axiosInstance.get(`/userinfo/character/renew?name=${name}`);
-  return res;
+  try {
+    const res = await axiosInstance.get(
+      `/userinfo/character/renew?name=${name}`
+    );
+    await alert(`${name} 캐릭터를 가져옵니다.`);
+    return res;
+  } catch (err: any) {
+    return alert(err.response.data.errorMessage);
+  }
 };
 
 // 캐릭터 아바타 getColor 사용하기위한 주소 받기

@@ -7,17 +7,35 @@ import {
   useGetAllMyChar,
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
+import LoadingSpinner from "./loadingSpinner";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
-  const charList = useGetAllMyChar({ refetchOnWindowFocus: false });
+  const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
   const { mutate } = useGetCharName({
     key: apiKey,
+    LoadingController: setIsLoading,
   });
+
+  const handleAuthClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (apiKey) {
+      try {
+        await mutate();
+      } catch (err) {
+        alert(err);
+      }
+    } else {
+      alert("토큰을 입력해 주세요.");
+      return;
+    }
+  };
+
   return (
     <Container>
-      <CharSelectBox charList={charList.data} />
+      <CharSelectBox charList={data} />
 
       <UserAuthLine>
         <QuestionBtn>
@@ -41,21 +59,21 @@ const MyChar = () => {
           <AuthBtn
             sort="primary"
             type="submit"
-            width="83px"
+            width={isLoading ? "107px" : "83px"}
             fontWeight="500"
-            onClick={(e: any) => {
-              e.preventDefault();
-              mutate();
-            }}
+            onClick={handleAuthClick}
+            disabled={isLoading}
           >
-            인증하기
+            <>
+              {isLoading && <LoadingSpinner />}
+              <span>인증하기</span>
+            </>
           </AuthBtn>
         </BottomForm>
       </UserAuthLine>
     </Container>
   );
 };
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0IjoiNTAwOjEwIiwiYWNjb3VudF9pZCI6IjExNzc3NjAyMSIsImF1dGhfaWQiOiIyIiwiZXhwIjoxNzA5MTA4NDA4LCJpYXQiOjE2OTM1NTY0MDgsIm5iZiI6MTY5MzU1NjQwOCwic2VydmljZV9pZCI6IjQzMDAxMTM5NyIsInRva2VuX3R5cGUiOiJBY2Nlc3NUb2tlbiJ9.XMOX4gvZpjUoQeKszzhvzlE0cF8KkVLvaRuoI7ByEHg
 
 export default MyChar;
 
