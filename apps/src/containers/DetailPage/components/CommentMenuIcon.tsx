@@ -6,7 +6,7 @@ export interface CommentMenuProps {
   boardId: string;
   comment: string;
   commentId: string;
-  isMyComment: boolean;
+  isMine: boolean;
   replyId?: string;
   tag?: string;
   isRecomment: boolean;
@@ -54,7 +54,7 @@ const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
         <CommentTools
           boardId={props.boardId}
           commentId={props.commentId}
-          isMyComment={props.isMyComment}
+          isMine={props.isMine}
           commentInfo={props}
           setIsHover={setIsHover}
           setIsModifyClick={setIsModifyClick}

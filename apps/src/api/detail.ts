@@ -5,7 +5,7 @@ export async function detail(id: any, accessToken?: string) {
 
   // accessToken이 있을때만 header에 전달
   if (accessToken) {
-    headers.Authorization = `Bearer ${accessToken}`;
+    headers.Authorization = `${accessToken}`;
   }
 
   const res = await axios.get(

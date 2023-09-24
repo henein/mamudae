@@ -12,7 +12,6 @@ const CompleteLogin = ({ ...data }: any) => {
     window.location.reload();
   };
 
-  console.log(data.uid);
   return (
     <LoginContainer>
       <LoginHeader>

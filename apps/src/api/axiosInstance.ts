@@ -16,8 +16,10 @@ axiosInstance.interceptors.request.use(
     } else {
       config.headers["Content-Type"] = "application/json";
     }
-    const accessToken = localStorage.getItem("access") || "";
-    config.headers.Authorization = `${accessToken}`;
+    const accessToken = localStorage.getItem("access");
+    if (accessToken) {
+      config.headers.Authorization = accessToken;
+    }
 
     return config;
   },

@@ -5,7 +5,6 @@ import CommentForm from "./CommentForm";
 
 interface postinfos {
   boardId: string;
-  userData: any;
   totalComment: string;
 }
 const Write = ({ ...data }: postinfos) => {

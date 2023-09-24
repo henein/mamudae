@@ -7,18 +7,17 @@ import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
+import { useMine } from "../../../hooks/detailPageHooks/useDetail";
 
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
-  const [isMyComment, setIsMyComment] = useState<boolean>(false);
   const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
+
+  const isMine = useMine(data.uid);
   useEffect(() => {
-    if (data.userData && data.userData.userName == data.userName) {
-      setIsMyComment(true);
-    }
-    if (data.userName == "알 수 없음") setIsDeleteComment(true);
-  }, [isMyComment, data]);
+    if (data.uid == "deleted") setIsDeleteComment(true);
+  }, [data.uid]);
 
   return (
     <Container>
@@ -46,7 +45,7 @@ const Comment = ({ ...data }) => {
                   boardId={data.boardId}
                   comment={data.comment}
                   commentId={data.commentId}
-                  isMyComment={isMyComment}
+                  isMine={isMine}
                   isRecomment={false}
                   setIsModifyClick={setIsModifyClick}
                 />
@@ -86,7 +85,7 @@ const Comment = ({ ...data }) => {
                 tag={item.tag}
                 replyId={item.replyId}
                 parentCommentId={data.commentId}
-                userData={data.userData}
+                uid={item.uid}
                 key={idx}
               />
             );
