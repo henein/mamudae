@@ -1,15 +1,61 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import CharBox from "./CharBox";
-
+import { CharInfo } from "./CharBox";
 interface CharSelectBoxType {
-  type: "인증" | "미인증";
+  charList: any;
 }
-const CharSelectBox = ({ type }: CharSelectBoxType) => {
+const CharSelectBox = ({ charList }: CharSelectBoxType) => {
   const [optionNum, setOptionNum] = useState<number>(1);
+
+  const newCharList = (optionNum: number) => {
+    if (charList) {
+      let sortedList = [...charList];
+
+      // null 값을 맨 뒤로 이동하는 정렬 함수
+      const moveNullToEnd = (array: CharInfo[]) => {
+        const withoutNull = array.filter((item) => item.world !== null);
+        const nulls = array.filter((item) => item.world === null);
+        return [...withoutNull, ...nulls];
+      };
+
+      switch (optionNum) {
+        case 1: // 높은 레벨 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.level === null) return 1;
+            if (b.level === null) return -1;
+            return b.level - a.level;
+          });
+          break;
+        case 2: // 낮은 레벨 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.level === null) return 1;
+            if (b.level === null) return -1;
+            return a.level - b.level;
+          });
+          break;
+        case 3: // 닉네임 sort
+          sortedList = sortedList.sort((a, b) => {
+            if (a.nickname === null) return 1;
+            if (b.nickname === null) return -1;
+            return a.nickName.localeCompare(b.nickName);
+          });
+          break;
+        default:
+          break;
+      }
+
+      // null 값을 맨 뒤로 이동
+      sortedList = moveNullToEnd(sortedList);
+
+      return sortedList;
+    } else return;
+  };
+  const sortedCharList = newCharList(optionNum);
+
   return (
     <BoxContent>
-      <Title>{type} 캐릭터</Title>
+      <Title>캐릭터</Title>
       <BoxLayout>
         <ContentSortOption>
           <HighLevelSort
@@ -29,14 +75,21 @@ const CharSelectBox = ({ type }: CharSelectBoxType) => {
           </NameSort>
         </ContentSortOption>
         <InnerAllChar>
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
-          <CharBox type={type} />
+          {charList &&
+            sortedCharList?.map((item: CharInfo, idx: number) => {
+              return (
+                <CharBox
+                  avatar={item.avatar}
+                  id={item.id}
+                  job={item.job}
+                  level={item.level}
+                  nickName={item.nickName}
+                  pickByUser={item.pickByUser}
+                  world={item.world}
+                  key={idx}
+                />
+              );
+            })}
         </InnerAllChar>
       </BoxLayout>
     </BoxContent>
@@ -48,7 +101,6 @@ export const BoxContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  /* padding: 20px 24px; */
 `;
 export const Title = styled.h1`
   color: #000;
@@ -66,6 +118,8 @@ const ContentSortOption = styled.div`
   display: flex;
   gap: 8px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 `;
 const btnStyle = css<{ isSelect: boolean }>`
   padding: 8px 12px;
@@ -75,6 +129,7 @@ const btnStyle = css<{ isSelect: boolean }>`
   font-size: 12px;
   font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
   line-height: normal;
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
 `;
 const HighLevelSort = styled.button`

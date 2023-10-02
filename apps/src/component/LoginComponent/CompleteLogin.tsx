@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
-import circle from "/public/detailPageImages/Ellipse.png";
 import Label from "../Label";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 import Link from "next/link";
@@ -13,15 +11,22 @@ const CompleteLogin = ({ ...data }: any) => {
     removeLocalStorage("refresh");
     window.location.reload();
   };
+
   return (
     <LoginContainer>
       <LoginHeader>
-        <RepresentativeImage src={circle} alt="none"></RepresentativeImage>
+        <RepresentativeImage
+          src={data.imageUrl || "/detailPageImages/Ellipse.png"}
+          alt=""
+        ></RepresentativeImage>
         <Profile>
           <Char>
-            <Label type="level">대표</Label>
-            <CharNickname>프돔이</CharNickname>
+            {data.pickCharacter && <Label type="level">대표</Label>}
+            <CharNickname>
+              {data.pickCharacter || "대표 캐릭터 없음"}
+            </CharNickname>
           </Char>
+
           <Nickname>{data.userName}</Nickname>
         </Profile>
       </LoginHeader>
@@ -78,10 +83,12 @@ const Profile = styled.div`
   gap: 4px;
   height: 100%;
 `;
-const RepresentativeImage = styled(Image)`
+const RepresentativeImage = styled.img`
   width: 48px;
   height: 48px;
   margin-right: 16px;
+  border-radius: 100%;
+  background-color: #dedede;
 `;
 const LoginHeader = styled.div`
   display: flex;

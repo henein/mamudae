@@ -1,7 +1,7 @@
 import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 export async function getPrintCode(code: string) {
-  console.log(code);
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login/kakao?code=${code}`
   );
@@ -10,14 +10,11 @@ export async function getPrintCode(code: string) {
 
 export async function getAtByRT(refreshToken: string | null) {
   try {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
-      {
-        headers: {
-          RefreshToken: `${refreshToken}`,
-        },
-      }
-    );
+    const res = await axiosInstance.get(`/auth/refresh`, {
+      headers: {
+        RefreshToken: `${refreshToken}`,
+      },
+    });
     return res;
   } catch (error: any) {
     return error.response;

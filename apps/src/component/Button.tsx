@@ -9,7 +9,8 @@ interface IButton {
   type?: BtnType;
   width?: string;
   fontWeight?: string;
-  onClick?: () => void;
+  onClick?: any;
+  disabled?: boolean;
 }
 
 const SORT: {
@@ -39,10 +40,17 @@ const Button = ({
   children,
   type,
   onClick,
+  disabled,
   ...props
 }: React.PropsWithChildren<IButton>) => {
   return (
-    <StyledButton sort={sort} type={type} onClick={onClick} {...props}>
+    <StyledButton
+      sort={sort}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </StyledButton>
   );
@@ -83,5 +91,6 @@ const StyledButton = styled.button<IButton>`
   &:disabled {
     background-color: #f4f5fa;
     color: rgba(0, 0, 0, 0.4);
+    cursor: auto;
   }
 `;

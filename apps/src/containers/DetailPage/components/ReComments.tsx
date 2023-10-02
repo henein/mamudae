@@ -7,17 +7,13 @@ import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
+import { useMine } from "../../../hooks/detailPageHooks/useDetail";
 
 const ReComments = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const [isModifyRClick, setIsModifyRClick] = useState<boolean>(false);
-  const [isMyComment, setIsMyComment] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (data.userData && data.userData.userName == data.userName) {
-      setIsMyComment(true);
-    }
-  }, [isMyComment, data]);
+  const isMine = useMine(data.uid);
 
   return (
     <Container>
@@ -44,7 +40,7 @@ const ReComments = ({ ...data }) => {
                 comment={data.comment}
                 commentId={data.commentId}
                 replyId={data.replyId}
-                isMyComment={isMyComment}
+                isMine={isMine}
                 isRecomment={true}
                 tag={data.tag}
                 setIsModifyClick={setIsModifyRClick}

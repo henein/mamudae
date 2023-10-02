@@ -6,7 +6,7 @@ export interface CommentMenuProps {
   boardId: string;
   comment: string;
   commentId: string;
-  isMyComment: boolean;
+  isMine: boolean;
   replyId?: string;
   tag?: string;
   isRecomment: boolean;
@@ -14,11 +14,19 @@ export interface CommentMenuProps {
 }
 const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
   const [isHover, setIsHover] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
 
   return (
-    <Wrap>
+    <Wrap
+      onFocus={() => setIsHover(true)}
+      onBlur={() => {
+        setIsToggle(false);
+        setIsHover(false);
+      }}
+      onClick={() => setIsToggle((prev) => !prev)}
+      tabIndex={0}
+    >
       <Svg
-        onClick={() => setIsHover((prev) => !prev)}
         width="20"
         height="20"
         viewBox="0 0 20 20"
@@ -42,11 +50,11 @@ const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
           />
         </g>
       </Svg>
-      {isHover && (
+      {isHover && isToggle && (
         <CommentTools
           boardId={props.boardId}
           commentId={props.commentId}
-          isMyComment={props.isMyComment}
+          isMine={props.isMine}
           commentInfo={props}
           setIsHover={setIsHover}
           setIsModifyClick={setIsModifyClick}

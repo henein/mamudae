@@ -7,22 +7,27 @@ export const useGetAllPost = () => {
     {
       queryKey: "E",
       queryFn: () => getEntireBoard(),
+      refetchOnWindowFocus: false,
     },
     {
       queryKey: "F",
       queryFn: () => getApi("F"),
+      refetchOnWindowFocus: false,
     },
     {
       queryKey: "H",
       queryFn: () => getApi("H"),
+      refetchOnWindowFocus: false,
     },
     {
       queryKey: "B",
       queryFn: () => getApi("B"),
+      refetchOnWindowFocus: false,
     },
     {
       queryKey: "I",
       queryFn: () => getApi("I"),
+      refetchOnWindowFocus: false,
     },
   ]);
 };
