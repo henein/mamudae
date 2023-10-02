@@ -36,8 +36,6 @@ const Comment = ({ ...data }) => {
                 <NickName isDeleteComment={isDeleteComment}>
                   {data.userName}
                 </NickName>
-                <Floor>48층</Floor>
-                <Job>겸마 격수</Job>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               {!isDeleteComment && (

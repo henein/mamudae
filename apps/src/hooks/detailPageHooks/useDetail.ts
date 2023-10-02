@@ -8,17 +8,16 @@ interface IUseDetail {
   options?: any;
 }
 
-export function useDetail({ boardId, accessToken, options }: IUseDetail) {
+export function useDetail({ boardId, options }: IUseDetail) {
   const { data, refetch } = useQuery(
     ["detailPageData", boardId],
-    () => detail(boardId, accessToken),
+    () => detail(boardId),
     {
       ...options,
     }
   );
 
-  console.log(data);
-  return { ...data, refetch };
+  return { data, refetch };
 }
 
 export const useMine = (dataUid: string | null) => {

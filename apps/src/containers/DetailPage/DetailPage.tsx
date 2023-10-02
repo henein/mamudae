@@ -15,7 +15,6 @@ import Warning from "../../component/Warning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
 import Link from "next/link";
 import { extensions } from "../../component/Editor/Editor";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
 
 export type CommentType = {
   comment: string;
@@ -32,25 +31,13 @@ const DetailPage = () => {
   const router = useRouter();
   const boardId = router.query.id as string;
 
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-  const {
-    title,
-    text,
-    recommend,
-    views,
-    createTime,
-    userSimpleResponseDto,
-    recommended,
-    commentNum,
-    refetch,
-  } = useDetail({
+  const { data, refetch } = useDetail({
     boardId,
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
     },
   });
+  console.log(data);
 
   const [context, setContext] = useState("");
 
@@ -62,10 +49,12 @@ const DetailPage = () => {
   }).data;
 
   useEffect(() => {
-    const html = generateHTML(JSON.parse(text), extensions);
+    if (data) {
+      const html = generateHTML(JSON.parse(data.text), extensions);
 
-    setContext(html);
-  }, [text]);
+      setContext(html);
+    }
+  }, [data]);
 
   const [isInAT, setIsInAT] = useState(false);
 
@@ -79,74 +68,75 @@ const DetailPage = () => {
 
   const { isWarning, warningType } = useOnWarning();
 
-  console.log(commentdata);
   return (
     <Container>
       <Announcement />
       <SideBox>
         <Login />
       </SideBox>
-      <div>
-        <WriteBox>
-          <Wrapper>
-            <Title
-              title={title}
-              name={userSimpleResponseDto.userName}
-              views={views}
-              createTime={createTime}
-            />
-            <Content dangerouslySetInnerHTML={{ __html: context }} />
-            <Like
-              recommend={recommend}
-              boardId={boardId}
-              recommended={recommended}
-            />
-          </Wrapper>
-        </WriteBox>
+      {data && (
+        <div>
+          <WriteBox>
+            <Wrapper>
+              <Title
+                title={data.title}
+                name={data.userSimpleResponseDto.userName}
+                views={data.views}
+                createTime={data.createTime}
+              />
+              <Content dangerouslySetInnerHTML={{ __html: context }} />
+              <Like
+                recommend={data.recommend}
+                boardId={boardId}
+                recommended={data.recommended}
+              />
+            </Wrapper>
+          </WriteBox>
 
-        <BoardOptionBox>
-          <Button type="button" sort="secondary">
-            목록
-          </Button>
-          <RightItems>
-            <Link href={`/update/${boardId}`}>
-              <Button type="button" sort="secondary">
-                수정하기
-              </Button>
-            </Link>
-            <Button type="button" sort="danger">
-              삭제하기
+          <BoardOptionBox>
+            <Button type="button" sort="secondary">
+              목록
             </Button>
-          </RightItems>
-        </BoardOptionBox>
+            <RightItems>
+              <Link href={`/update/${boardId}`}>
+                <Button type="button" sort="secondary">
+                  수정하기
+                </Button>
+              </Link>
+              <Button type="button" sort="danger">
+                삭제하기
+              </Button>
+            </RightItems>
+          </BoardOptionBox>
 
-        <CommentBox>
-          <Write boardId={boardId} totalComment={commentNum} />
-          <Comments>
-            {commentdata &&
-              commentdata.map((item: CommentType, idx: number) => {
-                return (
-                  <Comment
-                    comment={item.comment}
-                    userName={item.userName}
-                    modifiedDate={item.modifiedDate}
-                    replies={item.replies}
-                    key={idx}
-                    commentId={item.commentId}
-                    boardId={boardId}
-                    uid={userSimpleResponseDto.uid}
-                    isLastComment={idx + 1 == commentdata.length}
-                  />
-                );
-              })}
-          </Comments>
-        </CommentBox>
-        {isWarning && (
-          <StickyView>
-            <Warning type={warningType} />
-          </StickyView>
-        )}
-      </div>
+          <CommentBox>
+            <Write boardId={boardId} totalComment={data.commentNum} />
+            <Comments>
+              {commentdata &&
+                commentdata.map((item: CommentType, idx: number) => {
+                  return (
+                    <Comment
+                      comment={item.comment}
+                      userName={item.userName}
+                      modifiedDate={item.modifiedDate}
+                      replies={item.replies}
+                      key={idx}
+                      commentId={item.commentId}
+                      boardId={boardId}
+                      uid={item.uid}
+                      isLastComment={idx + 1 == commentdata.length}
+                    />
+                  );
+                })}
+            </Comments>
+          </CommentBox>
+          {isWarning && (
+            <StickyView>
+              <Warning type={warningType} />
+            </StickyView>
+          )}
+        </div>
+      )}
     </Container>
   );
 };
