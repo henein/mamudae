@@ -25,7 +25,7 @@ export const setUserProfile = async ({ forms }: UserProfileType) => {
   await formData.append("image", forms.image || "");
   await formData.append("userName", forms.userName || "");
   try {
-    const res = await axiosInstance.put(`/userinfo`, formData);
+    const res = await axiosInstance.post(`/userinfo`, formData);
     window.location.reload();
     return res;
   } catch (error) {
@@ -72,10 +72,9 @@ export const setRepresent = async (id: number) => {
 // 닉네임으로 캐릭터 정보 불러오기
 export const getCharInfo = async (name: string) => {
   try {
-    const res = await axiosInstance.get(
+    const res = await axiosInstance.post(
       `/userinfo/character/renew?name=${name}`
     );
-    await alert(`${name} 캐릭터를 가져옵니다.`);
     return res;
   } catch (err: any) {
     return alert(err.response.data.errorMessage);

@@ -7,6 +7,7 @@ import {
   useRefreshChar,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import { getCharInfo, getImgUrl } from "../../../../api/userInfo";
+import LoadingSpinner from "./LoadingSpinner";
 
 export interface CharInfo {
   avatar: string | null;
@@ -38,7 +39,10 @@ const CharBox = ({
     charId: id,
     options: {},
   });
-  const { mutate: refreshChar } = useRefreshChar({ nickName, setIsLoading });
+  const { mutate: refreshChar } = useRefreshChar({
+    name: nickName,
+    LoadingController: setIsLoading,
+  });
   // image 배경색상 랜덤 선택
   // useEffect(() => {
   //   const img: HTMLImageElement | null = document.querySelector("img#char"); // => 여기 고쳐야할듯 getColor함수가 안먹음
@@ -69,14 +73,7 @@ const CharBox = ({
   // }, []);
 
   return (
-    <Container
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => {
-        setIsHover(false);
-        setIsActive(false);
-      }}
-      onMouseDown={() => setIsActive(true)}
-    >
+    <Container>
       <ImgWrapper
         disable={avatar}
         onMouseEnter={() => setRefreshOn(true)}
@@ -94,19 +91,29 @@ const CharBox = ({
             onMouseEnter={() => setRefreshOn(true)}
             onMouseLeave={() => setRefreshOn(false)}
           >
-            <Image
-              src="/myPageImages/refresh.svg"
-              width="20"
-              height="20"
-              alt=""
-              onClick={async () => {
-                await refreshChar();
-              }}
-            />
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <Image
+                src="/myPageImages/refresh.svg"
+                width="20"
+                height="20"
+                alt=""
+                onClick={async () => {
+                  await refreshChar();
+                }}
+              />
+            )}
           </ImgPosition>
         )}
       </RefreshBtnPosition>
       <CharInfoBox
+        onMouseOver={() => setIsHover(true)}
+        onMouseLeave={() => {
+          setIsHover(false);
+          setIsActive(false);
+        }}
+        onMouseDown={() => setIsActive(true)}
         onClick={() => (avatar ? pickChar() : alert("미인증 캐릭터입니다."))}
         isRepresent={pickByUser}
         isHover={isHover}
@@ -136,7 +143,6 @@ const Container = styled.div`
   width: 144px;
   height: 173px;
   box-sizing: border-box;
-  overflow: hidden;
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;

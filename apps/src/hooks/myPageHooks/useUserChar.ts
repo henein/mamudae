@@ -48,7 +48,6 @@ export const useRefreshChar = ({ name, LoadingController, options }: any) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 3000);
       });
-      await alert(`${name} 업데이트 완료`);
       await queryClient.invalidateQueries("allMyChar");
       await LoadingController(false);
     },

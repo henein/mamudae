@@ -6,7 +6,9 @@ import UserInfoBox from "./UserInfoBox";
 import { useGetMyProfile } from "../../../../hooks/myPageHooks/useUserProfile";
 
 const Profile = () => {
-  const myProfile = useGetMyProfile({}).data;
+  const myProfile = useGetMyProfile({
+    refetchOnWindowFocus: false,
+  }).data;
 
   console.log(myProfile);
   return (

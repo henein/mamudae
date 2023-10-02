@@ -101,7 +101,6 @@ export const BoxContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  /* padding: 20px 24px; */
 `;
 export const Title = styled.h1`
   color: #000;
@@ -119,6 +118,8 @@ const ContentSortOption = styled.div`
   display: flex;
   gap: 8px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 `;
 const btnStyle = css<{ isSelect: boolean }>`
   padding: 8px 12px;

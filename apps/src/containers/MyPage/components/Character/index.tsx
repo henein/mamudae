@@ -7,7 +7,7 @@ import {
   useGetAllMyChar,
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
-import LoadingSpinner from "./loadingSpinner";
+import LoadingSpinner from "./LoadingSpinner";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
