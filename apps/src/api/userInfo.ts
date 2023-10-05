@@ -26,7 +26,7 @@ export const setUserProfile = async ({ forms }: UserProfileType) => {
   await formData.append("userName", forms.userName || "");
   try {
     const res = await axiosInstance.post(`/userinfo`, formData);
-    window.location.reload();
+    // window.location.reload();
     return res;
   } catch (error) {
     console.error("setUserProfile 오류:", error);

@@ -2,10 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../../../../component/Button";
-import {
-  useGetMyProfile,
-  useSetUserInfo,
-} from "../../../../hooks/myPageHooks/useUserProfile";
+import { useSetUserInfo } from "../../../../hooks/myPageHooks/useUserProfile";
 
 interface UserProfileType {
   imageUrl: string;
@@ -15,7 +12,6 @@ interface UserProfileType {
 
 const UserInfoBox = ({ ...props }: UserProfileType) => {
   const { imageUrl, userEmail, userName } = props;
-  const [isFault, setIsFault] = useState<boolean>(false);
 
   const [userForm, setUserForm] = useState<{
     image: File | null;
@@ -70,7 +66,6 @@ const UserInfoBox = ({ ...props }: UserProfileType) => {
             <InputLabel htmlFor="input-file" />
           </ImgSelect>
           <TextDiv>
-            {/* <WarnText>잘못된 닉네임입니다.</WarnText> */}
             <Nickname
               placeholder={userName || "익명"}
               onChange={(e: any) => {
