@@ -33,7 +33,7 @@ const Comment = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isDeleteComment={isDeleteComment}>
+                <NickName isDeleteComment={isDeleteComment} isMine={isMine}>
                   {data.userName}
                 </NickName>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
@@ -115,29 +115,13 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Job = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.labelBlack};
-`;
 const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const Floor = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-`;
-const NickName = styled.div<{ isDeleteComment: boolean }>`
-  color: ${({ theme, isDeleteComment }) =>
-    isDeleteComment ? theme.subText : theme.text};
+const NickName = styled.div<{ isMine: boolean; isDeleteComment: boolean }>`
+  color: ${({ theme, isDeleteComment, isMine }) =>
+    isDeleteComment ? theme.subText : isMine ? theme.brand : theme.text};
   margin-right: 4px;
   font-size: 12px;
 `;
