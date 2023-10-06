@@ -14,20 +14,23 @@ export const useGetCharName = ({
 }: IGetCharName) => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => getUserCharName(key), {
-    onSuccess: async () => {
-      await LoadingController(true);
-      await alert(
-        "사용자의 큐브 내역을 통해 캐릭터 닉네임을 조회합니다. (30초 정도 소요)"
-      );
-      await new Promise((resolve) => {
-        setTimeout(resolve, 30000);
-      });
-      await alert("캐릭터 닉네임 업데이트 완료");
-      await queryClient.invalidateQueries("allMyChar");
-      await LoadingController(false);
-    },
-  });
+  const { mutate } = useMutation(
+    ({ pastDay, recentDay }: any) => getUserCharName(key, recentDay, pastDay),
+    {
+      onSuccess: async () => {
+        await LoadingController(true);
+        await alert(
+          "사용자의 큐브 내역을 통해 캐릭터 닉네임을 조회합니다. (30초 정도 소요)"
+        );
+        await new Promise((resolve) => {
+          setTimeout(resolve, 30000);
+        });
+        await alert("캐릭터 닉네임 업데이트 완료");
+        await queryClient.invalidateQueries("allMyChar");
+        await LoadingController(false);
+      },
+    }
+  );
 
   return { mutate };
 };

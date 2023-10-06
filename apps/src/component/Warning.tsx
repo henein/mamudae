@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import SvgIcon from "@mui/material/SvgIcon";
 import WarningIcon from "@mui/icons-material/Warning";
@@ -7,18 +7,17 @@ import { useDispatch } from "react-redux";
 import { offWarnings } from "../../store/warningSlice/onWarning";
 import { useDeleteForm } from "../hooks/detailPageHooks/useCommentForm";
 import useCommentInfoSet from "../hooks/reduxHooks/useCommentInfoSet";
-
+import DateSelector from "./DateSelector";
 interface WarningProps {
-  type: "modify" | "delete" | "report";
+  type: "modify" | "delete" | "report" | "cubeCheck";
+  mutate?: any;
 }
 
-const Warning = ({ type }: WarningProps) => {
-  const commentInfo = useCommentInfoSet();
-
-  console.log(commentInfo);
-  const { deleteLogic } = useDeleteForm(commentInfo);
-
+const Warning = ({ type, mutate }: WarningProps) => {
   const dispatch = useDispatch();
+
+  const commentInfo = useCommentInfoSet();
+  const { deleteLogic } = useDeleteForm(commentInfo);
 
   const modalOff = () => {
     dispatch(offWarnings());
@@ -30,27 +29,62 @@ const Warning = ({ type }: WarningProps) => {
     }
   };
 
+  const [pastDay, setPastDay] = useState<string>("");
+  const [recentDay, setRecentDay] = useState<string>("");
+
+  console.log(pastDay);
+  console.log(recentDay);
   const korean = {
     modify: "수정",
     delete: "삭제",
     report: "신고",
+    cubeCheck: "큐브 내역 조회",
   };
   return (
     <View isWarning>
       <Container isWarning>
         <Content>
-          <ImgDiv>
-            <SvgIcon component={WarningIcon} fontSize="small" />
-          </ImgDiv>
-          <Phrases>정말로 이 댓글을 {korean[type]}하시겠습니까?</Phrases>
+          {type !== "cubeCheck" && (
+            <ImgDiv>
+              <SvgIcon component={WarningIcon} fontSize="small" />
+            </ImgDiv>
+          )}
+          {type == "cubeCheck" ? (
+            <>
+              <Phrases>{korean[type]}기간을 입력해주세요.</Phrases>
+              <DateSelector
+                setPastDay={setPastDay}
+                setRecentDay={setRecentDay}
+              />
+            </>
+          ) : (
+            <Phrases>정말로 이 댓글을 {korean[type]}하시겠습니까?</Phrases>
+          )}
         </Content>
         <BtnList>
           <Button type="button" sort="secondary" onClick={() => modalOff()}>
             취소
           </Button>
-          <Button type="submit" sort="danger" onClick={() => submitData()}>
-            {korean[type]}하기
-          </Button>
+          {type == "cubeCheck" ? (
+            <Button
+              type="submit"
+              sort="primary"
+              onClick={async () => {
+                if (pastDay && recentDay) {
+                  await mutate({ recentDay: recentDay, pastDay: pastDay });
+                  await modalOff();
+                } else {
+                  alert("날짜를 선택해주세요");
+                }
+              }}
+            >
+              인증하기
+            </Button>
+          ) : (
+            <Button type="submit" sort="danger" onClick={() => submitData()}>
+              {korean[type]}하기
+            </Button>
+          )}
         </BtnList>
       </Container>
     </View>
@@ -58,7 +92,6 @@ const Warning = ({ type }: WarningProps) => {
 };
 
 export default Warning;
-
 const View = styled.div<{ isWarning: boolean }>`
   position: fixed;
   top: 0;
