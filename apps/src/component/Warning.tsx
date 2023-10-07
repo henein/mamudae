@@ -32,8 +32,6 @@ const Warning = ({ type, mutate }: WarningProps) => {
   const [pastDay, setPastDay] = useState<string>("");
   const [recentDay, setRecentDay] = useState<string>("");
 
-  console.log(pastDay);
-  console.log(recentDay);
   const korean = {
     modify: "수정",
     delete: "삭제",
@@ -138,4 +136,5 @@ const BtnList = styled.ul`
   background-color: ${({ theme }) => theme.cardHeader};
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+  backdrop-filter: blur(4px);
 `;

@@ -12,10 +12,12 @@ import useOnWarning from "../../../../hooks/reduxHooks/useOnWarning";
 import Warning from "../../../../component/Warning";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
+import SwiperModal from "./SwiperModal";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
+  const [onModal, setOnModal] = useState<boolean>(false);
 
   const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
 
@@ -40,9 +42,18 @@ const MyChar = () => {
   return (
     <Container>
       <CharSelectBox charList={data} />
-
+      {onModal && (
+        <StickyView>
+          <SwiperModal setOnModal={setOnModal} />
+        </StickyView>
+      )}
       <UserAuthLine>
-        <QuestionBtn>
+        <QuestionBtn
+          onClick={(e: React.MouseEvent) => {
+            e.preventDefault();
+            setOnModal(true);
+          }}
+        >
           <Image
             src="/myPageImages/question.svg"
             width="20"
@@ -91,7 +102,6 @@ const StickyView = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
   width: 100%;
 `;
 const UserAuthLine = styled.div`
@@ -99,6 +109,7 @@ const UserAuthLine = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
+  margin-top: 24px;
 `;
 const InputBox = styled.input`
   padding: 12px 16px;
