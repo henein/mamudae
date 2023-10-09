@@ -22,8 +22,12 @@ interface UserProfileType {
 }
 export const setUserProfile = async ({ forms }: UserProfileType) => {
   const formData = new FormData();
-  await formData.append("image", forms.image || "");
-  await formData.append("userName", forms.userName || "");
+  if (forms.image) {
+    await formData.append("image", forms.image);
+    await formData.append("userName", forms.userName || "");
+  } else {
+    await formData.append("userName", forms.userName || "");
+  }
   try {
     const res = await axiosInstance.post(`/userinfo`, formData);
     // window.location.reload();
