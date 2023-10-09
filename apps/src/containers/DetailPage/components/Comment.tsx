@@ -36,7 +36,7 @@ const Comment = ({ ...data }) => {
                 <NickName isDeleteComment={isDeleteComment} isMine={isMine}>
                   {data.userName}
                 </NickName>
-                <Time>{timeDifference(data.modifiedDate)}</Time>
+                <Time>· {timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               {!isDeleteComment && (
                 <CommentMenuIcon
@@ -122,6 +122,7 @@ const Time = styled.div`
 const NickName = styled.div<{ isMine: boolean; isDeleteComment: boolean }>`
   color: ${({ theme, isDeleteComment, isMine }) =>
     isDeleteComment ? theme.subText : isMine ? theme.brand : theme.text};
+    font-weight: ${({ isMine }) => isMine && '500'};
   margin-right: 4px;
   font-size: 12px;
 `;
