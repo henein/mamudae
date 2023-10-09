@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import ColorThief from "colorthief";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import ColorThief from 'colorthief';
+import NextImage from 'next/image';
 import {
   usePickChar,
   useRefreshChar,
-} from "../../../../hooks/myPageHooks/useUserChar";
-import { getCharInfo, getImgUrl } from "../../../../api/userInfo";
-import LoadingSpinner from "./LoadingSpinner";
+} from '../../../../hooks/myPageHooks/useUserChar';
+import { getCharInfo, getImgUrl } from '../../../../api/userInfo';
+import LoadingSpinner from './LoadingSpinner';
+import { set } from 'date-fns';
 
 export interface CharInfo {
   avatar: string | null;
@@ -18,6 +19,26 @@ export interface CharInfo {
   pickByUser: boolean;
   world: string | null;
 }
+
+const convertRGBToHSL = (r: number, g: number, b: number) => {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const l = Math.max(r, g, b);
+  const s = l - Math.min(r, g, b);
+  const h = s
+    ? l === r
+      ? (g - b) / s
+      : l === g
+      ? 2 + (b - r) / s
+      : 4 + (r - g) / s
+    : 0;
+  return [
+    60 * h < 0 ? 60 * h + 360 : 60 * h,
+    100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
+    (100 * (2 * l - s)) / 2,
+  ];
+};
 
 const CharBox = ({
   avatar,
@@ -31,7 +52,7 @@ const CharBox = ({
   // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [imageRandomColor, setImageRandomColor] = useState<string>("");
+  const [imageRandomColor, setImageRandomColor] = useState<string>('');
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
@@ -43,49 +64,55 @@ const CharBox = ({
     name: nickName,
     LoadingController: setIsLoading,
   });
-  // image 배경색상 랜덤 선택
-  // useEffect(() => {
-  //   const img: HTMLImageElement | null = document.querySelector("img#char"); // => 여기 고쳐야할듯 getColor함수가 안먹음
-  //   const colorThief = new ColorThief();
 
-  //   if (img) {
-  //     if (img.complete) {
-  //       const fetchColor = async () => {
-  //         const dominantColor = await colorThief.getColor(img);
-  //         const rgbString = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+  useEffect(() => {
+    const colorThief = new ColorThief();
+    const img = new Image();
 
-  //         setImageRandomColor(rgbString);
-  //       };
-  //       fetchColor();
-  //     } else {
-  //       // 돔에 맨 처음 진입했을때도 컬러 적용
-  //       img.addEventListener("load", () => {
-  //         const fetchColor = async () => {
-  //           const dominantColor = await colorThief.getColor(img);
-  //           const rgbString = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+    img.addEventListener('load', function () {
+      const colorRGB = colorThief.getColor(img);
+      const color = convertRGBToHSL(colorRGB[0], colorRGB[1], colorRGB[2]);
+      setImageRandomColor(`hsl(${color[0]}, 100%, 95%)`);
+    });
 
-  //           setImageRandomColor(rgbString);
-  //         };
-  //         fetchColor();
-  //       });
-  //     }
-  //   }
-  // }, []);
+    // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
+    img.crossOrigin = 'Anonymous';
+    img.src =
+      `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
+      '/myPageImages/defaultChar.png';
+  }, [avatar]);
 
   return (
-    <Container>
+    <Container disable={avatar} color={imageRandomColor}>
+      <CharInfoBox
+        onMouseOver={() => setIsHover(true)}
+        onMouseLeave={() => {
+          setIsHover(false);
+          setIsActive(false);
+        }}
+        onMouseDown={() => setIsActive(true)}
+        onClick={() => (avatar ? pickChar() : alert('미인증 캐릭터입니다.'))}
+        isRepresent={pickByUser}
+        isHover={isHover}
+        isActive={isActive}
+      >
+        <Top>
+          {pickByUser && <Tag>대표</Tag>}
+          <NickName>{nickName}</NickName>
+        </Top>
+        <Bottom>
+          <JobnLevel>
+            {job && level ? `${job} / ${level}` : '정보 없음'}
+          </JobnLevel>
+        </Bottom>
+      </CharInfoBox>
       <ImgWrapper
         disable={avatar}
         onMouseEnter={() => setRefreshOn(true)}
         onMouseLeave={() => setRefreshOn(false)}
       />
       <RefreshBtnPosition>
-        <CharImg
-          disable={avatar}
-          src={avatar || "/myPageImages/defaultChar.png"}
-          id="char"
-          imageRandomColor={imageRandomColor}
-        />
+        <CharImg src={avatar || '/myPageImages/defaultChar.png'} id="char" />
         {refreshOn && (
           <ImgPosition
             onMouseEnter={() => setRefreshOn(true)}
@@ -94,7 +121,7 @@ const CharBox = ({
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <Image
+              <NextImage
                 src="/myPageImages/refresh.svg"
                 width="20"
                 height="20"
@@ -107,42 +134,21 @@ const CharBox = ({
           </ImgPosition>
         )}
       </RefreshBtnPosition>
-      <CharInfoBox
-        onMouseOver={() => setIsHover(true)}
-        onMouseLeave={() => {
-          setIsHover(false);
-          setIsActive(false);
-        }}
-        onMouseDown={() => setIsActive(true)}
-        onClick={() => (avatar ? pickChar() : alert("미인증 캐릭터입니다."))}
-        isRepresent={pickByUser}
-        isHover={isHover}
-        isActive={isActive}
-      >
-        <Top>
-          {pickByUser && <Tag>대표</Tag>}
-          <NickName>{nickName}</NickName>
-        </Top>
-        <Bottom>
-          <JobnLevel>
-            {job && level ? `${job} / ${level}` : "정보 없음"}
-          </JobnLevel>
-        </Bottom>
-      </CharInfoBox>
-      ;
     </Container>
   );
 };
 
 export default CharBox;
 
-const Container = styled.div`
+const Container = styled.div<{ color: string | null; disable: string | null }>`
   display: flex;
+  position: relative;
   flex-direction: column;
   border-radius: 16px;
   width: 144px;
   height: 173px;
   box-sizing: border-box;
+  background-color: ${({ color, disable }) => (disable ? color : '#E0E1E6')};
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;
@@ -157,20 +163,15 @@ const RefreshBtnPosition = styled.div`
 `;
 const ImgPosition = styled.button`
   height: 20px;
-  position: relative;
+  position: absolute;
   top: 8px;
-  right: 62px;
+  right: 8px;
   z-index: 10;
 `;
-const CharImg = styled.img<{
-  imageRandomColor: string;
-  disable: string | null;
-}>`
+const CharImg = styled.img`
   position: relative;
   top: -47px;
   left: -15px;
-  background-color: ${({ imageRandomColor, disable }) =>
-    disable ? imageRandomColor : "#E0E1E6"};
 `;
 const CharInfoBox = styled.div<{
   isRepresent: boolean;
@@ -184,6 +185,7 @@ const CharInfoBox = styled.div<{
   gap: 4px;
   padding: 20px 0px;
   border-radius: 15px;
+  width: 100%;
   border: 1px solid
     ${({ isRepresent, isHover, theme, isActive }) =>
       isRepresent
@@ -194,8 +196,8 @@ const CharInfoBox = styled.div<{
         ? theme.brandActive
         : theme.border};
   background-color: white;
-  position: relative;
-  top: -87px;
+  position: absolute;
+  bottom: 0px;
   z-index: 2;
   &:hover {
     cursor: pointer;

@@ -15,7 +15,6 @@ const Spinner = styled.div`
   border-right-color: #f4f5fa;
   border-radius: 100%;
   animation: spin 1s ease-in-out infinite;
-  margin-right: 5px;
   @keyframes spin {
     100% {
       transform: rotate(360deg);

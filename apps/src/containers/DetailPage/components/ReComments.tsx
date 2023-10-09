@@ -30,7 +30,7 @@ const ReComments = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName>{data.userName}</NickName>
+                <NickName isMine={isMine}>{data.userName}</NickName>
                 <Floor>48층</Floor>
                 <Job>겸마 격수</Job>
                 <Time>{timeDifference(data.modifiedDate)}</Time>
@@ -117,8 +117,8 @@ const Floor = styled.div`
   color: ${customColor.white};
   background-color: ${customColor.floor};
 `;
-const NickName = styled.div`
-  color: ${(prop) => prop.theme.text};
+const NickName = styled.div<{ isMine: boolean }>`
+  color: ${({ theme, isMine }) => (isMine ? theme.brand : theme.text)};
   margin-right: 4px;
   font-size: 12px;
 `;

@@ -22,11 +22,15 @@ interface UserProfileType {
 }
 export const setUserProfile = async ({ forms }: UserProfileType) => {
   const formData = new FormData();
-  await formData.append("image", forms.image || "");
-  await formData.append("userName", forms.userName || "");
+  if (forms.image) {
+    await formData.append("image", forms.image);
+    await formData.append("userName", forms.userName || "");
+  } else {
+    await formData.append("userName", forms.userName || "");
+  }
   try {
     const res = await axiosInstance.post(`/userinfo`, formData);
-    window.location.reload();
+    // window.location.reload();
     return res;
   } catch (error) {
     console.error("setUserProfile 오류:", error);
@@ -54,11 +58,15 @@ export const getMyCommentBoard = async () => {
 };
 
 // 넥슨 토큰으로 유저 캐릭터 정보 불러오기
-export const getUserCharName = async (userApi: string) => {
+export const getUserCharName = async (
+  userApi: string,
+  recentDay: string,
+  pastDay: string
+) => {
   const res = await axiosInstance.post("/userinfo/character/auth", {
     userApi,
-    recentDay: "2023-09-19",
-    pastDay: "2023-08-20",
+    recentDay,
+    pastDay,
   });
   return res;
 };

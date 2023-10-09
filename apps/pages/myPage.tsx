@@ -5,7 +5,6 @@ import { announce } from "../src/api/announce";
 import {
   getMyBoard,
   getMyCommentBoard,
-  getProfile,
   getAllMyChar,
 } from "../src/api/userInfo";
 
@@ -22,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   await queryClient.prefetchQuery("allMyChar", () => getAllMyChar());
   await queryClient.prefetchQuery("myBoards", () => getMyBoard());
   await queryClient.prefetchQuery("myCommentBoards", () => getMyCommentBoard());
-  await queryClient.prefetchQuery("myProfile", () => getProfile());
 
   return {
     props: {

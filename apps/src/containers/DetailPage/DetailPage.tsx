@@ -37,7 +37,6 @@ const DetailPage = () => {
       refetchOnWindowFocus: false,
     },
   });
-  console.log(data);
 
   const [context, setContext] = useState("");
 
@@ -80,7 +79,7 @@ const DetailPage = () => {
             <Wrapper>
               <Title
                 title={data.title}
-                name={data.userSimpleResponseDto.userName}
+                name={data.userName}
                 views={data.views}
                 createTime={data.createTime}
               />

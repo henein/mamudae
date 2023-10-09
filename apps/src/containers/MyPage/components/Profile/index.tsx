@@ -10,7 +10,6 @@ const Profile = () => {
     refetchOnWindowFocus: false,
   }).data;
 
-  console.log(myProfile);
   return (
     <Container>
       <Title>프로필</Title>

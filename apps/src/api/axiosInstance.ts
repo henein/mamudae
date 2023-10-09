@@ -57,6 +57,7 @@ axiosInstance.interceptors.response.use(
       alert("사용자 토큰이 만료되었습니다. 다시 로그인 해주세요.");
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
+      window.location.href = "/";
       return;
     } else if (exception == 103) {
       alert("사용자 토큰 값이 변경되었습니다. 다시 로그인 해주세요.");
@@ -66,9 +67,8 @@ axiosInstance.interceptors.response.use(
     } else if (exception == 104) {
       alert("로그인 해주세요");
       window.location.href = "/login";
+      return;
     } else {
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("access");
       return Promise.reject(error);
     }
   }
