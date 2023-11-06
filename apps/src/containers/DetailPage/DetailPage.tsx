@@ -15,6 +15,8 @@ import Warning from "../../component/Warning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
 import Link from "next/link";
 import { extensions } from "../../component/Editor/Editor";
+import { useDispatch } from "react-redux";
+import { onWarnings } from "../../../store/warningSlice/onWarning";
 
 export type CommentType = {
   comment: string;
@@ -30,6 +32,7 @@ export type CommentType = {
 const DetailPage = () => {
   const router = useRouter();
   const boardId = router.query.id as string;
+  const dispatch = useDispatch();
 
   const { data, refetch } = useDetail({
     boardId,
@@ -67,6 +70,15 @@ const DetailPage = () => {
 
   const { isWarning, warningType } = useOnWarning();
 
+  const btnClick = (btnType: string) => {
+    if (localStorage.getItem("access") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      window.location.reload();
+      return;
+    } else {
+      dispatch(onWarnings(btnType));
+    }
+  };
   return (
     <Container>
       <Announcement />
@@ -96,16 +108,30 @@ const DetailPage = () => {
             <Button type="button" sort="secondary">
               목록
             </Button>
-            <RightItems>
-              <Link href={`/update/${boardId}`}>
-                <Button type="button" sort="secondary">
-                  수정하기
+            {data && data.uid ? (
+              <RightItems>
+                <Link href={`/update/${boardId}`}>
+                  <Button type="button" sort="secondary">
+                    수정하기
+                  </Button>
+                </Link>
+                <Button type="button" sort="danger">
+                  삭제하기
                 </Button>
-              </Link>
-              <Button type="button" sort="danger">
-                삭제하기
-              </Button>
-            </RightItems>
+              </RightItems>
+            ) : (
+              <RightItems>
+                <Button
+                  type="button"
+                  sort="danger"
+                  onClick={() => {
+                    btnClick("boardReport");
+                  }}
+                >
+                  신고하기
+                </Button>
+              </RightItems>
+            )}
           </BoardOptionBox>
 
           <CommentBox>

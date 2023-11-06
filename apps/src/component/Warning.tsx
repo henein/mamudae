@@ -9,7 +9,7 @@ import { useDeleteForm } from "../hooks/detailPageHooks/useCommentForm";
 import useCommentInfoSet from "../hooks/reduxHooks/useCommentInfoSet";
 import DateSelector from "./DateSelector";
 interface WarningProps {
-  type: "modify" | "delete" | "report" | "cubeCheck";
+  type: "modify" | "delete" | "report" | "cubeCheck" | "boardReport";
   mutate?: any;
 }
 
@@ -37,6 +37,7 @@ const Warning = ({ type, mutate }: WarningProps) => {
     delete: "삭제",
     report: "신고",
     cubeCheck: "큐브 내역 조회",
+    boardReport: "신고",
   };
   return (
     <View isWarning>
@@ -55,6 +56,8 @@ const Warning = ({ type, mutate }: WarningProps) => {
                 setRecentDay={setRecentDay}
               />
             </>
+          ) : type === "boardReport" ? (
+            <Phrases>정말로 이 게시글을 {korean[type]}하시겠습니까?</Phrases>
           ) : (
             <Phrases>정말로 이 댓글을 {korean[type]}하시겠습니까?</Phrases>
           )}
