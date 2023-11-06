@@ -143,7 +143,7 @@ const CommentContent = styled.div`
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.text};
 `;
-const NormalSpan = styled.span``;
+const NormalSpan = styled.pre``;
 const TagSpan = styled.span`
   color: ${({ theme }) => theme.mentionText};
   margin-right: 4px;
