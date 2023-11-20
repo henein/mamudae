@@ -8,11 +8,11 @@ const LoadingSpinner = () => {
 export default LoadingSpinner;
 
 const Spinner = styled.div`
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
   box-sizing: border-box;
   border: 2px solid rgba(0, 0, 0, 0.4);
-  border-right-color: #f4f5fa;
+  border-right-color: rgba(0, 0, 0, 0);
   border-radius: 100%;
   animation: spin 1s ease-in-out infinite;
   @keyframes spin {
