@@ -7,12 +7,12 @@ import {
   useGetAllMyChar,
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
-import LoadingSpinner from "./LoadingSpinner";
 import useOnWarning from "../../../../hooks/reduxHooks/useOnWarning";
 import Warning from "../../../../component/Warning";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
+import LoadingSpinner from "../../../../component/LoadingSpinner";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");

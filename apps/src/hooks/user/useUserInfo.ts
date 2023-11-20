@@ -10,8 +10,12 @@ interface IUseUserInfo {
 export const useUserInfo = ({ options }: IUseUserInfo) => {
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
-  const { data } = useQuery("userInfo", () => userInfo(accessToken), {
-    ...options,
-  });
-  return { data };
+  const { data, isLoading } = useQuery(
+    "userInfo",
+    () => userInfo(accessToken),
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading };
 };
