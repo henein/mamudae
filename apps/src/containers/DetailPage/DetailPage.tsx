@@ -27,6 +27,7 @@ export type CommentType = {
   replyId: string;
   uid: string;
   replies?: any;
+  roleInBoard: string;
 };
 
 const DetailPage = () => {
@@ -49,6 +50,8 @@ const DetailPage = () => {
       refetchOnWindowFocus: false,
     },
   }).data;
+
+  console.log(commentdata);
 
   useEffect(() => {
     if (data) {
@@ -138,21 +141,26 @@ const DetailPage = () => {
             <Write boardId={boardId} totalComment={data.commentNum} />
             <Comments>
               {commentdata &&
-                commentdata.map((item: CommentType, idx: number) => {
-                  return (
-                    <Comment
-                      comment={item.comment}
-                      userName={item.userName}
-                      modifiedDate={item.modifiedDate}
-                      replies={item.replies}
-                      key={idx}
-                      commentId={item.commentId}
-                      boardId={boardId}
-                      uid={item.uid}
-                      isLastComment={idx + 1 == commentdata.length}
-                    />
-                  );
-                })}
+                commentdata.commentList.map(
+                  (item: CommentType, idx: number) => {
+                    return (
+                      <Comment
+                        comment={item.comment}
+                        userName={item.userName}
+                        modifiedDate={item.modifiedDate}
+                        replies={item.replies}
+                        key={idx}
+                        commentId={item.commentId}
+                        boardId={boardId}
+                        uid={item.uid}
+                        roleInBoard={item.roleInBoard}
+                        isLastComment={
+                          idx + 1 == commentdata.commentList.length
+                        }
+                      />
+                    );
+                  }
+                )}
             </Comments>
           </CommentBox>
           {isWarning && (

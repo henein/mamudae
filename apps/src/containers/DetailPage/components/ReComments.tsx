@@ -8,6 +8,7 @@ import timeDifference from "../../../utils/timeDifference";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
 import { useMine } from "../../../hooks/detailPageHooks/useDetail";
+import Label from "../../../component/Label";
 
 const ReComments = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -15,6 +16,7 @@ const ReComments = ({ ...data }) => {
 
   const isMine = useMine(data.uid);
 
+  console.log(data);
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
@@ -31,8 +33,7 @@ const ReComments = ({ ...data }) => {
             <CommentHeader>
               <UserInfo>
                 <NickName isMine={isMine}>{data.userName}</NickName>
-                <Floor>48층</Floor>
-                <Job>겸마 격수</Job>
+                <Label type={data.roleInBoard} />
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               <CommentMenuIcon
@@ -96,30 +97,13 @@ const FormDisplay = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-
-const Job = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.labelBlack};
-`;
 const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const Floor = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-`;
+
 const NickName = styled.div<{ isMine: boolean }>`
   color: ${({ theme, isMine }) => (isMine ? theme.brand : theme.text)};
-  margin-right: 4px;
   font-size: 12px;
 `;
 
@@ -137,6 +121,7 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  gap: 4px;
 `;
 const CommentContent = styled.div`
   font-size: 14px;

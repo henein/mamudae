@@ -8,6 +8,7 @@ import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
 import { useMine } from "../../../hooks/detailPageHooks/useDetail";
+import Label from "../../../component/Label";
 
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -15,6 +16,7 @@ const Comment = ({ ...data }) => {
   const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
 
   const isMine = useMine(data.uid);
+  console.log(data.roleInBoard);
   useEffect(() => {
     if (data.uid == "deleted") setIsDeleteComment(true);
   }, [data.uid]);
@@ -36,7 +38,8 @@ const Comment = ({ ...data }) => {
                 <NickName isDeleteComment={isDeleteComment} isMine={isMine}>
                   {data.userName}
                 </NickName>
-                <Time>· {timeDifference(data.modifiedDate)}</Time>
+                <Label type={data.roleInBoard} />
+                <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               {!isDeleteComment && (
                 <CommentMenuIcon
@@ -83,6 +86,7 @@ const Comment = ({ ...data }) => {
                 tag={item.tag}
                 replyId={item.replyId}
                 parentCommentId={data.commentId}
+                roleInBoard={item.roleInBoard}
                 uid={item.uid}
                 key={idx}
               />
@@ -122,8 +126,7 @@ const Time = styled.div`
 const NickName = styled.div<{ isMine: boolean; isDeleteComment: boolean }>`
   color: ${({ theme, isDeleteComment, isMine }) =>
     isDeleteComment ? theme.subText : isMine ? theme.brand : theme.text};
-    font-weight: ${({ isMine }) => isMine && '500'};
-  margin-right: 4px;
+  font-weight: ${({ isMine }) => isMine && "500"};
   font-size: 12px;
 `;
 
@@ -144,6 +147,7 @@ const CommentHeader = styled.div`
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
   margin-bottom: 8px;
 `;
 const CommentContent = styled.div<{ isDeleteComment: boolean }>`
