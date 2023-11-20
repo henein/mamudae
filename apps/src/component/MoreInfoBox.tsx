@@ -1,116 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { customColor } from "../constants/customColor";
-import { useRouter } from "next/router";
+import { usePagenate } from "../hooks/pagenateHook/usePagenate";
 
-const MoreInfoBox = ({
-  pageType,
-  data,
-  refetch,
-  pageNums,
-  setPageNums,
-}: any) => {
-  const router = useRouter();
-  const pageNum = parseInt(router.query.page as string) || 1;
-  const totalPages = data && data.totalPages;
+const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
+  const {
+    currentPage,
+    handlePageChange,
+    pages,
+    handleNextGroup,
+    handlePrevGroup,
+    lastPageGroup,
+    pageGroups,
+  } = usePagenate({ apiData: data });
 
-  // 페이지 한줄 묶음
-  const getPageNums = () => {
-    if (pageType == "postPage") {
-      const pageNumArr: number[] = [];
-      const startNum: number = Math.floor((pageNum - 1) / 10) * 10 + 1; // pageGroup역할을 함
-      const endNum: number = Math.min(startNum + 9, totalPages);
-      for (let i = startNum; i <= endNum; i++) {
-        pageNumArr.push(i);
-      }
-      return pageNumArr;
-    } else {
-      const pageNumArr = [];
-      const startNum = Math.floor((pageNums - 1) / 10) * 10 + 1;
-      const endNum = Math.min(startNum + 9, totalPages);
-      for (let i = startNum; i <= endNum; i++) {
-        pageNumArr.push(i);
-      }
-      return pageNumArr;
-    }
+  const handlePage = (isRouterPaging: boolean, pageNum: number) => {
+    if (isRouterPaging) handlePageChange(pageNum);
+    else setPageNums(pageNum);
   };
-
-  // 페이지 숫자 버튼 클릭시 라우팅
-  const handlePageNumClick = (pageNum: number) => {
-    if (pageType == "postPage") {
-      router.push(`${router.query.post}/?page=${pageNum}`);
-      refetch();
-    } else {
-      setPageNums(pageNum);
-    }
+  const handleGroup = (isRouterPaging: boolean, isPrev: boolean) => {
+    if (isPrev) isRouterPaging ? handlePrevGroup(pageGroups) : setPageNums();
+    else isRouterPaging ? handleNextGroup(pageGroups) : setPageNums();
   };
-
-  // < 버튼 클릭 시 10 페이지 감소
-  const handlePrevPageBtnClick = () => {
-    if (pageType == "postPage") {
-      router.push(`${router.query.post}/?page=${Math.max(pageNum - 10, 1)}`);
-      refetch();
-    } else setPageNums((prevPageNum: number) => Math.max(prevPageNum - 10, 1));
-  };
-
-  // > 버튼 클릭 시 10 페이지 증가, 10페이지 증가했을때 totalPages를 넘어가면 totalPages로 선정
-  const handleNextPageBtnClick = () => {
-    if (pageType == "postPage") {
-      router.push(
-        `${router.query.post}/?page=${Math.min(pageNum + 10, totalPages)}`
-      );
-      refetch();
-    } else
-      setPageNums((prevPageNum: number) =>
-        Math.min(prevPageNum + 10, totalPages)
-      );
+  const handleActive = (isRouterPaging: boolean, pageNum: number) => {
+    return isRouterPaging ? pageNum == currentPage : pageNum == pageNums;
   };
 
   return (
     <>
       <MoreInfo>
-        <NextPageBtn
-          onClick={handlePrevPageBtnClick}
-          disabled={
-            pageType == "postPage"
-              ? 0 < pageNum && pageNum < 11
-              : 0 < pageNums && pageNums < 11
-          }
-        >
-          <Image
-            src="/postPageImages/keyboard_arrow_left.svg"
-            width="6"
-            height="10"
-            alt=""
-          />
-        </NextPageBtn>
-
-        {getPageNums().map((num) => (
+        {pageGroups !== 0 && (
+          <NextPageBtn onClick={() => handleGroup(isRouterPaging, true)}>
+            <Image
+              src="/postPageImages/keyboard_arrow_left.svg"
+              width="6"
+              height="10"
+              alt=""
+            />
+          </NextPageBtn>
+        )}
+        {pages.map((pageNum) => (
           <PageNumBtn
-            key={num}
-            onClick={() => handlePageNumClick(num)}
-            active={pageType == "postPage" ? pageNum === num : pageNums === num}
+            onClick={() => {
+              handlePage(isRouterPaging, pageNum);
+            }}
+            active={handleActive(isRouterPaging, pageNum)}
+            key={pageNum}
           >
-            {num}
+            {pageNum}
           </PageNumBtn>
         ))}
-
-        <NextPageBtn
-          onClick={handleNextPageBtnClick}
-          disabled={
-            pageType == "postPage"
-              ? pageNum + 9 >= totalPages
-              : pageNums >= totalPages
-          }
-        >
-          <Image
-            src="/postPageImages/keyboard_arrow_right.svg"
-            width="6"
-            height="10"
-            alt=""
-          />
-        </NextPageBtn>
+        {pageGroups !== lastPageGroup && (
+          <NextPageBtn onClick={() => handleGroup(isRouterPaging, false)}>
+            <Image
+              src="/postPageImages/keyboard_arrow_right.svg"
+              width="6"
+              height="10"
+              alt=""
+            />
+          </NextPageBtn>
+        )}
       </MoreInfo>
     </>
   );

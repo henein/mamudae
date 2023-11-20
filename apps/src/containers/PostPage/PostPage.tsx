@@ -16,14 +16,14 @@ const PostPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
-      case '전체':
-      case '자유':
-      case '유머':
-      case '보스':
-      case '정보':
+      case "전체":
+      case "자유":
+      case "유머":
+      case "보스":
+      case "정보":
         break;
       default:
-        router.push('/404');
+        router.push("/404");
         break;
     }
   }, [router.isReady, router.query.post, router]);
@@ -44,7 +44,7 @@ const PostPage = () => {
             <BoardTitle title={router.query.post as string} />
             <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
-          <MoreInfoBox pageType={"postPage"} data={data} refetch={refetch} />
+          <MoreInfoBox isRouterPaging={true} data={data} />
         </BoardContent>
       </PostPageSet>
 
