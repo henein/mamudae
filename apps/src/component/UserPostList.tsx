@@ -35,7 +35,7 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
   // postpage에서 페이지에 따른 게시글 번호 설정
   const router = useRouter();
   const { page } = router.query;
-  const pageNum = parseInt(page as string, 10) || 1;
+  const pageNum = parseInt(page as string) || 1;
 
   // mypage에서 페이지에 따른 게시글 slice idx
   const startIndex = pageNums * 10 - 10;
@@ -69,7 +69,8 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
                               (pageNums - 1) * 10 -
                               pageNums +
                               1
-                          : data && data.totalElements - idx * pageNum
+                          : data &&
+                            data.totalElements - 20 * (pageNum - 1) - idx
                       }`.slice(-6)}
                     </PostNum>
                     <DivGap>
