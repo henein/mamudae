@@ -17,15 +17,19 @@ const Warning = ({ type, mutate }: WarningProps) => {
   const dispatch = useDispatch();
 
   const commentInfo = useCommentInfoSet();
+
   const { deleteLogic } = useDeleteForm(commentInfo);
 
   const modalOff = () => {
     dispatch(offWarnings());
   };
   const submitData = async () => {
-    if (type == "delete") {
+    if (type === "report") {
+      alert("신고 기능은 미구현입니다.");
+      modalOff();
+    } else if (type == "delete") {
       await deleteLogic();
-      await modalOff();
+      modalOff();
     }
   };
 
