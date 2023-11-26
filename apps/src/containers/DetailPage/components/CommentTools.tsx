@@ -15,16 +15,15 @@ interface CommentToolsType {
   setIsModifyClick: Dispatch<SetStateAction<boolean>>;
 }
 const CommentTools = ({ ...props }: CommentToolsType) => {
-  console.log(props);
+  console.log(props.commentInfo);
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
 
   const dispatch = useDispatch();
 
-  console.log(props.commentInfo);
   const btnClick = (btnType: string) => {
     if (!accessToken) {
-      // alert("로그인 후 이용 가능합니다.");
+      alert("로그인 후 이용 가능합니다.");
       window.location.reload();
       return;
     } else {

@@ -21,7 +21,7 @@ const CompleteLogin = ({ ...data }: any) => {
         ></RepresentativeImage>
         <Profile>
           <Char>
-            {data.pickCharacter && <Label type="level">대표</Label>}
+            {data.pickCharacter && <Label type="WRITER">대표</Label>}
             <CharNickname>
               {data.pickCharacter || "대표 캐릭터 없음"}
             </CharNickname>

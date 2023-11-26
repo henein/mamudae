@@ -8,6 +8,7 @@ import timeDifference from "../../../utils/timeDifference";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
 import { useMine } from "../../../hooks/detailPageHooks/useDetail";
+import Label from "../../../component/Label";
 
 const ReComments = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -30,9 +31,10 @@ const ReComments = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isMine={isMine}>{data.userName}</NickName>
-                <Floor>48층</Floor>
-                <Job>겸마 격수</Job>
+                <NickName isMine={isMine} isAdminRole={data.role === "ADMIN"}>
+                  {data.nickName}
+                </NickName>
+                {data.role === "WRITER" && <Label type={data.role} />}
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               <CommentMenuIcon
@@ -64,7 +66,7 @@ const ReComments = ({ ...data }) => {
                   boardId={data.boardId}
                   commentId={data.parentCommentId}
                   isRecomment={true}
-                  userName={data.userName}
+                  nickName={data.nickName}
                 />
               )}
             </FormDisplay>
@@ -96,31 +98,16 @@ const FormDisplay = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-
-const Job = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.labelBlack};
-`;
 const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const Floor = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
+
+const NickName = styled.div<{ isMine: boolean; isAdminRole: boolean }>`
+  color: ${({ theme, isAdminRole, isMine }) =>
+    isAdminRole ? theme.danger : isMine ? theme.brand : theme.text};
   font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-`;
-const NickName = styled.div<{ isMine: boolean }>`
-  color: ${({ theme, isMine }) => (isMine ? theme.brand : theme.text)};
-  margin-right: 4px;
-  font-size: 12px;
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
 `;
 
 const CommentBox = styled.div`
@@ -137,13 +124,14 @@ const UserInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  gap: 4px;
 `;
 const CommentContent = styled.div`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.text};
 `;
-const NormalSpan = styled.span``;
+const NormalSpan = styled.pre``;
 const TagSpan = styled.span`
   color: ${({ theme }) => theme.mentionText};
   margin-right: 4px;

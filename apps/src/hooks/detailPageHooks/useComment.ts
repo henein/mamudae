@@ -37,7 +37,7 @@ export function useGetComment({ boardId, options }: useGetComment) {
 }
 
 // 부모 댓글 작성
-export function usePostComment({ boardId, comment, accessToken }: usePComment) {
+export function usePostComment({ boardId, comment }: usePComment) {
   const queryClient = useQueryClient();
   const postCommentMutation = useMutation(
     "postComment",
@@ -45,7 +45,6 @@ export function usePostComment({ boardId, comment, accessToken }: usePComment) {
       postComment({
         boardId,
         comment,
-        accessToken,
       }),
     {
       onSuccess: () => {
@@ -56,15 +55,11 @@ export function usePostComment({ boardId, comment, accessToken }: usePComment) {
   );
 
   const postComments = async () => {
-    if (accessToken) {
-      try {
-        await postCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await postCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await postCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await postCommentMutation.mutateAsync();
     }
   };
 
@@ -76,7 +71,6 @@ export function usePostReComment({
   comment,
   commentId,
   tag,
-  accessToken,
 }: useRComment) {
   const queryClient = useQueryClient();
   const postReCommentMutation = useMutation(
@@ -87,7 +81,6 @@ export function usePostReComment({
         comment,
         commentId,
         tag,
-        accessToken,
       }),
     {
       onSuccess: () => {
@@ -98,27 +91,18 @@ export function usePostReComment({
   );
 
   const postReComments = async () => {
-    if (accessToken) {
-      try {
-        await postReCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await postReCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await postReCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await postReCommentMutation.mutateAsync();
     }
   };
 
   return { postReComments };
 }
 
-export function usePutComment({
-  boardId,
-  comment,
-  commentId,
-  accessToken,
-}: usePComment) {
+export function usePutComment({ boardId, comment, commentId }: usePComment) {
   const queryClient = useQueryClient();
   const putCommentMutation = useMutation(
     "putComment",
@@ -127,7 +111,6 @@ export function usePutComment({
         boardId,
         comment,
         commentId,
-        accessToken,
       }),
     {
       onSuccess: () => {
@@ -138,15 +121,11 @@ export function usePutComment({
   );
 
   const putComments = async () => {
-    if (accessToken) {
-      try {
-        await putCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await putCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await putCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await putCommentMutation.mutateAsync();
     }
   };
 
@@ -158,7 +137,6 @@ export function usePutReComment({
   replyId,
   comment,
   tag,
-  accessToken,
 }: useRComment) {
   const queryClient = useQueryClient();
   const putReCommentMutation = useMutation(
@@ -169,10 +147,10 @@ export function usePutReComment({
         replyId,
         comment,
         tag,
-        accessToken,
       }),
     {
       onSuccess: () => {
+        console.log(tag);
         queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
         queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
       },
@@ -180,26 +158,18 @@ export function usePutReComment({
   );
 
   const putReComments = async () => {
-    if (accessToken) {
-      try {
-        await putReCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await putReCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await putReCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await putReCommentMutation.mutateAsync();
     }
   };
 
   return { putReComments };
 }
 
-export function useDelComment({
-  boardId,
-  commentId,
-  accessToken,
-}: usePComment) {
+export function useDelComment({ boardId, commentId }: usePComment) {
   const queryClient = useQueryClient();
   const delCommentMutation = useMutation(
     "delComment",
@@ -207,7 +177,6 @@ export function useDelComment({
       deleteComment({
         boardId,
         commentId,
-        accessToken,
       }),
     {
       onSuccess: () => {
@@ -218,26 +187,18 @@ export function useDelComment({
   );
 
   const delComments = async () => {
-    if (accessToken) {
-      try {
-        await delCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await delCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await delCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await delCommentMutation.mutateAsync();
     }
   };
 
   return { delComments };
 }
 
-export function useDelReComment({
-  boardId,
-  replyId,
-  accessToken,
-}: useRComment) {
+export function useDelReComment({ boardId, replyId }: useRComment) {
   const queryClient = useQueryClient();
   const delReCommentMutation = useMutation(
     "delReComment",
@@ -245,7 +206,6 @@ export function useDelReComment({
       deleteReComment({
         boardId,
         replyId,
-        accessToken,
       }),
     {
       onSuccess: () => {
@@ -256,15 +216,11 @@ export function useDelReComment({
   );
 
   const delReComments = async () => {
-    if (accessToken) {
-      try {
-        await delReCommentMutation.mutateAsync();
-      } catch (err: any) {
-        await handleTokenError(err);
-        await delReCommentMutation.mutateAsync();
-      }
-    } else {
-      console.log("아직 accessToken을 가져오지 못함");
+    try {
+      await delReCommentMutation.mutateAsync();
+    } catch (err: any) {
+      await handleTokenError(err);
+      await delReCommentMutation.mutateAsync();
     }
   };
 

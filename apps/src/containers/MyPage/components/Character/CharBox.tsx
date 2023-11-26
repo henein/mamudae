@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ColorThief from 'colorthief';
-import NextImage from 'next/image';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import ColorThief from "colorthief";
+import NextImage from "next/image";
 import {
   usePickChar,
   useRefreshChar,
-} from '../../../../hooks/myPageHooks/useUserChar';
-import { getCharInfo, getImgUrl } from '../../../../api/userInfo';
-import LoadingSpinner from './LoadingSpinner';
-import { set } from 'date-fns';
+} from "../../../../hooks/myPageHooks/useUserChar";
+import LoadingSpinner from "../../../../component/LoadingSpinner";
 
 export interface CharInfo {
   avatar: string | null;
@@ -52,7 +50,7 @@ const CharBox = ({
   // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [imageRandomColor, setImageRandomColor] = useState<string>('');
+  const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
@@ -69,17 +67,17 @@ const CharBox = ({
     const colorThief = new ColorThief();
     const img = new Image();
 
-    img.addEventListener('load', function () {
+    img.addEventListener("load", function () {
       const colorRGB = colorThief.getColor(img);
       const color = convertRGBToHSL(colorRGB[0], colorRGB[1], colorRGB[2]);
       setImageRandomColor(`hsl(${color[0]}, 100%, 95%)`);
     });
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
-    img.crossOrigin = 'Anonymous';
+    img.crossOrigin = "Anonymous";
     img.src =
       `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
-      '/myPageImages/defaultChar.png';
+      "/myPageImages/defaultChar.png";
   }, [avatar]);
 
   return (
@@ -91,7 +89,7 @@ const CharBox = ({
           setIsActive(false);
         }}
         onMouseDown={() => setIsActive(true)}
-        onClick={() => (avatar ? pickChar() : alert('미인증 캐릭터입니다.'))}
+        onClick={() => (avatar ? pickChar() : alert("미인증 캐릭터입니다."))}
         isRepresent={pickByUser}
         isHover={isHover}
         isActive={isActive}
@@ -102,7 +100,7 @@ const CharBox = ({
         </Top>
         <Bottom>
           <JobnLevel>
-            {job && level ? `${job} / ${level}` : '정보 없음'}
+            {job && level ? `${job} / ${level}` : "정보 없음"}
           </JobnLevel>
         </Bottom>
       </CharInfoBox>
@@ -112,7 +110,7 @@ const CharBox = ({
         onMouseLeave={() => setRefreshOn(false)}
       />
       <RefreshBtnPosition>
-        <CharImg src={avatar || '/myPageImages/defaultChar.png'} id="char" />
+        <CharImg src={avatar || "/myPageImages/defaultChar.png"} id="char" />
         {refreshOn && (
           <ImgPosition
             onMouseEnter={() => setRefreshOn(true)}
@@ -148,7 +146,7 @@ const Container = styled.div<{ color: string | null; disable: string | null }>`
   width: 144px;
   height: 173px;
   box-sizing: border-box;
-  background-color: ${({ color, disable }) => (disable ? color : '#E0E1E6')};
+  background-color: ${({ color, disable }) => (disable ? color : "#E0E1E6")};
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;

@@ -1,27 +1,45 @@
 import React from "react";
 import styled from "styled-components";
-import { customColor, customColorType } from "../constants/customColor";
 
 interface ILabel {
-  type: keyof customColorType; // floor | level | job 등등
-  // 단계별, 레벨별 색깔 데이터를 받기?
+  type: "WRITER" | "USER";
 }
 
-const handleColor = (type: keyof customColorType) => {
-  for (const keyStore of Object.keys(customColor)) {
-    if (keyStore === type) return customColor[keyStore];
+const labelContent = (type: string) => {
+  switch (type) {
+    case "WRITER":
+      return "작성자";
+    case "USER":
+      return "유저";
+    default:
+      return null;
   }
 };
+
 const Label = (props: React.PropsWithChildren<ILabel>) => {
-  return <Container {...props}>{props.children}</Container>;
+  return (
+    <Container {...props}>
+      {props.children || labelContent(props.type)}
+    </Container>
+  );
 };
 
 export default Label;
 
 const Container = styled.div<ILabel>`
+  display: ${({ type }) => type !== "WRITER" && "none"};
   padding: 2px 4px;
-  color: ${customColor.white};
+  color: "#FFF";
   font-size: 12px;
-  background-color: ${({ type }) => handleColor(type)};
+  background-color: ${({ type, theme }) => {
+    switch (type) {
+      case "WRITER":
+        return theme.brand;
+      case "USER":
+        return theme.text;
+      default:
+        return "#000";
+    }
+  }};
   border-radius: 8px;
 `;

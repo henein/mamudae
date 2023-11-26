@@ -15,13 +15,15 @@ import Warning from "../../component/Warning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
 import Link from "next/link";
 import { extensions } from "../../component/Editor/Editor";
+import { useDispatch } from "react-redux";
+import { onWarnings } from "../../../store/warningSlice/onWarning";
 
 export type CommentType = {
   comment: string;
-  commentId: number;
+  id: number;
   modifiedDate: string;
-  userName: string;
   tag: string;
+  writerId: number;
   replyId: string;
   uid: string;
   replies?: any;
@@ -30,6 +32,7 @@ export type CommentType = {
 const DetailPage = () => {
   const router = useRouter();
   const boardId = router.query.id as string;
+  const dispatch = useDispatch();
 
   const { data, refetch } = useDetail({
     boardId,
@@ -67,6 +70,15 @@ const DetailPage = () => {
 
   const { isWarning, warningType } = useOnWarning();
 
+  const btnClick = (btnType: string) => {
+    if (localStorage.getItem("access") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      dispatch(onWarnings(btnType));
+    }
+  };
+
   return (
     <Container>
       <Announcement />
@@ -96,37 +108,69 @@ const DetailPage = () => {
             <Button type="button" sort="secondary">
               목록
             </Button>
-            <RightItems>
-              <Link href={`/update/${boardId}`}>
-                <Button type="button" sort="secondary">
-                  수정하기
+            {data && data.uid ? (
+              <RightItems>
+                <Link href={`/update/${boardId}`}>
+                  <Button type="button" sort="secondary">
+                    수정하기
+                  </Button>
+                </Link>
+                <Button type="button" sort="danger">
+                  삭제하기
                 </Button>
-              </Link>
-              <Button type="button" sort="danger">
-                삭제하기
-              </Button>
-            </RightItems>
+              </RightItems>
+            ) : (
+              <RightItems>
+                <Button
+                  type="button"
+                  sort="danger"
+                  onClick={() => {
+                    btnClick("boardReport");
+                  }}
+                >
+                  신고하기
+                </Button>
+              </RightItems>
+            )}
           </BoardOptionBox>
 
           <CommentBox>
             <Write boardId={boardId} totalComment={data.commentNum} />
             <Comments>
               {commentdata &&
-                commentdata.map((item: CommentType, idx: number) => {
-                  return (
-                    <Comment
-                      comment={item.comment}
-                      userName={item.userName}
-                      modifiedDate={item.modifiedDate}
-                      replies={item.replies}
-                      key={idx}
-                      commentId={item.commentId}
-                      boardId={boardId}
-                      uid={item.uid}
-                      isLastComment={idx + 1 == commentdata.length}
-                    />
-                  );
-                })}
+                commentdata.commentList.map(
+                  (item: CommentType, idx: number) => {
+                    return (
+                      <Comment
+                        writerList={commentdata.writerList}
+                        comment={item.comment}
+                        nickName={
+                          item.writerId === null
+                            ? "알 수 없음"
+                            : commentdata.writerList[item.writerId].nickName
+                        }
+                        modifiedDate={item.modifiedDate}
+                        replies={item.replies}
+                        key={idx}
+                        id={item.id}
+                        boardId={boardId}
+                        uid={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].uid
+                        }
+                        role={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].role
+                        }
+                        isLastComment={
+                          idx + 1 == commentdata.commentList.length
+                        }
+                      />
+                    );
+                  }
+                )}
             </Comments>
           </CommentBox>
           {isWarning && (

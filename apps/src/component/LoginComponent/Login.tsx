@@ -6,9 +6,10 @@ import { useUserInfo } from "../../hooks/user/useUserInfo";
 import CompleteLogin from "./CompleteLogin";
 import { useDispatch } from "react-redux";
 import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Login = () => {
-  const { data } = useUserInfo({
+  const { data, isLoading } = useUserInfo({
     options: {
       refetchOnWindowFocus: false,
       retry: 0,
@@ -22,12 +23,19 @@ const Login = () => {
     }
   }, [data, dispatch]);
 
+  if (isLoading) {
+    return (
+      <LoginContainer isLoading={isLoading}>
+        <LoadingSpinner />
+      </LoginContainer>
+    );
+  }
   return (
     <>
       {data ? (
         <CompleteLogin {...data} />
       ) : (
-        <LoginContainer>
+        <LoginContainer isLoading={isLoading}>
           <Link href="/login">
             <LoginBtn
               type="submit"
@@ -72,7 +80,7 @@ const LoginFooter = styled.div`
   align-items: center;
 `;
 const LoginBtn = styled(Button)``;
-const LoginContainer = styled.div`
+const LoginContainer = styled.div<{ isLoading: boolean }>`
   padding: 20px 24px;
   display: flex;
   align-items: center;

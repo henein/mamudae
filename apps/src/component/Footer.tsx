@@ -21,6 +21,7 @@ const Bottom = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 24px;
+  width: 100%;
 `;
 const InlineBox = styled.div`
   display: flex;
