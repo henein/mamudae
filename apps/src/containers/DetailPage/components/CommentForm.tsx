@@ -9,7 +9,7 @@ interface ICommentFormProps {
   boardId: string;
   commentId?: string;
   isRecomment: boolean;
-  userName?: string;
+  nickName?: string;
   firstRecomment?: boolean;
 }
 const CommentForm = ({ ...props }: ICommentFormProps) => {
@@ -21,7 +21,7 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
     isRecomment: props.isRecomment,
     boardId: props.boardId,
     commentId: props.commentId,
-    commentedUser: props.userName,
+    commentedUser: props.nickName,
   });
 
   const submit = async (data: FieldValues) => {
@@ -65,7 +65,7 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
             props.isRecomment
               ? props.firstRecomment
                 ? ""
-                : `@${props.userName} `
+                : `@${props.nickName} `
               : ""
           }
         />

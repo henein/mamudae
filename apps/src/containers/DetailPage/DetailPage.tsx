@@ -20,14 +20,13 @@ import { onWarnings } from "../../../store/warningSlice/onWarning";
 
 export type CommentType = {
   comment: string;
-  commentId: number;
+  id: number;
   modifiedDate: string;
-  userName: string;
   tag: string;
+  writerId: number;
   replyId: string;
   uid: string;
   replies?: any;
-  roleInBoard: string;
 };
 
 const DetailPage = () => {
@@ -50,8 +49,6 @@ const DetailPage = () => {
       refetchOnWindowFocus: false,
     },
   }).data;
-
-  console.log(commentdata);
 
   useEffect(() => {
     if (data) {
@@ -76,12 +73,12 @@ const DetailPage = () => {
   const btnClick = (btnType: string) => {
     if (localStorage.getItem("access") === null) {
       alert("로그인 후 이용 가능합니다.");
-      window.location.reload();
       return;
     } else {
       dispatch(onWarnings(btnType));
     }
   };
+
   return (
     <Container>
       <Announcement />
@@ -145,15 +142,28 @@ const DetailPage = () => {
                   (item: CommentType, idx: number) => {
                     return (
                       <Comment
+                        writerList={commentdata.writerList}
                         comment={item.comment}
-                        userName={item.userName}
+                        nickName={
+                          item.writerId === null
+                            ? "알 수 없음"
+                            : commentdata.writerList[item.writerId].nickName
+                        }
                         modifiedDate={item.modifiedDate}
                         replies={item.replies}
                         key={idx}
-                        commentId={item.commentId}
+                        id={item.id}
                         boardId={boardId}
-                        uid={item.uid}
-                        roleInBoard={item.roleInBoard}
+                        uid={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].uid
+                        }
+                        role={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].role
+                        }
                         isLastComment={
                           idx + 1 == commentdata.commentList.length
                         }

@@ -16,7 +16,6 @@ const ReComments = ({ ...data }) => {
 
   const isMine = useMine(data.uid);
 
-  console.log(data);
   return (
     <Container>
       <ReComment src={reComment} alt="none" />
@@ -32,8 +31,10 @@ const ReComments = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isMine={isMine}>{data.userName}</NickName>
-                <Label type={data.roleInBoard} />
+                <NickName isMine={isMine} isAdminRole={data.role === "ADMIN"}>
+                  {data.nickName}
+                </NickName>
+                {data.role === "WRITER" && <Label type={data.role} />}
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               <CommentMenuIcon
@@ -65,7 +66,7 @@ const ReComments = ({ ...data }) => {
                   boardId={data.boardId}
                   commentId={data.parentCommentId}
                   isRecomment={true}
-                  userName={data.userName}
+                  nickName={data.nickName}
                 />
               )}
             </FormDisplay>
@@ -102,9 +103,11 @@ const Time = styled.div`
   font-size: 12px;
 `;
 
-const NickName = styled.div<{ isMine: boolean }>`
-  color: ${({ theme, isMine }) => (isMine ? theme.brand : theme.text)};
+const NickName = styled.div<{ isMine: boolean; isAdminRole: boolean }>`
+  color: ${({ theme, isAdminRole, isMine }) =>
+    isAdminRole ? theme.danger : isMine ? theme.brand : theme.text};
   font-size: 12px;
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
 `;
 
 const CommentBox = styled.div`

@@ -16,10 +16,10 @@ const Comment = ({ ...data }) => {
   const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
 
   const isMine = useMine(data.uid);
-  console.log(data.roleInBoard);
+
   useEffect(() => {
-    if (data.uid == "deleted") setIsDeleteComment(true);
-  }, [data.uid]);
+    if (data.role === null) setIsDeleteComment(true);
+  }, [data]);
 
   return (
     <Container>
@@ -35,8 +35,12 @@ const Comment = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isDeleteComment={isDeleteComment} isMine={isMine}>
-                  {data.userName}
+                <NickName
+                  isDeleteComment={isDeleteComment}
+                  isMine={isMine}
+                  isAdminRole={data.role === "ADMIN"}
+                >
+                  {data.nickName}
                 </NickName>
                 <Label type={data.roleInBoard} />
                 <Time>{timeDifference(data.modifiedDate)}</Time>
@@ -45,7 +49,7 @@ const Comment = ({ ...data }) => {
                 <CommentMenuIcon
                   boardId={data.boardId}
                   comment={data.comment}
-                  commentId={data.commentId}
+                  commentId={data.id}
                   isMine={isMine}
                   isRecomment={false}
                   setIsModifyClick={setIsModifyClick}
@@ -65,10 +69,10 @@ const Comment = ({ ...data }) => {
                 <CommentForm
                   setIsClick={setIsClick}
                   boardId={data.boardId}
-                  commentId={data.commentId}
+                  commentId={data.id}
                   isRecomment={true}
                   firstRecomment={true}
-                  userName={data.userName}
+                  nickName={data.nickName}
                 />
               )}
             </FormDisplay>
@@ -81,13 +85,13 @@ const Comment = ({ ...data }) => {
               <ReComments
                 boardId={data.boardId}
                 comment={item.comment}
-                userName={item.userName}
+                nickName={data.writerList[item.writerId].nickName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
-                replyId={item.replyId}
-                parentCommentId={data.commentId}
-                roleInBoard={item.roleInBoard}
-                uid={item.uid}
+                replyId={item.id}
+                commentId={data.id}
+                role={data.writerList[item.writerId].role}
+                uid={data.writerList[item.writerId].uid}
                 key={idx}
               />
             );
@@ -123,10 +127,20 @@ const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const NickName = styled.div<{ isMine: boolean; isDeleteComment: boolean }>`
-  color: ${({ theme, isDeleteComment, isMine }) =>
-    isDeleteComment ? theme.subText : isMine ? theme.brand : theme.text};
-  font-weight: ${({ isMine }) => isMine && "500"};
+const NickName = styled.div<{
+  isMine: boolean;
+  isDeleteComment: boolean;
+  isAdminRole: boolean;
+}>`
+  color: ${({ theme, isDeleteComment, isMine, isAdminRole }) =>
+    isDeleteComment
+      ? theme.subText
+      : isAdminRole
+      ? theme.danger
+      : isMine
+      ? theme.brand
+      : theme.text};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
   font-size: 12px;
 `;
 
