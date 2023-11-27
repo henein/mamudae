@@ -9,22 +9,21 @@ import { commentInfoSet } from "../../../../store/warningSlice/commentInfo";
 interface CommentToolsType {
   boardId: string;
   commentId: string;
-  isMyComment: boolean;
+  isMine: boolean;
   commentInfo: any;
   setIsHover: Dispatch<SetStateAction<boolean>>;
   setIsModifyClick: Dispatch<SetStateAction<boolean>>;
 }
 const CommentTools = ({ ...props }: CommentToolsType) => {
-  console.log(props);
+  console.log(props.commentInfo);
   const { getLocalStorage } = useLocalStorage();
   const accessToken = getLocalStorage("access");
 
   const dispatch = useDispatch();
 
-  console.log(props.commentInfo);
   const btnClick = (btnType: string) => {
     if (!accessToken) {
-      // alert("로그인 후 이용 가능합니다.");
+      alert("로그인 후 이용 가능합니다.");
       window.location.reload();
       return;
     } else {
@@ -41,9 +40,9 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
   }, [props.commentInfo, dispatch]);
 
   return (
-    <Container isMyComment={props.isMyComment}>
+    <Container>
       <Functions>
-        {props.isMyComment ? (
+        {props.isMine ? (
           <>
             <Modify onClick={() => btnClick("modify")}>수정하기</Modify>
             <Delete onClick={() => btnClick("delete")}>삭제하기</Delete>
@@ -86,7 +85,7 @@ const Functions = styled.div`
   padding: 8px 0px;
   color: ${({ theme }) => theme.text};
 `;
-const Container = styled.div<{ isMyComment: boolean }>`
+const Container = styled.div`
   width: 81px;
   border: 1px solid ${customColor.whiteGray};
   box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.boxShadow};

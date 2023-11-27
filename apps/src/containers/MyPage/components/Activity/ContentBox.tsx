@@ -22,7 +22,7 @@ const ContentBox = ({ type, data }: ContentBoxType) => {
         </ContentSet>
         {/* 페이지네이션 데이터를 data로 받기 */}
         <MoreInfoBox
-          pageType={"myPage"}
+          isRouterPaging={false}
           data={data}
           pageNums={pageNums}
           setPageNums={setPageNums}

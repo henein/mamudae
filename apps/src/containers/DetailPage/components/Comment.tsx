@@ -7,18 +7,19 @@ import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
 import ModifyCommentForm from "./ModifyCommentForm";
+import { useMine } from "../../../hooks/detailPageHooks/useDetail";
+import Label from "../../../component/Label";
 
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
-  const [isMyComment, setIsMyComment] = useState<boolean>(false);
   const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
+
+  const isMine = useMine(data.uid);
+
   useEffect(() => {
-    if (data.userData && data.userData.userName == data.userName) {
-      setIsMyComment(true);
-    }
-    if (data.userName == "알 수 없음") setIsDeleteComment(true);
-  }, [isMyComment, data]);
+    if (data.role === null) setIsDeleteComment(true);
+  }, [data]);
 
   return (
     <Container>
@@ -34,19 +35,22 @@ const Comment = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isDeleteComment={isDeleteComment}>
-                  {data.userName}
+                <NickName
+                  isDeleteComment={isDeleteComment}
+                  isMine={isMine}
+                  isAdminRole={data.role === "ADMIN"}
+                >
+                  {data.nickName}
                 </NickName>
-                <Floor>48층</Floor>
-                <Job>겸마 격수</Job>
+                <Label type={data.roleInBoard} />
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               {!isDeleteComment && (
                 <CommentMenuIcon
                   boardId={data.boardId}
                   comment={data.comment}
-                  commentId={data.commentId}
-                  isMyComment={isMyComment}
+                  commentId={data.id}
+                  isMine={isMine}
                   isRecomment={false}
                   setIsModifyClick={setIsModifyClick}
                 />
@@ -65,10 +69,10 @@ const Comment = ({ ...data }) => {
                 <CommentForm
                   setIsClick={setIsClick}
                   boardId={data.boardId}
-                  commentId={data.commentId}
+                  commentId={data.id}
                   isRecomment={true}
                   firstRecomment={true}
-                  userName={data.userName}
+                  nickName={data.nickName}
                 />
               )}
             </FormDisplay>
@@ -81,12 +85,13 @@ const Comment = ({ ...data }) => {
               <ReComments
                 boardId={data.boardId}
                 comment={item.comment}
-                userName={item.userName}
+                nickName={data.writerList[item.writerId].nickName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
-                replyId={item.replyId}
-                parentCommentId={data.commentId}
-                userData={data.userData}
+                replyId={item.id}
+                commentId={data.id}
+                role={data.writerList[item.writerId].role}
+                uid={data.writerList[item.writerId].uid}
                 key={idx}
               />
             );
@@ -118,30 +123,24 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Job = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.labelBlack};
-`;
 const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const Floor = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-`;
-const NickName = styled.div<{ isDeleteComment: boolean }>`
-  color: ${({ theme, isDeleteComment }) =>
-    isDeleteComment ? theme.subText : theme.text};
-  margin-right: 4px;
+const NickName = styled.div<{
+  isMine: boolean;
+  isDeleteComment: boolean;
+  isAdminRole: boolean;
+}>`
+  color: ${({ theme, isDeleteComment, isMine, isAdminRole }) =>
+    isDeleteComment
+      ? theme.subText
+      : isAdminRole
+      ? theme.danger
+      : isMine
+      ? theme.brand
+      : theme.text};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
   font-size: 12px;
 `;
 
@@ -162,6 +161,7 @@ const CommentHeader = styled.div`
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
   margin-bottom: 8px;
 `;
 const CommentContent = styled.div<{ isDeleteComment: boolean }>`

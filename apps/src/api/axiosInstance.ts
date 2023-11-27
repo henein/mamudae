@@ -16,14 +16,17 @@ axiosInstance.interceptors.request.use(
     } else {
       config.headers["Content-Type"] = "application/json";
     }
-    const accessToken = localStorage.getItem("access") || "";
-    config.headers.Authorization = `${accessToken}`;
 
+    const accessToken = localStorage.getItem("access") || "";
+    if (accessToken) {
+      config.headers.Authorization = accessToken;
+    } else {
+      // accessToken이 없으면 아무것도 하지 않음
+    }
     return config;
   },
   (error) => {
-    // 오류 요청을 보내기전 수행할 일
-    // ...
+    // 오류 요청을 보내기전 수행할 코드
     return Promise.reject(error);
   }
 );
@@ -31,10 +34,6 @@ axiosInstance.interceptors.request.use(
 // get 요청 시 토큰 인증이 들어간다면, 사용될 로직
 axiosInstance.interceptors.response.use(
   (response) => {
-    if (response.status === 404) {
-      console.log("404 페이지로 넘어가야 함!");
-    }
-
     return response;
   },
   async (error) => {
@@ -55,26 +54,23 @@ axiosInstance.interceptors.response.use(
       const response = await axios.request(error.config);
       return response;
     } else if (exception == 102) {
-      alert("사용자 세션이 만료되었습니다. 다시 로그인 해주세요.");
+      alert("사용자 토큰이 만료되었습니다. 다시 로그인 해주세요.");
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
-      window.location.reload();
-    } else if (exception == 103) {
-      alert("토큰 값이 변경되었습니다. 다시 로그인 해주세요.");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("access");
-      window.location.reload();
-    } else if (exception == 104) {
-      alert("토큰이 사라져 로그인 페이지로 이동합니다.");
-      window.location.href = "/login";
-    } else {
-      alert("Error 500");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("access");
-      window.location.reload();
+      window.location.href = "/";
       return;
+    } else if (exception == 103) {
+      alert("사용자 토큰 값이 변경되었습니다. 다시 로그인 해주세요.");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("access");
+      return;
+    } else if (exception == 104) {
+      alert("로그인 해주세요");
+      window.location.href = "/login";
+      return;
+    } else {
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
   }
 );
 

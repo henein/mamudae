@@ -3,24 +3,46 @@ import styled from "styled-components";
 import UserHistoryBox from "./UserHistoryBox";
 import { Title } from "../Character/CharSelectBox";
 import UserInfoBox from "./UserInfoBox";
+import { useGetMyProfile } from "../../../../hooks/myPageHooks/useUserProfile";
 
-const index = () => {
+const Profile = () => {
+  const myProfile = useGetMyProfile({
+    refetchOnWindowFocus: false,
+  }).data;
+
   return (
     <Container>
       <Title>프로필</Title>
-      <Content>
-        <UserInfoBox />
-        <HistoryList>
-          <UserCreateDate title="가입한 날짜" history="2023.03.07" />
-          <UserPostNum title="작성한 게시글 수" history="5" />
-          <UserCommentNum title="작성한 댓글 수" history="10" />
-        </HistoryList>
-      </Content>
+      {myProfile && (
+        <Content>
+          <UserInfoBox
+            imageUrl={myProfile.imageUrl}
+            userEmail={myProfile.userEmail}
+            userName={myProfile.userName}
+          />
+          <HistoryList>
+            <UserCreateDate
+              title="가입한 날짜"
+              history={myProfile.signUpDate
+                .map((num: number) => num.toString().padStart(2, "0"))
+                .join(".")}
+            />
+            <UserPostNum
+              title="작성한 게시글 수"
+              history={myProfile.boardCount}
+            />
+            <UserCommentNum
+              title="작성한 댓글 수"
+              history={myProfile.commentCount}
+            />
+          </HistoryList>
+        </Content>
+      )}
     </Container>
   );
 };
 
-export default index;
+export default Profile;
 
 const Container = styled.div`
   display: flex;

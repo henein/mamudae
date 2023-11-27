@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type warningState = {
   isWarning: boolean;
-  warningType: "delete" | "modify" | "report";
+  warningType: "delete" | "modify" | "report" | "cubeCheck";
 };
 
 const initialState: warningState = {

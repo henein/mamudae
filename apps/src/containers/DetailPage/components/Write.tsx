@@ -5,7 +5,6 @@ import CommentForm from "./CommentForm";
 
 interface postinfos {
   boardId: string;
-  userData: any;
   totalComment: string;
 }
 const Write = ({ ...data }: postinfos) => {
@@ -45,4 +44,5 @@ const Container = styled.div<{ isScrollDown: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 0 24px;
   background-color: ${(prop) => prop.theme.cardHeader};
+  backdrop-filter: blur(4px);
 `;

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { PComment, RComment } from "../../api/comment";
-import { useLocalStorage } from "../storage/useLocalStorage";
 import {
   usePostComment,
   usePostReComment,
@@ -25,20 +24,15 @@ export const usePostForm = ({
   commentId,
   commentedUser,
 }: any) => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-
   const [PFormData, setPFormData] = useState<PComment>({
     boardId: "",
     comment: "",
-    accessToken,
   });
   const [RFormData, setRFormData] = useState<RComment>({
     boardId: "",
     comment: "",
     commentId: "",
     tag: "",
-    accessToken,
   });
 
   const { postReComments } = usePostReComment(RFormData); // 대댓글 post api
@@ -64,6 +58,7 @@ export const usePostForm = ({
         boardId: boardId,
         comment: data.comment,
       });
+      console.log(PFormData);
       return await postComments();
     }
   };
@@ -83,20 +78,15 @@ export const useDeleteForm = ({
   commentId,
   replyId,
 }: any) => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-
   // delete시, 부모 comment면 보내야되는 데이터 폼
   const [PFormData, setPFormData] = useState<PComment>({
     boardId: "",
     commentId: "",
-    accessToken,
   });
   // delete시, 자식 comment면 보내야되는 데이터 폼
   const [RFormData, setRFormData] = useState<RComment>({
     boardId: "",
     replyId: "",
-    accessToken,
   });
 
   const { delReComments } = useDelReComment(RFormData); // 대댓글 post api
@@ -137,39 +127,32 @@ export const usePutForm = ({
   tag,
   commentId,
 }: any) => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-
   const [PFormData, setPFormData] = useState<PComment>({
     boardId: "",
     comment: "",
     commentId: "",
-    accessToken,
   });
   const [RFormData, setRFormData] = useState<RComment>({
     boardId: "",
     comment: "",
     replyId: "",
     tag: "",
-    accessToken,
   });
 
   const { putComments } = usePutComment(PFormData); // 대댓글 put api
   const { putReComments } = usePutReComment(RFormData); // 댓글 put api
 
   // put 요청 시, 돌아가는 로직
-  const putLogic = async (data: FieldValues) => {
+  const putLogic = async (data: FieldValues, isCommonTag?: boolean) => {
     const commentWithoutTag = data.comment.replace("@" + tag, "");
-
     if (isRecomment) {
       await setRFormData({
         ...RFormData,
         boardId: boardId,
         comment: commentWithoutTag.trim(),
         replyId: replyId,
-        tag: data.comment.includes("@" + tag) ? tag : "",
+        tag: isCommonTag ? tag : null,
       });
-      console.log(RFormData);
       return await putReComments();
     } else {
       await setPFormData({

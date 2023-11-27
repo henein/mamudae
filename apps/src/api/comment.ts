@@ -1,13 +1,10 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
-interface DefaultProps {
-  accessToken?: string | undefined;
-}
-export interface GetComment extends DefaultProps {
+export interface GetComment {
   boardId: string;
 }
-export interface PComment extends DefaultProps {
+export interface PComment {
   boardId: string;
   comment?: string;
   commentId?: string | null;
@@ -19,9 +16,7 @@ export interface RComment extends PComment {
 
 // 댓글 조회
 export const getComment = async ({ boardId }: GetComment) => {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/${boardId}/comment`
-  );
+  const res = await axiosInstance.get(`/board/${boardId}/comment`);
 
   console.log(res);
   return res;

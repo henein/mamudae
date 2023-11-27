@@ -52,6 +52,7 @@ const Container = styled.div<{ isScrollDown: boolean }>`
   border-bottom: 1px solid ${(prop) => prop.theme.border};
   padding: 0 24px;
   background-color: ${(prop) => prop.theme.cardHeader};
+  backdrop-filter: blur(4px);
 `;
 
 const CustomImage = styled(Image)`
