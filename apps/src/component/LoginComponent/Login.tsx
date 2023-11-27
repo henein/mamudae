@@ -19,7 +19,9 @@ const Login = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (data) {
-      dispatch(saveUserInfo(data.userName));
+      dispatch(
+        saveUserInfo({ userName: data.userName, userRole: data.userRole })
+      );
     }
   }, [data, dispatch]);
 
