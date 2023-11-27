@@ -1,4 +1,4 @@
-import UpdatePage from "../../src/containers/UpdatePage/UpdatePage";
+import UpdatePage from "../../containers/UpdatePage/UpdatePage";
 
 const update = () => {
   return <UpdatePage />;

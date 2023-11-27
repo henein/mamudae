@@ -1,30 +1,27 @@
-import React from "react";
-import styled from "styled-components";
-import Profile from "./components/Profile";
+import styled from 'styled-components';
+import Logo from '../../component/Logo';
+import RegisterForm from '../../containers/RegisterPage/components/RegisterForm';
 
 const RegisterPage = () => {
   return (
     <Container>
-      <Title>Henein</Title>
-      <Profile />
+      <SignUpTitle>
+        <Logo size="small" />
+      </SignUpTitle>
+      <RegisterForm />
     </Container>
   );
 };
 
 export default RegisterPage;
 
-const Title = styled.span`
-  position: absolute;
-  top: 16%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 128px;
-  color: ${(prop) => prop.theme.brand};
-`;
+const SignUpTitle = styled.div``;
 
 const Container = styled.div`
-  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  gap: 42px;
 `;

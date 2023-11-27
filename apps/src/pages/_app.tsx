@@ -1,13 +1,13 @@
-import "../styles/globals.css";
+import '../../styles/globals.css';
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useRouter } from "next/router";
-import Layout from "../src/component/Layout";
+import Layout from "../component/Layout";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
-import SecondLayout from "../src/component/SecondLayout";
+import { store } from "../../store/store";
+import SecondLayout from "../component/SecondLayout";
 import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }: AppProps) {

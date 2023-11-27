@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
+import { usePrintCode } from "../hooks/kakao/usePrintCode";
 
 const KaKao = () => {
   const router = useRouter();

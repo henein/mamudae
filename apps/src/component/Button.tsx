@@ -71,8 +71,8 @@ const StyledButton = styled.button<IButton>`
   border-radius: 8px;
   padding: 12px 16px;
   color: ${({ theme, sort }) => (sort === "secondary" ? theme.text : "white")};
+  transition: all ease-in-out 100ms;
   &:hover {
-    transition: all ease-out 200ms;
     background-color: ${({ theme, sort }) =>
       sort === "primary"
         ? theme.brandHover

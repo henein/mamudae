@@ -1,9 +1,9 @@
 import React from "react";
-import PostPage from "../../../src/containers/PostPage/PostPage";
+import PostPage from "../../../containers/PostPage/PostPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { getApi } from "../../../src/api/postpage";
-import { announce } from "../../../src/api/announce";
+import { getApi } from "../../../api/postpage";
+import { announce } from "../../../api/announce";
 
 const PostList = () => {
   return <PostPage />;

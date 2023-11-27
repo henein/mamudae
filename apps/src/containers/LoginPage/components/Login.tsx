@@ -3,7 +3,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
-import kaKao from "/public/loginPageImages/KaKao.png";
+import kakaoIcon from "/public/loginPageImages/KaKao.png";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import useKaKao from "../../../hooks/kakao/useKaKao";
@@ -56,12 +56,12 @@ const Login = () => {
         <MidLineTextDiv>또는</MidLineTextDiv>
         <Line />
       </Lines>
-      <KaKaoBtn type="button">
-        <KaKaoDiv onClick={login}>
-          <KaKaoImg src={kaKao} alt="s" />
+      <KakaoBtn type="button">
+        <KakaoDiv onClick={login}>
+          <KakaoImg src={kakaoIcon} alt="s" />
           <span>KaKao로 로그인하기</span>
-        </KaKaoDiv>
-      </KaKaoBtn>
+        </KakaoDiv>
+      </KakaoBtn>
     </Container>
   );
 };
@@ -82,13 +82,13 @@ export const FormInputCss = css`
   }
 `;
 
-const KaKaoImg = styled(Image)`
+const KakaoImg = styled(Image)`
   position: absolute;
   left: 14px;
   width: 17px;
   height: 17px;
 `;
-const KaKaoDiv = styled.div`
+const KakaoDiv = styled.div`
   display: flex;
   position: relative;
   align-items: center;
@@ -132,9 +132,8 @@ const Lines = styled.div`
 `;
 const Line = styled.hr`
   width: calc((100% - 30px) / 2);
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 `;
 const MidLineTextDiv = styled.div`
   font-size: 10px;
@@ -143,7 +142,7 @@ const MidLineTextDiv = styled.div`
   text-align: center;
 `;
 
-const KaKaoBtn = styled.button`
+const KakaoBtn = styled.button`
   border-radius: 8px;
   border: 1px solid ${customColor.whiteGray};
   background-color: ${customColor.yellow};

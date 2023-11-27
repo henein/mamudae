@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export interface LocalLoginProps {
   userEmail: string;
@@ -28,4 +28,17 @@ export async function postLocalSignUp({
     }
   );
   return res.headers;
+}
+
+export async function sendAuthenticationMail(email: string) {
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/mail/naver`,
+    {
+      requestEmail: email,
+    }
+  );
+
+  console.log(res.data);
+
+  return res.data;
 }

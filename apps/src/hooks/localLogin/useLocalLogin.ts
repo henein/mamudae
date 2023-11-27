@@ -5,7 +5,7 @@ import {
   postLocalSignUp,
 } from "../../api/localLogin";
 import { useLocalStorage } from "../storage/useLocalStorage";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export interface UseLocalLoginProps extends LocalLoginProps {
   options?: any;
