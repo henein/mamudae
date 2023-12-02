@@ -12,7 +12,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
     handleNextGroup,
     handlePrevGroup,
     lastPageGroup,
-    pageGroups,
+    pageGroupsNum,
   } = usePagenate({ apiData: data });
 
   const handlePage = (isRouterPaging: boolean, pageNum: number) => {
@@ -20,8 +20,8 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
     else setPageNums(pageNum);
   };
   const handleGroup = (isRouterPaging: boolean, isPrev: boolean) => {
-    if (isPrev) isRouterPaging ? handlePrevGroup(pageGroups) : setPageNums();
-    else isRouterPaging ? handleNextGroup(pageGroups) : setPageNums();
+    if (isPrev) isRouterPaging ? handlePrevGroup() : setPageNums();
+    else isRouterPaging ? handleNextGroup() : setPageNums();
   };
   const handleActive = (isRouterPaging: boolean, pageNum: number) => {
     return isRouterPaging ? pageNum == currentPage : pageNum == pageNums;
@@ -30,7 +30,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
   return (
     <>
       <MoreInfo>
-        {pageGroups !== 0 && (
+        {pageGroupsNum !== 0 && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, true)}>
             <Image
               src="/postPageImages/keyboard_arrow_left.svg"
@@ -51,7 +51,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
             {pageNum}
           </PageNumBtn>
         ))}
-        {pageGroups !== lastPageGroup && (
+        {pageGroupsNum !== lastPageGroup && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, false)}>
             <Image
               src="/postPageImages/keyboard_arrow_right.svg"
