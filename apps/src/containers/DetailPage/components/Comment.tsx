@@ -42,7 +42,7 @@ const Comment = ({ ...data }) => {
                 >
                   {data.nickName}
                 </NickName>
-                <Label type={data.roleInBoard} />
+                <Label type={data.role} />
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               {!isDeleteComment && (

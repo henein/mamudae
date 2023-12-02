@@ -64,7 +64,7 @@ const ReComments = ({ ...data }) => {
                 <CommentForm
                   setIsClick={setIsClick}
                   boardId={data.boardId}
-                  commentId={data.parentCommentId}
+                  commentId={data.commentId}
                   isRecomment={true}
                   nickName={data.nickName}
                 />
