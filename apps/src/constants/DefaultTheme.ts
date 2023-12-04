@@ -98,6 +98,7 @@ export const lightMode: DefaultTheme = {
   dangerActive: paletteColor.danger400,
   modalBackdrop: paletteColor.black200,
   tabContainerBackground: paletteColor.white900,
+  characterCardDisableBackground: paletteColor.grey400,
   characterCardInfoBackground: paletteColor.white800,
   characterCardButton: paletteColor.black600,
   buttonBackground: paletteColor.white900,
@@ -105,6 +106,8 @@ export const lightMode: DefaultTheme = {
   buttonDisableText: paletteColor.black300,
   hyperlink: paletteColor.secondary600,
   toggleSelect: paletteColor.white800,
+  buttonRingHover: paletteColor.black025,
+  buttonRingActive: paletteColor.white050,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
@@ -135,6 +138,7 @@ export const darkMode: DefaultTheme = {
   dangerActive: paletteColor.danger500,
   modalBackdrop: paletteColor.black300,
   tabContainerBackground: paletteColor.grey800,
+  characterCardDisableBackground: paletteColor.black900,
   characterCardInfoBackground: paletteColor.grey800A,
   characterCardButton: paletteColor.white700,
   buttonBackground: paletteColor.grey700,
@@ -142,4 +146,6 @@ export const darkMode: DefaultTheme = {
   buttonDisableText: paletteColor.white400,
   hyperlink: paletteColor.secondary500,
   toggleSelect: paletteColor.grey700A,
+  buttonRingHover: paletteColor.black050,
+  buttonRingActive: paletteColor.white100,
 };

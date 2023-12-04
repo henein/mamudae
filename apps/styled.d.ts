@@ -32,6 +32,7 @@ declare module "styled-components" {
     dangerActive: string;
     modalBackdrop: string;
     tabContainerBackground: string;
+    characterCardDisableBackground: string;
     characterCardInfoBackground: string;
     characterCardButton: string;
     buttonBackground: string;
@@ -39,5 +40,7 @@ declare module "styled-components" {
     buttonDisableText: string;
     hyperlink: string;
     toggleSelect: string;
+    buttonRingHover: string;
+    buttonRingActive: string;
   }
 }
