@@ -10,17 +10,17 @@ declare module "styled-components" {
     danger: string;
     text: string;
     brand: string;
-    footer: string;
+    footerBackground: string;
     cardHeader: string;
     subText: string;
     chatBackground: string;
-    chatBubble: string;
+    chatBubbleBackground: string;
     footerText: string;
     footerSubText: string;
     header: string;
     input: string;
     button: string;
-    toolButton: string;
+    toolButtonHover: string;
     chatSelfText: string;
     headerButtonHover: string;
     mentionText: string;
@@ -31,5 +31,16 @@ declare module "styled-components" {
     dangerHover: string;
     dangerActive: string;
     modalBackdrop: string;
+    tabContainerBackground: string;
+    characterCardDisableBackground: string;
+    characterCardInfoBackground: string;
+    characterCardButton: string;
+    buttonBackground: string;
+    buttonDisableBackground: string;
+    buttonDisableText: string;
+    hyperlink: string;
+    toggleSelect: string;
+    buttonRingHover: string;
+    buttonRingActive: string;
   }
 }
