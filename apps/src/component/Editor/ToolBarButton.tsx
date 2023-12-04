@@ -22,7 +22,7 @@ const Container = styled.button<{ isChecked?: boolean }>`
   width: 32px;
   height: 32px;
   background-color: ${({ theme, isChecked }) =>
-    isChecked ? theme.toolButton : 'transparent'};
+    isChecked ? theme.toolButtonHover : 'transparent'};
   border-radius: 8px;
   display: flex;
   justify-content: center;
