@@ -15,7 +15,7 @@ const Footer = () => {
 export default Footer;
 
 const Bottom = styled.div`
-  background-color: ${({ theme }) => theme.footer};
+  background-color: ${({ theme }) => theme.footerBackground};
   height: 144px;
   display: flex;
   justify-content: center;
