@@ -89,8 +89,8 @@ const StyledButton = styled.button<IButton>`
     box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.border};
   }
   &:disabled {
-    background-color: #f4f5fa;
-    color: rgba(0, 0, 0, 0.4);
+    background-color: ${({ theme }) => theme.buttonDisableBackground};
+    color: ${({ theme }) => theme.buttonDisableText};
     cursor: auto;
   }
 `;

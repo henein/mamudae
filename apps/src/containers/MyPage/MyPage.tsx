@@ -85,7 +85,7 @@ const SelectOption = styled.div`
   padding: 0px 8px;
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.border};
-  background-color: white;
+  background-color: ${({ theme }) => theme.card};
   margin-bottom: 24px;
 `;
 const buttonStyle = css<{ isSelect: boolean }>`

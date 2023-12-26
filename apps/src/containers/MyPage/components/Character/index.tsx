@@ -128,6 +128,7 @@ const QuestionBtn = styled.button`
   display: flex;
   width: 32px;
   height: 32px;
+  background-color: ${({ theme }) => theme.buttonBackground};
   flex-direction: column;
   justify-content: center;
   align-items: center;

@@ -40,8 +40,6 @@ export const usePagenate = ({ ...props }: PagingContent) => {
   };
 
   // 페이지 컨트롤 로직 : api 데이터를 통해 페이징 할수있는 2차원 배열을 생성
-  const pageGroups = Number(router.query.pageGroups) || 0;
-
   const [pageArr, setPageArr] = useState<number[]>([]);
   useEffect(() => {
     if (props.apiData) {
@@ -61,37 +59,46 @@ export const usePagenate = ({ ...props }: PagingContent) => {
     }
     setPageGroup(pageGroup);
   }, [pageArr]);
+
+  // [[1,2,3,4,5,6,7,8,9,10],[11,12....]]
+  // 위와같이 페이지가 모여있는 2차원배열에서 상위 배열의 인덱스를 나타냄 0,1,2...
+  const [pageGroupsNum, setPageGroupsNum] = useState<number>(0);
+  useEffect(() => {
+    if (page && pageGroup) {
+      setPageGroupsNum(pageGroup.findIndex((arr) => arr.indexOf(page) !== -1));
+    }
+  }, [page, pageGroup]);
+
   const [pages, setPages] = useState<number[]>([]);
   useEffect(() => {
     let newpages: number[] = [];
-    if (pageGroup[pageGroups]) {
-      newpages = pageGroup[pageGroups].map((item) => {
+    if (pageGroup[pageGroupsNum]) {
+      newpages = pageGroup[pageGroupsNum].map((item) => {
         return item;
       });
       setPages(newpages);
     }
-  }, [pageGroups, pageGroup]);
-  // 다음 페이지그룹으로 이동하는 함수
-  const handleNextGroup = (pageGroupsNum: number) => {
-    const nextGroup = ++pageGroupsNum;
+  }, [pageGroupsNum, pageGroup]);
+
+  // 다음 페이지 그룹으로 이동하는 함수
+  const handleNextGroup = async () => {
+    let virtualPageGroupsNum = pageGroupsNum + 1;
     router.push({
       pathname: router.pathname,
       query: {
         ...router.query,
-        page: pageGroup[nextGroup][0] || 0,
-        pageGroups: nextGroup || 0,
+        page: virtualPageGroupsNum * 10 + 1,
       },
     });
   };
   // 이전 페이지 그룹으로 이동하는 함수
-  const handlePrevGroup = (pageGroupsNum: number) => {
-    const prevGroup = --pageGroupsNum;
+  const handlePrevGroup = async () => {
+    let virtualPageGroupsNum = pageGroupsNum - 1;
     router.push({
       pathname: router.pathname,
       query: {
         ...router.query,
-        page: pageGroup[prevGroup][9] || 0,
-        pageGroups: prevGroup || 0,
+        page: virtualPageGroupsNum * 10 + 10,
       },
     });
   };
@@ -99,17 +106,6 @@ export const usePagenate = ({ ...props }: PagingContent) => {
   const lastPageGroup = pageGroup.length - 1;
 
   // 에러처리 -> pageGroups가 lasPageGroup을 넘는경우 404페이지로 라우팅
-  const [pageGroupNum, setPageGroupNum] = useState<number>(0);
-  useEffect(() => {
-    setPageGroupNum(pageGroups);
-  }, [pageGroups]);
-  useEffect(() => {
-    if (lastPageGroup > 0) {
-      if (pageGroupNum > lastPageGroup) {
-        router.push("/404");
-      }
-    }
-  }, [lastPageGroup, pageGroupNum, router]);
 
   // currentPage : 현재 페이지
   // handlePageChange : 페이지 번호 클릭시 라우팅(page번호 change)
@@ -124,6 +120,6 @@ export const usePagenate = ({ ...props }: PagingContent) => {
     handleNextGroup,
     handlePrevGroup,
     lastPageGroup,
-    pageGroups,
+    pageGroupsNum,
   };
 };

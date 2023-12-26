@@ -1,21 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type userInfoType = {
+interface userInfoType {
   userName: string;
-  userUniquKey: string;
-};
+  userRole: string;
+}
 
 const initialState: userInfoType = {
   userName: "",
-  userUniquKey: "",
+  userRole: "",
 };
 
 const userInfoSlice = createSlice({
-  name: "userInfo",
+  name: "loginUserInfo",
   initialState,
   reducers: {
     saveUserInfo: (state, action) => {
-      state.userName = action.payload;
+      const { userName, userRole } = action.payload;
+      state.userName = userName;
+      state.userRole = userRole;
     },
   },
 });
