@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import styled, { css } from "styled-components";
-import { customColor } from "../../../constants/customColor";
-import Image from "next/image";
-import kakaoIcon from "/public/loginPageImages/KaKao.png";
-import Button from "../../../component/Button";
-import Link from "next/link";
-import useKaKao from "../../../hooks/kakao/useKaKao";
-import { LocalLoginProps } from "../../../api/localLogin";
-import { useLocalLogin } from "../../../hooks/localLogin/useLocalLogin";
+import React, { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import styled, { css } from 'styled-components';
+import { customColor } from '../../../constants/customColor';
+import Image from 'next/image';
+import kakaoIcon from '/public/loginPageImages/KaKao.png';
+import Button from '../../../component/Button';
+import Link from 'next/link';
+import useKaKao from '../../../hooks/kakao/useKaKao';
+import { LocalLoginProps } from '../../../api/localLogin';
+import { useLocalLogin } from '../../../hooks/localLogin/useLocalLogin';
+import { TextField } from '../../../component/TextField';
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const { login } = useKaKao();
   const [localLoginForm, setLocalLoginForm] = useState<LocalLoginProps>({
-    userEmail: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const { mutate } = useLocalLogin(localLoginForm);
 
   const submit = async (data: FieldValues) => {
     await setLocalLoginForm({
-      userEmail: data.id,
+      email: data.email,
       password: data.password,
     });
     await mutate();
@@ -30,24 +31,22 @@ const Login = () => {
   return (
     <Container onSubmit={handleSubmit(submit)}>
       <Title>로그인</Title>
-      <Id
-        type="text"
+      <TextField
+        register={register('email')}
+        type="email"
         placeholder="이메일"
-        {...register("id")}
-        autoComplete="off"
       />
-      <PassWord
-        type="text"
+      <TextField
+        register={register('password')}
+        type="password"
         placeholder="비밀번호"
-        {...register("password")}
-        autoComplete="off"
       />
       <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
         로그인
       </LoginBtn>
       <SignUpContents>
         <LeftBtn type="button">로그인이 안되시나요?</LeftBtn>
-        <Link href="/signUp">
+        <Link href="/register">
           <RightBtn type="button">회원가입</RightBtn>
         </Link>
       </SignUpContents>
@@ -59,7 +58,7 @@ const Login = () => {
       <KakaoBtn type="button">
         <KakaoDiv onClick={login}>
           <KakaoImg src={kakaoIcon} alt="s" />
-          <span>KaKao로 로그인하기</span>
+          <span>Kakao로 로그인하기</span>
         </KakaoDiv>
       </KakaoBtn>
     </Container>

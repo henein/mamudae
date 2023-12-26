@@ -1,59 +1,153 @@
-'use client';
-
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import { customColor } from '../../../constants/customColor';
 import Image from 'next/image';
-import kaKao from '/public/loginPageImages/KaKao.png';
-import Button from '../../../component/Button';
 import Link from 'next/link';
-import { FormInputCss } from '../../LoginPage/components/Login';
+import styled from 'styled-components';
 import useKaKao from '../../../hooks/kakao/useKaKao';
+import {
+  postAuthenticationMail,
+  postLocalRegister,
+  postVerifyCode,
+} from '../../../api/localLogin';
+import Button from '../../../component/Button';
 import { TextField } from '../../../component/TextField';
-import { sendAuthenticationMail } from '../../../api/localLogin';
+import kaKao from '/public/loginPageImages/KaKao.png';
+import { customColor } from '../../../constants/customColor';
+import { FormInputCss } from '../../LoginPage/components/Login';
 
 interface RegisterFormInputs {
   email: string;
   password: string;
   confirmPassword: string;
-  code: string;
+  verifyCode: string;
 }
 
+type RegisterPhase = 'email' | 'verify' | 'password';
+
 const RegisterForm = () => {
+  const [currentPhase, setCurrentPhase] = useState<RegisterPhase>('email');
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [token, setToken] = useState('');
+
   const { login } = useKaKao();
 
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormInputs>();
+  const { register, getValues, handleSubmit, formState } =
+    useForm<RegisterFormInputs>();
 
   const onSubmit = async (data: FieldValues) => {
-    sendAuthenticationMail("ahb0327@naver.com");
+    switch (currentPhase) {
+      case 'email': {
+        try {
+          await postAuthenticationMail(data.email);
+        } catch (error) {
+          alert(error);
+          return;
+        }
+
+        setCurrentPhase('verify');
+        break;
+      }
+      case 'verify': {
+        try {
+          setToken(await postVerifyCode(data.verifyCode));
+        } catch (error) {
+          alert(error);
+          return;
+        }
+
+        setCurrentPhase('password');
+        break;
+      }
+      case 'password':
+        try {
+          await postLocalRegister({
+            email: data.email,
+            password: data.password,
+            token,
+          });
+        } catch (error) {
+          alert(error);
+          return;
+        }
+
+        break;
+    }
   };
+
+  // useEffect(() => {
+  //   switch (currentPhase) {
+  //     case 'email':
+  //       if (formState.dirtyFields.email) {
+  //         setIsSubmitDisabled(false);
+  //       } else {
+  //         setIsSubmitDisabled(true);
+  //       }
+  //       break;
+  //     case 'verify':
+  //       console.log(getValues('verifyCode'));
+  //       if (
+  //         formState.dirtyFields.verifyCode &&
+  //         getValues('verifyCode').length === 6
+  //       ) {
+  //         setIsSubmitDisabled(false);
+  //       } else {
+  //         setIsSubmitDisabled(true);
+  //       }
+  //       break;
+  //     default:
+  //       setIsSubmitDisabled(true);
+  //   }
+  // }, [currentPhase, formState, getValues]);
 
   return (
     <>
       <Container onSubmit={handleSubmit(onSubmit)}>
         <Title>회원가입</Title>
-        <p>{errors.confirmPassword?.message}</p>
-        <TextField {...register('email')} type="email" placeholder="이메일" />
+        <p>{formState.errors.confirmPassword?.message}</p>
         <TextField
-          {...register('password')}
-          type="password"
-          placeholder="비밀번호"
+          register={register('email')}
+          type="email"
+          placeholder="이메일"
+          disabled={currentPhase !== 'email'}
         />
-        <TextField
-          {...register('confirmPassword', {
-            validate: (value) => value === getValues('password'),
-          })}
-          type="password"
-          placeholder="비밀번호 확인"
-        />
-        <Button type="submit" sort="primary" width="100%" fontWeight="700">
-          이메일로 가입하기
+        {currentPhase === 'verify' && (
+          <TextField
+            register={register('verifyCode', { pattern: /^[0-9]{6}$/ })}
+            type="number"
+            placeholder="인증번호"
+            align="center"
+          />
+        )}
+        {currentPhase === 'password' && (
+          <>
+            <TextField
+              register={register('password')}
+              type="password"
+              placeholder="비밀번호"
+            />
+            <TextField
+              register={register('confirmPassword', {
+                validate: (value) => value === getValues('password'),
+              })}
+              type="password"
+              placeholder="비밀번호 확인"
+            />
+          </>
+        )}
+        <Button
+          type="submit"
+          sort="primary"
+          width="100%"
+          fontWeight="700"
+          disabled={isSubmitDisabled}
+        >
+          {
+            {
+              email: '인증번호 받기',
+              verify: '인증하기',
+              password: '가입하기',
+            }[currentPhase]
+          }
         </Button>
         <Lines>
           <Line />
@@ -63,7 +157,7 @@ const RegisterForm = () => {
         <KaKaoBtn type="button">
           <KaKaoDiv onClick={login}>
             <KaKaoImg src={kaKao} alt="s" />
-            <span>KaKao로 가입하기</span>
+            <span>Kakao로 가입하기</span>
           </KaKaoDiv>
         </KaKaoBtn>
       </Container>
