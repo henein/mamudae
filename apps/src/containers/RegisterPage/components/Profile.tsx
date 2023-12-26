@@ -6,7 +6,7 @@ import circle from "/public/detailPageImages/Ellipse.png";
 import { FieldValues, useForm } from "react-hook-form";
 import { FormInputCss } from "../../LoginPage/components/Login";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
-import { useSetUserName } from "../../../hooks/user/useUserInfo";
+// import { useSetUserName } from "../../../hooks/user/useUserInfo";
 
 interface IUserName {
   setName: string;
@@ -21,12 +21,12 @@ const Profile = () => {
     setName: "",
     accessToken,
   });
-  const { mutate } = useSetUserName(userName);
+  // const { mutate } = useSetUserName(userName);
 
   // 2~15 사이 문자열 전달
   const submit = async (data: FieldValues) => {
     await setUserName({ ...userName, setName: data.nickname });
-    await mutate();
+    // await mutate();
   };
 
   return (
