@@ -7,12 +7,12 @@ import {
   useGetAllMyChar,
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
-import LoadingSpinner from "./LoadingSpinner";
 import useOnWarning from "../../../../hooks/reduxHooks/useOnWarning";
 import Warning from "../../../../component/Warning";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
+import LoadingSpinner from "../../../../component/LoadingSpinner";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
@@ -78,10 +78,10 @@ const MyChar = () => {
             onClick={handleAuthClick}
             disabled={isLoading}
           >
-            <>
+            <BtnInner>
               {isLoading && <LoadingSpinner />}
               <span>인증하기</span>
-            </>
+            </BtnInner>
           </AuthBtn>
         </BottomForm>
         {isWarning && (
@@ -139,4 +139,8 @@ const AuthBtn = styled(Button)``;
 const BottomForm = styled.form`
   display: flex;
   gap: 8px;
+`;
+const BtnInner = styled.span`
+  display: flex;
+  gap: 5px;
 `;

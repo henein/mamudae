@@ -14,7 +14,9 @@ const UpdatePage = () => {
   const router = useRouter();
   const boardId = router.query.id as string;
 
-  const { title, text } = useDetail({
+  const {
+    data: { title, text },
+  } = useDetail({
     boardId,
     options: {
       refetchOnWindowFocus: false,

@@ -1,19 +1,22 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import { BoardInfoType } from "../MainPage";
-import SvgIcon from "@mui/material/SvgIcon";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import SvgIcon from '@mui/material/SvgIcon';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import useDarkMode from '../../../hooks/reduxHooks/useDarkMode';
 
-const BoardHead = ({ boardTitle: board_title }: BoardInfoType) => {
+export type BoardHeadProps = {
+  boardTitle: string;
+};
+
+const BoardHead = ({ boardTitle }: BoardHeadProps) => {
   const darkModeState = useDarkMode();
 
   return (
     <BoardHeader darkModeState={darkModeState}>
-      <Link href={`board/${board_title}`}>
+      <Link href={`board/${boardTitle}`}>
         <Title>
-          {board_title}
+          {boardTitle}
           <ImgDiv>
             <SvgIcon component={ChevronRightIcon} />
           </ImgDiv>

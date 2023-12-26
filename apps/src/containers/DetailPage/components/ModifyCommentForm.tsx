@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import TextAreaAutoResize from "react-textarea-autosize";
 import { useForm, FieldValues } from "react-hook-form";
-// import { usePutLogic } from "../../../hooks/detailPageHooks/useCommentForm";
 import useCommentInfoSet from "../../../hooks/reduxHooks/useCommentInfoSet";
 import { usePutForm } from "../../../hooks/detailPageHooks/useCommentForm";
 
@@ -16,7 +15,6 @@ const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
 
   const commentInfo = useCommentInfoSet();
 
-  console.log(props);
   const { putLogic } = usePutForm({
     isRecomment: props.isRecomment,
     boardId: commentInfo.boardId,
@@ -26,11 +24,12 @@ const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
   });
 
   const submit = async (data: FieldValues) => {
-    if (!localStorage.getItem("refresh")) {
+    if (!localStorage.getItem("access")) {
       alert("로그인해야 이용할 수 있습니다.");
       return;
     } else {
-      await putLogic(data);
+      const isCommonTag = data.comment.split(" ")[0] == "@" + commentInfo.tag;
+      await putLogic(data, isCommonTag);
       props.setIsModifyClick(false);
     }
   };
@@ -42,9 +41,9 @@ const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
           rows={1}
           {...register("comment")}
           defaultValue={
-            props.isRecomment
-              ? `@${commentInfo.tag} ${commentInfo.comment} `
-              : `${commentInfo.comment}`
+            props.isRecomment && commentInfo.tag
+              ? `@${commentInfo.tag} ${commentInfo.comment}`
+              : commentInfo.comment
           }
         />
         <InputFunc>
