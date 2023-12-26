@@ -7,6 +7,8 @@ import {
   useRefreshChar,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../store";
 
 export interface CharInfo {
   avatar: string | null;
@@ -47,6 +49,10 @@ const CharBox = ({
   pickByUser,
   world,
 }: CharInfo) => {
+  const darkModeState = useSelector(
+    (state: RootState) => state.darkMode.isDarkMode
+  );
+
   // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -70,7 +76,11 @@ const CharBox = ({
     img.addEventListener("load", function () {
       const colorRGB = colorThief.getColor(img);
       const color = convertRGBToHSL(colorRGB[0], colorRGB[1], colorRGB[2]);
-      setImageRandomColor(`hsl(${color[0]}, 100%, 95%)`);
+      setImageRandomColor(
+        darkModeState
+          ? `hsl(${color[0]}, 15%, 25%)`
+          : `hsl(${color[0]}, 100%, 95%)`
+      );
     });
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
@@ -120,7 +130,11 @@ const CharBox = ({
               <LoadingSpinner />
             ) : (
               <NextImage
-                src="/myPageImages/refresh.svg"
+                src={
+                  darkModeState
+                    ? "/myPageImages/whiteRefresh.svg"
+                    : "/myPageImages/refresh.svg"
+                }
                 width="20"
                 height="20"
                 alt=""
@@ -146,7 +160,8 @@ const Container = styled.div<{ color: string | null; disable: string | null }>`
   width: 144px;
   height: 173px;
   box-sizing: border-box;
-  background-color: ${({ color, disable }) => (disable ? color : "#E0E1E6")};
+  background-color: ${({ color, disable, theme }) =>
+    disable ? color : theme.characterCardDisableBackground};
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;
@@ -193,7 +208,7 @@ const CharInfoBox = styled.div<{
         : isActive
         ? theme.brandActive
         : theme.border};
-  background-color: white;
+  background-color: ${({ theme }) => theme.card};
   position: absolute;
   bottom: 0px;
   z-index: 2;
@@ -225,7 +240,7 @@ const Tag = styled.div`
   border-radius: 8px;
 `;
 const NickName = styled.span`
-  color: #000;
+  color: ${({ theme }) => theme.text};
   font-size: 14px;
   font-weight: 400;
   line-height: normal;

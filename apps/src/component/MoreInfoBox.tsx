@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { customColor } from "../constants/customColor";
 import { usePagenate } from "../hooks/pagenateHook/usePagenate";
 
 const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
@@ -76,7 +75,6 @@ const MoreInfo = styled.div`
   height: 64px;
   border-top: 1px solid ${({ theme }) => theme.border};
 `;
-
 const NextPageBtn = styled.button`
   width: 32px;
   height: 32px;
@@ -88,15 +86,12 @@ const NextPageBtn = styled.button`
     display: none;
   }
 `;
-
 const PageNumBtn = styled.button<{ active: boolean }>`
   width: 32px;
   height: 32px;
-  color: ${(props) =>
-    props.active ? customColor.white : customColor.darkGray};
-  background-color: ${(props) =>
-    props.active ? props.theme.brand : customColor.white};
-  border-radius: ${(props) => props.active && "32px"};
+  color: ${({ active, theme }) => (active ? "#fff" : theme.subText)};
+  background-color: ${({ active, theme }) => active && theme.brand};
+  border-radius: ${({ active }) => active && "32px"};
   border: none;
   font-weight: 400;
   font-size: 12px;

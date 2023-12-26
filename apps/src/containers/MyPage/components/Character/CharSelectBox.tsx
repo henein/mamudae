@@ -103,7 +103,7 @@ export const BoxContent = styled.div`
   gap: 12px;
 `;
 export const Title = styled.h1`
-  color: #000;
+  color: ${({ theme }) => theme.text};
   font-size: 20px;
   font-weight: 700;
   line-height: normal;
@@ -125,7 +125,7 @@ const btnStyle = css<{ isSelect: boolean }>`
   padding: 8px 12px;
   color: ${({ isSelect, theme }) => (isSelect ? "white" : theme.subText)};
   background-color: ${({ isSelect, theme }) =>
-    isSelect ? "#212225" : "white"};
+    isSelect ? "#212225" : theme.card};
   font-size: 12px;
   font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
   line-height: normal;

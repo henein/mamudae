@@ -40,6 +40,6 @@ const Title = styled.h2`
 `;
 const HistoryCont = styled.h2`
   ${fontStyle}
-  color: #000;
+  color: ${({ theme }) => theme.text};
   font-size: 32px;
 `;
