@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
+import QuestionIcon from "/public/myPageImages/question.svg";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
@@ -54,12 +55,7 @@ const MyChar = () => {
             setOnModal(true);
           }}
         >
-          <Image
-            src="/myPageImages/question.svg"
-            width="20"
-            height="21"
-            alt=""
-          />
+          <QuestionIcon width="20px" height="21px" />
         </QuestionBtn>
         <BottomForm
           onSubmit={(e: any) => {
@@ -135,6 +131,7 @@ const QuestionBtn = styled.button`
   gap: 4px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  color: ${({ theme }) => theme.subText};
 `;
 const AuthBtn = styled(Button)``;
 const BottomForm = styled.form`

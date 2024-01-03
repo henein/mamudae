@@ -1,6 +1,5 @@
 import React, { useEffect, Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
-import { customColor } from "../../../constants/customColor";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 import { onWarnings } from "../../../../store/warningSlice/onWarning";
 import { useDispatch } from "react-redux";
@@ -87,7 +86,7 @@ const Functions = styled.div`
 `;
 const Container = styled.div`
   width: 81px;
-  border: 1px solid ${customColor.whiteGray};
+  border: 1px solid ${({ theme }) => theme.border};
   box-shadow: 0px 4px 8px 0px ${({ theme }) => theme.boxShadow};
   border-radius: 0px 16px 16px 16px;
   align-items: center;
@@ -95,6 +94,7 @@ const Container = styled.div`
   display: flex;
   position: absolute;
   right: -80px;
+  top: 20px;
   background-color: ${({ theme }) => theme.cardHeader};
   box-sizing: border-box;
 `;

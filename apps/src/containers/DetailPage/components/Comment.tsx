@@ -140,7 +140,7 @@ const NickName = styled.div<{
       : isMine
       ? theme.brand
       : theme.text};
-  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "normal")};
   font-size: 12px;
 `;
 
@@ -167,6 +167,5 @@ const UserInfo = styled.div`
 const CommentContent = styled.div<{ isDeleteComment: boolean }>`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${({ theme, isDeleteComment }) =>
-    isDeleteComment ? theme.subText : theme.text};
+  color: ${({ theme, isDeleteComment }) => theme.text};
 `;

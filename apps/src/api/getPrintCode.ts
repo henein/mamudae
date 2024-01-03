@@ -9,11 +9,14 @@ export async function getPrintCode(code: string) {
 
 export async function getAtByRT(refreshToken: string | null) {
   try {
-    const res = await axios.get(`/auth/refresh`, {
-      headers: {
-        RefreshToken: `${refreshToken}`,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+      {
+        headers: {
+          RefreshToken: `${refreshToken}`,
+        },
+      }
+    );
     return res;
   } catch (error: any) {
     return error.response;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import SvgIcon from "@mui/material/SvgIcon";
-import WarningIcon from "@mui/icons-material/Warning";
+import WarningIcon from "/public/detailPageImages/warning.svg";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { offWarnings } from "../../store/warningSlice/onWarning";
@@ -49,7 +48,7 @@ const Warning = ({ type, mutate }: WarningProps) => {
         <Content>
           {type !== "cubeCheck" && (
             <ImgDiv>
-              <SvgIcon component={WarningIcon} fontSize="small" />
+              <WarningIcon width="22px" height="19px" />
             </ImgDiv>
           )}
           {type == "cubeCheck" ? (

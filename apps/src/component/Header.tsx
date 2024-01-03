@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { toggleDarkMode } from "../../store/darkmodeSlice/darkmode";
-import SvgIcon from "@mui/material/SvgIcon";
-import SearchIcon from "@mui/icons-material/Search";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import SearchIcon from "/public/headerCompoImages/search.svg";
+import DarkModeIcon from "/public/headerCompoImages/dark_mode.svg";
+import LightModeIcon from "/public/headerCompoImages/light_mode.svg";
 import useScroll from "../hooks/scrollHooks/useScroll";
 
 const Header = () => {
@@ -48,16 +47,16 @@ const Header = () => {
           <RightDiv>
             <DarkModeBtn onClick={onClick}>
               <LightImg darkModeState={darkModeState}>
-                <SvgIcon component={LightModeIcon} fontSize="small" />
+                <LightModeIcon width="20px" height="20px" />
               </LightImg>
               <DarkImg darkModeState={darkModeState}>
-                <SvgIcon component={DarkModeIcon} fontSize="small" />
+                <DarkModeIcon width="20px" height="20px" />
               </DarkImg>
             </DarkModeBtn>
             <InputBox>
               <InlineInput placeholder="검색"></InlineInput>
               <SubmitBtn>
-                <SvgIcon component={SearchIcon} inheritViewBox />
+                <SearchIcon />
               </SubmitBtn>
             </InputBox>
           </RightDiv>
