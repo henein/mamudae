@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { usePagenate } from "../hooks/pagenateHook/usePagenate";
+import ArrowLeftIcon from "/public/postPageImages/keyboard_arrow_left.svg";
+import ArrowRightIcon from "/public/postPageImages/keyboard_arrow_right.svg";
 
 const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
   const {
@@ -31,12 +33,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
       <MoreInfo>
         {pageGroupsNum !== 0 && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, true)}>
-            <Image
-              src="/postPageImages/keyboard_arrow_left.svg"
-              width="6"
-              height="10"
-              alt=""
-            />
+            <ArrowLeftIcon width="6" height="10" />
           </NextPageBtn>
         )}
         {pages.map((pageNum) => (
@@ -52,12 +49,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
         ))}
         {pageGroupsNum !== lastPageGroup && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, false)}>
-            <Image
-              src="/postPageImages/keyboard_arrow_right.svg"
-              width="6"
-              height="10"
-              alt=""
-            />
+            <ArrowRightIcon width="6" height="10" />
           </NextPageBtn>
         )}
       </MoreInfo>
@@ -84,6 +76,9 @@ const NextPageBtn = styled.button`
   }
   &:disabled {
     display: none;
+  }
+  svg {
+    color: ${({ theme }) => theme.brand};
   }
 `;
 const PageNumBtn = styled.button<{ active: boolean }>`

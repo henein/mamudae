@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import timeDifference from "../utils/timeDifference";
+import Schedule from "/public/detailPageImages/schedule.svg";
+import Visibility from "/public/detailPageImages/visibility.svg";
 
 /**
  * UserPostList에 필요한 postlist 데이터
@@ -88,21 +90,11 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
                     )}
 
                     <DivGap>
-                      <Image
-                        src="/postPageImages/schedule.svg"
-                        width="16"
-                        height="16"
-                        alt=""
-                      />
+                      <Schedule width="16" height="16" />
                       <Time>{timeAgo}</Time>
                     </DivGap>
                     <ViewDiv>
-                      <Image
-                        src="/postPageImages/visibility.svg"
-                        width="16"
-                        height="16"
-                        alt=""
-                      />
+                      <Visibility width="16" height="16" />
                       <Views>{item.views}</Views>
                     </ViewDiv>
                   </RightSide>

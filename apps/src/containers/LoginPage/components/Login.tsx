@@ -3,7 +3,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
-import kaKao from "/public/loginPageImages/KaKao.png";
+import KakaoIcon from "/public/loginPageImages/kakao.svg";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import useKaKao from "../../../hooks/kakao/useKaKao";
@@ -58,7 +58,7 @@ const Login = () => {
       </Lines>
       <KaKaoBtn type="button">
         <KaKaoDiv onClick={login}>
-          <KaKaoImg src={kaKao} alt="s" />
+          <KakaoIcon width="17px" height="17px" />
           <span>KaKao로 로그인하기</span>
         </KaKaoDiv>
       </KaKaoBtn>
@@ -81,19 +81,16 @@ export const FormInputCss = css`
     color: ${(prop) => prop.theme.subText};
   }
 `;
-
-const KaKaoImg = styled(Image)`
-  position: absolute;
-  left: 14px;
-  width: 17px;
-  height: 17px;
-`;
 const KaKaoDiv = styled.div`
   display: flex;
   position: relative;
   align-items: center;
   height: 100%;
   justify-content: center;
+  svg {
+    position: absolute;
+    left: 14px;
+  }
 `;
 const Container = styled.form`
   justify-content: space-between;

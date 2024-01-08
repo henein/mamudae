@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import time from "/public/detailPageImages/schedule.png";
-import watch from "/public/detailPageImages/visibility.png";
+import Schedule from "/public/detailPageImages/schedule.svg";
+import Visibility from "/public/detailPageImages/visibility.svg";
 import Image from "next/image";
 import timeDifference from "../../../utils/timeDifference";
 import useScroll from "../../../hooks/scrollHooks/useScroll";
@@ -25,11 +25,11 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
         </NicknameAndFloor>
         <TimeAndWatch>
           <Time suppressHydrationWarning={true}>
-            <CustomImage src={time} alt="none" />
+            <Schedule width="16px" height="16px" />
             {timeDifference(createTime)}
           </Time>
           <Watch>
-            <CustomImage src={watch} alt="none" />
+            <Visibility width="16px" height="16px" />
             {views}
           </Watch>
         </TimeAndWatch>
@@ -53,10 +53,9 @@ const Container = styled.div<{ isScrollDown: boolean }>`
   padding: 0 24px;
   background-color: ${(prop) => prop.theme.cardHeader};
   backdrop-filter: blur(4px);
-`;
-
-const CustomImage = styled(Image)`
-  margin-right: 4px;
+  svg {
+    margin-right: 4px;
+  }
 `;
 
 const Nickname = styled.div`

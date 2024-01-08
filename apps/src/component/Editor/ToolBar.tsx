@@ -1,27 +1,25 @@
-import {
-  Attachment,
-  FormatAlignCenter,
-  FormatAlignJustify,
-  FormatAlignLeft,
-  FormatAlignRight,
-  FormatBold,
-  FormatItalic,
-  FormatStrikethrough,
-  FormatUnderlined,
-  Image as ImageIcon,
-} from '@mui/icons-material';
-import { Editor } from '@tiptap/react';
-import React from 'react';
-import styled from 'styled-components';
-import { ToolBarButton } from './ToolBarButton';
-import { ToolBarDivider } from './ToolBarDivider';
-import FormatH1 from './format_h1.svg';
-import FormatH2 from './format_h2.svg';
-import FormatH3 from './format_h3.svg';
-import useScroll from '../../hooks/scrollHooks/useScroll';
-import { CardHeader } from '../CardHeader';
-import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
-import { uploadImage } from '../../api/board';
+import Attachment from "/public/writingPageImages/attachment.svg";
+import FormatAlignCenter from "/public/writingPageImages/formatAlignCenter.svg";
+import FormatAlignJustify from "/public/writingPageImages/formatAlignJustify.svg";
+import FormatAlignLeft from "/public/writingPageImages/formatAlignLeft.svg";
+import FormatAlignRight from "/public/writingPageImages/formatAlignRight.svg";
+import FormatBold from "/public/writingPageImages/formatBold.svg";
+import FormatItalic from "/public/writingPageImages/formatItalic.svg";
+import FormatStrikethrough from "/public/writingPageImages/formatStrikethrough.svg";
+import FormatUnderlined from "/public/writingPageImages/formatUnderlined.svg";
+import ImageIcon from "/public/writingPageImages/imageIcon.svg";
+import { Editor } from "@tiptap/react";
+import React from "react";
+import styled from "styled-components";
+import { ToolBarButton } from "./ToolBarButton";
+import { ToolBarDivider } from "./ToolBarDivider";
+import FormatH1 from "/public/writingPageImages/format_h1.svg";
+import FormatH2 from "/public/writingPageImages/format_h2.svg";
+import FormatH3 from "/public/writingPageImages/format_h3.svg";
+import useScroll from "../../hooks/scrollHooks/useScroll";
+import { CardHeader } from "../CardHeader";
+import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import { uploadImage } from "../../api/board";
 
 export interface ToolBarProps {
   editor: Editor | null;
@@ -31,12 +29,12 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
   const { isScrollDown } = useScroll();
 
   const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage('access');
+  const accessToken = getLocalStorage("access");
 
   return (
     <Container isScrollDown={isScrollDown}>
       <ToolBarButton
-        isChecked={editor?.isActive('heading', { level: 1 })}
+        isChecked={editor?.isActive("heading", { level: 1 })}
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 1 }).run()
         }
@@ -44,7 +42,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         <FormatH1 />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive('heading', { level: 2 })}
+        isChecked={editor?.isActive("heading", { level: 2 })}
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 2 }).run()
         }
@@ -52,7 +50,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
         <FormatH2 />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive('heading', { level: 3 })}
+        isChecked={editor?.isActive("heading", { level: 3 })}
         onClick={() =>
           editor?.chain().focus().toggleHeading({ level: 3 }).run()
         }
@@ -61,62 +59,62 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
       </ToolBarButton>
       <ToolBarDivider />
       <ToolBarButton
-        isChecked={editor?.isActive('bold')}
+        isChecked={editor?.isActive("bold")}
         onClick={() => editor?.chain().focus().toggleBold().run()}
       >
-        <FormatBold fontSize="small" />
+        <FormatBold />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive('italic')}
+        isChecked={editor?.isActive("italic")}
         onClick={() => editor?.chain().focus().toggleItalic().run()}
       >
-        <FormatItalic fontSize="small" />
+        <FormatItalic />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive('underline')}
+        isChecked={editor?.isActive("underline")}
         onClick={() => editor?.chain().focus().toggleUnderline().run()}
       >
-        <FormatUnderlined fontSize="small" />
+        <FormatUnderlined />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive('strike')}
+        isChecked={editor?.isActive("strike")}
         onClick={() => editor?.chain().focus().toggleStrike().run()}
       >
-        <FormatStrikethrough fontSize="small" />
+        <FormatStrikethrough />
       </ToolBarButton>
       <ToolBarDivider />
       <ToolBarButton
-        isChecked={editor?.isActive({ textAlign: 'left' })}
-        onClick={() => editor?.chain().focus().setTextAlign('left').run()}
+        isChecked={editor?.isActive({ textAlign: "left" })}
+        onClick={() => editor?.chain().focus().setTextAlign("left").run()}
       >
-        <FormatAlignLeft fontSize="small" />
+        <FormatAlignLeft />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive({ textAlign: 'center' })}
-        onClick={() => editor?.chain().focus().setTextAlign('center').run()}
+        isChecked={editor?.isActive({ textAlign: "center" })}
+        onClick={() => editor?.chain().focus().setTextAlign("center").run()}
       >
-        <FormatAlignCenter fontSize="small" />
+        <FormatAlignCenter />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive({ textAlign: 'right' })}
-        onClick={() => editor?.chain().focus().setTextAlign('right').run()}
+        isChecked={editor?.isActive({ textAlign: "right" })}
+        onClick={() => editor?.chain().focus().setTextAlign("right").run()}
       >
-        <FormatAlignRight fontSize="small" />
+        <FormatAlignRight />
       </ToolBarButton>
       <ToolBarButton
-        isChecked={editor?.isActive({ textAlign: 'justify' })}
-        onClick={() => editor?.chain().focus().setTextAlign('justify').run()}
+        isChecked={editor?.isActive({ textAlign: "justify" })}
+        onClick={() => editor?.chain().focus().setTextAlign("justify").run()}
       >
-        <FormatAlignJustify fontSize="small" />
+        <FormatAlignJustify />
       </ToolBarButton>
       <ToolBarDivider />
       <ToolBarButton
         onClick={() => {
           editor?.commands.focus();
 
-          const input = document.createElement('input');
+          const input = document.createElement("input");
 
-          input.type = 'file';
+          input.type = "file";
           input.multiple = true;
           input.onchange = (_) => {
             if (!input.files) {
@@ -136,10 +134,10 @@ export const ToolBar: React.FC<ToolBarProps> = ({ editor }) => {
           input.click();
         }}
       >
-        <ImageIcon fontSize="small" />
+        <ImageIcon />
       </ToolBarButton>
       <ToolBarButton onClick={() => editor?.chain().focus().run()}>
-        <Attachment fontSize="small" />
+        <Attachment />
       </ToolBarButton>
     </Container>
   );
@@ -152,7 +150,7 @@ const Container = styled(CardHeader)<{ isScrollDown: boolean }>`
   color: ${({ theme }) => theme.text};
   padding: 8px 20px;
   position: sticky;
-  top: ${({ isScrollDown }) => (isScrollDown ? '16px' : '88px')};
+  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
   z-index: 1;
   transition: top 0.2s ease-in-out;
 

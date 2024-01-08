@@ -9,6 +9,7 @@ import {
 import LoadingSpinner from "../../../../component/LoadingSpinner";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../store";
+import RefreshIcon from "/public/myPageImages/refresh.svg";
 
 export interface CharInfo {
   avatar: string | null;
@@ -59,6 +60,7 @@ const CharBox = ({
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+  console.log(imageRandomColor);
 
   const { mutate: pickChar } = usePickChar({
     charId: id,
@@ -88,7 +90,7 @@ const CharBox = ({
     img.src =
       `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
       "/myPageImages/defaultChar.png";
-  }, [avatar]);
+  }, [avatar, darkModeState]);
 
   return (
     <Container disable={avatar} color={imageRandomColor}>
@@ -129,15 +131,9 @@ const CharBox = ({
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <NextImage
-                src={
-                  darkModeState
-                    ? "/myPageImages/whiteRefresh.svg"
-                    : "/myPageImages/refresh.svg"
-                }
+              <RefreshIcon
                 width="20"
                 height="20"
-                alt=""
                 onClick={async () => {
                   await refreshChar();
                 }}
@@ -180,6 +176,9 @@ const ImgPosition = styled.button`
   top: 8px;
   right: 8px;
   z-index: 10;
+  svg {
+    color: ${({ theme }) => theme.characterCardButton};
+  }
 `;
 const CharImg = styled.img`
   position: relative;

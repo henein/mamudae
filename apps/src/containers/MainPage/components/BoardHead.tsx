@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
-import SvgIcon from '@mui/material/SvgIcon';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import useDarkMode from '../../../hooks/reduxHooks/useDarkMode';
+import React from "react";
+import styled from "styled-components";
+import Link from "next/link";
+import ChevronRightIcon from "/public/mainPageImages/chevron_right.svg";
+import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
 export type BoardHeadProps = {
   boardTitle: string;
@@ -18,7 +17,7 @@ const BoardHead = ({ boardTitle }: BoardHeadProps) => {
         <Title>
           {boardTitle}
           <ImgDiv>
-            <SvgIcon component={ChevronRightIcon} />
+            <ChevronRightIcon width="10px" height="10px" />
           </ImgDiv>
         </Title>
       </Link>
@@ -37,6 +36,9 @@ const BoardHeader = styled.div<{ darkModeState: boolean }>`
   z-index: 1;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   padding-left: 24px;
+  svg {
+    color: ${({ theme }) => theme.text};
+  }
 `;
 const Title = styled.h3`
   display: flex;
