@@ -20,8 +20,6 @@ const Header = () => {
     dispatch(toggleDarkMode());
   };
 
-  console.log(darkModeState);
-
   return (
     <Container isScrollDown={isScrollDown} stickyTop={stickyTop}>
       <Background darkModeState={darkModeState} stickyTop={stickyTop}>
@@ -31,12 +29,7 @@ const Header = () => {
               <Title>Henein</Title>
             </Link>
             <Nav>
-              <Link href="/">
-                <NavItem stickyTop={stickyTop} isSelect>
-                  홈
-                </NavItem>
-              </Link>
-              <Link href="/">
+              <Link href="/board/공지">
                 <NavItem stickyTop={stickyTop}>공지</NavItem>
               </Link>
               <Link href="/">
