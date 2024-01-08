@@ -3,7 +3,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
-import kaKao from "/public/loginPageImages/KaKao.png";
+import kaKao from "/public/loginPageImages/kakao.svg";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
