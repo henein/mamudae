@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ColorThief from "colorthief";
-import NextImage from "next/image";
 import {
   usePickChar,
   useRefreshChar,
@@ -129,7 +128,7 @@ const CharBox = ({
             onMouseLeave={() => setRefreshOn(false)}
           >
             {isLoading ? (
-              <LoadingSpinner />
+              <LoadingSpinner width={15} height={15} borderWidth={2} />
             ) : (
               <RefreshIcon
                 width="20"
