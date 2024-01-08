@@ -1,51 +1,21 @@
-import { useRouter } from "next/router";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { userInfo, setUserName } from "../../api/userInfo";
-import handleTokenError from "../../utils/handleTokenError";
+import { useQuery } from "react-query";
+import { userInfo } from "../../api/userInfo";
+import { useLocalStorage } from "../storage/useLocalStorage";
 
 interface IUseUserInfo {
-  accessToken: string | undefined;
   options?: any;
+  accessToken?: string;
 }
 
-export const useUserInfo = ({ accessToken, options }: IUseUserInfo) => {
-  const { data, refetch } = useQuery("userInfo", () => userInfo(accessToken), {
-    ...options,
-    enabled: !!accessToken,
-
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (err: any) => {
-      handleTokenError(err, refetch);
-    },
-  });
-  return { data };
-};
-
-interface IUseSetUserName {
-  setName: string;
-  accessToken: string | undefined;
-  options?: any;
-}
-
-export const useSetUserName = ({
-  setName,
-  accessToken,
-  options,
-}: IUseSetUserName) => {
-  const router = useRouter();
-  const { mutate } = useMutation(() => setUserName(setName, accessToken), {
-    ...options,
-    enabled: !!accessToken,
-    onSuccess: (data) => {
-      router.push("/");
-    },
-    onError: (err) => {
-      alert("set-userName 에러입니다.");
-      console.log(err);
-    },
-  });
-
-  return { mutate };
+export const useUserInfo = ({ options }: IUseUserInfo) => {
+  const { getLocalStorage } = useLocalStorage();
+  const accessToken = getLocalStorage("access");
+  const { data, isLoading } = useQuery(
+    "userInfo",
+    () => userInfo(accessToken),
+    {
+      ...options,
+    }
+  );
+  return { data, isLoading };
 };

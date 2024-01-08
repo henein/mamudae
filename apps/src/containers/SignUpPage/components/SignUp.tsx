@@ -3,7 +3,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { customColor } from "../../../constants/customColor";
 import Image from "next/image";
-import kaKao from "/public/loginPageImages/KaKao.png";
+import kaKao from "/public/loginPageImages/kakao.svg";
 import Button from "../../../component/Button";
 import Link from "next/link";
 import { FormInputCss } from "../../LoginPage/components/Login";
@@ -116,7 +116,6 @@ const KaKaoDiv = styled.div`
   justify-content: center;
 `;
 const Container = styled.form`
-  z-index: 1;
   justify-content: space-between;
   border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
@@ -126,8 +125,6 @@ const Container = styled.form`
   flex-direction: column;
   border-radius: 16px;
   padding: 20px 24px;
-  position: absolute;
-  top: calc(16% + 30px);
 `;
 const Title = styled.span`
   padding: 8px;

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { customColor } from "../../constants/customColor";
-import Image from "next/image";
-import circle from "/public/detailPageImages/Ellipse.png";
 import Label from "../Label";
 import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
+import Link from "next/link";
 
 const CompleteLogin = ({ ...data }: any) => {
   const { removeLocalStorage } = useLocalStorage();
@@ -13,21 +11,29 @@ const CompleteLogin = ({ ...data }: any) => {
     removeLocalStorage("refresh");
     window.location.reload();
   };
+
   return (
     <LoginContainer>
       <LoginHeader>
-        <RepresentativeImage src={circle} alt="none"></RepresentativeImage>
+        <RepresentativeImage
+          src={data.imageUrl || "/detailPageImages/Ellipse.png"}
+          alt=""
+        ></RepresentativeImage>
         <Profile>
+          <Char>
+            {data.pickCharacter && <Label type="WRITER">대표</Label>}
+            <CharNickname>
+              {data.pickCharacter || "대표 캐릭터 없음"}
+            </CharNickname>
+          </Char>
+
           <Nickname>{data.userName}</Nickname>
-          <Honours>
-            <Label type="level">{data.userLevel || "미등록"}</Label>
-            <Label type="floor">{data.floor || "미등록"}</Label>
-            <Label type="job">{data.job || "미등록"}</Label>
-          </Honours>
         </Profile>
       </LoginHeader>
       <LoginFooter>
-        <MyInfo>내 정보</MyInfo>
+        <Link href="/myPage">
+          <MyInfo>내 정보</MyInfo>
+        </Link>
         <LogOut onClick={logout}>로그아웃</LogOut>
       </LoginFooter>
     </LoginContainer>
@@ -54,41 +60,35 @@ const LoginFooter = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Level = styled.div`
-  padding: 2px 4px;
-  color: ${customColor.white};
-  font-size: 10px;
-  background-color: ${customColor.level};
-  border-radius: 8px;
-  margin-right: 4px;
-`;
-const Floor = styled.div`
-  padding: 2px 4px;
-  color: ${customColor.white};
-  font-size: 10px;
-  background-color: ${customColor.floor};
-  border-radius: 8px;
-`;
-const Honours = styled.div`
+
+const Char = styled.div`
   display: flex;
+  align-items: center;
   gap: 4px;
+`;
+const CharNickname = styled.span`
+  font-size: 12px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.subText};
 `;
 const Nickname = styled.div`
   font-size: 16px;
   font-weight: 700;
-  margin-bottom: 8px;
   color: ${(prop) => prop.theme.text};
 `;
 const Profile = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 4px;
   height: 100%;
 `;
-const RepresentativeImage = styled(Image)`
+const RepresentativeImage = styled.img`
   width: 48px;
   height: 48px;
-  margin-right: 8px;
+  margin-right: 16px;
+  border-radius: 100%;
+  background-color: #dedede;
 `;
 const LoginHeader = styled.div`
   display: flex;

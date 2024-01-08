@@ -6,67 +6,92 @@ import ReComments from "./ReComments";
 import timeDifference from "../../../utils/timeDifference";
 import { CommentType } from "../DetailPage";
 import CommentForm from "./CommentForm";
+import ModifyCommentForm from "./ModifyCommentForm";
+import { useMine } from "../../../hooks/detailPageHooks/useDetail";
+import Label from "../../../component/Label";
 
-// 작성자 본인인지 아닌지, 닉네임, 층, 직업, 시간, 대댓글인지 새로운 댓글인지
-// 마지막 댓글인지?
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
+  const [isModifyClick, setIsModifyClick] = useState<boolean>(false);
+  const [isDeleteComment, setIsDeleteComment] = useState<boolean>(false);
 
-  const replyBtnClick = () => {
-    setIsClick(true);
-  };
+  const isMine = useMine(data.uid);
 
-  const [isMyComment, setIsMyComment] = useState<boolean>(false);
+  useEffect(() => {
+    if (data.role === null) setIsDeleteComment(true);
+  }, [data]);
 
-  const onClick = () => {
-    if (data.userData.userName == data.userName) {
-      setIsMyComment(true);
-    }
-  };
-  console.log();
   return (
     <Container>
       <CommentBox isLastComment={data.isLastComment}>
-        <CommentHeader>
-          <UserInfo>
-            <NickName>{data.userName}</NickName>
-            <Floor>48층</Floor>
-            <Job>겸마 격수</Job>
-            <Time>{timeDifference(data.modifiedDate)}</Time>
-          </UserInfo>
-          <CommentMenuIcon
-            boardId={data.boardId}
-            comment={data.comment}
-            commentId={data.commentId}
-            isMyComment={isMyComment}
-            onClick={onClick}
-          />
-        </CommentHeader>
-        <CommentContent>{data.comment}</CommentContent>
+        {isModifyClick ? (
+          <>
+            <ModifyCommentForm
+              setIsModifyClick={setIsModifyClick}
+              isRecomment={false}
+            />
+          </>
+        ) : (
+          <>
+            <CommentHeader>
+              <UserInfo>
+                <NickName
+                  isDeleteComment={isDeleteComment}
+                  isMine={isMine}
+                  isAdminRole={data.role === "ADMIN"}
+                >
+                  {data.nickName}
+                </NickName>
+                <Label type={data.role} />
+                <Time>{timeDifference(data.modifiedDate)}</Time>
+              </UserInfo>
+              {!isDeleteComment && (
+                <CommentMenuIcon
+                  boardId={data.boardId}
+                  comment={data.comment}
+                  commentId={data.id}
+                  isMine={isMine}
+                  isRecomment={false}
+                  setIsModifyClick={setIsModifyClick}
+                />
+              )}
+            </CommentHeader>
+            <CommentContent isDeleteComment={isDeleteComment}>
+              {data.comment}
+            </CommentContent>
+            <FormDisplay>
+              {!isDeleteComment && (
+                <ReCommentBtn onClick={() => setIsClick(true)}>
+                  답글
+                </ReCommentBtn>
+              )}
+              {isClick && (
+                <CommentForm
+                  setIsClick={setIsClick}
+                  boardId={data.boardId}
+                  commentId={data.id}
+                  isRecomment={true}
+                  firstRecomment={true}
+                  nickName={data.nickName}
+                />
+              )}
+            </FormDisplay>
+          </>
+        )}
+
         <div>
-          <FormDisplay>
-            <ReCommentBtn onClick={replyBtnClick}>답글</ReCommentBtn>
-            {isClick && (
-              <CommentForm
-                setIsClick={setIsClick}
-                boardId={data.boardId}
-                commentId={data.commentId}
-                isRecomment={true}
-                userName={data.userName}
-              />
-            )}
-          </FormDisplay>
           {data.replies.map((item: CommentType, idx: number) => {
             return (
               <ReComments
                 boardId={data.boardId}
                 comment={item.comment}
-                userName={item.userName}
+                nickName={data.writerList[item.writerId].nickName}
                 modifiedDate={item.modifiedDate}
                 tag={item.tag}
-                replyId={item.replyId}
-                parentCommentId={data.commentId}
-                userData={data.userData}
+                replyId={item.id}
+                commentId={data.id}
+                role={data.writerList[item.writerId].role}
+                uid={data.writerList[item.writerId].uid}
                 key={idx}
               />
             );
@@ -98,29 +123,24 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Job = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.labelBlack};
-`;
 const Time = styled.div`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
 `;
-const Floor = styled.div`
-  padding: 2px 4px;
-  border-radius: 8px;
-  font-size: 12px;
-  margin-right: 4px;
-  color: ${customColor.white};
-  background-color: ${customColor.floor};
-`;
-const NickName = styled.div`
-  color: ${(prop) => prop.theme.text};
-  margin-right: 4px;
+const NickName = styled.div<{
+  isMine: boolean;
+  isDeleteComment: boolean;
+  isAdminRole: boolean;
+}>`
+  color: ${({ theme, isDeleteComment, isMine, isAdminRole }) =>
+    isDeleteComment
+      ? theme.subText
+      : isAdminRole
+      ? theme.danger
+      : isMine
+      ? theme.brand
+      : theme.text};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "normal")};
   font-size: 12px;
 `;
 
@@ -141,10 +161,11 @@ const CommentHeader = styled.div`
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
   margin-bottom: 8px;
 `;
-const CommentContent = styled.div`
+const CommentContent = styled.div<{ isDeleteComment: boolean }>`
   font-size: 14px;
   margin-bottom: 8px;
-  color: ${(prop) => prop.theme.text};
+  color: ${({ theme, isDeleteComment }) => theme.text};
 `;

@@ -6,9 +6,10 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { useRouter } from "next/router";
 import Layout from "../src/component/Layout";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
+import { store, persistor } from "../store/store";
 import SecondLayout from "../src/component/SecondLayout";
 import { ThemeProvider } from "next-themes";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = useState(() => new QueryClient())[0];
@@ -23,15 +24,17 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <Provider store={store}>
-              {shouldRenderLayout ? (
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              ) : (
-                <SecondLayout>
-                  <Component {...pageProps} />
-                </SecondLayout>
-              )}
+              <PersistGate persistor={persistor}>
+                {shouldRenderLayout ? (
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                ) : (
+                  <SecondLayout>
+                    <Component {...pageProps} />
+                  </SecondLayout>
+                )}
+              </PersistGate>
             </Provider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />

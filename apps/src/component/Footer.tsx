@@ -15,12 +15,13 @@ const Footer = () => {
 export default Footer;
 
 const Bottom = styled.div`
-  background-color: ${({ theme }) => theme.footer};
+  background-color: ${({ theme }) => theme.footerBackground};
   height: 144px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 24px;
+  width: 100%;
 `;
 const InlineBox = styled.div`
   display: flex;

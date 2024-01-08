@@ -1,28 +1,18 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import BoardTitle from "./components/BoardTitle";
-import UserPostList from "./components/UserPostList";
-import MoreInfoBox from "./components/MoreInfoBox";
+import UserPostList from "../../component/UserPostList";
+import MoreInfoBox from "../../component/MoreInfoBox";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import Button from "../../component/Button";
-import { customColor } from "../../constants/customColor";
 import { useRouter } from "next/router";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
+import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
+import Link from "next/link";
 
 const PostPage = () => {
   const router = useRouter();
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-  const { data } = useUserInfo({
-    accessToken,
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  });
+
   useEffect(() => {
     if (!router.isReady) return;
     switch (router.query.post) {
@@ -30,33 +20,39 @@ const PostPage = () => {
       case "자유":
       case "유머":
       case "보스":
-      case "직업":
+      case "정보":
         break;
       default:
         router.push("/404");
         break;
     }
-  }, [router.isReady, router.query.post]);
+  }, [router.isReady, router.query.post, router]);
 
+  const { data, refetch } = useEachPost();
+  console.log(data);
   return (
     <Layout>
       <Announcement />
       <PostPageSet>
         <Aside>
-          <Aside>{data ? <CompleteLogin {...data} /> : <Login />}</Aside>
+          <Aside>
+            <Login />
+          </Aside>
         </Aside>
         <BoardContent>
           <ContentSet>
-            <BoardTitle />
-            <UserPostList />
+            <BoardTitle title={router.query.post as string} />
+            <UserPostList data={data} type="postPage" pageNums={0} />
           </ContentSet>
-          <MoreInfoBox />
+          <MoreInfoBox isRouterPaging={true} data={data} />
         </BoardContent>
       </PostPageSet>
 
-      <WriteBtn type="submit" sort="primary">
-        작성하기
-      </WriteBtn>
+      <Link href="/write">
+        <WriteBtn type="submit" sort="primary">
+          작성하기
+        </WriteBtn>
+      </Link>
     </Layout>
   );
 };
@@ -75,14 +71,13 @@ const PostPageSet = styled.div`
   display: flex;
   gap: 32px;
 `;
-const BoardContent = styled.div`
+export const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
   width: 808px;
-  height: 872px;
   box-sizing: border-box;
   z-index: 0.5;
   background-color: ${({ theme }) => theme.card};

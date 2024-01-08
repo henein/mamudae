@@ -1,23 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import Button from "../Button";
+import { useUserInfo } from "../../hooks/user/useUserInfo";
+import CompleteLogin from "./CompleteLogin";
+import { useDispatch } from "react-redux";
+import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
+import LoadingSpinner from "../LoadingSpinner";
 
 const Login = () => {
+  const { data, isLoading } = useUserInfo({
+    options: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        saveUserInfo({ userName: data.userName, userRole: data.userRole })
+      );
+    }
+  }, [data, dispatch]);
+
+  if (isLoading) {
+    return (
+      <LoginContainer isLoading={isLoading}>
+        <LoadingSpinner width={15} height={15} borderWidth={2} />
+      </LoginContainer>
+    );
+  }
   return (
-    <LoginContainer>
-      <Link href="/login">
-        <LoginBtn type="submit" sort="primary" width="252px" fontWeight="700">
-          로그인
-        </LoginBtn>
-      </Link>
-      <LoginFooter>
-        <Text>로그인이 안 되시나요?</Text>
-        <Link href="/signUp">
-          <SignUpBtn>회원가입</SignUpBtn>
-        </Link>
-      </LoginFooter>
-    </LoginContainer>
+    <>
+      {data ? (
+        <CompleteLogin {...data} />
+      ) : (
+        <LoginContainer isLoading={isLoading}>
+          <Link href="/login">
+            <LoginBtn
+              type="submit"
+              sort="primary"
+              width="252px"
+              fontWeight="700"
+            >
+              로그인
+            </LoginBtn>
+          </Link>
+          <LoginFooter>
+            <Text>로그인이 안 되시나요?</Text>
+            <Link href="/signUp">
+              <SignUpBtn>회원가입</SignUpBtn>
+            </Link>
+          </LoginFooter>
+        </LoginContainer>
+      )}
+    </>
   );
 };
 
@@ -43,7 +82,7 @@ const LoginFooter = styled.div`
   align-items: center;
 `;
 const LoginBtn = styled(Button)``;
-const LoginContainer = styled.div`
+const LoginContainer = styled.div<{ isLoading: boolean }>`
   padding: 20px 24px;
   display: flex;
   align-items: center;

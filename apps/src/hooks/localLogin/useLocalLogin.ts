@@ -23,8 +23,8 @@ export const useLocalLogin = ({
     {
       ...options,
       onSuccess: (data) => {
-        setLocalStorage("access", data["authorization"].substring(7));
-        setLocalStorage("refresh", data["refreshtoken"].substring(7));
+        setLocalStorage("access", data["authorization"]);
+        setLocalStorage("refresh", data["refreshtoken"]);
         router.push("/");
       },
       onError: (err: any) => {
@@ -53,8 +53,8 @@ export const useLocalSignUp = ({
       ...options,
       onSuccess: (data) => {
         console.log(data);
-        setLocalStorage("access", data["authorization"].substring(7));
-        setLocalStorage("refresh", data["refreshtoken"].substring(7));
+        setLocalStorage("access", data["authorization"]);
+        setLocalStorage("refresh", data["refreshtoken"]);
         data["status"]
           ? // 첫 로그인일 시
             router.push("/register")

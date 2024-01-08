@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { usePostRecommend } from "../../../hooks/detailPageHooks/usePostRecommend";
-import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import Favorite from "@mui/icons-material/Favorite";
-import SvgIcon from "@mui/material/SvgIcon";
+import FavoriteBorderOutlinedIcon from "/public/detailPageImages/favoriteOutline.svg";
+import Favorite from "/public/detailPageImages/favorite.svg";
 interface ILikeIcon {
   boardId: string;
   recommended: boolean;
 }
 
 const LikeIcon = ({ boardId, recommended }: ILikeIcon) => {
-  const { getLocalStorage } = useLocalStorage();
-  const accessToken = getLocalStorage("access");
-  const { recommend } = usePostRecommend({ boardId, accessToken });
+  const { recommend } = usePostRecommend({ boardId });
 
   const onLikeClick = () => {
     recommend();
@@ -22,9 +18,9 @@ const LikeIcon = ({ boardId, recommended }: ILikeIcon) => {
     <>
       <IconDiv onClick={onLikeClick} recommended={recommended}>
         {recommended ? (
-          <SvgIcon component={Favorite} />
+          <Favorite width="20px" height="20px" />
         ) : (
-          <SvgIcon component={FavoriteBorderOutlinedIcon} />
+          <FavoriteBorderOutlinedIcon width="20px" height="20px" />
         )}
       </IconDiv>
     </>

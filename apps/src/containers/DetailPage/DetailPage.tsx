@@ -1,68 +1,48 @@
-import Image from "@tiptap/extension-image";
-import Placeholder from "@tiptap/extension-placeholder";
-import TextAlign from "@tiptap/extension-text-align";
-import Underline from "@tiptap/extension-underline";
-import { generateHTML } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { generateHTML } from "@tiptap/react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Button from "../../component/Button";
-import CompleteLogin from "../../component/LoginComponent/CompleteLogin";
 import Login from "../../component/LoginComponent/Login";
 import { useGetComment } from "../../hooks/detailPageHooks/useComment";
 import { useDetail } from "../../hooks/detailPageHooks/useDetail";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
 import Comment from "./components/Comment";
 import Like from "./components/Like";
 import Title from "./components/Title";
 import Write from "./components/Write";
+import Warning from "../../component/Warning";
+import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
+import Link from "next/link";
+import { extensions } from "../../component/Editor/Editor";
+import { useDispatch } from "react-redux";
+import { onWarnings } from "../../../store/warningSlice/onWarning";
 
 export type CommentType = {
   comment: string;
-  commentId: number;
+  id: number;
   modifiedDate: string;
-  userName: string;
   tag: string;
+  writerId: number;
   replyId: string;
+  uid: string;
   replies?: any;
 };
 
 const DetailPage = () => {
   const router = useRouter();
-  const { getLocalStorage } = useLocalStorage();
-
   const boardId = router.query.id as string;
-  const accessToken = getLocalStorage("access");
-  // Hybrid Rendering
+  const dispatch = useDispatch();
 
-  const {
-    title,
-    text,
-    recommend,
-    views,
-    createTime,
-    userInfoResponseDto,
-    recommended,
-    refetch,
-  } = useDetail({
+  const { data, refetch } = useDetail({
     boardId,
-    accessToken,
     options: {
       refetchOnWindowFocus: false,
     },
   });
 
   const [context, setContext] = useState("");
-  const userData = useUserInfo({
-    accessToken,
-    options: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  }).data;
+
   const commentdata = useGetComment({
     boardId,
     options: {
@@ -71,18 +51,12 @@ const DetailPage = () => {
   }).data;
 
   useEffect(() => {
-    const html = generateHTML(JSON.parse(text), [
-      StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Placeholder.configure({
-        placeholder: "내용을 입력해주세요...",
-      }),
-      Underline,
-      Image,
-    ]);
+    if (data) {
+      const html = generateHTML(JSON.parse(data.text), extensions);
 
-    setContext(html);
-  }, [text]);
+      setContext(html);
+    }
+  }, [data]);
 
   const [isInAT, setIsInAT] = useState(false);
 
@@ -94,74 +68,131 @@ const DetailPage = () => {
     refetch();
   }, [isInAT, refetch]);
 
+  const { isWarning, warningType } = useOnWarning();
+
+  const btnClick = (btnType: string) => {
+    if (localStorage.getItem("access") === null) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      dispatch(onWarnings(btnType));
+    }
+  };
+
   return (
     <Container>
       <Announcement />
       <SideBox>
-        {userData ? <CompleteLogin {...userData} /> : <Login />}
+        <Login />
       </SideBox>
-      <div>
-        <BoardOptionBox>
-          <Button type="button" sort="secondary">
-            목록
-          </Button>
-          <RightItems>
-            <Button type="button" sort="secondary">
-              수정하기
-            </Button>
-            <Button type="button" sort="danger">
-              삭제하기
-            </Button>
-          </RightItems>
-        </BoardOptionBox>
-        <WriteBox>
-          <Wrapper>
-            <Title
-              title={title}
-              name={userInfoResponseDto.userName}
-              views={views}
-              createTime={createTime}
-            />
-            <Content dangerouslySetInnerHTML={{ __html: context }} />
-            <Like
-              recommend={recommend}
-              boardId={boardId}
-              recommended={recommended}
-            />
-          </Wrapper>
-        </WriteBox>
+      {data && (
+        <div>
+          <WriteBox>
+            <Wrapper>
+              <Title
+                title={data.title}
+                name={data.userName}
+                views={data.views}
+                createTime={data.createTime}
+              />
+              <Content dangerouslySetInnerHTML={{ __html: context }} />
+              <Like
+                recommend={data.recommend}
+                boardId={boardId}
+                recommended={data.recommended}
+              />
+            </Wrapper>
+          </WriteBox>
 
-        <CommentBox>
-          <Write boardId={boardId} userData={userData} />
-          <Comments>
-            {commentdata &&
-              commentdata.map((item: CommentType, idx: number) => {
-                return (
-                  <Comment
-                    comment={item.comment}
-                    userName={item.userName}
-                    modifiedDate={item.modifiedDate}
-                    replies={item.replies}
-                    key={idx}
-                    commentId={item.commentId}
-                    boardId={boardId}
-                    userData={userData}
-                    isLastComment={idx + 1 == commentdata.length}
-                  />
-                );
-              })}
-          </Comments>
-        </CommentBox>
-      </div>
+          <BoardOptionBox>
+            <Button type="button" sort="secondary">
+              목록
+            </Button>
+            {data && data.uid ? (
+              <RightItems>
+                <Link href={`/update/${boardId}`}>
+                  <Button type="button" sort="secondary">
+                    수정하기
+                  </Button>
+                </Link>
+                <Button type="button" sort="danger">
+                  삭제하기
+                </Button>
+              </RightItems>
+            ) : (
+              <RightItems>
+                <Button
+                  type="button"
+                  sort="danger"
+                  onClick={() => {
+                    btnClick("boardReport");
+                  }}
+                >
+                  신고하기
+                </Button>
+              </RightItems>
+            )}
+          </BoardOptionBox>
+
+          <CommentBox>
+            <Write boardId={boardId} totalComment={data.commentNum} />
+            <Comments>
+              {commentdata &&
+                commentdata.commentList.map(
+                  (item: CommentType, idx: number) => {
+                    return (
+                      <Comment
+                        writerList={commentdata.writerList}
+                        comment={item.comment}
+                        nickName={
+                          item.writerId === null
+                            ? "알 수 없음"
+                            : commentdata.writerList[item.writerId].nickName
+                        }
+                        modifiedDate={item.modifiedDate}
+                        replies={item.replies}
+                        key={idx}
+                        id={item.id}
+                        boardId={boardId}
+                        uid={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].uid
+                        }
+                        role={
+                          item.writerId === null
+                            ? null
+                            : commentdata.writerList[item.writerId].role
+                        }
+                        isLastComment={
+                          idx + 1 == commentdata.commentList.length
+                        }
+                      />
+                    );
+                  }
+                )}
+            </Comments>
+          </CommentBox>
+          {isWarning && (
+            <StickyView>
+              <Warning type={warningType} />
+            </StickyView>
+          )}
+        </div>
+      )}
     </Container>
   );
 };
 
 export default DetailPage;
+const StickyView = styled.div`
+  position: sticky;
+  z-index: 1001;
+`;
 const BoardOptionBox = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-top: 16px;
 `;
 const RightItems = styled.div`
   display: flex;
@@ -174,7 +205,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: calc(100% + 21px);
-  position: relative;
 `;
 const Content = styled.div`
   margin-top: 20px;
@@ -183,6 +213,10 @@ const Content = styled.div`
   padding: 0 24px;
   line-height: 18px;
   color: ${(prop) => prop.theme.text};
+
+  img {
+    max-width: 100%;
+  }
 `;
 
 const SideBox = styled.div`
@@ -193,22 +227,16 @@ const SideBox = styled.div`
 const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 32px;
   background-color: ${(prop) => prop.theme.card};
   width: 808px;
   border-radius: 16px;
-  ::-webkit-scrollbar {
-    display: none;
-  }
   border: 1px solid ${(prop) => prop.theme.border};
 `;
 const WriteBox = styled.div`
   border-radius: 16px;
   background-color: ${(prop) => prop.theme.card};
   border: 1px solid ${(prop) => prop.theme.border};
-  ::-webkit-scrollbar {
-    display: none;
-  }
   display: flex;
   flex-direction: column;
   width: 808px;

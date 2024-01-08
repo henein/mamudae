@@ -1,21 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { BoardInfoType } from "../MainPage";
-import SvgIcon from "@mui/material/SvgIcon";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronRightIcon from "/public/mainPageImages/chevron_right.svg";
 import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
 
-const BoardHead = ({ board_title }: BoardInfoType) => {
+export type BoardHeadProps = {
+  boardTitle: string;
+};
+
+const BoardHead = ({ boardTitle }: BoardHeadProps) => {
   const darkModeState = useDarkMode();
 
   return (
     <BoardHeader darkModeState={darkModeState}>
-      <Link href={`board/${board_title}`}>
+      <Link href={`board/${boardTitle}`}>
         <Title>
-          {board_title}
+          {boardTitle}
           <ImgDiv>
-            <SvgIcon component={ChevronRightIcon} />
+            <ChevronRightIcon width="10px" height="10px" />
           </ImgDiv>
         </Title>
       </Link>
@@ -34,6 +36,9 @@ const BoardHeader = styled.div<{ darkModeState: boolean }>`
   z-index: 1;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   padding-left: 24px;
+  svg {
+    color: ${({ theme }) => theme.text};
+  }
 `;
 const Title = styled.h3`
   display: flex;

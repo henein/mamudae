@@ -4,16 +4,12 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { toggleDarkMode } from "../../store/darkmodeSlice/darkmode";
-import SvgIcon from "@mui/material/SvgIcon";
-import SearchIcon from "@mui/icons-material/Search";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import SearchIcon from "/public/headerCompoImages/search.svg";
+import DarkModeIcon from "/public/headerCompoImages/dark_mode.svg";
+import LightModeIcon from "/public/headerCompoImages/light_mode.svg";
 import useScroll from "../hooks/scrollHooks/useScroll";
 
-type HeaderPropType = {
-  setTheme: any;
-};
-const Header = ({ setTheme }: HeaderPropType) => {
+const Header = () => {
   const dispatch = useDispatch();
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
@@ -21,9 +17,10 @@ const Header = ({ setTheme }: HeaderPropType) => {
   const { isScrollDown, stickyTop } = useScroll();
 
   const onClick = () => {
-    darkModeState ? setTheme("light") : setTheme("dark");
     dispatch(toggleDarkMode());
   };
+
+  console.log(darkModeState);
 
   return (
     <Container isScrollDown={isScrollDown} stickyTop={stickyTop}>
@@ -33,34 +30,33 @@ const Header = ({ setTheme }: HeaderPropType) => {
             <Link href="/">
               <Title>Henein</Title>
             </Link>
-            <NavList>
+            <Nav>
               <Link href="/">
-                <Listdiv stickyTop={stickyTop}>홈</Listdiv>
+                <NavItem stickyTop={stickyTop} isSelect>
+                  홈
+                </NavItem>
               </Link>
               <Link href="/">
-                <Listdiv stickyTop={stickyTop}>공지</Listdiv>
+                <NavItem stickyTop={stickyTop}>공지</NavItem>
               </Link>
               <Link href="/">
-                <Listdiv stickyTop={stickyTop}>정보</Listdiv>
+                <NavItem stickyTop={stickyTop}>커뮤니티</NavItem>
               </Link>
-              <Link href="/">
-                <Listdiv stickyTop={stickyTop}>커뮤니티</Listdiv>
-              </Link>
-            </NavList>
+            </Nav>
           </LeftDiv>
           <RightDiv>
             <DarkModeBtn onClick={onClick}>
               <LightImg darkModeState={darkModeState}>
-                <SvgIcon component={LightModeIcon} fontSize="small" />
+                <LightModeIcon width="20px" height="20px" />
               </LightImg>
               <DarkImg darkModeState={darkModeState}>
-                <SvgIcon component={DarkModeIcon} fontSize="small" />
+                <DarkModeIcon width="20px" height="20px" />
               </DarkImg>
             </DarkModeBtn>
             <InputBox>
               <InlineInput placeholder="검색"></InlineInput>
               <SubmitBtn>
-                <SvgIcon component={SearchIcon} inheritViewBox />
+                <SearchIcon />
               </SubmitBtn>
             </InputBox>
           </RightDiv>
@@ -148,21 +144,23 @@ const DarkImg = styled.div<{ darkModeState: boolean }>`
       : `1px solid ${theme.chatBackground}`};
   box-sizing: border-box;
 `;
-const NavList = styled.div`
+const Nav = styled.div`
   display: flex;
   align-items: center;
 `;
-const Listdiv = styled.div<{ stickyTop: boolean }>`
+const NavItem = styled.div<{ stickyTop: boolean; isSelect?: boolean }>`
   box-sizing: border-box;
   text-decoration: none;
   color: ${({ theme }) => theme.text};
   padding: 10.5px 16px;
   line-height: 19px;
   font-size: 16px;
+  font-weight: ${({ isSelect }) => (isSelect ? 600 : 400)};
+  border-radius: 8px;
   &:hover {
     background-color: ${({ theme }) => theme.headerButtonHover};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.boxShadow};
-    border-radius: 8px;
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.border} inset;
+    font-weight: 600;
   }
 `;
 const InputBox = styled.form`
