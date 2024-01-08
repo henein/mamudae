@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import styled from "styled-components";
+import LoadingSpinner from "../src/component/LoadingSpinner";
 import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
 
 const KaKao = () => {
@@ -10,19 +12,23 @@ const KaKao = () => {
   useEffect(() => {
     if (!router.isReady) return;
     if (!code) {
-      alert("카카오에서 인자코드를 받지 못함");
+      return;
     } else {
       receivePrintCode();
     }
   }, [router.isReady, code, receivePrintCode]);
 
   return (
-    <div>
-      {code && <p>Kakao authorization code: {code}</p>}
-      {!code && <p>Kakao authorization code not found.</p>}
-      인자코드를 받았어요!! 서버에게 인자코드를 주면 돼요!!
-    </div>
+    <Container>
+      <LoadingSpinner width={130} height={130} borderWidth={6} />
+    </Container>
   );
 };
 
 export default KaKao;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

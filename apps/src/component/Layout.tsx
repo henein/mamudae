@@ -17,10 +17,8 @@ const Layout = ({ children }: React.PropsWithChildren) => {
       <ScrollProvider>
         <GlobalStyles />
         <PageDiv>
-          <div>
-            <Header />
-            {children}
-          </div>
+          <Header />
+          {children}
           <Footer />
         </PageDiv>
       </ScrollProvider>

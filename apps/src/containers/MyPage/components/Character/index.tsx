@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CharSelectBox from "./CharSelectBox";
 import Button from "../../../../component/Button";
-import Image from "next/image";
 import {
   useGetAllMyChar,
   useGetCharName,
@@ -75,7 +74,9 @@ const MyChar = () => {
             disabled={isLoading}
           >
             <BtnInner>
-              {isLoading && <LoadingSpinner />}
+              {isLoading && (
+                <LoadingSpinner width={15} height={15} borderWidth={2} />
+              )}
               <span>인증하기</span>
             </BtnInner>
           </AuthBtn>

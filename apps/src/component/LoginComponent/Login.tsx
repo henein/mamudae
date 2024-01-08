@@ -28,7 +28,7 @@ const Login = () => {
   if (isLoading) {
     return (
       <LoginContainer isLoading={isLoading}>
-        <LoadingSpinner />
+        <LoadingSpinner width={15} height={15} borderWidth={2} />
       </LoginContainer>
     );
   }
