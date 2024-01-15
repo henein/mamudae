@@ -1,6 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAllMyChar } from "../../api/userInfo";
-import { getUserCharName, getCharInfo, setRepresent } from "../../api/userInfo";
+import {
+  getUserCharName,
+  getOneCharInfo,
+  getAllCharInfo,
+  setRepresent,
+} from "../../api/userInfo";
 
 interface IGetCharName {
   key: string;
@@ -42,10 +47,35 @@ export const useGetAllMyChar = ({ options }: any) => {
   return { data, refetch };
 };
 
-export const useRefreshChar = ({ name, LoadingController, options }: any) => {
+export const useRefreshOneChar = ({
+  charId,
+  LoadingController,
+  options,
+}: any) => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => getCharInfo(name), {
+  const { mutate } = useMutation(() => getOneCharInfo(charId), {
+    onSuccess: async () => {
+      await LoadingController(true);
+      await new Promise((resolve) => {
+        setTimeout(resolve, 3000);
+      });
+      await queryClient.invalidateQueries("allMyChar");
+      await LoadingController(false);
+    },
+  });
+
+  return { mutate };
+};
+
+export const useRefreshAllChar = ({
+  idList,
+  LoadingController,
+  options,
+}: any) => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(() => getAllCharInfo(idList), {
     onSuccess: async () => {
       await LoadingController(true);
       await new Promise((resolve) => {
