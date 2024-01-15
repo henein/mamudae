@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ColorThief from "colorthief";
 import {
   usePickChar,
-  useRefreshChar,
+  useRefreshOneChar,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ export interface CharInfo {
   id: number;
   job: string | null;
   level: number | null;
-  nickName: string;
+  charName: string;
   pickByUser: boolean;
   world: string | null;
 }
@@ -45,7 +45,7 @@ const CharBox = ({
   id,
   job,
   level,
-  nickName,
+  charName,
   pickByUser,
   world,
 }: CharInfo) => {
@@ -59,14 +59,13 @@ const CharBox = ({
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
-  console.log(imageRandomColor);
 
   const { mutate: pickChar } = usePickChar({
     charId: id,
     options: {},
   });
-  const { mutate: refreshChar } = useRefreshChar({
-    name: nickName,
+  const { mutate: refreshChar } = useRefreshOneChar({
+    charId: id,
     LoadingController: setIsLoading,
   });
 
@@ -91,6 +90,11 @@ const CharBox = ({
       "/myPageImages/defaultChar.png";
   }, [avatar, darkModeState]);
 
+  const charImageResize = avatar
+    ? "https://open.api.nexon.com/static/maplestory/Character/180/" +
+      avatar.toString().slice(55)
+    : "/myPageImages/defaultChar.png";
+
   return (
     <Container disable={avatar} color={imageRandomColor}>
       <CharInfoBox
@@ -107,7 +111,7 @@ const CharBox = ({
       >
         <Top>
           {pickByUser && <Tag>대표</Tag>}
-          <NickName>{nickName}</NickName>
+          <NickName>{charName || "정보 없음"}</NickName>
         </Top>
         <Bottom>
           <JobnLevel>
@@ -121,7 +125,7 @@ const CharBox = ({
         onMouseLeave={() => setRefreshOn(false)}
       />
       <RefreshBtnPosition>
-        <CharImg src={avatar || "/myPageImages/defaultChar.png"} id="char" />
+        <CharImg src={charImageResize} id="char" />
         {refreshOn && (
           <ImgPosition
             onMouseEnter={() => setRefreshOn(true)}
@@ -165,6 +169,9 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
   height: 120px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  background-color: ${({ disable, theme }) =>
+    disable || theme.characterCardDisableBackground};
+  opacity: ${({ disable }) => disable || "0.6"};
 `;
 const RefreshBtnPosition = styled.div`
   display: flex;
