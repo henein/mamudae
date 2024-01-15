@@ -2,11 +2,21 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import CharBox from "./CharBox";
 import { CharInfo } from "./CharBox";
+import RefreshIcon from "/public/myPageImages/refresh.svg";
+import LoadingSpinner from "../../../../component/LoadingSpinner";
+import { useRefreshAllChar } from "../../../../hooks/myPageHooks/useUserChar";
 interface CharSelectBoxType {
   charList: any;
 }
 const CharSelectBox = ({ charList }: CharSelectBoxType) => {
   const [optionNum, setOptionNum] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const idList = charList?.map((item: any) => item.id);
+  const { mutate: refreshAllChar } = useRefreshAllChar({
+    idList: idList,
+    LoadingController: setIsLoading,
+  });
 
   const newCharList = (optionNum: number) => {
     if (charList) {
@@ -36,9 +46,9 @@ const CharSelectBox = ({ charList }: CharSelectBoxType) => {
           break;
         case 3: // 닉네임 sort
           sortedList = sortedList.sort((a, b) => {
-            if (a.nickname === null) return 1;
-            if (b.nickname === null) return -1;
-            return a.nickName.localeCompare(b.nickName);
+            if (a.charName === null) return 1;
+            if (b.charName === null) return -1;
+            return a.charName.localeCompare(b.charName);
           });
           break;
         default:
@@ -55,7 +65,20 @@ const CharSelectBox = ({ charList }: CharSelectBoxType) => {
 
   return (
     <BoxContent>
-      <Title>캐릭터</Title>
+      <TitleBox>
+        <Title>캐릭터</Title>
+        {isLoading ? (
+          <LoadingSpinner width={15} height={15} borderWidth={2} />
+        ) : (
+          <RefreshIcon
+            width="20"
+            height="20"
+            onClick={async () => {
+              await refreshAllChar();
+            }}
+          />
+        )}
+      </TitleBox>
       <BoxLayout>
         <ContentSortOption>
           <HighLevelSort
@@ -83,7 +106,7 @@ const CharSelectBox = ({ charList }: CharSelectBoxType) => {
                   id={item.id}
                   job={item.job}
                   level={item.level}
-                  nickName={item.nickName}
+                  charName={item.charName}
                   pickByUser={item.pickByUser}
                   world={item.world}
                   key={idx}
@@ -102,18 +125,27 @@ export const BoxContent = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 0px 8px;
+  svg {
+    color: ${({ theme }) => theme.subText};
+  }
+`;
 export const Title = styled.h1`
-  color: ${({ theme }) => theme.text};
   font-size: 20px;
   font-weight: 700;
   line-height: normal;
-  padding: 8px 8px 0px 8px;
+  color: ${({ theme }) => theme.text};
 `;
 export const BoxLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
 `;
+
 const ContentSortOption = styled.div`
   display: flex;
   gap: 8px;
