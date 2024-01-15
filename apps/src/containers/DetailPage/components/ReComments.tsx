@@ -127,7 +127,7 @@ const UserInfo = styled.div`
   margin-bottom: 8px;
   gap: 4px;
 `;
-const CommentContent = styled.div`
+const CommentContent = styled.pre`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.text};
