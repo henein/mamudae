@@ -75,6 +75,9 @@ const Warning = ({ type, mutate }: WarningProps) => {
               sort="primary"
               onClick={async () => {
                 if (pastDay && recentDay) {
+                  await alert(
+                    "사용자의 큐브 내역을 통해 캐릭터 닉네임을 조회합니다. (사용자 정보에 따라 시간차이가 발생할 수 있습니다.)"
+                  );
                   await mutate({ recentDay: recentDay, pastDay: pastDay });
                   await modalOff();
                 } else {

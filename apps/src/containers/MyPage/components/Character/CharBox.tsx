@@ -53,20 +53,17 @@ const CharBox = ({
     (state: RootState) => state.darkMode.isDarkMode
   );
 
-  // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   const { mutate: pickChar } = usePickChar({
     charId: id,
     options: {},
   });
-  const { mutate: refreshChar } = useRefreshOneChar({
+  const { mutate: refreshChar, isLoading } = useRefreshOneChar({
     charId: id,
-    LoadingController: setIsLoading,
   });
 
   useEffect(() => {
@@ -85,9 +82,9 @@ const CharBox = ({
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
     img.crossOrigin = "Anonymous";
-    img.src =
-      `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
-      "/myPageImages/defaultChar.png";
+    img.src = avatar
+      ? `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}`
+      : "/myPageImages/defaultChar.png";
   }, [avatar, darkModeState]);
 
   const charImageResize = avatar
@@ -176,7 +173,7 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
 const RefreshBtnPosition = styled.div`
   display: flex;
 `;
-const ImgPosition = styled.button`
+const ImgPosition = styled.div`
   height: 20px;
   position: absolute;
   top: 8px;
@@ -184,6 +181,9 @@ const ImgPosition = styled.button`
   z-index: 10;
   svg {
     color: ${({ theme }) => theme.characterCardButton};
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const CharImg = styled.img`
@@ -218,11 +218,9 @@ const CharInfoBox = styled.div<{
   bottom: 0px;
   z-index: 2;
   &:hover {
-    cursor: pointer;
-  }
-  &:hover {
     box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.05);
     transition: box-shadow 200ms;
+    cursor: pointer;
   }
   &:active {
     box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);

@@ -7,15 +7,14 @@ import LoadingSpinner from "../../../../component/LoadingSpinner";
 import { useRefreshAllChar } from "../../../../hooks/myPageHooks/useUserChar";
 interface CharSelectBoxType {
   charList: any;
+  isAllCharLoading: boolean;
 }
-const CharSelectBox = ({ charList }: CharSelectBoxType) => {
+const CharSelectBox = ({ charList, isAllCharLoading }: CharSelectBoxType) => {
   const [optionNum, setOptionNum] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState(false);
 
   const idList = charList?.map((item: any) => item.id);
-  const { mutate: refreshAllChar } = useRefreshAllChar({
+  const { mutate: refreshAllChar, isLoading } = useRefreshAllChar({
     idList: idList,
-    LoadingController: setIsLoading,
   });
 
   const newCharList = (optionNum: number) => {
@@ -97,23 +96,29 @@ const CharSelectBox = ({ charList }: CharSelectBoxType) => {
             이름
           </NameSort>
         </ContentSortOption>
-        <InnerAllChar>
-          {charList &&
-            sortedCharList?.map((item: CharInfo, idx: number) => {
-              return (
-                <CharBox
-                  avatar={item.avatar}
-                  id={item.id}
-                  job={item.job}
-                  level={item.level}
-                  charName={item.charName}
-                  pickByUser={item.pickByUser}
-                  world={item.world}
-                  key={idx}
-                />
-              );
-            })}
-        </InnerAllChar>
+        {isAllCharLoading ? (
+          <LoadingDiv>
+            <LoadingSpinner width={35} height={35} borderWidth={3} />
+          </LoadingDiv>
+        ) : (
+          <InnerAllChar>
+            {charList &&
+              sortedCharList?.map((item: CharInfo, idx: number) => {
+                return (
+                  <CharBox
+                    avatar={item.avatar}
+                    id={item.id}
+                    job={item.job}
+                    level={item.level}
+                    charName={item.charName}
+                    pickByUser={item.pickByUser}
+                    world={item.world}
+                    key={idx}
+                  />
+                );
+              })}
+          </InnerAllChar>
+        )}
       </BoxLayout>
     </BoxContent>
   );
@@ -132,6 +137,9 @@ const TitleBox = styled.div`
   padding: 8px 8px 0px 8px;
   svg {
     color: ${({ theme }) => theme.subText};
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 export const Title = styled.h1`
@@ -177,4 +185,10 @@ const InnerAllChar = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px 22px;
+`;
+const LoadingDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 173px;
 `;
