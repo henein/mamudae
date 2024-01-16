@@ -16,14 +16,12 @@ import QuestionIcon from "/public/myPageImages/question.svg";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
   const [onModal, setOnModal] = useState<boolean>(false);
 
   const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
 
-  const { mutate } = useGetCharName({
+  const { mutate, isLoading } = useGetCharName({
     key: apiKey,
-    LoadingController: setIsLoading,
   });
 
   const { isWarning, warningType } = useOnWarning();
@@ -41,7 +39,7 @@ const MyChar = () => {
 
   return (
     <Container>
-      <CharSelectBox charList={data} />
+      <CharSelectBox charList={data} isAllCharLoading={isLoading} />
       {onModal && (
         <StickyView>
           <SwiperModal setOnModal={setOnModal} />

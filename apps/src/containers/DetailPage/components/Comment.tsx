@@ -164,7 +164,7 @@ const UserInfo = styled.div`
   gap: 4px;
   margin-bottom: 8px;
 `;
-const CommentContent = styled.div<{ isDeleteComment: boolean }>`
+const CommentContent = styled.pre<{ isDeleteComment: boolean }>`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${({ theme, isDeleteComment }) => theme.text};
