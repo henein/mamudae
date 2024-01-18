@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { customColor } from '../../../constants/customColor';
 import Image from 'next/image';
 import kakaoIcon from '/public/loginPageImages/KaKao.png';
 import Button from '../../../component/Button';
-import Link from 'next/link';
 import useKaKao from '../../../hooks/kakao/useKaKao';
 import { LocalLoginProps } from '../../../api/localLogin';
 import { useLocalLogin } from '../../../hooks/localLogin/useLocalLogin';
 import { TextField } from '../../../component/TextField';
 
-const Login = () => {
+const LoginForm = () => {
   const { register, handleSubmit } = useForm();
   const { login } = useKaKao();
   const [localLoginForm, setLocalLoginForm] = useState<LocalLoginProps>({
@@ -41,15 +40,9 @@ const Login = () => {
         type="password"
         placeholder="비밀번호"
       />
-      <LoginBtn type="submit" sort="primary" width="100%" fontWeight="700">
+      <Button type="submit" sort="primary" width="100%" fontWeight="700">
         로그인
-      </LoginBtn>
-      <SignUpContents>
-        <LeftBtn type="button">로그인이 안되시나요?</LeftBtn>
-        <Link href="/register">
-          <RightBtn type="button">회원가입</RightBtn>
-        </Link>
-      </SignUpContents>
+      </Button>
       <Lines>
         <Line />
         <MidLineTextDiv>또는</MidLineTextDiv>
@@ -65,21 +58,7 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-export const FormInputCss = css`
-  border: 1px solid ${(prop) => prop.theme.border};
-  border-radius: 8px;
-  width: 100%;
-  height: 41px;
-  padding: 12px 16px;
-  font-size: 14px;
-  background-color: ${(prop) => prop.theme.input};
-  color: ${({ theme }) => theme.text};
-  ::placeholder {
-    color: ${(prop) => prop.theme.subText};
-  }
-`;
+export default LoginForm;
 
 const KakaoImg = styled(Image)`
   position: absolute;
@@ -95,13 +74,12 @@ const KakaoDiv = styled.div`
   justify-content: center;
 `;
 const Container = styled.form`
-  justify-content: space-between;
   border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
-  height: 380px;
-  background-color: ${(prop) => prop.theme.cardHeader};
+  background-color: ${(prop) => prop.theme.card};
   display: flex;
   flex-direction: column;
+  gap: 16px;
   border-radius: 16px;
   padding: 20px 24px;
 `;
@@ -110,18 +88,6 @@ const Title = styled.span`
   font-size: 20px;
   font-weight: 700;
   color: ${(prop) => prop.theme.text};
-`;
-const Id = styled.input`
-  ${FormInputCss}
-`;
-const PassWord = styled.input`
-  ${FormInputCss}
-`;
-const LoginBtn = styled(Button)``;
-const SignUpContents = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 `;
 const Lines = styled.div`
   display: flex;
@@ -132,15 +98,14 @@ const Lines = styled.div`
 const Line = styled.hr`
   width: calc((100% - 30px) / 2);
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid ${({ theme }) => theme.divider};
 `;
 const MidLineTextDiv = styled.div`
   font-size: 10px;
-  color: ${customColor.darkGray};
+  color: ${({ theme }) => theme.subText};
   width: 30px;
   text-align: center;
 `;
-
 const KakaoBtn = styled.button`
   border-radius: 8px;
   border: 1px solid ${customColor.whiteGray};
@@ -155,13 +120,4 @@ const KakaoBtn = styled.button`
   &:active {
     transform: scale(0.98);
   }
-`;
-const LeftBtn = styled.button`
-  font-size: 12px;
-  color: ${customColor.darkGray};
-`;
-const RightBtn = styled.button`
-  font-size: 12px;
-  color: ${customColor.orange};
-  font-weight: 900;
 `;

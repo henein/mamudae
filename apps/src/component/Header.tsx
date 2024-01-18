@@ -1,14 +1,15 @@
-import Link from "next/link";
-import React from "react";
-import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
-import { toggleDarkMode } from "../../store/darkmodeSlice/darkmode";
-import SvgIcon from "@mui/material/SvgIcon";
-import SearchIcon from "@mui/icons-material/Search";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import useScroll from "../hooks/scrollHooks/useScroll";
+import Link from 'next/link';
+import React from 'react';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { toggleDarkMode } from '../../store/darkmodeSlice/darkmode';
+import SvgIcon from '@mui/material/SvgIcon';
+import SearchIcon from '@mui/icons-material/Search';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import useScroll from '../hooks/scrollHooks/useScroll';
+import { Logo } from './Logo';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -28,9 +29,9 @@ const Header = () => {
       <Background darkModeState={darkModeState} stickyTop={stickyTop}>
         <TitleBox stickyTop={stickyTop}>
           <LeftDiv>
-            <Link href="/">
-              <Title>Henein</Title>
-            </Link>
+            <LogoLink href="/">
+              <Logo size="small" />
+            </LogoLink>
             <Nav>
               <Link href="/">
                 <NavItem stickyTop={stickyTop} isSelect>
@@ -54,12 +55,6 @@ const Header = () => {
                 <SvgIcon component={DarkModeIcon} fontSize="small" />
               </DarkImg>
             </DarkModeBtn>
-            <InputBox>
-              <InlineInput placeholder="검색"></InlineInput>
-              <SubmitBtn>
-                <SvgIcon component={SearchIcon} inheritViewBox />
-              </SubmitBtn>
-            </InputBox>
           </RightDiv>
         </TitleBox>
       </Background>
@@ -69,20 +64,20 @@ const Header = () => {
 
 export default Header;
 const Container = styled.header<{ isScrollDown: boolean; stickyTop: boolean }>`
-  position: ${({ stickyTop }) => stickyTop && "sticky"};
+  position: ${({ stickyTop }) => stickyTop && 'sticky'};
   top: 0;
   z-index: 1000;
   transform: ${({ isScrollDown }) =>
-    isScrollDown ? "translateY(-73px)" : "none"};
+    isScrollDown ? 'translateY(-73px)' : 'none'};
   transition: transform 0.2s ease-in-out;
 `;
 const Background = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
   display: flex;
   align-items: center;
   background-color: ${({ stickyTop, theme }) =>
-    stickyTop ? theme.card : "none"};
+    stickyTop ? theme.card : 'none'};
   border-bottom: ${({ stickyTop, theme }) =>
-    stickyTop ? `1px solid ${theme.border}` : "none"};
+    stickyTop ? `1px solid ${theme.border}` : 'none'};
   box-shadow: ${({ stickyTop, theme }) =>
     stickyTop && `0px 4px 8px ${theme.boxShadow}`};
 `;
@@ -98,18 +93,15 @@ const RightDiv = styled.div`
 const TitleBox = styled.div<{ stickyTop: boolean }>`
   display: flex;
   justify-content: space-between;
-  align-items: ${({ stickyTop }) => (stickyTop ? "center" : "flex-end")};
-  height: ${({ stickyTop }) => (stickyTop ? "72px" : "64px")};
+  align-items: ${({ stickyTop }) => (stickyTop ? 'center' : 'flex-end')};
+  height: ${({ stickyTop }) => (stickyTop ? '72px' : '64px')};
   width: 1140px;
   margin: 0 auto;
   background-color: ${({ stickyTop, theme }) =>
-    stickyTop ? theme.card : "none"};
+    stickyTop ? theme.card : 'none'};
 `;
-const Title = styled.h1`
-  font-size: 32px;
-  font-weight: 900;
-  line-height: 38px;
-  color: ${({ theme }) => theme.brand};
+const LogoLink = styled(Link)`
+  line-height: 0;
 `;
 const DarkModeBtn = styled.button`
   display: flex;
@@ -126,7 +118,7 @@ const LightImg = styled.div<{ darkModeState: boolean }>`
   padding: 5px;
   border-radius: 8px;
   background-color: ${({ darkModeState, theme }) =>
-    darkModeState ? "none" : theme.cardHeader};
+    darkModeState ? 'none' : theme.cardHeader};
   border: ${({ darkModeState, theme }) =>
     darkModeState
       ? `1px solid ${theme.chatBackground}`
@@ -138,7 +130,7 @@ const DarkImg = styled.div<{ darkModeState: boolean }>`
   padding: 5px;
   border-radius: 8px;
   background-color: ${({ darkModeState, theme }) =>
-    darkModeState ? theme.cardHeader : "none"};
+    darkModeState ? theme.cardHeader : 'none'};
   border: ${({ darkModeState, theme }) =>
     darkModeState
       ? `1px solid ${theme.border}`

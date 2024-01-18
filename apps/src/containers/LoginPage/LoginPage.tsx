@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import Login from "./components/Login";
-import Logo from "../../component/Logo";
+import LoginForm from "./components/Login";
+import { Logo } from "../../component/Logo";
+import Link from "next/link";
+
 const LoginPage = () => {
   return (
     <Container>
-      <LeftDiv>
-        <Logo size="big" />
-      </LeftDiv>
-      <RightDiv>
-        <Login />
-      </RightDiv>
+      <Logo />
+      <LoginForm />
+      <SignUpContents>
+        <LeftBtn>아직 계정이 없으신가요?</LeftBtn>
+        <Link href="/register">
+          <RightBtn>회원가입</RightBtn>
+        </Link>
+      </SignUpContents>
     </Container>
   );
 };
@@ -18,25 +22,28 @@ const LoginPage = () => {
 export default LoginPage;
 
 const Container = styled.div`
-  height: 100vh;
-  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  gap: 24px;
+  background-color: ${({ theme }) => theme.loginBackground};
 `;
-const LeftDiv = styled.div`
+
+const SignUpContents = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 960px;
-  height: 100vh;
-  background-color: #f9faff;
+  gap: 4px;
+  align-items: baseline;
 `;
-const RightDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 960px;
-  height: 100vh;
-  background-color: #e0e1e6;
+
+const LeftBtn = styled.p`
+  font-size: 12px;
+  color: ${(prop) => prop.theme.subText};
+`;
+
+const RightBtn = styled.a`
+  font-size: 12px;
+  color: ${({ theme }) => theme.brand};
+  font-weight: 900;
 `;
