@@ -11,13 +11,18 @@ import Comment from "./components/Comment";
 import Like from "./components/Like";
 import Title from "./components/Title";
 import Write from "./components/Write";
-import Warning from "../../component/Warning";
+import CommentWarning from "../../component/WarningComponent/CommentWarning";
+import BoardWarning from "../../component/WarningComponent/BoardWarning";
 import useOnWarning from "../../hooks/reduxHooks/useOnWarning";
 import Link from "next/link";
 import { extensions } from "../../component/Editor/Editor";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../store/warningSlice/onWarning";
 
+export interface WarningState {
+  btnType: "delete" | "modify" | "report";
+  location: "board" | "comment";
+}
 export type CommentType = {
   comment: string;
   id: number;
@@ -33,6 +38,7 @@ const DetailPage = () => {
   const router = useRouter();
   const boardId = router.query.id as string;
   const dispatch = useDispatch();
+  const { isWarning, warningType, warningLocation } = useOnWarning();
 
   const { data, refetch } = useDetail({
     boardId,
@@ -41,8 +47,6 @@ const DetailPage = () => {
     },
   });
 
-  const [context, setContext] = useState("");
-
   const commentdata = useGetComment({
     boardId,
     options: {
@@ -50,16 +54,15 @@ const DetailPage = () => {
     },
   }).data;
 
+  const [context, setContext] = useState("");
   useEffect(() => {
     if (data) {
       const html = generateHTML(JSON.parse(data.text), extensions);
-
       setContext(html);
     }
   }, [data]);
 
   const [isInAT, setIsInAT] = useState(false);
-
   useEffect(() => {
     const storedValue = localStorage.getItem("access");
     if (storedValue) {
@@ -68,14 +71,12 @@ const DetailPage = () => {
     refetch();
   }, [isInAT, refetch]);
 
-  const { isWarning, warningType } = useOnWarning();
-
-  const btnClick = (btnType: string) => {
+  const btnClick = ({ btnType, location }: WarningState) => {
     if (localStorage.getItem("access") === null) {
       alert("로그인 후 이용 가능합니다.");
       return;
     } else {
-      dispatch(onWarnings(btnType));
+      dispatch(onWarnings({ warningType: btnType, warningLocation: location }));
     }
   };
 
@@ -85,101 +86,109 @@ const DetailPage = () => {
       <SideBox>
         <Login />
       </SideBox>
-      {data && (
-        <div>
-          <WriteBox>
-            <Wrapper>
-              <Title
-                title={data.title}
-                name={data.userName}
-                views={data.views}
-                createTime={data.createTime}
-              />
-              <Content dangerouslySetInnerHTML={{ __html: context }} />
-              <Like
-                recommend={data.recommend}
-                boardId={boardId}
-                recommended={data.recommended}
-              />
-            </Wrapper>
-          </WriteBox>
-
-          <BoardOptionBox>
-            <Button type="button" sort="secondary">
-              목록
-            </Button>
-            {data && data.uid ? (
-              <RightItems>
-                <Link href={`/update/${boardId}`}>
-                  <Button type="button" sort="secondary">
-                    수정하기
-                  </Button>
-                </Link>
-                <Button type="button" sort="danger">
-                  삭제하기
-                </Button>
-              </RightItems>
-            ) : (
-              <RightItems>
-                <Button
-                  type="button"
-                  sort="danger"
-                  onClick={() => {
-                    btnClick("boardReport");
-                  }}
-                >
-                  신고하기
-                </Button>
-              </RightItems>
+      <div>
+        <WriteBox>
+          <Wrapper>
+            {data && (
+              <>
+                <Title
+                  title={data.title}
+                  name={data.userName}
+                  views={data.views}
+                  createTime={data.createTime}
+                />
+                <Content dangerouslySetInnerHTML={{ __html: context }} />
+                <Like
+                  recommend={data.recommend}
+                  boardId={boardId}
+                  recommended={data.recommended}
+                />
+              </>
             )}
-          </BoardOptionBox>
+          </Wrapper>
+        </WriteBox>
 
-          <CommentBox>
-            <Write boardId={boardId} totalComment={data.commentNum} />
-            <Comments>
-              {commentdata &&
-                commentdata.commentList.map(
-                  (item: CommentType, idx: number) => {
-                    return (
-                      <Comment
-                        writerList={commentdata.writerList}
-                        comment={item.comment}
-                        nickName={
-                          item.writerId === null
-                            ? "알 수 없음"
-                            : commentdata.writerList[item.writerId].nickName
-                        }
-                        modifiedDate={item.modifiedDate}
-                        replies={item.replies}
-                        key={idx}
-                        id={item.id}
-                        boardId={boardId}
-                        uid={
-                          item.writerId === null
-                            ? null
-                            : commentdata.writerList[item.writerId].uid
-                        }
-                        role={
-                          item.writerId === null
-                            ? null
-                            : commentdata.writerList[item.writerId].role
-                        }
-                        isLastComment={
-                          idx + 1 == commentdata.commentList.length
-                        }
-                      />
-                    );
-                  }
-                )}
-            </Comments>
-          </CommentBox>
-          {isWarning && (
-            <StickyView>
-              <Warning type={warningType} />
-            </StickyView>
+        <BoardOptionBox>
+          <Button type="button" sort="secondary">
+            목록
+          </Button>
+          {data && data.uid ? (
+            <RightItems>
+              <Link href={`/update/${boardId}`}>
+                <Button type="button" sort="secondary">
+                  수정하기
+                </Button>
+              </Link>
+              <Button
+                type="button"
+                sort="danger"
+                onClick={() => {
+                  btnClick({ btnType: "delete", location: "board" });
+                }}
+              >
+                삭제하기
+              </Button>
+            </RightItems>
+          ) : (
+            <RightItems>
+              <Button
+                type="button"
+                sort="danger"
+                onClick={() => {
+                  btnClick({ btnType: "report", location: "board" });
+                }}
+              >
+                신고하기
+              </Button>
+            </RightItems>
           )}
-        </div>
-      )}
+        </BoardOptionBox>
+
+        <CommentBox>
+          {data && <Write boardId={boardId} totalComment={data.commentNum} />}
+          <Comments>
+            {commentdata &&
+              commentdata.commentList.map((item: CommentType, idx: number) => {
+                return (
+                  <Comment
+                    writerList={commentdata.writerList}
+                    comment={item.comment}
+                    nickName={
+                      item.writerId === null
+                        ? "알 수 없음"
+                        : commentdata.writerList[item.writerId].nickName
+                    }
+                    modifiedDate={item.modifiedDate}
+                    replies={item.replies}
+                    key={idx}
+                    id={item.id}
+                    boardId={boardId}
+                    uid={
+                      item.writerId === null
+                        ? null
+                        : commentdata.writerList[item.writerId].uid
+                    }
+                    role={
+                      item.writerId === null
+                        ? null
+                        : commentdata.writerList[item.writerId].role
+                    }
+                    isLastComment={idx + 1 == commentdata.commentList.length}
+                  />
+                );
+              })}
+          </Comments>
+        </CommentBox>
+        {isWarning && (
+          <StickyView>
+            {warningLocation === "board" ? (
+              <BoardWarning type={warningType} />
+            ) : (
+              <CommentWarning type={warningType} />
+            )}
+          </StickyView>
+        )}
+      </div>
     </Container>
   );
 };
