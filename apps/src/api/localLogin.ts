@@ -1,31 +1,68 @@
-import axios from "axios";
+import axios from 'axios';
 
 export interface LocalLoginProps {
-  userEmail: string;
+  email: string;
   password: string;
 }
 
-export async function postLocalLogin({ userEmail, password }: LocalLoginProps) {
+export async function postLocalLogin({ email, password }: LocalLoginProps) {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
     {
-      userEmail: userEmail,
+      userEmail: email,
       password: password,
     }
   );
   return res.headers;
 }
 
-export async function postLocalSignUp({
-  userEmail,
+export async function postLocalRegister({
+  email,
   password,
-}: LocalLoginProps) {
+  token,
+}: {
+  email: string;
+  password: string;
+  token: string;
+}) {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login/register`,
     {
-      userEmail: userEmail,
-      password: password,
+      userEmail: email,
+      password,
+    },
+    {
+      headers: {
+        authorization: token,
+      },
     }
   );
+
   return res.headers;
+}
+
+export async function postAuthenticationMail(email: string) {
+  const formData = new FormData();
+
+  formData.append('requestEmail', email);
+
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/mail/sender`,
+    formData
+  );
+
+  return res.data;
+}
+
+export async function postVerifyCode(code: string) {
+  const formData = new FormData();
+
+  formData.append('key', code);
+
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/mail/verify`,
+    formData
+  );
+
+  return res.headers['authorization'];
 }

@@ -77,15 +77,32 @@ export const setRepresent = async (id: number) => {
   return res;
 };
 
-// 닉네임으로 캐릭터 정보 불러오기
-export const getCharInfo = async (name: string) => {
+// 캐릭터 id로 단일 캐릭터 세부정보 조회
+export const getOneCharInfo = async (id: number) => {
   try {
-    const res = await axiosInstance.post(
-      `/userinfo/character/renew?name=${name}`
+    const res = await axiosInstance.get(
+      `/userinfo/character/update/single/${id}`
     );
     return res;
   } catch (err: any) {
-    return alert(err.response.data.errorMessage);
+    if (err.response.data.code === 110)
+      return alert("1시간 뒤에 요청할 수 있습니다.");
+  }
+};
+
+// 캐릭터 id 리스트로 모든 캐릭터 세부정보 조회
+export const getAllCharInfo = async (idList: number[]) => {
+  try {
+    const res = await axiosInstance.post(
+      `/userinfo/character/update/multiple`,
+      {
+        idList,
+      }
+    );
+    return res;
+  } catch (err: any) {
+    if (err.response.data.code === 110)
+      return alert("1시간 뒤에 요청할 수 있습니다.");
   }
 };
 

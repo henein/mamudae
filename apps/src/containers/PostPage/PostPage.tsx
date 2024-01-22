@@ -21,6 +21,7 @@ const PostPage = () => {
       case "유머":
       case "보스":
       case "정보":
+      case "공지":
         break;
       default:
         router.push("/404");
@@ -28,8 +29,7 @@ const PostPage = () => {
     }
   }, [router.isReady, router.query.post, router]);
 
-  const { data, refetch } = useEachPost();
-  console.log(data);
+  const { data } = useEachPost();
   return (
     <Layout>
       <Announcement />

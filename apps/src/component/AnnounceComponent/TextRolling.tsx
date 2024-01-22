@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { useGetAnnounce } from "../../hooks/announce/useGetAnnounce";
@@ -8,6 +9,7 @@ type SlidePropType = {
   props?: boolean | number;
 };
 type AnnounceDataType = {
+  id: number;
   title: string;
 };
 
@@ -42,11 +44,11 @@ const TextRolling = () => {
   return (
     <Slider {...settings}>
       {data.content &&
-        data.content.map((item: AnnounceDataType, idx: number) => {
+        data.content.map((item: AnnounceDataType) => {
           return (
-            <div key={idx}>
+            <Link href={`/board/공지/${item.id}`} key={item.id}>
               <CustomSlide txt={item.title} />
-            </div>
+            </Link>
           );
         })}
     </Slider>

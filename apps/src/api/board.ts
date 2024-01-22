@@ -49,10 +49,15 @@ export async function updateBoard({ accessToken, id, ...props }: IUpdateBoard) {
   return res.data;
 }
 
+export async function deleteBoard(boardId: number) {
+  const res = await axiosInstance.delete(`/board/${boardId}`);
+  return res.data;
+}
+
 export async function uploadImage({ accessToken, image }: IUploadImage) {
   const formData = new FormData();
 
-  formData.append("image", image)
+  formData.append("image", image);
 
   const res = await axiosInstance.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board/image`,
@@ -60,10 +65,10 @@ export async function uploadImage({ accessToken, image }: IUploadImage) {
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     }
   );
-  
+
   return res.data as string;
 }

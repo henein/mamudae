@@ -1,4 +1,4 @@
-import WritePage from "../src/containers/WritePage/WritePage";
+import WritePage from "../containers/WritePage/WritePage";
 
 const write = () => {
   return <WritePage />;

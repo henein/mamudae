@@ -3,8 +3,14 @@ import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import Board from "./components/Board";
+import { useGetBoard } from "../../hooks/mainPageHooks/useGetAllPost";
 
 const MainPage = () => {
+  const { data: entireBoard } = useGetBoard("E");
+  const { data: freeBoard } = useGetBoard("F");
+  const { data: humorBoard } = useGetBoard("H");
+  const { data: bossBoard } = useGetBoard("B");
+  const { data: infoBoard } = useGetBoard("I");
   return (
     <Layout>
       <Announcement />
@@ -14,13 +20,13 @@ const MainPage = () => {
         </Aside>
         <BoardSet>
           <div>
-            <Board boardTitle="전체" isLarge={true} />
+            <Board boardTitle="전체" isLarge={true} content={entireBoard} />
           </div>
           <SmallBoard>
-            <Board boardTitle="자유" isLarge={false} />
-            <Board boardTitle="유머" isLarge={false} />
-            <Board boardTitle="보스" isLarge={false} />
-            <Board boardTitle="정보" isLarge={false} />
+            <Board boardTitle="자유" isLarge={false} content={freeBoard} />
+            <Board boardTitle="유머" isLarge={false} content={humorBoard} />
+            <Board boardTitle="보스" isLarge={false} content={bossBoard} />
+            <Board boardTitle="정보" isLarge={false} content={infoBoard} />
           </SmallBoard>
         </BoardSet>
       </MainPageSet>

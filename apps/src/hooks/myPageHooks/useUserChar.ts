@@ -1,38 +1,40 @@
+import { AxiosError } from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAllMyChar } from "../../api/userInfo";
-import { getUserCharName, getCharInfo, setRepresent } from "../../api/userInfo";
+import {
+  getUserCharName,
+  getOneCharInfo,
+  getAllCharInfo,
+  setRepresent,
+} from "../../api/userInfo";
 
 interface IGetCharName {
   key: string;
   LoadingController?: any;
   options?: any;
 }
-export const useGetCharName = ({
-  key,
-  LoadingController,
-  options,
-}: IGetCharName) => {
+export const useGetCharName = ({ key, options }: IGetCharName) => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     ({ pastDay, recentDay }: any) => getUserCharName(key, recentDay, pastDay),
     {
       onSuccess: async () => {
-        await LoadingController(true);
-        await alert(
-          "사용자의 큐브 내역을 통해 캐릭터 닉네임을 조회합니다. (30초 정도 소요)"
-        );
         await new Promise((resolve) => {
-          setTimeout(resolve, 30000);
+          setTimeout(resolve, 3000);
         });
-        await alert("캐릭터 닉네임 업데이트 완료");
-        await queryClient.invalidateQueries("allMyChar");
-        await LoadingController(false);
+        await queryClient.refetchQueries("allMyChar");
+        await alert("캐릭터 업데이트 완료");
+      },
+      onError: async (error: AxiosError) => {
+        if (error.response?.status === 500) {
+          alert("API 키 값이 잘못되었습니다.");
+        }
       },
     }
   );
 
-  return { mutate };
+  return { mutate, isLoading };
 };
 
 export const useGetAllMyChar = ({ options }: any) => {
@@ -42,21 +44,34 @@ export const useGetAllMyChar = ({ options }: any) => {
   return { data, refetch };
 };
 
-export const useRefreshChar = ({ name, LoadingController, options }: any) => {
+export const useRefreshOneChar = ({ charId, options }: any) => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => getCharInfo(name), {
+  const { mutate, isLoading } = useMutation(() => getOneCharInfo(charId), {
     onSuccess: async () => {
-      await LoadingController(true);
       await new Promise((resolve) => {
         setTimeout(resolve, 3000);
       });
-      await queryClient.invalidateQueries("allMyChar");
-      await LoadingController(false);
+      await queryClient.refetchQueries("allMyChar");
     },
   });
 
-  return { mutate };
+  return { mutate, isLoading };
+};
+
+export const useRefreshAllChar = ({ idList, options }: any) => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(() => getAllCharInfo(idList), {
+    onSuccess: async () => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 3000);
+      });
+      await queryClient.refetchQueries("allMyChar");
+    },
+  });
+
+  return { mutate, isLoading };
 };
 
 interface PickCharType {

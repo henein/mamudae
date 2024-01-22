@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import LoadingSpinner from "../src/component/LoadingSpinner";
-import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
+import LoadingSpinner from "../component/LoadingSpinner";
+import { usePrintCode } from "../hooks/kakao/usePrintCode";
 
 const KaKao = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const KaKao = () => {
 
   return (
     <Container>
-      <LoadingSpinner width={130} height={130} borderWidth={6} />
+      <LoadingSpinner width={48} height={48} borderWidth={4} />
     </Container>
   );
 };
@@ -28,6 +28,9 @@ const KaKao = () => {
 export default KaKao;
 
 const Container = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

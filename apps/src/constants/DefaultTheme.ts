@@ -1,3 +1,4 @@
+import { pl } from 'date-fns/locale';
 import { DefaultTheme } from 'styled-components';
 
 export const paletteColor = {
@@ -108,6 +109,7 @@ export const lightMode: DefaultTheme = {
   toggleSelect: paletteColor.white800,
   buttonRingHover: paletteColor.black025,
   buttonRingActive: paletteColor.white050,
+  loginBackground: paletteColor.primary050,
 };
 export const darkMode: DefaultTheme = {
   background: paletteColor.grey900,
@@ -148,4 +150,5 @@ export const darkMode: DefaultTheme = {
   toggleSelect: paletteColor.grey700A,
   buttonRingHover: paletteColor.black050,
   buttonRingActive: paletteColor.white100,
+  loginBackground: 'transparent',
 };

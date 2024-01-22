@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ColorThief from "colorthief";
 import {
   usePickChar,
-  useRefreshChar,
+  useRefreshOneChar,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ export interface CharInfo {
   id: number;
   job: string | null;
   level: number | null;
-  nickName: string;
+  charName: string;
   pickByUser: boolean;
   world: string | null;
 }
@@ -45,7 +45,7 @@ const CharBox = ({
   id,
   job,
   level,
-  nickName,
+  charName,
   pickByUser,
   world,
 }: CharInfo) => {
@@ -53,21 +53,17 @@ const CharBox = ({
     (state: RootState) => state.darkMode.isDarkMode
   );
 
-  // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
-  console.log(imageRandomColor);
 
   const { mutate: pickChar } = usePickChar({
     charId: id,
     options: {},
   });
-  const { mutate: refreshChar } = useRefreshChar({
-    name: nickName,
-    LoadingController: setIsLoading,
+  const { mutate: refreshChar, isLoading } = useRefreshOneChar({
+    charId: id,
   });
 
   useEffect(() => {
@@ -86,10 +82,15 @@ const CharBox = ({
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
     img.crossOrigin = "Anonymous";
-    img.src =
-      `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
-      "/myPageImages/defaultChar.png";
+    img.src = avatar
+      ? `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}`
+      : "/myPageImages/defaultChar.png";
   }, [avatar, darkModeState]);
+
+  const charImageResize = avatar
+    ? "https://open.api.nexon.com/static/maplestory/Character/180/" +
+      avatar.toString().slice(55)
+    : "/myPageImages/defaultChar.png";
 
   return (
     <Container disable={avatar} color={imageRandomColor}>
@@ -107,7 +108,7 @@ const CharBox = ({
       >
         <Top>
           {pickByUser && <Tag>대표</Tag>}
-          <NickName>{nickName}</NickName>
+          <NickName>{charName || "정보 없음"}</NickName>
         </Top>
         <Bottom>
           <JobnLevel>
@@ -121,7 +122,7 @@ const CharBox = ({
         onMouseLeave={() => setRefreshOn(false)}
       />
       <RefreshBtnPosition>
-        <CharImg src={avatar || "/myPageImages/defaultChar.png"} id="char" />
+        <CharImg src={charImageResize} id="char" />
         {refreshOn && (
           <ImgPosition
             onMouseEnter={() => setRefreshOn(true)}
@@ -165,11 +166,14 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
   height: 120px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  background-color: ${({ disable, theme }) =>
+    disable || theme.characterCardDisableBackground};
+  opacity: ${({ disable }) => disable || "0.6"};
 `;
 const RefreshBtnPosition = styled.div`
   display: flex;
 `;
-const ImgPosition = styled.button`
+const ImgPosition = styled.div`
   height: 20px;
   position: absolute;
   top: 8px;
@@ -177,6 +181,9 @@ const ImgPosition = styled.button`
   z-index: 10;
   svg {
     color: ${({ theme }) => theme.characterCardButton};
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const CharImg = styled.img`
@@ -211,11 +218,9 @@ const CharInfoBox = styled.div<{
   bottom: 0px;
   z-index: 2;
   &:hover {
-    cursor: pointer;
-  }
-  &:hover {
     box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.05);
     transition: box-shadow 200ms;
+    cursor: pointer;
   }
   &:active {
     box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);

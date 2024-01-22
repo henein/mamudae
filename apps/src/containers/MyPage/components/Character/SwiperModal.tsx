@@ -21,31 +21,26 @@ const SwiperModal = ({ ...props }: any) => {
       case 0:
         return (
           <>
-            넥슨 개발자센터 (
             <a
-              href="https://developers.nexon.com"
+              href="https://openapi.nexon.com/"
               target="_blank"
               rel="noreferrer"
             >
-              https://developers.nexon.com
+              NEXON Open API
             </a>
-            )에 접속해서 로그인 해주세요.
+            에 접속해서 ➊로그인 하고 ➋My 애플리케이션으로 이동해주세요.
           </>
         );
       case 1:
-        return <span>우측 상단의 마이페이지로 이동해주세요.</span>;
+        return <span>애플리케이션 등록하기를 눌러주세요.</span>;
       case 2:
-        return <span>새 애플리케이션 등록을 눌러주세요.</span>;
-      case 3:
         return <span>내용을 위와 같이 입력해주세요.</span>;
+      case 3:
+        return <span>➊약관 동의를 하고 ➋아래 등록 버튼을 눌러주세요.</span>;
       case 4:
-        return <span>아래 발급 버튼을 눌러주세요.</span>;
+        return <span>표시된 부분을 눌러서 상세 페이지로 이동해주세요.</span>;
       case 5:
-        return (
-          <span>
-            ➊을 눌러서 내용을 확장하고 ➋를 눌러서 토큰을 복사해주세요.
-          </span>
-        );
+        return <span>표시된 부분을 눌러서 API Key를 복사해주세요.</span>;
       default:
         return;
     }

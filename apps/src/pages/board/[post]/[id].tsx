@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { announce } from "../../../src/api/announce";
-import DetailPage from "../../../src/containers/DetailPage/DetailPage";
-import { detail } from "../../../src/api/detail";
+import { announce } from "../../../api/announce";
+import DetailPage from "../../../containers/DetailPage/DetailPage";
+import { detail } from "../../../api/detail";
 
 const Detail = () => {
   return <DetailPage />;

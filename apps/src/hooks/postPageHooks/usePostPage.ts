@@ -8,6 +8,7 @@ const title: { [key: string]: string } = {
   유머: "H",
   보스: "B",
   직업: "I",
+  공지: "N",
 };
 
 export function useEachPost() {

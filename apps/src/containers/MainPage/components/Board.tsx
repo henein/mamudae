@@ -3,17 +3,18 @@ import styled from "styled-components";
 import UserPostList from "./UserPostList";
 import BoardHead from "./BoardHead";
 
-export type BoardInfoType = {
+interface BoardInfoType {
   boardTitle: "전체" | "자유" | "유머" | "보스" | "정보";
   isLarge?: boolean;
-};
+  content: any;
+}
 
-function Board({ boardTitle, isLarge }: BoardInfoType) {
+function Board({ boardTitle, isLarge, content }: BoardInfoType) {
   return (
     <Layout>
       <BoardContent isLarge={isLarge}>
         <BoardHead boardTitle={boardTitle} />
-        <UserPostList boardTitle={boardTitle} />
+        <UserPostList content={content} />
       </BoardContent>
     </Layout>
   );

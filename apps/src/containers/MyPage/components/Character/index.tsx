@@ -7,26 +7,24 @@ import {
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import useOnWarning from "../../../../hooks/reduxHooks/useOnWarning";
-import Warning from "../../../../component/Warning";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
 import QuestionIcon from "/public/myPageImages/question.svg";
+import DateSelectorBox from "./DateSelectorBox";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
   const [onModal, setOnModal] = useState<boolean>(false);
 
   const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
 
-  const { mutate } = useGetCharName({
+  const { mutate, isLoading } = useGetCharName({
     key: apiKey,
-    LoadingController: setIsLoading,
   });
 
-  const { isWarning, warningType } = useOnWarning();
+  const { isWarning } = useOnWarning();
   const dispatch = useDispatch();
 
   const handleAuthClick = async (e: React.MouseEvent) => {
@@ -35,13 +33,15 @@ const MyChar = () => {
       alert("토큰을 입력해 주세요.");
       return;
     } else {
-      dispatch(onWarnings("cubeCheck"));
+      dispatch(
+        onWarnings({ warningType: "cube", warningLocation: "nexonAuth" })
+      );
     }
   };
 
   return (
     <Container>
-      <CharSelectBox charList={data} />
+      <CharSelectBox charList={data} isAllCharLoading={isLoading} />
       {onModal && (
         <StickyView>
           <SwiperModal setOnModal={setOnModal} />
@@ -83,7 +83,7 @@ const MyChar = () => {
         </BottomForm>
         {isWarning && (
           <StickyView>
-            <Warning type={warningType} mutate={mutate} />
+            <DateSelectorBox mutate={mutate} />
           </StickyView>
         )}
       </UserAuthLine>

@@ -1,12 +1,12 @@
-import MyPage from "../src/containers/MyPage/MyPage";
+import MyPage from "../containers/MyPage/MyPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { announce } from "../src/api/announce";
+import { announce } from "../api/announce";
 import {
   getMyBoard,
   getMyCommentBoard,
   getAllMyChar,
-} from "../src/api/userInfo";
+} from "../api/userInfo";
 
 const myPage = () => {
   return <MyPage />;

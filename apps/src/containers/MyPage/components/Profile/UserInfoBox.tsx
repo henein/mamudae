@@ -85,6 +85,7 @@ const UserInfoBox = ({ ...props }: UserProfileType) => {
           e.preventDefault();
           await setUserForm({ ...userForm, userName: nickname });
           await mutate();
+          window.location.reload();
         }}
       >
         저장하기
