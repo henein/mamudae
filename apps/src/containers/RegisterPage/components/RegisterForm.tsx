@@ -10,7 +10,7 @@ import {
 } from '../../../api/localLogin';
 import Button from '../../../component/Button';
 import { TextField } from '../../../component/TextField';
-import kaKao from '/public/loginPageImages/KaKao.png';
+import kaKao from '/public/loginPageImages/kakao.svg';
 import { customColor } from '../../../constants/customColor';
 
 interface RegisterFormInputs {
