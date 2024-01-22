@@ -36,32 +36,32 @@ export const useLocalLogin = ({
   return { mutate };
 };
 
-export const useLocalSignUp = ({
-  email,
-  password,
-  options,
-}: UseLocalLoginProps) => {
-  const { setLocalStorage } = useLocalStorage();
-  const router = useRouter();
-  const { mutate } = useMutation(
-    ['postLocalLogin'],
-    () => postLocalRegister({ email, password }),
-    {
-      ...options,
-      onSuccess: (data) => {
-        console.log(data);
-        setLocalStorage('access', data['authorization']);
-        setLocalStorage('refresh', data['refreshtoken']);
-        // data["status"]
-        //   ? // 첫 로그인일 시
-        //     router.push("/register")
-        //   : // 첫 로그인이 아닐 시
-        router.push('/');
-      },
-      onError: (err: any) => {
-        alert(err.response.data.error);
-      },
-    }
-  );
-  return { mutate };
-};
+// export const useLocalSignUp = ({
+//   email,
+//   password,
+//   options,
+// }: UseLocalLoginProps) => {
+//   const { setLocalStorage } = useLocalStorage();
+//   const router = useRouter();
+//   const { mutate } = useMutation(
+//     ['postLocalLogin'],
+//     () => postLocalRegister({ email, password }),
+//     {
+//       ...options,
+//       onSuccess: (data) => {
+//         console.log(data);
+//         setLocalStorage('access', data['authorization']);
+//         setLocalStorage('refresh', data['refreshtoken']);
+//         // data["status"]
+//         //   ? // 첫 로그인일 시
+//         //     router.push("/register")
+//         //   : // 첫 로그인이 아닐 시
+//         router.push('/');
+//       },
+//       onError: (err: any) => {
+//         alert(err.response.data.error);
+//       },
+//     }
+//   );
+//   return { mutate };
+// };

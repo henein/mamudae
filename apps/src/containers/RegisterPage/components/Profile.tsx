@@ -4,8 +4,8 @@ import Button from "../../../component/Button";
 import Image from "next/image";
 import circle from "/public/detailPageImages/Ellipse.png";
 import { FieldValues, useForm } from "react-hook-form";
-import { FormInputCss } from "../../LoginPage/components/Login";
 import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
+import { TextField } from "../../../component/TextField";
 // import { useSetUserName } from "../../../hooks/user/useUserInfo";
 
 interface IUserName {
@@ -33,7 +33,7 @@ const Profile = () => {
     <Container>
       <Title>프로필</Title>
       <ProfileImg src={circle} alt="none"></ProfileImg>
-      <Nickname
+      <TextField
         type="text"
         placeholder="닉네임"
         // {...register("nickname")}
@@ -58,9 +58,6 @@ const ProfileImg = styled(Image)`
   margin: 0 auto;
   width: 128px;
   height: 128px;
-`;
-const Nickname = styled.input`
-  ${FormInputCss}
 `;
 const CompletionBtn = styled(Button)``;
 const Container = styled.form`
