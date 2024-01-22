@@ -19,14 +19,16 @@ const Login = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (data) {
-      dispatch(saveUserInfo(data.userName));
+      dispatch(
+        saveUserInfo({ userName: data.userName, userRole: data.userRole })
+      );
     }
   }, [data, dispatch]);
 
   if (isLoading) {
     return (
       <LoginContainer isLoading={isLoading}>
-        <LoadingSpinner />
+        <LoadingSpinner width={15} height={15} borderWidth={2} />
       </LoginContainer>
     );
   }

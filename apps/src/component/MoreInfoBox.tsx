@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import { customColor } from "../constants/customColor";
 import { usePagenate } from "../hooks/pagenateHook/usePagenate";
+import ArrowLeftIcon from "/public/postPageImages/keyboard_arrow_left.svg";
+import ArrowRightIcon from "/public/postPageImages/keyboard_arrow_right.svg";
 
 const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
   const {
@@ -12,7 +13,7 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
     handleNextGroup,
     handlePrevGroup,
     lastPageGroup,
-    pageGroups,
+    pageGroupsNum,
   } = usePagenate({ apiData: data });
 
   const handlePage = (isRouterPaging: boolean, pageNum: number) => {
@@ -20,8 +21,8 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
     else setPageNums(pageNum);
   };
   const handleGroup = (isRouterPaging: boolean, isPrev: boolean) => {
-    if (isPrev) isRouterPaging ? handlePrevGroup(pageGroups) : setPageNums();
-    else isRouterPaging ? handleNextGroup(pageGroups) : setPageNums();
+    if (isPrev) isRouterPaging ? handlePrevGroup() : setPageNums();
+    else isRouterPaging ? handleNextGroup() : setPageNums();
   };
   const handleActive = (isRouterPaging: boolean, pageNum: number) => {
     return isRouterPaging ? pageNum == currentPage : pageNum == pageNums;
@@ -30,14 +31,9 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
   return (
     <>
       <MoreInfo>
-        {pageGroups !== 0 && (
+        {pageGroupsNum !== 0 && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, true)}>
-            <Image
-              src="/postPageImages/keyboard_arrow_left.svg"
-              width="6"
-              height="10"
-              alt=""
-            />
+            <ArrowLeftIcon width="6" height="10" />
           </NextPageBtn>
         )}
         {pages.map((pageNum) => (
@@ -51,14 +47,9 @@ const MoreInfoBox = ({ isRouterPaging, data, setPageNums, pageNums }: any) => {
             {pageNum}
           </PageNumBtn>
         ))}
-        {pageGroups !== lastPageGroup && (
+        {pageGroupsNum !== lastPageGroup && (
           <NextPageBtn onClick={() => handleGroup(isRouterPaging, false)}>
-            <Image
-              src="/postPageImages/keyboard_arrow_right.svg"
-              width="6"
-              height="10"
-              alt=""
-            />
+            <ArrowRightIcon width="6" height="10" />
           </NextPageBtn>
         )}
       </MoreInfo>
@@ -76,7 +67,6 @@ const MoreInfo = styled.div`
   height: 64px;
   border-top: 1px solid ${({ theme }) => theme.border};
 `;
-
 const NextPageBtn = styled.button`
   width: 32px;
   height: 32px;
@@ -87,16 +77,16 @@ const NextPageBtn = styled.button`
   &:disabled {
     display: none;
   }
+  svg {
+    color: ${({ theme }) => theme.brand};
+  }
 `;
-
 const PageNumBtn = styled.button<{ active: boolean }>`
   width: 32px;
   height: 32px;
-  color: ${(props) =>
-    props.active ? customColor.white : customColor.darkGray};
-  background-color: ${(props) =>
-    props.active ? props.theme.brand : customColor.white};
-  border-radius: ${(props) => props.active && "32px"};
+  color: ${({ active, theme }) => (active ? "#fff" : theme.subText)};
+  background-color: ${({ active, theme }) => active && theme.brand};
+  border-radius: ${({ active }) => active && "32px"};
   border: none;
   font-weight: 400;
   font-size: 12px;

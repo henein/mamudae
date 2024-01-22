@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
 import Image from "next/image";
 import styled from "styled-components";
+import ArrowDownIcon from "/public/myPageImages/arrowDown.svg";
 
 const DateSelector = ({ ...props }: any) => {
   const formattingDate = (date: Date) => {
@@ -85,12 +86,7 @@ const DateSelector = ({ ...props }: any) => {
         }
       />
       <ImagePositionL htmlFor="datePickerPast">
-        <Image
-          src={"/myPageImages/arrowDown.svg"}
-          alt=""
-          width={16}
-          height={10}
-        />
+        <ArrowDownIcon width="16px" height="10px" />
       </ImagePositionL>
       <span>~</span>
       <DatePicker
@@ -108,12 +104,7 @@ const DateSelector = ({ ...props }: any) => {
         }
       />
       <ImagePositionR htmlFor="datePickerRecent">
-        <Image
-          src={"/myPageImages/arrowDown.svg"}
-          alt=""
-          width={16}
-          height={10}
-        />
+        <ArrowDownIcon width="16px" height="10px" />
       </ImagePositionR>
     </Container>
   );
@@ -146,6 +137,7 @@ const Container = styled.div`
 const ImagePositionR = styled.label`
   position: absolute;
   right: 33px;
+  color: ${({ theme }) => theme.text};
   &:hover {
     cursor: pointer;
   }
@@ -153,6 +145,7 @@ const ImagePositionR = styled.label`
 const ImagePositionL = styled.label`
   position: absolute;
   left: 140px;
+  color: ${({ theme }) => theme.text};
   &:hover {
     cursor: pointer;
   }

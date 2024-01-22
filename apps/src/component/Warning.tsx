@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import SvgIcon from "@mui/material/SvgIcon";
-import WarningIcon from "@mui/icons-material/Warning";
+import WarningIcon from "/public/detailPageImages/warning.svg";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { offWarnings } from "../../store/warningSlice/onWarning";
@@ -49,7 +48,7 @@ const Warning = ({ type, mutate }: WarningProps) => {
         <Content>
           {type !== "cubeCheck" && (
             <ImgDiv>
-              <SvgIcon component={WarningIcon} fontSize="small" />
+              <WarningIcon width="22px" height="19px" />
             </ImgDiv>
           )}
           {type == "cubeCheck" ? (
@@ -76,6 +75,9 @@ const Warning = ({ type, mutate }: WarningProps) => {
               sort="primary"
               onClick={async () => {
                 if (pastDay && recentDay) {
+                  await alert(
+                    "사용자의 큐브 내역을 통해 캐릭터 닉네임을 조회합니다. (사용자 정보에 따라 시간차이가 발생할 수 있습니다.)"
+                  );
                   await mutate({ recentDay: recentDay, pastDay: pastDay });
                   await modalOff();
                 } else {

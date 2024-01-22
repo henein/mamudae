@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CharSelectBox from "./CharSelectBox";
 import Button from "../../../../component/Button";
-import Image from "next/image";
 import {
   useGetAllMyChar,
   useGetCharName,
@@ -13,17 +12,16 @@ import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
+import QuestionIcon from "/public/myPageImages/question.svg";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩 상태 추가
   const [onModal, setOnModal] = useState<boolean>(false);
 
   const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
 
-  const { mutate } = useGetCharName({
+  const { mutate, isLoading } = useGetCharName({
     key: apiKey,
-    LoadingController: setIsLoading,
   });
 
   const { isWarning, warningType } = useOnWarning();
@@ -41,7 +39,7 @@ const MyChar = () => {
 
   return (
     <Container>
-      <CharSelectBox charList={data} />
+      <CharSelectBox charList={data} isAllCharLoading={isLoading} />
       {onModal && (
         <StickyView>
           <SwiperModal setOnModal={setOnModal} />
@@ -54,12 +52,7 @@ const MyChar = () => {
             setOnModal(true);
           }}
         >
-          <Image
-            src="/myPageImages/question.svg"
-            width="20"
-            height="21"
-            alt=""
-          />
+          <QuestionIcon width="20px" height="21px" />
         </QuestionBtn>
         <BottomForm
           onSubmit={(e: any) => {
@@ -79,7 +72,9 @@ const MyChar = () => {
             disabled={isLoading}
           >
             <BtnInner>
-              {isLoading && <LoadingSpinner />}
+              {isLoading && (
+                <LoadingSpinner width={15} height={15} borderWidth={2} />
+              )}
               <span>인증하기</span>
             </BtnInner>
           </AuthBtn>
@@ -128,12 +123,14 @@ const QuestionBtn = styled.button`
   display: flex;
   width: 32px;
   height: 32px;
+  background-color: ${({ theme }) => theme.buttonBackground};
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 4px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  color: ${({ theme }) => theme.subText};
 `;
 const AuthBtn = styled(Button)``;
 const BottomForm = styled.form`

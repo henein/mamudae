@@ -1,7 +1,6 @@
 import MainPage from "../containers/MainPage/MainPage";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { getApi, getEntireBoard } from "../api/mainpage";
 import { announce } from "../api/announce";
 
 export default function Home() {
@@ -10,11 +9,6 @@ export default function Home() {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("E", () => getEntireBoard());
-  await queryClient.prefetchQuery("F", () => getApi("F"));
-  await queryClient.prefetchQuery("B", () => getApi("B"));
-  await queryClient.prefetchQuery("H", () => getApi("H"));
-  await queryClient.prefetchQuery("I", () => getApi("I"));
   await queryClient.prefetchQuery("announce", () => announce());
 
   return {

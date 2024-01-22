@@ -1,14 +1,15 @@
+import Link from "next/link";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { useGetAnnounce } from "../../hooks/announce/useGetAnnounce";
-import SvgIcon from "@mui/material/SvgIcon";
-import CampaignIcon from "@mui/icons-material/Campaign";
+import CampaignIcon from "/public/announceCompoImages/campaign.svg";
 
 type SlidePropType = {
   txt: string;
   props?: boolean | number;
 };
 type AnnounceDataType = {
+  id: number;
   title: string;
 };
 
@@ -16,7 +17,7 @@ const CustomSlide = ({ txt, ...props }: SlidePropType) => {
   return (
     <TextSet {...props}>
       <ImgDiv>
-        <SvgIcon component={CampaignIcon} inheritViewBox />;
+        <CampaignIcon width="20px" height="12px" />
       </ImgDiv>
       <InfoText>{txt}</InfoText>
     </TextSet>
@@ -40,14 +41,15 @@ const TextRolling = () => {
 
   const { data } = useGetAnnounce();
 
+  console.log(data);
   return (
     <Slider {...settings}>
       {data.content &&
-        data.content.map((item: AnnounceDataType, idx: number) => {
+        data.content.map((item: AnnounceDataType) => {
           return (
-            <div key={idx}>
+            <Link href={`/board/공지/${item.id}`} key={item.id}>
               <CustomSlide txt={item.title} />
-            </div>
+            </Link>
           );
         })}
     </Slider>
@@ -60,17 +62,17 @@ const TextSet = styled.div`
   display: flex;
   justify-content: center;
   line-height: 24px;
+  gap: 4px;
   position: relative;
   top: -24px;
 `;
 const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 3px;
+  align-items: center;
   width: 24px;
   height: 24px;
   border: none;
-  margin-right: 4px;
   color: ${({ theme }) => theme.brand};
 `;
 const InfoText = styled.span`

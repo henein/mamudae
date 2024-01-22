@@ -1,15 +1,14 @@
-import Link from 'next/link';
-import React from 'react';
-import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store';
-import { toggleDarkMode } from '../../store/darkmodeSlice/darkmode';
-import SvgIcon from '@mui/material/SvgIcon';
-import SearchIcon from '@mui/icons-material/Search';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import useScroll from '../hooks/scrollHooks/useScroll';
-import { Logo } from './Logo';
+import Link from "next/link";
+import React from "react";
+import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store";
+import { toggleDarkMode } from "../../store/darkmodeSlice/darkmode";
+import SearchIcon from "/public/headerCompoImages/search.svg";
+import DarkModeIcon from "/public/headerCompoImages/dark_mode.svg";
+import LightModeIcon from "/public/headerCompoImages/light_mode.svg";
+import useScroll from "../hooks/scrollHooks/useScroll";
+import { Logo } from "./Logo";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,8 +21,6 @@ const Header = () => {
     dispatch(toggleDarkMode());
   };
 
-  console.log(darkModeState);
-
   return (
     <Container isScrollDown={isScrollDown} stickyTop={stickyTop}>
       <Background darkModeState={darkModeState} stickyTop={stickyTop}>
@@ -33,12 +30,7 @@ const Header = () => {
               <Logo size="small" />
             </LogoLink>
             <Nav>
-              <Link href="/">
-                <NavItem stickyTop={stickyTop} isSelect>
-                  홈
-                </NavItem>
-              </Link>
-              <Link href="/">
+              <Link href="/board/공지">
                 <NavItem stickyTop={stickyTop}>공지</NavItem>
               </Link>
               <Link href="/">
@@ -49,10 +41,10 @@ const Header = () => {
           <RightDiv>
             <DarkModeBtn onClick={onClick}>
               <LightImg darkModeState={darkModeState}>
-                <SvgIcon component={LightModeIcon} fontSize="small" />
+                <LightModeIcon width="20px" height="20px" />
               </LightImg>
               <DarkImg darkModeState={darkModeState}>
-                <SvgIcon component={DarkModeIcon} fontSize="small" />
+                <DarkModeIcon width="20px" height="20px" />
               </DarkImg>
             </DarkModeBtn>
           </RightDiv>

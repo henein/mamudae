@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Image from "next/image";
-import reComment from "/public/detailPageImages/reComment.png";
+import ReComment from "/public/detailPageImages/reComment.svg";
 import { customColor } from "../../../constants/customColor";
 import CommentMenuIcon from "./CommentMenuIcon";
 import timeDifference from "../../../utils/timeDifference";
@@ -18,7 +17,7 @@ const ReComments = ({ ...data }) => {
 
   return (
     <Container>
-      <ReComment src={reComment} alt="none" />
+      <ReComment width="20px" height="20px" />
       <CommentBox>
         {isModifyRClick ? (
           <>
@@ -64,7 +63,7 @@ const ReComments = ({ ...data }) => {
                 <CommentForm
                   setIsClick={setIsClick}
                   boardId={data.boardId}
-                  commentId={data.parentCommentId}
+                  commentId={data.commentId}
                   isRecomment={true}
                   nickName={data.nickName}
                 />
@@ -82,8 +81,10 @@ const Container = styled.div`
   display: flex;
   margin-top: 12px;
   gap: 12px;
+  svg {
+    color: ${(prop) => prop.theme.subText};
+  }
 `;
-const ReComment = styled(Image)``;
 const ReCommentBtn = styled.button`
   color: ${(prop) => prop.theme.subText};
   font-size: 12px;
@@ -126,7 +127,7 @@ const UserInfo = styled.div`
   margin-bottom: 8px;
   gap: 4px;
 `;
-const CommentContent = styled.div`
+const CommentContent = styled.pre`
   font-size: 14px;
   margin-bottom: 8px;
   color: ${(prop) => prop.theme.text};

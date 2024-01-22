@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ColorThief from "colorthief";
-import NextImage from "next/image";
 import {
   usePickChar,
-  useRefreshChar,
+  useRefreshOneChar,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../store";
+import RefreshIcon from "/public/myPageImages/refresh.svg";
 
 export interface CharInfo {
   avatar: string | null;
   id: number;
   job: string | null;
   level: number | null;
-  nickName: string;
+  charName: string;
   pickByUser: boolean;
   world: string | null;
 }
@@ -43,24 +45,25 @@ const CharBox = ({
   id,
   job,
   level,
-  nickName,
+  charName,
   pickByUser,
   world,
 }: CharInfo) => {
-  // const [isCharBoxClick, setIsCharBoxClick] = useState<boolean>(pickByUser);
+  const darkModeState = useSelector(
+    (state: RootState) => state.darkMode.isDarkMode
+  );
+
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [imageRandomColor, setImageRandomColor] = useState<string>("");
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
   const { mutate: pickChar } = usePickChar({
     charId: id,
     options: {},
   });
-  const { mutate: refreshChar } = useRefreshChar({
-    name: nickName,
-    LoadingController: setIsLoading,
+  const { mutate: refreshChar, isLoading } = useRefreshOneChar({
+    charId: id,
   });
 
   useEffect(() => {
@@ -70,15 +73,24 @@ const CharBox = ({
     img.addEventListener("load", function () {
       const colorRGB = colorThief.getColor(img);
       const color = convertRGBToHSL(colorRGB[0], colorRGB[1], colorRGB[2]);
-      setImageRandomColor(`hsl(${color[0]}, 100%, 95%)`);
+      setImageRandomColor(
+        darkModeState
+          ? `hsl(${color[0]}, 15%, 25%)`
+          : `hsl(${color[0]}, 100%, 95%)`
+      );
     });
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
     img.crossOrigin = "Anonymous";
-    img.src =
-      `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}` ||
-      "/myPageImages/defaultChar.png";
-  }, [avatar]);
+    img.src = avatar
+      ? `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}`
+      : "/myPageImages/defaultChar.png";
+  }, [avatar, darkModeState]);
+
+  const charImageResize = avatar
+    ? "https://open.api.nexon.com/static/maplestory/Character/180/" +
+      avatar.toString().slice(55)
+    : "/myPageImages/defaultChar.png";
 
   return (
     <Container disable={avatar} color={imageRandomColor}>
@@ -96,7 +108,7 @@ const CharBox = ({
       >
         <Top>
           {pickByUser && <Tag>대표</Tag>}
-          <NickName>{nickName}</NickName>
+          <NickName>{charName || "정보 없음"}</NickName>
         </Top>
         <Bottom>
           <JobnLevel>
@@ -110,20 +122,18 @@ const CharBox = ({
         onMouseLeave={() => setRefreshOn(false)}
       />
       <RefreshBtnPosition>
-        <CharImg src={avatar || "/myPageImages/defaultChar.png"} id="char" />
+        <CharImg src={charImageResize} id="char" />
         {refreshOn && (
           <ImgPosition
             onMouseEnter={() => setRefreshOn(true)}
             onMouseLeave={() => setRefreshOn(false)}
           >
             {isLoading ? (
-              <LoadingSpinner />
+              <LoadingSpinner width={15} height={15} borderWidth={2} />
             ) : (
-              <NextImage
-                src="/myPageImages/refresh.svg"
+              <RefreshIcon
                 width="20"
                 height="20"
-                alt=""
                 onClick={async () => {
                   await refreshChar();
                 }}
@@ -146,7 +156,8 @@ const Container = styled.div<{ color: string | null; disable: string | null }>`
   width: 144px;
   height: 173px;
   box-sizing: border-box;
-  background-color: ${({ color, disable }) => (disable ? color : "#E0E1E6")};
+  background-color: ${({ color, disable, theme }) =>
+    disable ? color : theme.characterCardDisableBackground};
 `;
 const ImgWrapper = styled.div<{ disable: string | null }>`
   position: absolute;
@@ -155,16 +166,25 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
   height: 120px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
+  background-color: ${({ disable, theme }) =>
+    disable || theme.characterCardDisableBackground};
+  opacity: ${({ disable }) => disable || "0.6"};
 `;
 const RefreshBtnPosition = styled.div`
   display: flex;
 `;
-const ImgPosition = styled.button`
+const ImgPosition = styled.div`
   height: 20px;
   position: absolute;
   top: 8px;
   right: 8px;
   z-index: 10;
+  svg {
+    color: ${({ theme }) => theme.characterCardButton};
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 const CharImg = styled.img`
   position: relative;
@@ -193,16 +213,14 @@ const CharInfoBox = styled.div<{
         : isActive
         ? theme.brandActive
         : theme.border};
-  background-color: white;
+  background-color: ${({ theme }) => theme.card};
   position: absolute;
   bottom: 0px;
   z-index: 2;
   &:hover {
-    cursor: pointer;
-  }
-  &:hover {
     box-shadow: 0px 0px 0px 4px rgba(0, 0, 0, 0.05);
     transition: box-shadow 200ms;
+    cursor: pointer;
   }
   &:active {
     box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
@@ -225,7 +243,7 @@ const Tag = styled.div`
   border-radius: 8px;
 `;
 const NickName = styled.span`
-  color: #000;
+  color: ${({ theme }) => theme.text};
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
