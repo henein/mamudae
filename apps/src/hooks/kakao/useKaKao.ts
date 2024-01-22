@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const useKaKao = () => {
   const router = useRouter();
