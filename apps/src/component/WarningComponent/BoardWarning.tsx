@@ -12,15 +12,21 @@ import Button from "../Button";
 import { WarningProps } from "./CommentWarning";
 import { useDispatch } from "react-redux";
 import { offWarnings } from "../../../store/warningSlice/onWarning";
+import { useBoardDelete } from "../../hooks/detailPageHooks/useDetail";
 
-const BoardWarning = ({ type }: WarningProps) => {
+interface BoardWarningProps extends WarningProps {
+  boardId: number;
+}
+const BoardWarning = ({ type, boardId }: BoardWarningProps) => {
   const dispatch = useDispatch();
+  const { boardDelete } = useBoardDelete({ boardType: "", boardId });
 
-  const submitData = () => {
+  const submitData = async () => {
     if (type === "report") {
       alert("신고 기능은 미구현입니다.");
       dispatch(offWarnings());
     } else if (type == "delete") {
+      await boardDelete();
       dispatch(offWarnings());
     }
   };

@@ -182,7 +182,7 @@ const DetailPage = () => {
         {isWarning && (
           <StickyView>
             {warningLocation === "board" ? (
-              <BoardWarning type={warningType} />
+              <BoardWarning type={warningType} boardId={Number(boardId)} />
             ) : (
               <CommentWarning type={warningType} />
             )}
