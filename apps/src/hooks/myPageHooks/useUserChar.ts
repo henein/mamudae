@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAllMyChar } from "../../api/userInfo";
 import {
@@ -24,6 +25,11 @@ export const useGetCharName = ({ key, options }: IGetCharName) => {
         });
         await queryClient.refetchQueries("allMyChar");
         await alert("캐릭터 업데이트 완료");
+      },
+      onError: async (error: AxiosError) => {
+        if (error.response?.status === 500) {
+          alert("API 키 값이 잘못되었습니다.");
+        }
       },
     }
   );

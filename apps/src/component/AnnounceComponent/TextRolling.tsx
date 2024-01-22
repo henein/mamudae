@@ -41,7 +41,6 @@ const TextRolling = () => {
 
   const { data } = useGetAnnounce();
 
-  console.log(data);
   return (
     <Slider {...settings}>
       {data.content &&
