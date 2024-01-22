@@ -13,7 +13,7 @@ interface IUserName {
   accessToken: string | undefined;
 }
 const Profile = () => {
-  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm();
   const { getLocalStorage } = useLocalStorage();
 
   const accessToken = getLocalStorage("access");
@@ -30,13 +30,13 @@ const Profile = () => {
   };
 
   return (
-    <Container onSubmit={handleSubmit(submit)}>
+    <Container>
       <Title>프로필</Title>
       <ProfileImg src={circle} alt="none"></ProfileImg>
       <Nickname
         type="text"
         placeholder="닉네임"
-        {...register("nickname")}
+        // {...register("nickname")}
         autoComplete="off"
       />
       <CompletionBtn type="submit" sort="primary" width="100%" fontWeight="700">

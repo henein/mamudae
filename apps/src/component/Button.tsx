@@ -71,8 +71,8 @@ const StyledButton = styled.button<IButton>`
   border-radius: 8px;
   padding: 12px 16px;
   color: ${({ theme, sort }) => (sort === "secondary" ? theme.text : "white")};
-  &:hover {
-    transition: all ease-out 200ms;
+  transition: all ease-in-out 100ms;
+  &:hover:enabled {
     background-color: ${({ theme, sort }) =>
       sort === "primary"
         ? theme.brandHover
@@ -80,7 +80,7 @@ const StyledButton = styled.button<IButton>`
     color: ${({ theme, sort }) => sort === "secondary" && theme.brandHover};
     box-shadow: 0px 0px 0px 4px ${({ theme }) => theme.boxShadow};
   }
-  &:active {
+  &:active:enabled {
     background-color: ${({ theme, sort }) =>
       sort === "primary"
         ? theme.brandActive

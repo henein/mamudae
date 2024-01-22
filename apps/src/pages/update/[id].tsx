@@ -1,7 +1,7 @@
-import { GetServerSideProps } from "next";
-import { QueryClient, dehydrate } from "react-query";
-import UpdatePage from "../../src/containers/UpdatePage/UpdatePage";
-import { detail } from "../../src/api/detail";
+import { GetServerSideProps } from 'next';
+import { QueryClient, dehydrate } from 'react-query';
+import UpdatePage from '../../containers/UpdatePage/UpdatePage';
+import { detail } from '../../api/detail';
 
 const update = () => {
   return <UpdatePage />;
@@ -10,7 +10,7 @@ const update = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["detailPageData", id], () => detail(id));
+  await queryClient.prefetchQuery(['detailPageData', id], () => detail(id));
 
   return {
     props: {

@@ -42,5 +42,6 @@ declare module "styled-components" {
     toggleSelect: string;
     buttonRingHover: string;
     buttonRingActive: string;
+    loginBackground: string;
   }
 }

@@ -50,8 +50,8 @@ const Login = () => {
           </Link>
           <LoginFooter>
             <Text>로그인이 안 되시나요?</Text>
-            <Link href="/signUp">
-              <SignUpBtn>회원가입</SignUpBtn>
+            <Link href="/register">
+              <RegisterButton>회원가입</RegisterButton>
             </Link>
           </LoginFooter>
         </LoginContainer>
@@ -65,7 +65,7 @@ const Text = styled.span`
   color: ${({ theme }) => theme.subText};
   font-size: 12px;
 `;
-const SignUpBtn = styled.button`
+const RegisterButton = styled.button`
   color: ${({ theme }) => theme.brand};
   border: none;
   background-color: ${({ theme }) => theme.card};

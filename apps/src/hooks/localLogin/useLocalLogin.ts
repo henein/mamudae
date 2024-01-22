@@ -1,37 +1,34 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from 'react-query';
 import {
   LocalLoginProps,
   postLocalLogin,
-  postLocalSignUp,
-} from "../../api/localLogin";
-import { useLocalStorage } from "../storage/useLocalStorage";
-import { useRouter } from "next/router";
+  postLocalRegister,
+} from '../../api/localLogin';
+import { useLocalStorage } from '../storage/useLocalStorage';
+import { useRouter } from 'next/navigation';
 
 export interface UseLocalLoginProps extends LocalLoginProps {
   options?: any;
 }
 export const useLocalLogin = ({
-  userEmail,
+  email: userEmail,
   password,
   options,
 }: UseLocalLoginProps) => {
   const { setLocalStorage } = useLocalStorage();
   const router = useRouter();
   const { mutate } = useMutation(
-    ["getLocalLogin"],
-    () => postLocalLogin({ password, userEmail }),
+    ['getLocalLogin'],
+    () => postLocalLogin({ password, email: userEmail }),
     {
       ...options,
       onSuccess: (data) => {
-        setLocalStorage("access", data["authorization"]);
-        setLocalStorage("refresh", data["refreshtoken"]);
-        router.push("/");
+        setLocalStorage('access', data['authorization']);
+        setLocalStorage('refresh', data['refreshtoken']);
+        router.push('/');
       },
       onError: (err: any) => {
-        if (err.response.data.code == 404) alert(err.response.data.error);
-        else {
-          alert("새로고침 후 다시 시도해주세요.");
-        }
+        alert(err.response.data.error);
       },
     }
   );
@@ -40,32 +37,29 @@ export const useLocalLogin = ({
 };
 
 export const useLocalSignUp = ({
-  userEmail,
+  email,
   password,
   options,
 }: UseLocalLoginProps) => {
   const { setLocalStorage } = useLocalStorage();
   const router = useRouter();
   const { mutate } = useMutation(
-    ["postLocalLogin"],
-    () => postLocalSignUp({ userEmail, password }),
+    ['postLocalLogin'],
+    () => postLocalRegister({ email, password }),
     {
       ...options,
       onSuccess: (data) => {
         console.log(data);
-        setLocalStorage("access", data["authorization"]);
-        setLocalStorage("refresh", data["refreshtoken"]);
-        data["status"]
-          ? // 첫 로그인일 시
-            router.push("/register")
-          : // 첫 로그인이 아닐 시
-            router.push("/");
+        setLocalStorage('access', data['authorization']);
+        setLocalStorage('refresh', data['refreshtoken']);
+        // data["status"]
+        //   ? // 첫 로그인일 시
+        //     router.push("/register")
+        //   : // 첫 로그인이 아닐 시
+        router.push('/');
       },
       onError: (err: any) => {
-        if (err.response.data.code == 409) alert(err.response.data.error);
-        else {
-          alert("새로고침 후 다시 시도해주세요.");
-        }
+        alert(err.response.data.error);
       },
     }
   );

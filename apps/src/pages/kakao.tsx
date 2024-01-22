@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import LoadingSpinner from "../src/component/LoadingSpinner";
-import { usePrintCode } from "../src/hooks/kakao/usePrintCode";
+import LoadingSpinner from "../component/LoadingSpinner";
+import { usePrintCode } from "../hooks/kakao/usePrintCode";
 
 const KaKao = () => {
   const router = useRouter();
