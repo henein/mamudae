@@ -85,7 +85,8 @@ export const getOneCharInfo = async (id: number) => {
     );
     return res;
   } catch (err: any) {
-    return alert(err.response.data.errorMessage);
+    if (err.response.data.code === 110)
+      return alert("1시간 뒤에 요청할 수 있습니다.");
   }
 };
 
@@ -100,7 +101,8 @@ export const getAllCharInfo = async (idList: number[]) => {
     );
     return res;
   } catch (err: any) {
-    return alert(err.response.data.errorMessage);
+    if (err.response.data.code === 110)
+      return alert("1시간 뒤에 요청할 수 있습니다.");
   }
 };
 
