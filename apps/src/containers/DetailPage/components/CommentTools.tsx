@@ -4,6 +4,7 @@ import { useLocalStorage } from "../../../hooks/storage/useLocalStorage";
 import { onWarnings } from "../../../../store/warningSlice/onWarning";
 import { useDispatch } from "react-redux";
 import { commentInfoSet } from "../../../../store/warningSlice/commentInfo";
+import { WarningState } from "../DetailPage";
 
 interface CommentToolsType {
   boardId: string;
@@ -20,14 +21,17 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
 
   const dispatch = useDispatch();
 
-  const btnClick = (btnType: string) => {
+  const btnClick = ({ btnType, location }: WarningState) => {
     if (!accessToken) {
       alert("로그인 후 이용 가능합니다.");
       window.location.reload();
       return;
     } else {
       if (btnType == "modify") props.setIsModifyClick(true);
-      else dispatch(onWarnings(btnType));
+      else
+        dispatch(
+          onWarnings({ warningType: btnType, warningLocation: location })
+        );
       props.setIsHover(false); // commentTools 닫힘
     }
   };
@@ -43,12 +47,30 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
       <Functions>
         {props.isMine ? (
           <>
-            <Modify onClick={() => btnClick("modify")}>수정하기</Modify>
-            <Delete onClick={() => btnClick("delete")}>삭제하기</Delete>
+            <Modify
+              onClick={() =>
+                btnClick({ btnType: "modify", location: "comment" })
+              }
+            >
+              수정하기
+            </Modify>
+            <Delete
+              onClick={() =>
+                btnClick({ btnType: "delete", location: "comment" })
+              }
+            >
+              삭제하기
+            </Delete>
           </>
         ) : (
           <>
-            <Report onClick={() => btnClick("report")}>신고하기</Report>
+            <Report
+              onClick={() =>
+                btnClick({ btnType: "report", location: "comment" })
+              }
+            >
+              신고하기
+            </Report>
           </>
         )}
       </Functions>

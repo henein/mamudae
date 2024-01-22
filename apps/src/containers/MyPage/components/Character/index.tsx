@@ -7,12 +7,12 @@ import {
   useGetCharName,
 } from "../../../../hooks/myPageHooks/useUserChar";
 import useOnWarning from "../../../../hooks/reduxHooks/useOnWarning";
-import Warning from "../../../../component/Warning";
 import { useDispatch } from "react-redux";
 import { onWarnings } from "../../../../../store/warningSlice/onWarning";
 import SwiperModal from "./SwiperModal";
 import LoadingSpinner from "../../../../component/LoadingSpinner";
 import QuestionIcon from "/public/myPageImages/question.svg";
+import DateSelectorBox from "./DateSelectorBox";
 
 const MyChar = () => {
   const [apiKey, setApiKey] = useState<string>("");
@@ -24,7 +24,7 @@ const MyChar = () => {
     key: apiKey,
   });
 
-  const { isWarning, warningType } = useOnWarning();
+  const { isWarning } = useOnWarning();
   const dispatch = useDispatch();
 
   const handleAuthClick = async (e: React.MouseEvent) => {
@@ -33,7 +33,9 @@ const MyChar = () => {
       alert("토큰을 입력해 주세요.");
       return;
     } else {
-      dispatch(onWarnings("cubeCheck"));
+      dispatch(
+        onWarnings({ warningType: "cube", warningLocation: "nexonAuth" })
+      );
     }
   };
 
@@ -81,7 +83,7 @@ const MyChar = () => {
         </BottomForm>
         {isWarning && (
           <StickyView>
-            <Warning type={warningType} mutate={mutate} />
+            <DateSelectorBox mutate={mutate} />
           </StickyView>
         )}
       </UserAuthLine>

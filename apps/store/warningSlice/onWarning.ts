@@ -1,13 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-type warningState = {
+interface PayloadWarningState {
   isWarning: boolean;
-  warningType: "delete" | "modify" | "report" | "cubeCheck";
-};
+  warningType: "delete" | "modify" | "report" | "cube";
+  warningLocation: "board" | "comment" | "nexonAuth";
+}
 
-const initialState: warningState = {
+const initialState: PayloadWarningState = {
   isWarning: false,
   warningType: "delete",
+  warningLocation: "board",
 };
 
 const warningSlice = createSlice({
@@ -16,7 +18,8 @@ const warningSlice = createSlice({
   reducers: {
     onWarnings: (state, action) => {
       state.isWarning = true;
-      state.warningType = action.payload;
+      state.warningType = action.payload.warningType;
+      state.warningLocation = action.payload.warningLocation;
     },
     offWarnings: (state) => {
       state.isWarning = false;
