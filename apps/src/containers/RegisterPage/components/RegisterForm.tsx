@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import Image from 'next/image';
-import styled from 'styled-components';
-import useKaKao from '../../../hooks/kakao/useKaKao';
+import { useEffect, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import Image from "next/image";
+import styled from "styled-components";
 import {
   postAuthenticationMail,
   postLocalRegister,
   postVerifyCode,
-} from '../../../api/localLogin';
-import Button from '../../../component/Button';
-import { TextField } from '../../../component/TextField';
-import kaKao from '/public/loginPageImages/kakao.svg';
-import { customColor } from '../../../constants/customColor';
+} from "../../../api/localLogin";
+import Button from "../../../component/Button";
+import { TextField } from "../../../component/TextField";
+import kaKao from "/public/loginPageImages/kakao.svg";
+import { customColor } from "../../../constants/customColor";
+import KakaoBtn from "../../../component/KakaoBtn";
 
 interface RegisterFormInputs {
   email: string;
@@ -20,21 +20,19 @@ interface RegisterFormInputs {
   verifyCode: string;
 }
 
-type RegisterPhase = 'email' | 'verify' | 'password';
+type RegisterPhase = "email" | "verify" | "password";
 
 const RegisterForm = () => {
-  const [currentPhase, setCurrentPhase] = useState<RegisterPhase>('email');
+  const [currentPhase, setCurrentPhase] = useState<RegisterPhase>("email");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
-  const [token, setToken] = useState('');
-
-  const { login } = useKaKao();
+  const [token, setToken] = useState("");
 
   const { register, getValues, handleSubmit, formState } =
     useForm<RegisterFormInputs>();
 
   const onSubmit = async (data: FieldValues) => {
     switch (currentPhase) {
-      case 'email': {
+      case "email": {
         try {
           await postAuthenticationMail(data.email);
         } catch (error) {
@@ -42,10 +40,10 @@ const RegisterForm = () => {
           return;
         }
 
-        setCurrentPhase('verify');
+        setCurrentPhase("verify");
         break;
       }
-      case 'verify': {
+      case "verify": {
         try {
           setToken(await postVerifyCode(data.verifyCode));
         } catch (error) {
@@ -53,10 +51,10 @@ const RegisterForm = () => {
           return;
         }
 
-        setCurrentPhase('password');
+        setCurrentPhase("password");
         break;
       }
-      case 'password':
+      case "password":
         try {
           await postLocalRegister({
             email: data.email,
@@ -74,28 +72,28 @@ const RegisterForm = () => {
 
   useEffect(() => {
     switch (currentPhase) {
-      case 'email':
+      case "email":
         if (formState.dirtyFields.email) {
           setIsSubmitDisabled(false);
         } else {
           setIsSubmitDisabled(true);
         }
         break;
-      case 'verify':
+      case "verify":
         if (
           formState.dirtyFields.verifyCode &&
-          getValues('verifyCode').length === 6
+          getValues("verifyCode").length === 6
         ) {
           setIsSubmitDisabled(false);
         } else {
           setIsSubmitDisabled(true);
         }
         break;
-      case 'password':
+      case "password":
         if (
           formState.dirtyFields.password &&
           formState.dirtyFields.confirmPassword &&
-          getValues('password') === getValues('confirmPassword')
+          getValues("password") === getValues("confirmPassword")
         ) {
           setIsSubmitDisabled(false);
         } else {
@@ -113,28 +111,28 @@ const RegisterForm = () => {
         <Title>회원가입</Title>
         {/* <p>{formState.errors.confirmPassword?.message}</p> */}
         <TextField
-          register={register('email')}
+          register={register("email")}
           type="email"
           placeholder="이메일"
-          disabled={currentPhase !== 'email'}
+          disabled={currentPhase !== "email"}
         />
-        {currentPhase === 'verify' && (
+        {currentPhase === "verify" && (
           <TextField
-            register={register('verifyCode', { pattern: /^[0-9]{6}$/ })}
+            register={register("verifyCode", { pattern: /^[0-9]{6}$/ })}
             type="number"
             placeholder="인증번호"
           />
         )}
-        {currentPhase === 'password' && (
+        {currentPhase === "password" && (
           <>
             <TextField
-              register={register('password')}
+              register={register("password")}
               type="password"
               placeholder="비밀번호"
             />
             <TextField
-              register={register('confirmPassword', {
-                validate: (value) => value === getValues('password'),
+              register={register("confirmPassword", {
+                validate: (value) => value === getValues("password"),
               })}
               type="password"
               placeholder="비밀번호 확인"
@@ -150,9 +148,9 @@ const RegisterForm = () => {
         >
           {
             {
-              email: '인증번호 받기',
-              verify: '인증하기',
-              password: '가입하기',
+              email: "인증번호 받기",
+              verify: "인증하기",
+              password: "가입하기",
             }[currentPhase]
           }
         </Button>
@@ -161,12 +159,7 @@ const RegisterForm = () => {
           <MidLineTextDiv>또는</MidLineTextDiv>
           <Line />
         </Lines>
-        <KaKaoBtn type="button">
-          <KaKaoDiv onClick={login}>
-            <KaKaoImg src={kaKao} alt="s" />
-            <span>Kakao로 가입하기</span>
-          </KaKaoDiv>
-        </KaKaoBtn>
+        <KakaoBtn />
       </Container>
     </>
   );
@@ -174,19 +167,6 @@ const RegisterForm = () => {
 
 export default RegisterForm;
 
-const KaKaoImg = styled(Image)`
-  position: absolute;
-  left: 14px;
-  width: 17px;
-  height: 17px;
-`;
-const KaKaoDiv = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-`;
 const Container = styled.form`
   border: 1px solid ${(prop) => prop.theme.border};
   width: 380px;
@@ -219,19 +199,4 @@ const MidLineTextDiv = styled.div`
   color: ${({ theme }) => theme.subText};
   width: 30px;
   text-align: center;
-`;
-const KaKaoBtn = styled.button`
-  border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.border};
-  background-color: ${customColor.yellow};
-  font-size: 14px;
-  color: ${customColor.black};
-  width: 100%;
-  height: 41px;
-  &:hover {
-    background-color: ${customColor.darkYellow};
-  }
-  &:active {
-    transform: scale(0.98);
-  }
 `;
