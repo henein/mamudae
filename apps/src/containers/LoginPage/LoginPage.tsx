@@ -3,12 +3,14 @@ import styled from "styled-components";
 import LoginForm from "./components/Login";
 import { Logo } from "../../component/Logo";
 import Link from "next/link";
+import CaptchaBtn from "../../component/Recaptcha";
 
 const LoginPage = () => {
   return (
     <Container>
       <Logo />
       <LoginForm />
+      <CaptchaBtn />
       <SignUpContents>
         <LeftBtn>아직 계정이 없으신가요?</LeftBtn>
         <Link href="/register">
