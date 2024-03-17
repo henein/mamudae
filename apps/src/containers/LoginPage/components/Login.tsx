@@ -6,8 +6,12 @@ import { LocalLoginProps } from "../../../api/localLogin";
 import { useLocalLogin } from "../../../hooks/localLogin/useLocalLogin";
 import { TextField } from "../../../component/TextField";
 import KakaoBtn from "../../../component/KakaoBtn";
+import CaptchaBtn from "../../../component/Recaptcha";
 
 const LoginForm = () => {
+  const [onCaptcha, setOnCaptcha] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
   const { register, handleSubmit } = useForm();
   const [localLoginForm, setLocalLoginForm] = useState<LocalLoginProps>({
     email: "",
@@ -36,9 +40,34 @@ const LoginForm = () => {
         type="password"
         placeholder="비밀번호"
       />
-      <Button type="submit" sort="primary" width="100%" fontWeight="700">
-        로그인
-      </Button>
+      {onCaptcha && (
+        <CaptchaBtn setOnCaptcha={setOnCaptcha} setIsSuccess={setIsSuccess} />
+      )}
+
+      {isSuccess ? (
+        <Button
+          type="submit"
+          sort="primary"
+          width="100%"
+          fontWeight="700"
+          disabled={!isSuccess}
+        >
+          로그인
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          sort="primary"
+          width="100%"
+          fontWeight="700"
+          onClick={() => {
+            setOnCaptcha(true);
+          }}
+        >
+          로그인
+        </Button>
+      )}
+
       <Lines>
         <Line />
         <MidLineTextDiv>또는</MidLineTextDiv>
@@ -83,4 +112,14 @@ const MidLineTextDiv = styled.div`
   color: ${({ theme }) => theme.subText};
   width: 30px;
   text-align: center;
+`;
+const AbsoluteDiv = styled.div`
+  position: absolute;
+  z-index: 10;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  background-color: white; */
 `;
