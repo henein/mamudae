@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Announcement from "../../component/AnnounceComponent/Announcement";
 import Login from "../../component/LoginComponent/Login";
 import SearchHeader from "./components/SearchHeader";
-import SearchList from "./components/SearchList";
+import SearchContent from "./components/SearchContent";
 
 const SearchPage = () => {
   return (
@@ -15,7 +15,7 @@ const SearchPage = () => {
         </Aside>
         <InnerContent>
           <SearchHeader />
-          <SearchList />
+          <SearchContent />
         </InnerContent>
       </SearchPageSet>
     </Layout>
@@ -38,6 +38,7 @@ const InnerContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 808px;
+  gap: 24px;
 `;
 const Aside = styled.aside`
   display: flex;

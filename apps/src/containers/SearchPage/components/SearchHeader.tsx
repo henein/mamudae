@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import SearchBox from "../../../component/SearchBox";
 
 const SearchHeader = () => {
   return (
@@ -12,13 +13,17 @@ const SearchHeader = () => {
         <option value="B">보스</option>
         <option value="I">직업</option>
       </SelectBoard>
+      <SearchBox />
     </Container>
   );
 };
 
 export default SearchHeader;
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  gap: 8px;
+`;
 
 const SelectBoard = styled.select`
   width: 69px;
