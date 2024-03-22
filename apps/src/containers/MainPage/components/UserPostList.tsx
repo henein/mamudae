@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { useGetBoard } from "../../../hooks/mainPageHooks/useGetBoard";
 
 export type ItemType = {
   id: number;
@@ -13,12 +14,13 @@ export type ItemType = {
   boardType: string;
 };
 
-const UserPostList = ({ content }: any) => {
-  console.log(content);
+const UserPostList = ({ boardType }: any) => {
+  const { data } = useGetBoard(boardType);
+
   return (
     <PostList>
-      {content &&
-        content.content.slice(0, 8).map((item: ItemType) => {
+      {data &&
+        data.content.slice(0, 8).map((item: ItemType) => {
           return (
             <PostItem key={item.id}>
               <Link href={`board/${item.boardType}/${item.id}`} key={item.id}>
