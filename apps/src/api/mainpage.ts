@@ -1,9 +1,15 @@
 import axios from "axios";
 
-// F,H,B,I,E => (free,humor,boss,info,entire)
+export const getBoardList = async () => {
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/board/type-list`
+  );
+  return res;
+};
+
 export const getBoard = async (boardName: string) => {
   const json = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/board/?board=${boardName}&page=1&size=30`
+    `${process.env.NEXT_PUBLIC_API_URL}/board/?type=${boardName}&page=1`
   );
   const apiData = await json.data;
   return apiData;
