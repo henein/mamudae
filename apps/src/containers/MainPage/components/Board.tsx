@@ -4,17 +4,17 @@ import UserPostList from "./UserPostList";
 import BoardHead from "./BoardHead";
 
 interface BoardInfoType {
-  boardTitle: "전체" | "자유" | "유머" | "보스" | "정보";
+  boardTitle: string;
   isLarge?: boolean;
-  content: any;
+  boardType: string;
 }
 
-function Board({ boardTitle, isLarge, content }: BoardInfoType) {
+function Board({ boardTitle, isLarge, boardType }: BoardInfoType) {
   return (
     <Layout>
       <BoardContent isLarge={isLarge}>
         <BoardHead boardTitle={boardTitle} />
-        <UserPostList content={content} />
+        <UserPostList boardType={boardType} />
       </BoardContent>
     </Layout>
   );

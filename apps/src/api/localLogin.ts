@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export interface LocalLoginProps {
   email: string;
@@ -44,7 +44,7 @@ export async function postLocalRegister({
 export async function postAuthenticationMail(email: string) {
   const formData = new FormData();
 
-  formData.append('requestEmail', email);
+  formData.append("requestEmail", email);
 
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/mail/sender`,
@@ -57,12 +57,19 @@ export async function postAuthenticationMail(email: string) {
 export async function postVerifyCode(code: string) {
   const formData = new FormData();
 
-  formData.append('key', code);
+  formData.append("key", code);
 
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/mail/verify`,
     formData
   );
 
-  return res.headers['authorization'];
+  return res.headers["authorization"];
 }
+
+export const recaptchaTokenAuth = async (token: string) => {
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/captcha?value=${token}`
+  );
+  return res;
+};
