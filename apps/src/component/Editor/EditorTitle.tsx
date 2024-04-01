@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { ToolBarDivider } from './ToolBarDivider';
+import { useGetBoardList } from '../../hooks/mainPageHooks/useGetBoard';
 
 export interface EditorTitleProps {
   register: UseFormRegister<FieldValues>;
@@ -9,14 +10,17 @@ export interface EditorTitleProps {
 }
 
 export const EditorTitle: React.FC<EditorTitleProps> = (props) => {
+  const { data: boardList } = useGetBoardList();
+
   return (
     <TitleBox>
       <SelectBoard {...props.register('selectBoard', { required: true })}>
-        <option value="F">자유</option>
-        <option value="I">정보</option>
-        <option value="H">유머</option>
-        <option value="B">보스</option>
-        <option value="I">직업</option>
+        {boardList &&
+          boardList.data.map((boardType: string) => (
+            <option key={boardType} value={boardType}>
+              {boardType}
+            </option>
+          ))}
       </SelectBoard>
 
       <ToolBarDivider />

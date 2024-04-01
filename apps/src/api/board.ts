@@ -3,6 +3,7 @@ import axiosInstance from "./axiosInstance";
 export interface ICreateBoard {
   accessToken?: string | undefined;
   boardType: string;
+  htmlText: string;
   text: string;
   title: string;
 }
@@ -10,6 +11,7 @@ export interface ICreateBoard {
 export interface IUpdateBoard {
   accessToken?: string | undefined;
   id: string;
+  htmlText: string;
   text: string;
   title: string;
 }
