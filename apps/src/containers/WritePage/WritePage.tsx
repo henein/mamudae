@@ -28,11 +28,11 @@ const WritePage = () => {
           accessToken,
           title: data['title'],
           boardType: data['selectBoard'],
-          text: JSON.stringify(editor?.getJSON()),
+          htmlText: JSON.stringify(editor?.getJSON()),
+          text: editor?.getText(),
         },
         {
           onSuccess: (data) => {
-            console.log(data)
             router.back();
           },
           onError: (error) => {

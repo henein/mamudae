@@ -37,12 +37,23 @@ const UpdatePage = () => {
 
   const submit = (data: FieldValues) => {
     if (editor !== null && !editor.isEmpty) {
-      mutate({
-        accessToken,
-        id: boardId,
-        title: data['title'],
-        text: JSON.stringify(editor?.getJSON()),
-      });
+      mutate(
+        {
+          accessToken,
+          id: boardId,
+          title: data['title'],
+          htmlText: JSON.stringify(editor?.getJSON()),
+          text: editor?.getText(),
+        },
+        {
+          onSuccess: (data) => {
+            router.back();
+          },
+          onError: (error) => {
+            alert(error);
+          },
+        }
+      );
     }
   };
 
