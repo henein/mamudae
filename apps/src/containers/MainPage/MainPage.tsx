@@ -17,12 +17,17 @@ const MainPage = () => {
         </Aside>
         <BoardSet>
           <div>
-            <Board boardTitle="전체" isLarge={true} boardType={"공지"} />
+            <Board boardTitle="전체" isLarge={true} boardType={"ALL"} />
           </div>
           <SmallBoard>
             {boardList &&
               boardList.data.map((item: string) => (
-                <Board boardTitle={item} isLarge={false} boardType={item} />
+                <Board
+                  boardTitle={item}
+                  isLarge={false}
+                  boardType={item}
+                  key={item}
+                />
               ))}
           </SmallBoard>
         </BoardSet>
