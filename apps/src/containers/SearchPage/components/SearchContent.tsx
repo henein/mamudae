@@ -1,26 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import LoadingSpinner from "../../../component/LoadingSpinner";
+import { useGetSearchList } from "../../../hooks/searchPageHooks/useSearch";
 import SearchItem from "./SearchItem";
 
-const SearchContent = () => {
+const SearchContent = ({ type, value, page }: any) => {
+  const { searchData, isLoading } = useGetSearchList({ type, value, page });
   return (
     <Container>
-      <Title>
-        <strong>‘배매 코강’</strong> 관련 게시글을 128개 찾았어요.
-      </Title>
-      <SearchList>
-        <SearchItem />
-        <Line />
-        <SearchItem />
-        <Line />
-        <SearchItem />
-        <Line />
-        <SearchItem />
-        <Line />
-        <SearchItem />
-        <Line />
-        <SearchItem />
-      </SearchList>
+      {isLoading ? (
+        <LoadingSpinner width={30} height={30} borderWidth={3} />
+      ) : (
+        <>
+          <Title>
+            <strong>’{value}’</strong> 관련 게시글을 {searchData.content.length}
+            개 찾았어요.
+          </Title>
+          <SearchList>
+            {searchData.content.length ? (
+              searchData.content.map((item: any) => {
+                return <SearchItem />;
+              })
+            ) : (
+              // <NoneItem>관련된 게시글이 없습니다.</NoneItem>
+              <></>
+            )}
+          </SearchList>
+        </>
+      )}
     </Container>
   );
 };
@@ -46,6 +53,18 @@ const SearchList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+`;
+const NoneItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: aliceblue;
+  color: ${({ theme }) => theme.text};
+  font-size: 45px;
+  font-style: normal;
+  line-height: normal;
+  font-weight: 400;
 `;
 const Line = styled.hr`
   width: 100%;

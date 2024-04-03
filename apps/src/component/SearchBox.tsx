@@ -1,11 +1,25 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SearchIcon from "/public/headerCompoImages/search.svg";
 
-const SearchBox = ({ width }: any) => {
+const SearchBox = ({ type }: any) => {
+  const router = useRouter();
+  const [text, setText] = useState<string>("");
+
+  const submit = (e: any) => {
+    e.preventDefault();
+    router.push({
+      pathname: `/search`,
+      query: { type: type, value: text, page: 1 },
+    });
+  };
   return (
-    <Container>
-      <InnerInput placeholder="검색" />
+    <Container onSubmit={submit}>
+      <InnerInput
+        placeholder="검색"
+        onChange={(e) => setText(e.target.value)}
+      />
       <SearchIcon width="24px" height="24px" />
     </Container>
   );
@@ -13,7 +27,7 @@ const SearchBox = ({ width }: any) => {
 
 export default SearchBox;
 
-const Container = styled.div`
+const Container = styled.form`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -25,6 +39,9 @@ const Container = styled.div`
   svg {
     color: ${({ theme }) => theme.subText};
     margin: 4px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const InnerInput = styled.input`

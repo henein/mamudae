@@ -5,7 +5,7 @@ import Login from "../../component/LoginComponent/Login";
 import SearchHeader from "./components/SearchHeader";
 import SearchContent from "./components/SearchContent";
 
-const SearchPage = () => {
+const SearchPage = ({ ...props }) => {
   return (
     <Layout>
       <Announcement />
@@ -15,7 +15,11 @@ const SearchPage = () => {
         </Aside>
         <InnerContent>
           <SearchHeader />
-          <SearchContent />
+          <SearchContent
+            type={props.type}
+            value={props.value}
+            page={props.page}
+          />
         </InnerContent>
       </SearchPageSet>
     </Layout>

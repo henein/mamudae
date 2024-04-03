@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SearchBox from "../../../component/SearchBox";
+import { useGetBoardList } from "../../../hooks/mainPageHooks/useGetBoard";
 
 const SearchHeader = () => {
+  const { data } = useGetBoardList();
+  const [type, setType] = useState("ALL");
   return (
     <Container>
-      <SelectBoard>
-        <option value="E">전체</option>
-        <option value="F">자유</option>
-        <option value="I">정보</option>
-        <option value="H">유머</option>
-        <option value="B">보스</option>
-        <option value="I">직업</option>
+      <SelectBoard onChange={(e) => setType(e.target.value)}>
+        <option value="ALL">전체</option>
+        {data &&
+          data.data.map((item: string) => {
+            return (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            );
+          })}
       </SelectBoard>
-      <SearchBox />
+      <SearchBox type={type} />
     </Container>
   );
 };
