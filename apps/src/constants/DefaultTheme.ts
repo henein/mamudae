@@ -71,7 +71,7 @@ export const paletteColor = {
 };
 
 export const lightMode: DefaultTheme = {
-  background: paletteColor.grey050,
+  background: paletteColor.white900,
   border: paletteColor.black050,
   card: paletteColor.white900,
   divider: paletteColor.black100,
