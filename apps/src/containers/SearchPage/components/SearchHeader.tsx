@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import SearchBox from "../../../component/SearchBox";
-import { useGetBoardList } from "../../../hooks/mainPageHooks/useGetBoard";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import SearchBox from '../../../component/SearchBox';
+import { useGetBoardList } from '../../../hooks/board/useGetBoard';
 
 const SearchHeader = () => {
   const { data } = useGetBoardList();
-  const [type, setType] = useState("ALL");
+  const [type, setType] = useState('ALL');
   return (
     <Container>
       <SelectBoard onChange={(e) => setType(e.target.value)}>

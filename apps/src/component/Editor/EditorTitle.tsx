@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { ToolBarDivider } from './ToolBarDivider';
-import { useGetBoardList } from '../../hooks/mainPageHooks/useGetBoard';
+import { useGetBoardList } from '../../hooks/board/useGetBoard';
 
 export interface EditorTitleProps {
   register: UseFormRegister<FieldValues>;

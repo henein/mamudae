@@ -1,7 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-// F,H,B,I,E
-export const getApi = async (boardName: string, pageNum: number) => {
+export const getEachBoard = async (boardName: string, pageNum: number) => {
   const json = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/board/?type=${boardName}&page=${pageNum}`
   );

@@ -1,11 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import LoadingSpinner from "../../../component/LoadingSpinner";
-import { useGetSearchList } from "../../../hooks/searchPageHooks/useSearch";
-import SearchItem from "./SearchItem";
+import React from 'react';
+import styled from 'styled-components';
+import LoadingSpinner from '../../../component/LoadingSpinner';
+import { useGetSearchList } from '../../../hooks/searchPageHooks/useSearch';
+import Pagenate from './Pagenate';
+import SearchItem from './SearchItem';
 
 const SearchContent = ({ type, value, page }: any) => {
   const { searchData, isLoading } = useGetSearchList({ type, value, page });
+
   return (
     <Container>
       {isLoading ? (
@@ -13,21 +15,21 @@ const SearchContent = ({ type, value, page }: any) => {
       ) : (
         <>
           <Title>
-            <strong>’{value}’</strong> 관련 게시글을 {searchData.content.length}
+            <strong>’{value}’</strong> 관련 게시글을 {searchData.totalElements}
             개 찾았어요.
           </Title>
           <SearchList>
             {searchData.content.length ? (
               searchData.content.map((item: any) => {
-                return <SearchItem />;
+                return <SearchItem key={item.id} {...item} />;
               })
             ) : (
-              // <NoneItem>관련된 게시글이 없습니다.</NoneItem>
-              <></>
+              <NoneItem>관련된 게시글이 없습니다.</NoneItem>
             )}
           </SearchList>
         </>
       )}
+      <Pagenate data={searchData} />
     </Container>
   );
 };

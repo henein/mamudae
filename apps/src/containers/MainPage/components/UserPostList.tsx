@@ -1,6 +1,6 @@
-import Link from "next/link";
-import styled from "styled-components";
-import { useGetBoard } from "../../../hooks/mainPageHooks/useGetBoard";
+import Link from 'next/link';
+import styled from 'styled-components';
+import { useGetBoard } from '../../../hooks/board/useGetBoard';
 
 export type ItemType = {
   id: number;

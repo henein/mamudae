@@ -1,39 +1,44 @@
-import Image from "next/image";
-import React from "react";
-import styled, { css } from "styled-components";
-import Visibility from "/public/detailPageImages/visibility.svg";
-import Comment from "/public/detailPageImages/Comment.svg";
-import Favorite from "/public/detailPageImages/favoriteOutline.svg";
+import Image from 'next/image';
+import React from 'react';
+import styled, { css } from 'styled-components';
+import Visibility from '/public/detailPageImages/visibility.svg';
+import Comment from '/public/detailPageImages/Comment.svg';
+import Favorite from '/public/detailPageImages/favoriteOutline.svg';
+import timeDifference from '../../../utils/timeDifference';
+import Link from 'next/link';
 
-const SearchItem = () => {
+const SearchItem = ({ ...props }) => {
   return (
     <Container>
       <BoardInfo>
-        <Type>자유</Type>
-        <Title>배틀메이지 코강 어떻게 해야 하나요?</Title>
+        <Link href={`/board/${props.boardType}`}>
+          <Type>{props.boardType}</Type>
+        </Link>
+        <Link href={`/board/${props.boardType}/${props.id}`}>
+          <Title>{props.title}</Title>
+        </Link>
         <Content>
-          이번에 하이퍼버닝으로 시작한 뉴비인데 코강 어떻게 하는거예요? 이번에
-          하이퍼버닝으로 시작한 뉴비인데 코강 어떻게 하는거예요?
+          {props.content || '컨텐츠 없음 - 컨텐츠 api에서 속성 추가 필요함'}
         </Content>
       </BoardInfo>
       <UserInfo>
         <Left>
           <Images />
-          <Nickname>Pdom</Nickname>
-          <Time>· 3일 전</Time>
+          <Nickname>{props.userName}</Nickname>
+          <Time>· {timeDifference(props.createTime)}</Time>
         </Left>
         <Right>
           <CountDiv>
             <Visibility />
-            <span>104</span>
+            <span>{props.views}</span>
           </CountDiv>
           <CountDiv>
             <Comment />
-            <span>12</span>
+            <span>{props.commentNum}</span>
           </CountDiv>
           <CountDiv>
             <Favorite />
-            <span>5</span>
+            <span>{props.recommendNum}</span>
           </CountDiv>
         </Right>
       </UserInfo>
@@ -61,6 +66,7 @@ const BoardInfo = styled.div`
 const Type = styled.span`
   font-size: 12px;
   font-weight: 400;
+  color: ${({ theme }) => theme.subText};
 `;
 const Title = styled.h2`
   color: ${({ theme }) => theme.text};

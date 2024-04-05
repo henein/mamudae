@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/LoginComponent/Login";
-import Board from "./components/Board";
-import { useGetBoardList } from "../../hooks/mainPageHooks/useGetBoard";
+import React from 'react';
+import styled from 'styled-components';
+import Announcement from '../../component/AnnounceComponent/Announcement';
+import Login from '../../component/LoginComponent/Login';
+import Board from './components/Board';
+import { useGetBoardList } from '../../hooks/board/useGetBoard';
 
 const MainPage = () => {
   const { data: boardList } = useGetBoardList();
@@ -17,7 +17,7 @@ const MainPage = () => {
         </Aside>
         <BoardSet>
           <div>
-            <Board boardTitle="전체" isLarge={true} boardType={"ALL"} />
+            <Board boardTitle="전체" isLarge={true} boardType={'ALL'} />
           </div>
           <SmallBoard>
             {boardList &&
