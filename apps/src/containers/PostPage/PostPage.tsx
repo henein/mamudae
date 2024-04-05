@@ -8,7 +8,7 @@ import Login from '../../component/LoginComponent/Login';
 import Button from '../../component/Button';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useGetEachBoard } from '../../hooks/mainPageHooks/useGetBoard';
+import { useGetEachBoard } from '../../hooks/board/useGetBoard';
 
 const PostPage = () => {
   const router = useRouter();
