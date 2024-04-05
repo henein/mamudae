@@ -1,35 +1,22 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import BoardTitle from "./components/BoardTitle";
-import UserPostList from "../../component/UserPostList";
-import MoreInfoBox from "../../component/MoreInfoBox";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/LoginComponent/Login";
-import Button from "../../component/Button";
-import { useRouter } from "next/router";
-import { useEachPost } from "../../hooks/postPageHooks/usePostPage";
-import Link from "next/link";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import BoardTitle from './components/BoardTitle';
+import UserPostList from '../../component/UserPostList';
+import MoreInfoBox from '../../component/MoreInfoBox';
+import Announcement from '../../component/AnnounceComponent/Announcement';
+import Login from '../../component/LoginComponent/Login';
+import Button from '../../component/Button';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useGetEachBoard } from '../../hooks/mainPageHooks/useGetBoard';
 
 const PostPage = () => {
   const router = useRouter();
-
-  useEffect(() => {
-    if (!router.isReady) return;
-    switch (router.query.post) {
-      case "전체":
-      case "자유":
-      case "유머":
-      case "보스":
-      case "정보":
-      case "공지":
-        break;
-      default:
-        router.push("/404");
-        break;
-    }
-  }, [router.isReady, router.query.post, router]);
-
-  const { data } = useEachPost();
+  const boardType = router.query.post === '전체' ? 'ALL' : router.query.post;
+  const { data } = useGetEachBoard(
+    boardType as string,
+    Number(router.query.page) || 1
+  );
   return (
     <Layout>
       <Announcement />

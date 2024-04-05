@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import timeDifference from "../utils/timeDifference";
-import Schedule from "/public/detailPageImages/schedule.svg";
-import Visibility from "/public/detailPageImages/visibility.svg";
+import React from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import timeDifference from '../utils/timeDifference';
+import Schedule from '/public/detailPageImages/schedule.svg';
+import Visibility from '/public/detailPageImages/visibility.svg';
 
 /**
  * UserPostList에 필요한 postlist 데이터
@@ -43,7 +43,7 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
   const startIndex = pageNums * 10 - 10;
   const endIndex = startIndex + 10;
   const usingData =
-    type == "myPage"
+    type == 'myPage'
       ? data && data.content.slice(startIndex, endIndex)
       : data && data.content;
 
@@ -63,17 +63,15 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
                 <PostItem>
                   <LeftSide>
                     <PostNum>
-                      {`000000${
-                        type == "myPage"
-                          ? data &&
-                            data.content.length -
-                              (idx + 1 - pageNums) -
-                              (pageNums - 1) * 10 -
-                              pageNums +
-                              1
-                          : data &&
-                            data.totalElements - 20 * (pageNum - 1) - idx
-                      }`.slice(-6)}
+                      {`${
+                        data && type == 'myPage'
+                          ? data.content.length -
+                            (idx + 1 - pageNums) -
+                            (pageNums - 1) * 10 -
+                            pageNums +
+                            1
+                          : data.totalElements - 20 * (pageNum - 1) - idx
+                      }`.padStart(6, '0')}
                     </PostNum>
                     <DivGap>
                       <span>{item.title}</span>
@@ -81,7 +79,7 @@ const UserPostList = ({ data, type, pageNums }: UserPostListType) => {
                     </DivGap>
                   </LeftSide>
                   <RightSide>
-                    {type == "myPage" ? (
+                    {type == 'myPage' ? (
                       <></>
                     ) : (
                       <DivGap>
