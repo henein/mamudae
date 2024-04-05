@@ -19,13 +19,19 @@ const SearchContent = ({ type, value, page }: any) => {
             개 찾았어요.
           </Title>
           <SearchList>
-            {searchData.content.length ? (
-              searchData.content.map((item: any) => {
-                return <SearchItem key={item.id} {...item} />;
-              })
-            ) : (
-              <NoneItem>관련된 게시글이 없습니다.</NoneItem>
-            )}
+            {searchData.content.length &&
+              searchData.content.map((item: any, idx: number) => {
+                if (idx === searchData.content.length - 1) {
+                  return <SearchItem {...item} key={item.id} />;
+                } else {
+                  return (
+                    <div key={idx}>
+                      <SearchItem key={item.id} {...item} />
+                      <Line />
+                    </div>
+                  );
+                }
+              })}
           </SearchList>
         </>
       )}
@@ -54,21 +60,9 @@ const Title = styled.h1`
 const SearchList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
 `;
-const NoneItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  background-color: aliceblue;
-  color: ${({ theme }) => theme.text};
-  font-size: 45px;
-  font-style: normal;
-  line-height: normal;
-  font-weight: 400;
-`;
-const Line = styled.hr`
+const Line = styled.div`
   width: 100%;
-  border: 0.5px solid ${({ theme }) => theme.divider};
+  border-top: 1px solid ${({ theme }) => theme.divider};
+  margin: 8px 0px;
 `;

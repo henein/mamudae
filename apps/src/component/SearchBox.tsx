@@ -1,18 +1,22 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import styled from "styled-components";
-import SearchIcon from "/public/headerCompoImages/search.svg";
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import SearchIcon from '/public/headerCompoImages/search.svg';
 
 const SearchBox = ({ type }: any) => {
   const router = useRouter();
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>('');
 
   const submit = (e: any) => {
     e.preventDefault();
-    router.push({
-      pathname: `/search`,
-      query: { type: type, value: text, page: 1 },
-    });
+    if (text.length === 1) {
+      alert('검색은 두글자 이상이어야 합니다.');
+    } else {
+      router.push({
+        pathname: `/search`,
+        query: { type: type, value: text, page: 1 },
+      });
+    }
   };
   return (
     <Container onSubmit={submit}>

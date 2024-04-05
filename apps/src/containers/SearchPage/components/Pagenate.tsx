@@ -20,7 +20,7 @@ const Pagenate = ({ ...props }) => {
   };
 
   return (
-    <Container>
+    <Container view={props.data?.totalElements}>
       {pageGroupsNum !== 0 && (
         <NextPageBtn onClick={() => handlePrevGroup()}>
           <ArrowLeftIcon width="6" height="10" />
@@ -46,8 +46,8 @@ const Pagenate = ({ ...props }) => {
 
 export default Pagenate;
 
-const Container = styled.div`
-  display: flex;
+const Container = styled.div<{ view: boolean }>`
+  display: ${({ view }) => (view ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   padding: 20px 24px;
