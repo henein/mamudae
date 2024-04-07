@@ -15,8 +15,17 @@ const SearchContent = ({ type, value, page }: any) => {
       ) : (
         <>
           <Title>
-            <strong>’{value}’</strong> 관련 게시글을 {searchData.totalElements}
-            개 찾았어요.
+            {searchData.totalElements ? (
+              <span>
+                <strong>’{value}’</strong> 관련 게시글을
+                {searchData.totalElements}개 찾았어요.
+              </span>
+            ) : (
+              <span>
+                <strong>’{value}’</strong> 관련 게시글이 없어요. 다른 검색어로
+                시도해 주세요.
+              </span>
+            )}
           </Title>
           <SearchList>
             {searchData.content.length &&
