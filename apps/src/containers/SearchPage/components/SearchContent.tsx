@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LoadingSpinner from '../../../component/LoadingSpinner';
 import { useGetSearchList } from '../../../hooks/searchPageHooks/useSearch';
 import Pagenate from './Pagenate';
-import SearchItem from './SearchItem';
+import CommonListItem from '../../../component/CommonListItem';
 
 const SearchContent = ({ type, value, page }: any) => {
   const { searchData, isLoading } = useGetSearchList({ type, value, page });
@@ -31,11 +31,11 @@ const SearchContent = ({ type, value, page }: any) => {
             {searchData.content.length &&
               searchData.content.map((item: any, idx: number) => {
                 if (idx === searchData.content.length - 1) {
-                  return <SearchItem {...item} key={item.id} />;
+                  return <CommonListItem {...item} key={item.id} />;
                 } else {
                   return (
                     <div key={idx}>
-                      <SearchItem key={item.id} {...item} />
+                      <CommonListItem key={item.id} {...item} />
                       <Line />
                     </div>
                   );

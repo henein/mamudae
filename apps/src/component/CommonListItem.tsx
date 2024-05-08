@@ -1,44 +1,57 @@
-import Image from 'next/image';
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import Link from 'next/link';
+import timeDifference from '../utils/timeDifference';
 import Visibility from '/public/detailPageImages/visibility.svg';
 import Comment from '/public/detailPageImages/Comment.svg';
 import Favorite from '/public/detailPageImages/favoriteOutline.svg';
-import timeDifference from '../../../utils/timeDifference';
-import Link from 'next/link';
+import Image from 'next/image';
 
-const SearchItem = ({ ...props }) => {
+const CommonListItem = ({ ...props }) => {
+  const {
+    id,
+    boardType,
+    title,
+    text,
+    userName,
+    createTime,
+    views,
+    commentNum,
+    recommendNum,
+    fileUrl,
+  } = props;
   return (
     <Container>
       <BoardInfo>
-        <Link href={`/board/${props.boardType}`}>
-          <Type>{props.boardType}</Type>
-        </Link>
-        <Link href={`/board/${props.boardType}/${props.id}`}>
-          <Title>{props.title}</Title>
-        </Link>
-        <Content>
-          {props.content || '컨텐츠 없음 - 컨텐츠 api에서 속성 추가 필요함'}
-        </Content>
+        <Infos>
+          <Link href={`/board/${boardType}`}>
+            <Type>{boardType}</Type>
+          </Link>
+          <Link href={`/board/${boardType}/${id}`}>
+            <Title>{title}</Title>
+          </Link>
+          <Content>{text || '...'}</Content>
+        </Infos>
+        {fileUrl && <CustomImage src={fileUrl} alt="" width={64} height={64} />}
       </BoardInfo>
       <UserInfo>
         <Left>
           <Images />
-          <Nickname>{props.userName}</Nickname>
-          <Time>· {timeDifference(props.createTime)}</Time>
+          <Nickname>{userName}</Nickname>
+          <Time>· {timeDifference(createTime)}</Time>
         </Left>
         <Right>
           <CountDiv>
             <Visibility />
-            <span>{props.views}</span>
+            <span>{views}</span>
           </CountDiv>
           <CountDiv>
             <Comment />
-            <span>{props.commentNum}</span>
+            <span>{commentNum}</span>
           </CountDiv>
           <CountDiv>
             <Favorite />
-            <span>{props.recommendNum}</span>
+            <span>{recommendNum}</span>
           </CountDiv>
         </Right>
       </UserInfo>
@@ -46,7 +59,7 @@ const SearchItem = ({ ...props }) => {
   );
 };
 
-export default SearchItem;
+export default CommonListItem;
 
 const Container = styled.div`
   display: flex;
@@ -59,7 +72,6 @@ const Container = styled.div`
 `;
 const BoardInfo = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   height: 64px;
 `;
@@ -82,6 +94,11 @@ const Content = styled.p`
   font-size: 14px;
   font-weight: 400;
   line-height: normal;
+`;
+const Infos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const UserInfo = styled.div`
   display: flex;
@@ -123,4 +140,11 @@ const CountDiv = styled.div`
     font-size: 12px;
     font-weight: 400;
   }
+`;
+const CustomImage = styled(Image)`
+  background-color: black;
+  border-radius: 8px;
+  width: 64px;
+  height: 64px;
+  margin-left: 8px;
 `;
