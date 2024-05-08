@@ -1,10 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Schedule from "/public/detailPageImages/schedule.svg";
-import Visibility from "/public/detailPageImages/visibility.svg";
-import Image from "next/image";
-import timeDifference from "../../../utils/timeDifference";
-import useScroll from "../../../hooks/scrollHooks/useScroll";
+import React from 'react';
+import styled from 'styled-components';
+import Schedule from '/public/detailPageImages/schedule.svg';
+import Visibility from '/public/detailPageImages/visibility.svg';
+import timeDifference from '../../../../utils/timeDifference';
+import useScroll from '../../../../hooks/scrollHooks/useScroll';
 
 interface ITitle {
   title: string;
@@ -41,7 +40,7 @@ const Title = ({ title, name, views, createTime }: ITitle) => {
 export default Title;
 const Container = styled.div<{ isScrollDown: boolean }>`
   position: sticky;
-  top: ${({ isScrollDown }) => (isScrollDown ? "16px" : "88px")};
+  top: ${({ isScrollDown }) => (isScrollDown ? '16px' : '88px')};
   transition: top 0.2s ease-in-out;
   box-shadow: ${({ theme }) => `0px 4px 8px ${theme.boxShadow}`};
   display: flex;

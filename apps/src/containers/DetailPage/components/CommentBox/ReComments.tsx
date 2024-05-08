@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import ReComment from "/public/detailPageImages/reComment.svg";
-import { customColor } from "../../../constants/customColor";
-import CommentMenuIcon from "./CommentMenuIcon";
-import timeDifference from "../../../utils/timeDifference";
-import CommentForm from "./CommentForm";
-import ModifyCommentForm from "./ModifyCommentForm";
-import { useMine } from "../../../hooks/detailPageHooks/useDetail";
-import Label from "../../../component/Label";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import ReComment from '/public/detailPageImages/reComment.svg';
+import { customColor } from '../../../../constants/customColor';
+import CommentMenuIcon from './CommentMenuIcon';
+import timeDifference from '../../../../utils/timeDifference';
+import CommentForm from './CommentForm';
+import ModifyCommentForm from './ModifyCommentForm';
+import { useMine } from '../../../../hooks/detailPageHooks/useDetail';
+import Label from '../../../../component/Label';
 
 const ReComments = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -30,10 +30,10 @@ const ReComments = ({ ...data }) => {
           <>
             <CommentHeader>
               <UserInfo>
-                <NickName isMine={isMine} isAdminRole={data.role === "ADMIN"}>
+                <NickName isMine={isMine} isAdminRole={data.role === 'ADMIN'}>
                   {data.nickName}
                 </NickName>
-                {data.role === "WRITER" && <Label type={data.role} />}
+                {data.role === 'WRITER' && <Label type={data.role} />}
                 <Time>{timeDifference(data.modifiedDate)}</Time>
               </UserInfo>
               <CommentMenuIcon
@@ -50,7 +50,7 @@ const ReComments = ({ ...data }) => {
             <CommentContent>
               {data.tag ? (
                 <NormalSpan>
-                  <TagSpan>{"@" + data.tag}</TagSpan>
+                  <TagSpan>{'@' + data.tag}</TagSpan>
                   {data.comment}
                 </NormalSpan>
               ) : (
@@ -108,7 +108,7 @@ const NickName = styled.div<{ isMine: boolean; isAdminRole: boolean }>`
   color: ${({ theme, isAdminRole, isMine }) =>
     isAdminRole ? theme.danger : isMine ? theme.brand : theme.text};
   font-size: 12px;
-  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "500")};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? '700' : '500')};
 `;
 
 const CommentBox = styled.div`

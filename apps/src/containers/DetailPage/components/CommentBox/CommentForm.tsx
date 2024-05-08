@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import TextAreaAutoResize from "react-textarea-autosize";
-import { FieldValues, useForm } from "react-hook-form";
-import { usePostForm } from "../../../hooks/detailPageHooks/useCommentForm";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import TextAreaAutoResize from 'react-textarea-autosize';
+import { FieldValues, useForm } from 'react-hook-form';
+import { usePostForm } from '../../../../hooks/detailPageHooks/useCommentForm';
 
 interface ICommentFormProps {
   setIsClick: (arg: boolean) => void;
@@ -25,8 +25,8 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
   });
 
   const submit = async (data: FieldValues) => {
-    if (!localStorage.getItem("refresh")) {
-      alert("로그인해야 이용할 수 있습니다.");
+    if (!localStorage.getItem('refresh')) {
+      alert('로그인해야 이용할 수 있습니다.');
       reset();
       return;
     } else {
@@ -59,14 +59,14 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
         <StyledTextareaAutosize
           placeholder="댓글 쓰기"
           rows={1}
-          {...register("comment")}
+          {...register('comment')}
           onFocus={() => setIsFocusInput(true)}
           defaultValue={
             props.isRecomment
               ? props.firstRecomment
-                ? ""
+                ? ''
                 : `@${props.nickName} `
-              : ""
+              : ''
           }
         />
         <InputFunc isRecomment={props.isRecomment} isFocusInput={isFocusInput}>
@@ -82,7 +82,7 @@ const CommentForm = ({ ...props }: ICommentFormProps) => {
 
 export default CommentForm;
 const ContainerForm = styled.form<{ isRecomment: boolean }>`
-  margin-bottom: ${({ isRecomment }) => !isRecomment && "20px"};
+  margin-bottom: ${({ isRecomment }) => !isRecomment && '20px'};
 `;
 const WriteDiv = styled.div`
   display: flex;
@@ -111,7 +111,7 @@ const StyledTextareaAutosize = styled(TextAreaAutoResize)`
 `;
 const InputFunc = styled.div<{ isRecomment: boolean; isFocusInput: boolean }>`
   display: ${({ isRecomment, isFocusInput }) =>
-    isRecomment ? "flex" : isFocusInput ? "flex" : "none"};
+    isRecomment ? 'flex' : isFocusInput ? 'flex' : 'none'};
   justify-content: end;
   gap: 4px;
 `;

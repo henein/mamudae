@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import CommentMenuIcon from "./CommentMenuIcon";
-import { customColor } from "../../../constants/customColor";
-import ReComments from "./ReComments";
-import timeDifference from "../../../utils/timeDifference";
-import { CommentType } from "../DetailPage";
-import CommentForm from "./CommentForm";
-import ModifyCommentForm from "./ModifyCommentForm";
-import { useMine } from "../../../hooks/detailPageHooks/useDetail";
-import Label from "../../../component/Label";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import CommentMenuIcon from './CommentMenuIcon';
+import ReComments from './ReComments';
+import timeDifference from '../../../../utils/timeDifference';
+import { CommentType } from '../../DetailPage';
+import CommentForm from './CommentForm';
+import ModifyCommentForm from './ModifyCommentForm';
+import { useMine } from '../../../../hooks/detailPageHooks/useDetail';
+import Label from '../../../../component/Label';
+import { customColor } from '../../../../constants/customColor';
 
 const Comment = ({ ...data }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -38,7 +38,7 @@ const Comment = ({ ...data }) => {
                 <NickName
                   isDeleteComment={isDeleteComment}
                   isMine={isMine}
-                  isAdminRole={data.role === "ADMIN"}
+                  isAdminRole={data.role === 'ADMIN'}
                 >
                   {data.nickName}
                 </NickName>
@@ -140,7 +140,7 @@ const NickName = styled.div<{
       : isMine
       ? theme.brand
       : theme.text};
-  font-weight: ${({ isAdminRole }) => (isAdminRole ? "700" : "normal")};
+  font-weight: ${({ isAdminRole }) => (isAdminRole ? '700' : 'normal')};
   font-size: 12px;
 `;
 
@@ -148,10 +148,10 @@ const CommentBox = styled.div<{ isLastComment: boolean }>`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding-bottom: ${({ isLastComment }) => !isLastComment && "14px"};
+  padding-bottom: ${({ isLastComment }) => !isLastComment && '14px'};
   border-bottom: ${({ theme, isLastComment }) =>
     !isLastComment && `1px solid ${theme.divider}`};
-  margin-bottom: ${({ isLastComment }) => !isLastComment && "20px"};
+  margin-bottom: ${({ isLastComment }) => !isLastComment && '20px'};
 `;
 const CommentHeader = styled.div`
   display: flex;

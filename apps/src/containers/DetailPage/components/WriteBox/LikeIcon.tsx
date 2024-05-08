@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { usePostRecommend } from "../../../hooks/detailPageHooks/usePostRecommend";
-import FavoriteBorderOutlinedIcon from "/public/detailPageImages/favoriteOutline.svg";
-import Favorite from "/public/detailPageImages/favorite.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { usePostRecommend } from '../../../../hooks/detailPageHooks/usePostRecommend';
+import FavoriteBorderOutlinedIcon from '/public/detailPageImages/favoriteOutline.svg';
+import Favorite from '/public/detailPageImages/favorite.svg';
 interface ILikeIcon {
   boardId: string;
   recommended: boolean;
@@ -35,7 +35,7 @@ const IconDiv = styled.div<{ recommended: boolean }>`
   align-items: center;
   background-color: ${({ theme, recommended }) =>
     recommended ? theme.brand : theme.card};
-  color: ${({ theme, recommended }) => (recommended ? "white" : theme.brand)};
+  color: ${({ theme, recommended }) => (recommended ? 'white' : theme.brand)};
   border: 1px solid ${({ theme }) => theme.border};
   width: 40px;
   height: 40px;

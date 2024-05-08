@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from "react";
-import styled from "styled-components";
-import TextAreaAutoResize from "react-textarea-autosize";
-import { useForm, FieldValues } from "react-hook-form";
-import useCommentInfoSet from "../../../hooks/reduxHooks/useCommentInfoSet";
-import { usePutForm } from "../../../hooks/detailPageHooks/useCommentForm";
+import React, { Dispatch, SetStateAction } from 'react';
+import styled from 'styled-components';
+import TextAreaAutoResize from 'react-textarea-autosize';
+import { useForm, FieldValues } from 'react-hook-form';
+import useCommentInfoSet from '../../../../hooks/reduxHooks/useCommentInfoSet';
+import { usePutForm } from '../../../../hooks/detailPageHooks/useCommentForm';
 
 interface ModifyCommentFormType {
   isRecomment: boolean;
@@ -24,11 +24,11 @@ const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
   });
 
   const submit = async (data: FieldValues) => {
-    if (!localStorage.getItem("access")) {
-      alert("로그인해야 이용할 수 있습니다.");
+    if (!localStorage.getItem('access')) {
+      alert('로그인해야 이용할 수 있습니다.');
       return;
     } else {
-      const isCommonTag = data.comment.split(" ")[0] == "@" + commentInfo.tag;
+      const isCommonTag = data.comment.split(' ')[0] == '@' + commentInfo.tag;
       await putLogic(data, isCommonTag);
       props.setIsModifyClick(false);
     }
@@ -39,7 +39,7 @@ const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
       <WriteDiv>
         <StyledTextareaAutosize
           rows={1}
-          {...register("comment")}
+          {...register('comment')}
           defaultValue={
             props.isRecomment && commentInfo.tag
               ? `@${commentInfo.tag} ${commentInfo.comment}`
@@ -86,7 +86,7 @@ const StyledTextareaAutosize = styled(TextAreaAutoResize)`
   }
 `;
 const InputFunc = styled.div`
-  display: "flex";
+  display: 'flex';
   justify-content: end;
   gap: 4px;
 `;
