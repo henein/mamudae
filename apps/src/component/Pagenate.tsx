@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { usePagenate } from '../../../hooks/pagenateHook/usePagenate';
+import { usePagenate } from '../hooks/pagenateHook/usePagenate';
 import ArrowLeftIcon from '/public/postPageImages/keyboard_arrow_left.svg';
 import ArrowRightIcon from '/public/postPageImages/keyboard_arrow_right.svg';
 

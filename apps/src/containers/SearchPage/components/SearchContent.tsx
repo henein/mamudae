@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import LoadingSpinner from '../../../component/LoadingSpinner';
 import { useGetSearchList } from '../../../hooks/searchPageHooks/useSearch';
-import Pagenate from './Pagenate';
 import CommonListItem from '../../../component/CommonListItem';
+import Pagenate from '../../../component/Pagenate';
 
 const SearchContent = ({ type, value, page }: any) => {
   const { searchData, isLoading } = useGetSearchList({ type, value, page });

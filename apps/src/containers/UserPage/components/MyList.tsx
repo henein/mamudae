@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Pagenate from '../../SearchPage/components/Pagenate';
+import Pagenate from '../../../component/Pagenate';
 import CommonListItem from '../../../component/CommonListItem';
 
 const MyList = ({ ...props }) => {
