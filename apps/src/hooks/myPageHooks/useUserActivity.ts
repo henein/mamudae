@@ -1,20 +1,30 @@
-import { useQuery } from "react-query";
-import { getMyBoard, getMyCommentBoard } from "../../api/userInfo";
+import { useQuery } from 'react-query';
+import { getMyBoard, getMyCommentBoard } from '../../api/userInfo';
 
 interface getMyPage {
+  nickname: string;
+  page: number;
   options?: any;
 }
 
-export function useGetMyBoard({ options }: getMyPage) {
-  const { data } = useQuery("myBoards", () => getMyBoard(), {
-    ...options,
-  });
-  return { ...data };
+export function useGetMyBoard({ nickname, page, options }: getMyPage) {
+  const { data, refetch } = useQuery(
+    ['myBoards', nickname],
+    () => getMyBoard(nickname, page),
+    {
+      ...options,
+    }
+  );
+  return { ...data, refetch };
 }
 
-export function useGetMyCommentBoard({ options }: getMyPage) {
-  const { data } = useQuery("myCommentBoards", () => getMyCommentBoard(), {
-    ...options,
-  });
-  return { ...data };
+export function useGetMyCommentBoard({ nickname, page, options }: getMyPage) {
+  const { data, refetch } = useQuery(
+    ['myCommentBoards', nickname],
+    () => getMyCommentBoard(nickname, page),
+    {
+      ...options,
+    }
+  );
+  return { ...data, refetch };
 }
