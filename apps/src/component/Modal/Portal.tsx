@@ -10,7 +10,7 @@ const PortalWrapper = ({ children }: { children: ReactElement }) => {
 export default PortalWrapper;
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -18,6 +18,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${({ theme }) => theme.modalBackdrop};
   z-index: 999999;
 `;
