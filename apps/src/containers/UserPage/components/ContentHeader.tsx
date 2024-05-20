@@ -1,16 +1,17 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import useOptionSelectStore from '../../../../store/myPageOptionSelect';
+import useOptionSelectStore from '../../../../store/option/headerOption';
 
-const ContentHeader = () => {
+const ContentHeader = ({ ...props }) => {
   const router = useRouter();
-
-  const buttons = [
-    { label: '게시글', value: 1 },
-    { label: '댓글', value: 2 },
-    { label: '캐릭터', value: 3 },
-  ];
+  const buttons = useMemo(() => {
+    return [
+      { label: '게시글', value: 0, count: props.boardCount },
+      { label: '댓글', value: 1, count: props.commentCount },
+      { label: '캐릭터', value: 2, count: props.characterCount || 0 },
+    ];
+  }, [props]);
 
   const { setOptionNumber } = useOptionSelectStore();
 
@@ -38,7 +39,9 @@ const ContentHeader = () => {
           }
           onClick={() => onClick(item.value)}
         >
-          {item.label}
+          <span>
+            {item.label} {item.count}
+          </span>
         </OptionBtn>
       ))}
     </Container>

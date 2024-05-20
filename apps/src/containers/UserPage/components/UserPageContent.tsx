@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import Content from '../components/Content';
 import ContentHeader from '../components/ContentHeader';
+import { useGetMyProfile } from '../../../hooks/userPageHooks/useUserProfile';
 
-const UserPageContent = () => {
+const UserPageContent = ({ ...props }) => {
+  const { data } = useGetMyProfile();
+  console.log(data);
   return (
     <Container>
-      <UserProfile />
+      <UserProfile {...data} />
       <BoardContent>
-        <ContentHeader />
-        <Content />
+        <ContentHeader
+          boardCount={data?.boardCount}
+          commentCount={data?.commentCount}
+        />
+        <Content {...props} />
       </BoardContent>
     </Container>
   );

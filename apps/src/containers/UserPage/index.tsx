@@ -3,16 +3,8 @@ import styled from 'styled-components';
 import Announcement from '../../component/AnnounceComponent/Announcement';
 import Login from '../../component/LoginComponent/Login';
 import UserPageContent from './components/UserPageContent';
-import useUserPageQueryStore from '../../../store/userPageQuerySlice';
 
 const UserPage = ({ ...props }) => {
-  const { nickname, page } = props;
-  const { setQueries } = useUserPageQueryStore();
-
-  useEffect(() => {
-    setQueries({ nickname: nickname, page: page });
-  }, [nickname, page]);
-
   return (
     <Layout>
       <Announcement />
@@ -20,7 +12,7 @@ const UserPage = ({ ...props }) => {
         <Aside>
           <Login />
         </Aside>
-        <UserPageContent />
+        <UserPageContent {...props} />
       </Container>
     </Layout>
   );
