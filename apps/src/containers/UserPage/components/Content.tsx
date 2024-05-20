@@ -38,7 +38,7 @@ const Content = ({ ...props }) => {
       ) : option == 1 ? (
         <MyList data={myCommentBoards} />
       ) : (
-        <Character />
+        <Character uid={props.uid} />
       )}
     </div>
   );
