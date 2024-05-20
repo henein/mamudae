@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import ColorThief from "colorthief";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import ColorThief from 'colorthief';
 import {
   usePickChar,
   useRefreshOneChar,
-} from "../../../../hooks/myPageHooks/useUserChar";
-import LoadingSpinner from "../../../../component/LoadingSpinner";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../store";
-import RefreshIcon from "/public/myPageImages/refresh.svg";
+} from '../../../../hooks/userPageHooks/useUserChar';
+import LoadingSpinner from '../../../../component/LoadingSpinner';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../store';
+import RefreshIcon from '/public/myPageImages/refresh.svg';
 
 export interface CharInfo {
   avatar: string | null;
@@ -55,7 +55,7 @@ const CharBox = ({
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [imageRandomColor, setImageRandomColor] = useState<string>("");
+  const [imageRandomColor, setImageRandomColor] = useState<string>('');
   const [refreshOn, setRefreshOn] = useState<boolean>(false);
 
   const { mutate: pickChar } = usePickChar({
@@ -70,7 +70,7 @@ const CharBox = ({
     const colorThief = new ColorThief();
     const img = new Image();
 
-    img.addEventListener("load", function () {
+    img.addEventListener('load', function () {
       const colorRGB = colorThief.getColor(img);
       const color = convertRGBToHSL(colorRGB[0], colorRGB[1], colorRGB[2]);
       setImageRandomColor(
@@ -81,16 +81,16 @@ const CharBox = ({
     });
 
     // TODO: 현재 구글의 프록시 서버를 사용한다. 배포 전에 자체 프록시 서버로 변경해야한다.
-    img.crossOrigin = "Anonymous";
+    img.crossOrigin = 'Anonymous';
     img.src = avatar
       ? `https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=2592000&url=${avatar}`
-      : "/myPageImages/defaultChar.png";
+      : '/myPageImages/defaultChar.png';
   }, [avatar, darkModeState]);
 
   const charImageResize = avatar
-    ? "https://open.api.nexon.com/static/maplestory/Character/180/" +
+    ? 'https://open.api.nexon.com/static/maplestory/Character/180/' +
       avatar.toString().slice(55)
-    : "/myPageImages/defaultChar.png";
+    : '/myPageImages/defaultChar.png';
 
   return (
     <Container disable={avatar} color={imageRandomColor}>
@@ -101,18 +101,18 @@ const CharBox = ({
           setIsActive(false);
         }}
         onMouseDown={() => setIsActive(true)}
-        onClick={() => (avatar ? pickChar() : alert("미인증 캐릭터입니다."))}
+        onClick={() => (avatar ? pickChar() : alert('미인증 캐릭터입니다.'))}
         isRepresent={pickByUser}
         isHover={isHover}
         isActive={isActive}
       >
         <Top>
           {pickByUser && <Tag>대표</Tag>}
-          <NickName>{charName || "정보 없음"}</NickName>
+          <NickName>{charName || '정보 없음'}</NickName>
         </Top>
         <Bottom>
           <JobnLevel>
-            {job && level ? `${job} / ${level}` : "정보 없음"}
+            {job && level ? `${job} / ${level}` : '정보 없음'}
           </JobnLevel>
         </Bottom>
       </CharInfoBox>
@@ -168,7 +168,7 @@ const ImgWrapper = styled.div<{ disable: string | null }>`
   border-radius: 16px;
   background-color: ${({ disable, theme }) =>
     disable || theme.characterCardDisableBackground};
-  opacity: ${({ disable }) => disable || "0.6"};
+  opacity: ${({ disable }) => disable || '0.6'};
 `;
 const RefreshBtnPosition = styled.div`
   display: flex;

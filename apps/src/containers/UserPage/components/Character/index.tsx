@@ -5,7 +5,7 @@ import Button from '../../../../component/Button';
 import {
   useGetAllMyChar,
   useGetCharName,
-} from '../../../../hooks/myPageHooks/useUserChar';
+} from '../../../../hooks/userPageHooks/useUserChar';
 import useOnWarning from '../../../../hooks/reduxHooks/useOnWarning';
 import { useDispatch } from 'react-redux';
 import { onWarnings } from '../../../../../store/warningSlice/onWarning';

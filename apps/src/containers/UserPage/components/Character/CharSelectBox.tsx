@@ -1,10 +1,10 @@
-import { useState } from "react";
-import styled, { css } from "styled-components";
-import CharBox from "./CharBox";
-import { CharInfo } from "./CharBox";
-import RefreshIcon from "/public/myPageImages/refresh.svg";
-import LoadingSpinner from "../../../../component/LoadingSpinner";
-import { useRefreshAllChar } from "../../../../hooks/myPageHooks/useUserChar";
+import { useState } from 'react';
+import styled, { css } from 'styled-components';
+import CharBox from './CharBox';
+import { CharInfo } from './CharBox';
+import RefreshIcon from '/public/myPageImages/refresh.svg';
+import LoadingSpinner from '../../../../component/LoadingSpinner';
+import { useRefreshAllChar } from '../../../../hooks/userPageHooks/useUserChar';
 interface CharSelectBoxType {
   charList: any;
   isAllCharLoading: boolean;
@@ -163,11 +163,11 @@ const ContentSortOption = styled.div`
 `;
 const btnStyle = css<{ isSelect: boolean }>`
   padding: 8px 12px;
-  color: ${({ isSelect, theme }) => (isSelect ? "white" : theme.subText)};
+  color: ${({ isSelect, theme }) => (isSelect ? 'white' : theme.subText)};
   background-color: ${({ isSelect, theme }) =>
-    isSelect ? "#212225" : theme.card};
+    isSelect ? '#212225' : theme.card};
   font-size: 12px;
-  font-weight: ${({ isSelect }) => (isSelect ? "700" : "400")};
+  font-weight: ${({ isSelect }) => (isSelect ? '700' : '400')};
   line-height: normal;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
