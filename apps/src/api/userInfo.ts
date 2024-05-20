@@ -1,15 +1,16 @@
-import axiosInstance from "./axiosInstance";
+import axios from 'axios';
+import axiosInstance from './axiosInstance';
 // 유저 정보 조회
 export const userInfo = async (accessToken: string | undefined) => {
   if (accessToken) {
-    const res = await axiosInstance.get("/userinfo");
+    const res = await axiosInstance.get('/userinfo');
     return res.data;
   }
 };
 
 // 유저(본인) Profile 조회
 export const getProfile = async () => {
-  const res = await axiosInstance.get("/userinfo/profile");
+  const res = await axiosInstance.get('/userinfo/profile');
   return res;
 };
 
@@ -23,38 +24,45 @@ interface UserProfileType {
 export const setUserProfile = async ({ forms }: UserProfileType) => {
   const formData = new FormData();
   if (forms.image) {
-    await formData.append("image", forms.image);
-    await formData.append("userName", forms.userName || "");
+    await formData.append('image', forms.image);
+    await formData.append('userName', forms.userName || '');
   } else {
-    await formData.append("userName", forms.userName || "");
+    await formData.append('userName', forms.userName || '');
   }
   try {
     const res = await axiosInstance.post(`/userinfo`, formData);
-    // window.location.reload();
     return res;
   } catch (error) {
-    console.error("setUserProfile 오류:", error);
+    console.error('setUserProfile 오류:', error);
     throw error; // 오류를 다시 던져서 상위 호출자에게 전달합니다.
   }
 };
 
 // 현재 인증된 모든 캐릭터 조회
 export const getAllMyChar = async () => {
-  const res = await axiosInstance.get("/userinfo/character/all");
+  const res = await axiosInstance.get('/userinfo/character/all');
   return res.data;
 };
 
 // 유저가 작성한 게시물 조회
-export const getMyBoard = async () => {
-  const res = await axiosInstance.get("/userinfo/myboards");
+export const getMyBoard = async (nickname: string, page: number) => {
+  const res = await axios.get(
+    `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/userinfo/active/board?name=${nickname}&page=${page || 1}&size=5`
+  );
 
-  return res;
+  return res.data;
 };
 
 // 유저가 댓글을 작성한 게시물 조회
-export const getMyCommentBoard = async () => {
-  const res = await axiosInstance.get("/userinfo/mycomment-boards");
-  return res;
+export const getMyCommentBoard = async (nickname: string, page: number) => {
+  const res = await axios.get(
+    `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/userinfo/active/comment?name=${nickname}&page=${page || 1}&size=5`
+  );
+  return res.data;
 };
 
 // 넥슨 토큰으로 유저 캐릭터 정보 불러오기
@@ -63,7 +71,7 @@ export const getUserCharName = async (
   recentDay: string,
   pastDay: string
 ) => {
-  const res = await axiosInstance.post("/userinfo/character/auth", {
+  const res = await axiosInstance.post('/userinfo/character/auth', {
     userApi,
     recentDay,
     pastDay,
@@ -86,7 +94,7 @@ export const getOneCharInfo = async (id: number) => {
     return res;
   } catch (err: any) {
     if (err.response.data.code === 110)
-      return alert("1시간 뒤에 요청할 수 있습니다.");
+      return alert('1시간 뒤에 요청할 수 있습니다.');
   }
 };
 
@@ -102,7 +110,7 @@ export const getAllCharInfo = async (idList: number[]) => {
     return res;
   } catch (err: any) {
     if (err.response.data.code === 110)
-      return alert("1시간 뒤에 요청할 수 있습니다.");
+      return alert('1시간 뒤에 요청할 수 있습니다.');
   }
 };
 

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
-import styled, { ThemeProvider } from "styled-components";
-import { lightMode, darkMode } from "../constants/DefaultTheme";
-import GlobalStyles from "../../styles/GlobalStyles";
-import { ScrollProvider } from "./ScrollProvider";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import React from 'react';
+import Footer from './Footer';
+import Header from './Header';
+import styled, { ThemeProvider } from 'styled-components';
+import { lightMode, darkMode } from '../constants/DefaultTheme';
+import GlobalStyles from '../../styles/GlobalStyles';
+import { ScrollProvider } from './ScrollProvider';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 const Layout = ({ children }: React.PropsWithChildren) => {
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
@@ -16,6 +16,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
     <ThemeProvider theme={darkModeState ? darkMode : lightMode}>
       <ScrollProvider>
         <GlobalStyles />
+        <div id="modal-root" />
         <PageDiv>
           <div>
             <Header />

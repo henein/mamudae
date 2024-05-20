@@ -67,7 +67,8 @@
     "styled-components": "^5.3.9",
     "swiper": "^11.0.4",
     "ts-jest": "^29.1.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
