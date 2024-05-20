@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from './axiosInstance';
 // 유저 정보 조회
 export const userInfo = async (accessToken: string | undefined) => {
@@ -30,7 +31,6 @@ export const setUserProfile = async ({ forms }: UserProfileType) => {
   }
   try {
     const res = await axiosInstance.post(`/userinfo`, formData);
-    // window.location.reload();
     return res;
   } catch (error) {
     console.error('setUserProfile 오류:', error);
@@ -46,19 +46,23 @@ export const getAllMyChar = async () => {
 
 // 유저가 작성한 게시물 조회
 export const getMyBoard = async (nickname: string, page: number) => {
-  const res = await axiosInstance.get(
-    `/userinfo/myboards?page=${page || 1}&size=5`
+  const res = await axios.get(
+    `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/userinfo/active/board?name=${nickname}&page=${page || 1}&size=5`
   );
 
-  return res;
+  return res.data;
 };
 
 // 유저가 댓글을 작성한 게시물 조회
 export const getMyCommentBoard = async (nickname: string, page: number) => {
-  const res = await axiosInstance.get(
-    `/userinfo/mycomment-boards?page=${page || 1}&size=5`
+  const res = await axios.get(
+    `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/userinfo/active/comment?name=${nickname}&page=${page || 1}&size=5`
   );
-  return res;
+  return res.data;
 };
 
 // 넥슨 토큰으로 유저 캐릭터 정보 불러오기
