@@ -24,6 +24,7 @@ const UserProfile = ({ ...props }) => {
       <Button sort="secondary" onClick={open}>
         수정하기
       </Button>
+      {profileModifyOnModal && <ProfileModifyModal />}
     </Conatiner>
   );
 };
