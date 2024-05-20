@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import Label from "../Label";
-import { useLocalStorage } from "../../hooks/storage/useLocalStorage";
-import Link from "next/link";
+import React from 'react';
+import styled from 'styled-components';
+import Label from '../Label';
+import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
+import Link from 'next/link';
 
 const CompleteLogin = ({ ...data }: any) => {
   const { removeLocalStorage } = useLocalStorage();
   const logout = () => {
-    removeLocalStorage("access");
-    removeLocalStorage("refresh");
+    removeLocalStorage('access');
+    removeLocalStorage('refresh');
     window.location.reload();
   };
 
@@ -16,14 +16,14 @@ const CompleteLogin = ({ ...data }: any) => {
     <LoginContainer>
       <LoginHeader>
         <RepresentativeImage
-          src={data.imageUrl || "/detailPageImages/Ellipse.png"}
+          src={data.imageUrl || '/detailPageImages/Ellipse.png'}
           alt=""
         ></RepresentativeImage>
         <Profile>
           <Char>
             {data.pickCharacter && <Label type="WRITER">대표</Label>}
             <CharNickname>
-              {data.pickCharacter || "대표 캐릭터 없음"}
+              {data.pickCharacter || '대표 캐릭터 없음'}
             </CharNickname>
           </Char>
 
@@ -31,7 +31,7 @@ const CompleteLogin = ({ ...data }: any) => {
         </Profile>
       </LoginHeader>
       <LoginFooter>
-        <Link href="/myPage">
+        <Link href={`/user/${data.userName}`}>
           <MyInfo>내 정보</MyInfo>
         </Link>
         <LogOut onClick={logout}>로그아웃</LogOut>
