@@ -16,7 +16,7 @@ const UserPageContent = ({ ...props }) => {
           boardCount={data?.boardCount}
           commentCount={data?.commentCount}
         />
-        <Content {...props} />
+        <Content {...props} {...data} />
       </BoardContent>
     </Container>
   );

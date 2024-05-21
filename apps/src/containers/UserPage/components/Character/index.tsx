@@ -6,54 +6,33 @@ import {
   useGetAllMyChar,
   useGetCharName,
 } from '../../../../hooks/userPageHooks/useUserChar';
-import useOnWarning from '../../../../hooks/reduxHooks/useOnWarning';
-import { useDispatch } from 'react-redux';
-import { onWarnings } from '../../../../../store/warningSlice/onWarning';
-import SwiperModal from './SwiperModal';
+import NexonApiProcessModal from '../../../../component/Modal/NexonApiProcessModal';
 import LoadingSpinner from '../../../../component/LoadingSpinner';
 import QuestionIcon from '/public/myPageImages/question.svg';
-import DateSelectorBox from './DateSelectorBox';
+import DateSelectorModal from '../../../../component/Modal/DateSelectorModal';
+import useNexonProccessModalState from '../../../../../store/modal/nexonProcces';
+import useDateSelectorModalState from '../../../../../store/modal/dateSelector';
 
-const MyChar = () => {
-  const [apiKey, setApiKey] = useState<string>('');
-  const [onModal, setOnModal] = useState<boolean>(false);
+const MyChar = ({ ...props }) => {
+  const { uid } = props;
+  console.log(uid);
 
+  const { nexonProcessOnModal, open: npOpen } = useNexonProccessModalState();
+  const { dateSelectorOnModal, open: dsOpen } = useDateSelectorModalState();
   const { data } = useGetAllMyChar({ refetchOnWindowFocus: false });
 
+  const [apiKey, setApiKey] = useState<string>('');
   const { mutate, isLoading } = useGetCharName({
     key: apiKey,
   });
 
-  const { isWarning } = useOnWarning();
-  const dispatch = useDispatch();
-
-  const handleAuthClick = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!apiKey) {
-      alert('토큰을 입력해 주세요.');
-      return;
-    } else {
-      dispatch(
-        onWarnings({ warningType: 'cube', warningLocation: 'nexonAuth' })
-      );
-    }
-  };
-
   return (
     <Container>
       <CharSelectBox charList={data} isAllCharLoading={isLoading} />
-      {onModal && (
-        <StickyView>
-          <SwiperModal setOnModal={setOnModal} />
-        </StickyView>
-      )}
+      {nexonProcessOnModal && <NexonApiProcessModal />}
+      {dateSelectorOnModal && <DateSelectorModal mutate={mutate} />}
       <UserAuthLine>
-        <QuestionBtn
-          onClick={(e: React.MouseEvent) => {
-            e.preventDefault();
-            setOnModal(true);
-          }}
-        >
+        <QuestionBtn onClick={npOpen}>
           <QuestionIcon width="20px" height="21px" />
         </QuestionBtn>
         <BottomForm
@@ -70,8 +49,11 @@ const MyChar = () => {
             type="submit"
             width={isLoading ? '107px' : '83px'}
             fontWeight="500"
-            onClick={handleAuthClick}
             disabled={isLoading}
+            onClick={() => {
+              if (apiKey) dsOpen();
+              else alert('토큰을 입력해 주세요.');
+            }}
           >
             <BtnInner>
               {isLoading && (
@@ -81,21 +63,12 @@ const MyChar = () => {
             </BtnInner>
           </AuthBtn>
         </BottomForm>
-        {isWarning && (
-          <StickyView>
-            <DateSelectorBox mutate={mutate} />
-          </StickyView>
-        )}
       </UserAuthLine>
     </Container>
   );
 };
 
 export default MyChar;
-const StickyView = styled.div`
-  position: sticky;
-  z-index: 1001;
-`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;

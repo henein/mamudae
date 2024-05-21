@@ -1,57 +1,23 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import Button from "../../../../component/Button";
-import Image from "next/image";
+import React from 'react';
+import styled from 'styled-components';
+import PortalWrapper from './Portal';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Keyboard, Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import Image from 'next/image';
+import Button from '../Button';
+import { useProcessSlider } from '../../hooks/userPageHooks/useUserChar';
+import useNexonProccessModalState from '../../../store/modal/nexonProcces';
+import { Bottom } from './modalCommonStyle';
 
-const SwiperModal = ({ ...props }: any) => {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [infoText, setInfoText] = useState<any>();
-
-  const handleSlideChange = (swiper: any) => {
-    setActiveSlideIndex(swiper.activeIndex);
-  };
-
-  const getSlideInfoText = (index: number) => {
-    switch (index) {
-      case 0:
-        return (
-          <>
-            <a
-              href="https://openapi.nexon.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              NEXON Open API
-            </a>
-            에 접속해서 ➊로그인 하고 ➋My 애플리케이션으로 이동해주세요.
-          </>
-        );
-      case 1:
-        return <span>애플리케이션 등록하기를 눌러주세요.</span>;
-      case 2:
-        return <span>내용을 위와 같이 입력해주세요.</span>;
-      case 3:
-        return <span>➊약관 동의를 하고 ➋아래 등록 버튼을 눌러주세요.</span>;
-      case 4:
-        return <span>표시된 부분을 눌러서 상세 페이지로 이동해주세요.</span>;
-      case 5:
-        return <span>표시된 부분을 눌러서 API Key를 복사해주세요.</span>;
-      default:
-        return;
-    }
-  };
-
-  useEffect(() => {
-    setInfoText(getSlideInfoText(activeSlideIndex));
-  }, [activeSlideIndex]);
+const NexonApiProcessModal = () => {
+  const { close } = useNexonProccessModalState();
+  const { infoText, handleSlideChange } = useProcessSlider();
 
   return (
-    <View>
+    <PortalWrapper>
       <Container>
         <Swiper
           slidesPerView={1}
@@ -116,29 +82,19 @@ const SwiperModal = ({ ...props }: any) => {
             />
           </SwiperSlide>
         </Swiper>
-        <Bottom>
+        <CustomBottom>
           <InfoText>{infoText}</InfoText>
-          <Button sort="secondary" onClick={() => props.setOnModal(false)}>
+          <Button sort="secondary" onClick={close}>
             닫기
           </Button>
-        </Bottom>
+        </CustomBottom>
       </Container>
-    </View>
+    </PortalWrapper>
   );
 };
 
-export default SwiperModal;
-const View = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.modalBackdrop};
-`;
+export default NexonApiProcessModal;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -172,10 +128,10 @@ const Container = styled.div`
     }
   }
   .swiper-button-next {
-    background-image: url("/myPageImages/nextButton.svg");
+    background-image: url('/myPageImages/nextButton.svg');
   }
   .swiper-button-prev {
-    background-image: url("/myPageImages/prevButton.svg");
+    background-image: url('/myPageImages/prevButton.svg');
   }
   .swiper-button-disabled {
     opacity: 0.3;
@@ -191,17 +147,9 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.brand};
   }
 `;
-const Bottom = styled.div`
+const CustomBottom = styled(Bottom)`
   display: flex;
-  padding: 16px 24px;
   justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(4px);
-  background-color: ${({ theme }) => theme.cardHeader};
-  height: 73px;
-  border-top: 1px solid ${({ theme }) => theme.border};
-  border-bottom-right-radius: 16px;
-  border-bottom-left-radius: 16px;
 `;
 const InfoText = styled.div`
   color: ${({ theme }) => theme.text};
