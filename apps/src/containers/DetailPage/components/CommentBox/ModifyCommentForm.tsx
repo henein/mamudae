@@ -2,8 +2,8 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import TextAreaAutoResize from 'react-textarea-autosize';
 import { useForm, FieldValues } from 'react-hook-form';
-import useCommentInfoSet from '../../../../hooks/reduxHooks/useCommentInfoSet';
 import { usePutForm } from '../../../../hooks/detailPageHooks/useCommentForm';
+import useCommentInfoState from '../../../../../store/comment/commentInfo';
 
 interface ModifyCommentFormType {
   isRecomment: boolean;
@@ -13,7 +13,7 @@ interface ModifyCommentFormType {
 const ModifyCommentForm = ({ ...props }: ModifyCommentFormType) => {
   const { register, handleSubmit } = useForm();
 
-  const commentInfo = useCommentInfoSet();
+  const { commentInfo } = useCommentInfoState();
 
   const { putLogic } = usePutForm({
     isRecomment: props.isRecomment,

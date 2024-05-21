@@ -1,7 +1,6 @@
 import React, { useEffect, Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { commentInfoSet } from '../../../../../store/comment/commentInfo';
+import useCommentInfoState from '../../../../../store/comment/commentInfo';
 
 interface CommentToolsType {
   boardId: string;
@@ -13,21 +12,19 @@ interface CommentToolsType {
 }
 
 const CommentTools = ({ ...props }: CommentToolsType) => {
-  console.log(props.commentInfo);
-  const dispatch = useDispatch();
-
+  const { setCommentInfo } = useCommentInfoState();
   useEffect(() => {
-    if (props.commentInfo) {
-      dispatch(commentInfoSet(props.commentInfo));
-    }
-  }, [props.commentInfo, dispatch]);
+    setCommentInfo(props.commentInfo);
+  }, [props.commentInfo]);
 
   return (
     <Container>
       <Functions>
         {props.isMine ? (
           <>
-            <Modify onClick={() => {}}>수정하기</Modify>
+            <Modify onClick={() => props.setIsModifyClick(true)}>
+              수정하기
+            </Modify>
             <Delete onClick={() => {}}>삭제하기</Delete>
           </>
         ) : (
