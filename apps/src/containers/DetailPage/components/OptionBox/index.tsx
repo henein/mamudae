@@ -1,13 +1,25 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import useBoardWarningModalState from '../../../../../store/modal/boardWarning';
 import Button from '../../../../component/Button';
+import BoardWarningModal from '../../../../component/Modal/BoardWarningModal';
 
 const OptionBox = ({ ...props }) => {
   const { data, boardId } = props;
+  const {
+    boardWarningOnModal,
+    open: warningOpen,
+    getType,
+  } = useBoardWarningModalState();
+
+  const type = useMemo(() => {
+    return getType();
+  }, [boardWarningOnModal]);
 
   return (
     <Container>
+      {type && <BoardWarningModal type={type} boardId={boardId} />}
       <Button type="button" sort="secondary">
         목록
       </Button>
@@ -18,7 +30,11 @@ const OptionBox = ({ ...props }) => {
               수정하기
             </Button>
           </Link>
-          <Button type="button" sort="danger" onClick={() => {}}>
+          <Button
+            type="button"
+            sort="danger"
+            onClick={() => warningOpen('delete')}
+          >
             삭제하기
           </Button>
         </RightItems>

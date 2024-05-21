@@ -31,3 +31,10 @@ export const Bottom = styled.div`
   border-bottom-right-radius: 16px;
   backdrop-filter: blur(4px);
 `;
+export const WarningIconWrapper = styled.div`
+  color: ${({ theme }) => theme.danger};
+`;
+export const Phrases = styled.div`
+  font-size: 14px;
+  color: ${({ theme }) => theme.text};
+`;
