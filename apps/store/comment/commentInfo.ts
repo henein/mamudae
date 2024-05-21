@@ -1,38 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { create } from 'zustand';
 
-type infoType = {
-  commentInfo: {
-    boardId: string;
-    comment: string;
-    commentId: string;
-    isMyComment: boolean;
-    isRecomment: boolean;
-    replyId?: string;
-    tag?: string;
-  };
-};
+export interface CommentInfo {
+  boardId: string;
+  comment: string;
+  commentId: string;
+  isMyComment: boolean;
+  isRecomment: boolean;
+  replyId?: string;
+  tag?: string;
+}
 
-const initialState: infoType = {
+interface Prop {
+  commentInfo: CommentInfo;
+  setCommentInfo: (commentInfo: CommentInfo) => void;
+}
+
+const useCommentInfoState = create<Prop>((set) => ({
   commentInfo: {
-    boardId: "",
-    comment: "",
-    commentId: "",
+    boardId: '',
+    comment: '',
+    commentId: '',
     isMyComment: false,
     isRecomment: false,
-    replyId: "",
-    tag: "",
+    replyId: '',
+    tag: '',
   },
-};
+  setCommentInfo: (commentInfo) => set(() => ({ commentInfo: commentInfo })),
+}));
 
-const commentInfo = createSlice({
-  name: "isWarning",
-  initialState,
-  reducers: {
-    commentInfoSet: (state, action) => {
-      state.commentInfo = action.payload;
-    },
-  },
-});
-
-export const { commentInfoSet } = commentInfo.actions;
-export default commentInfo.reducer;
+export default useCommentInfoState;
