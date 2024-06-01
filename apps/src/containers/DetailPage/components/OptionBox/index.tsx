@@ -6,15 +6,20 @@ import useReportBoxModalState from '../../../../../store/modal/reportBox';
 import Button from '../../../../component/Button';
 import BoardWarningModal from '../../../../component/Modal/BoardWarningModal';
 import ReportBox from '../../../../component/Modal/ReportBoxModal';
+import useCommentWarningModalState from '../../../../../store/modal/commentWarning';
+import CommentWarningModal from '../../../../component/Modal/CommentWarningModal';
 
 const OptionBox = ({ ...props }) => {
   const { data, boardId } = props;
+
   const { getType: getBoardWarningType, open: warningOpen } =
     useBoardWarningModalState();
   const { getType: getReportType, open: reportOpen } = useReportBoxModalState();
+  const { getType: getCommentWarningType } = useCommentWarningModalState();
 
   const warningType = getBoardWarningType();
   const reportType = getReportType();
+  const commentWarningType = getCommentWarningType();
 
   return (
     <Container>
@@ -51,6 +56,7 @@ const OptionBox = ({ ...props }) => {
         <BoardWarningModal type={warningType} boardId={boardId} />
       )}
       {reportType && <ReportBox type={reportType} />}
+      {commentWarningType && <CommentWarningModal type={commentWarningType} />}
     </Container>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect, Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
 import useCommentInfoState from '../../../../../store/comment/commentInfo';
+import useCommentWarningModalState from '../../../../../store/modal/commentWarning';
+import useReportBoxModalState from '../../../../../store/modal/reportBox';
 
 interface CommentToolsType {
-  boardId: string;
-  commentId: string;
   isMine: boolean;
   commentInfo: any;
   setIsHover: Dispatch<SetStateAction<boolean>>;
@@ -17,6 +17,9 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
     setCommentInfo(props.commentInfo);
   }, [props.commentInfo]);
 
+  const { open: openCommentWarning } = useCommentWarningModalState();
+  const { open: openReport } = useReportBoxModalState();
+
   return (
     <Container>
       <Functions>
@@ -25,11 +28,21 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
             <Modify onClick={() => props.setIsModifyClick(true)}>
               수정하기
             </Modify>
-            <Delete onClick={() => {}}>삭제하기</Delete>
+            <Delete onClick={() => openCommentWarning('delete')}>
+              삭제하기
+            </Delete>
           </>
         ) : (
           <>
-            <Report onClick={() => {}}>신고하기</Report>
+            <Report
+              onClick={() => {
+                props.commentInfo.isRecomment
+                  ? openReport('recomment')
+                  : openReport('comment');
+              }}
+            >
+              신고하기
+            </Report>
           </>
         )}
       </Functions>

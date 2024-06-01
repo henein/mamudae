@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import {
   getComment,
   postComment,
@@ -7,9 +7,10 @@ import {
   putReComment,
   deleteComment,
   deleteReComment,
-} from "../../api/comment";
-import handleTokenError from "../../utils/handleTokenError";
-import { GetComment, PComment, RComment } from "../../api/comment";
+} from '../../api/comment';
+import handleTokenError from '../../utils/handleTokenError';
+import { GetComment, PComment, RComment } from '../../api/comment';
+import useCommentWarningModalState from '../../../store/modal/commentWarning';
 
 interface useGetComment extends GetComment {
   options?: any;
@@ -26,7 +27,7 @@ interface useRComment extends RComment {
 // 댓글 조회
 export function useGetComment({ boardId, options }: useGetComment) {
   const { data } = useQuery(
-    ["comment", boardId],
+    ['comment', boardId],
     () => getComment({ boardId }),
     {
       ...options,
@@ -40,7 +41,7 @@ export function useGetComment({ boardId, options }: useGetComment) {
 export function usePostComment({ boardId, comment }: usePComment) {
   const queryClient = useQueryClient();
   const postCommentMutation = useMutation(
-    "postComment",
+    'postComment',
     () =>
       postComment({
         boardId,
@@ -48,8 +49,8 @@ export function usePostComment({ boardId, comment }: usePComment) {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신
       },
     }
   );
@@ -74,7 +75,7 @@ export function usePostReComment({
 }: useRComment) {
   const queryClient = useQueryClient();
   const postReCommentMutation = useMutation(
-    "postReComment",
+    'postReComment',
     () =>
       postReComment({
         boardId,
@@ -84,8 +85,8 @@ export function usePostReComment({
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
       },
     }
   );
@@ -105,7 +106,7 @@ export function usePostReComment({
 export function usePutComment({ boardId, comment, commentId }: usePComment) {
   const queryClient = useQueryClient();
   const putCommentMutation = useMutation(
-    "putComment",
+    'putComment',
     () =>
       putComment({
         boardId,
@@ -114,8 +115,8 @@ export function usePutComment({ boardId, comment, commentId }: usePComment) {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
       },
     }
   );
@@ -140,7 +141,7 @@ export function usePutReComment({
 }: useRComment) {
   const queryClient = useQueryClient();
   const putReCommentMutation = useMutation(
-    "putReComment",
+    'putReComment',
     () =>
       putReComment({
         boardId,
@@ -151,8 +152,8 @@ export function usePutReComment({
     {
       onSuccess: () => {
         console.log(tag);
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신 -> 총 댓글 수 가지고오기 위함
       },
     }
   );
@@ -170,9 +171,11 @@ export function usePutReComment({
 }
 
 export function useDelComment({ boardId, commentId }: usePComment) {
+  const { close } = useCommentWarningModalState();
+
   const queryClient = useQueryClient();
   const delCommentMutation = useMutation(
-    "delComment",
+    'delComment',
     () =>
       deleteComment({
         boardId,
@@ -180,8 +183,9 @@ export function useDelComment({ boardId, commentId }: usePComment) {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신
+        close();
       },
     }
   );
@@ -199,9 +203,11 @@ export function useDelComment({ boardId, commentId }: usePComment) {
 }
 
 export function useDelReComment({ boardId, replyId }: useRComment) {
+  const { close } = useCommentWarningModalState();
+
   const queryClient = useQueryClient();
   const delReCommentMutation = useMutation(
-    "delReComment",
+    'delReComment',
     () =>
       deleteReComment({
         boardId,
@@ -209,8 +215,9 @@ export function useDelReComment({ boardId, replyId }: useRComment) {
       }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["comment", boardId]); // onSuccess 시에 comment 갱신
-        queryClient.invalidateQueries(["detailPageData", boardId]); // onSuccess 시에 detailPageData 갱신
+        queryClient.invalidateQueries(['comment', boardId]); // onSuccess 시에 comment 갱신
+        queryClient.invalidateQueries(['detailPageData', boardId]); // onSuccess 시에 detailPageData 갱신
+        close();
       },
     }
   );
