@@ -1,35 +1,24 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import { useGetBoard } from '../../../hooks/board/useGetBoard';
+import { SimpleBoardList } from '../MainPage';
 
-export type ItemType = {
-  id: number;
-  title: string;
-  commentNum: number;
-  userName: string;
-  createTime: string;
-  views: number;
-  recomment: number;
-  text: string;
-  boardType: string;
-};
-
-const UserPostList = ({ boardType }: any) => {
-  const { data } = useGetBoard(boardType);
-
+interface Props {
+  boardTitle: string;
+  data: SimpleBoardList[];
+}
+const UserPostList = ({ ...props }: Props) => {
   return (
     <PostList>
-      {data &&
-        data.content.slice(0, 8).map((item: ItemType) => {
-          return (
-            <PostItem key={item.id}>
-              <Link href={`board/${item.boardType}/${item.id}`} key={item.id}>
-                <span>{item.title}</span>
-              </Link>
-              <NickName>{item.userName}</NickName>
-            </PostItem>
-          );
-        })}
+      {props.data.map((item: SimpleBoardList) => {
+        return (
+          <PostItem key={item.id}>
+            <Link href={`board/${props.boardTitle}/${item.id}`} key={item.id}>
+              <span>{item.title}</span>
+            </Link>
+            <NickName>{item.userName}</NickName>
+          </PostItem>
+        );
+      })}
     </PostList>
   );
 };
