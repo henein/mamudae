@@ -1,17 +1,17 @@
-import axios from "axios";
-import axiosInstance from "./axiosInstance";
+import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface GetComment {
-  boardId: string;
+  boardId: number;
 }
 export interface PComment {
-  boardId: string;
-  comment?: string;
-  commentId?: string | null;
+  boardId: number;
+  comment?: number;
+  commentId?: number | null;
 }
 export interface RComment extends PComment {
-  replyId?: string;
-  tag?: string;
+  replyId?: number;
+  tag?: number;
 }
 
 // 댓글 조회

@@ -1,11 +1,11 @@
-import React from "react";
-import Image from "next/image";
-import styled from "styled-components";
-import LikeIcon from "./LikeIcon";
+import React from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
+import LikeIcon from './LikeIcon';
 
 interface ILike {
   recommend: number;
-  boardId: string;
+  boardId: number;
   recommended: boolean;
 }
 

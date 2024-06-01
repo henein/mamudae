@@ -4,7 +4,7 @@ import { deleteBoard } from '../../api/board';
 import { detail } from '../../api/detail';
 
 interface IUseDetail {
-  boardId: string;
+  boardId: number;
   accessToken?: string;
   options?: any;
 }

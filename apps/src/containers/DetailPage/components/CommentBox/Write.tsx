@@ -4,7 +4,7 @@ import useScroll from '../../../../hooks/scrollHooks/useScroll';
 import CommentForm from './CommentForm';
 
 interface postinfos {
-  boardId: string;
+  boardId: number;
   totalComment: string;
 }
 const Write = ({ ...data }: postinfos) => {

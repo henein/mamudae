@@ -14,14 +14,14 @@ export type CommentType = {
   modifiedDate: string;
   tag: string;
   writerId: number;
-  replyId: string;
+  replyId: number;
   uid: string;
   replies?: any;
 };
 
 const DetailPage = () => {
   const router = useRouter();
-  const boardId = router.query.id as string;
+  const boardId = Number(router.query.id);
 
   const { data } = useDetail({
     boardId,
