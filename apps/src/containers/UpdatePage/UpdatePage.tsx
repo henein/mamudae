@@ -12,7 +12,7 @@ import { ToolBarDivider } from '../../component/Editor/ToolBarDivider';
 
 const UpdatePage = () => {
   const router = useRouter();
-  const boardId = router.query.id as string;
+  const boardId = Number(router.query.id);
 
   const {
     data: { title, text },

@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from './axiosInstance';
 
 export interface ICreateBoard {
   accessToken?: string | undefined;
@@ -10,7 +10,7 @@ export interface ICreateBoard {
 
 export interface IUpdateBoard {
   accessToken?: string | undefined;
-  id: string;
+  id: number;
   htmlText: string;
   text: string;
   title: string;
@@ -59,7 +59,7 @@ export async function deleteBoard(boardId: number) {
 export async function uploadImage({ accessToken, image }: IUploadImage) {
   const formData = new FormData();
 
-  formData.append("image", image);
+  formData.append('image', image);
 
   const res = await axiosInstance.post(
     `${process.env.NEXT_PUBLIC_API_URL}/board/image`,
@@ -67,7 +67,7 @@ export async function uploadImage({ accessToken, image }: IUploadImage) {
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     }
   );
