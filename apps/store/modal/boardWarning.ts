@@ -26,7 +26,7 @@ const useBoardWarningModalState = create<Prop>((set, get) => ({
     })),
   close: () =>
     set(() => ({
-      boardWarningOnModal: { modify: false, delete: false, report: false },
+      boardWarningOnModal: { modify: false, delete: false },
     })),
   getType: () => {
     const trueKey = Object.entries(get().boardWarningOnModal)
