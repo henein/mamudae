@@ -15,7 +15,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient();
   const page = context.query.page || 1;
   try {
-    await queryClient.prefetchQuery('announce', () => announce());
     await queryClient.fetchQuery(['myBoards', nickname], () =>
       getMyBoard(nickname, 1)
     );

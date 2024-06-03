@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { PComment, RComment } from "../../api/comment";
+import { useState } from 'react';
+import { PComment, RComment } from '../../api/comment';
 import {
   usePostComment,
   usePostReComment,
@@ -7,8 +7,8 @@ import {
   useDelReComment,
   usePutComment,
   usePutReComment,
-} from "../../hooks/detailPageHooks/useComment";
-import { FieldValues } from "react-hook-form";
+} from '../../hooks/detailPageHooks/useComment';
+import { FieldValues } from 'react-hook-form';
 
 // post,put,delete 요청에 대한 각각의 form 만들어주는 hook
 
@@ -25,14 +25,14 @@ export const usePostForm = ({
   commentedUser,
 }: any) => {
   const [PFormData, setPFormData] = useState<PComment>({
-    boardId: "",
-    comment: "",
+    boardId: 0,
+    comment: '',
   });
   const [RFormData, setRFormData] = useState<RComment>({
-    boardId: "",
-    comment: "",
-    commentId: "",
-    tag: "",
+    boardId: 0,
+    comment: '',
+    commentId: 0,
+    tag: '',
   });
 
   const { postReComments } = usePostReComment(RFormData); // 대댓글 post api
@@ -41,15 +41,15 @@ export const usePostForm = ({
   // post시, 돌아가는 로직
   // data : react-hook-form의 input register 이름
   const postLogic = async (data: FieldValues) => {
-    const commentWithoutTag = data.comment.replace("@" + commentedUser, "");
+    const commentWithoutTag = data.comment.replace('@' + commentedUser, '');
 
     if (isRecomment) {
       await setRFormData({
         ...RFormData,
         boardId: boardId,
         comment: commentWithoutTag.trim(),
-        commentId: commentId ?? "",
-        tag: data.comment.includes("@" + commentedUser) ? commentedUser : "",
+        commentId: commentId ?? '',
+        tag: data.comment.includes('@' + commentedUser) ? commentedUser : '',
       });
       return await postReComments();
     } else {
@@ -80,13 +80,13 @@ export const useDeleteForm = ({
 }: any) => {
   // delete시, 부모 comment면 보내야되는 데이터 폼
   const [PFormData, setPFormData] = useState<PComment>({
-    boardId: "",
-    commentId: "",
+    boardId: 0,
+    commentId: 0,
   });
   // delete시, 자식 comment면 보내야되는 데이터 폼
   const [RFormData, setRFormData] = useState<RComment>({
-    boardId: "",
-    replyId: "",
+    boardId: 0,
+    replyId: 0,
   });
 
   const { delReComments } = useDelReComment(RFormData); // 대댓글 post api
@@ -128,15 +128,15 @@ export const usePutForm = ({
   commentId,
 }: any) => {
   const [PFormData, setPFormData] = useState<PComment>({
-    boardId: "",
-    comment: "",
-    commentId: "",
+    boardId: 0,
+    comment: '',
+    commentId: 0,
   });
   const [RFormData, setRFormData] = useState<RComment>({
-    boardId: "",
-    comment: "",
-    replyId: "",
-    tag: "",
+    boardId: 0,
+    comment: '',
+    replyId: 0,
+    tag: '',
   });
 
   const { putComments } = usePutComment(PFormData); // 대댓글 put api
@@ -144,7 +144,7 @@ export const usePutForm = ({
 
   // put 요청 시, 돌아가는 로직
   const putLogic = async (data: FieldValues, isCommonTag?: boolean) => {
-    const commentWithoutTag = data.comment.replace("@" + tag, "");
+    const commentWithoutTag = data.comment.replace('@' + tag, '');
     if (isRecomment) {
       await setRFormData({
         ...RFormData,

@@ -1,4 +1,4 @@
-import { getBoard, getBoardList } from '../../api/mainpage';
+import { getBoard, getBoardList, getMainBoardList } from '../../api/mainpage';
 import { useQuery } from 'react-query';
 import { getEachBoard } from '../../api/postpage';
 
@@ -22,6 +22,13 @@ export const useGetEachBoard = (boardType: string, pageNum: number) => {
 
 export const useGetBoardList = () => {
   const { data } = useQuery(['boardList'], () => getBoardList(), {
+    refetchOnWindowFocus: false,
+  });
+  return { data };
+};
+
+export const useGetMainBoardList = () => {
+  const { data } = useQuery(['mainBoardList'], () => getMainBoardList(), {
     refetchOnWindowFocus: false,
   });
   return { data };

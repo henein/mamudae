@@ -4,7 +4,7 @@ import { usePostRecommend } from '../../../../hooks/detailPageHooks/usePostRecom
 import FavoriteBorderOutlinedIcon from '/public/detailPageImages/favoriteOutline.svg';
 import Favorite from '/public/detailPageImages/favorite.svg';
 interface ILikeIcon {
-  boardId: string;
+  boardId: number;
   recommended: boolean;
 }
 

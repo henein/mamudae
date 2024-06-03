@@ -1,14 +1,14 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
-import styled from "styled-components";
-import CommentTools from "./CommentTools";
-import MoreButton from "/public/detailPageImages/more_button.svg";
+import React, { useState, Dispatch, SetStateAction } from 'react';
+import styled from 'styled-components';
+import CommentTools from './CommentTools';
+import MoreButton from '/public/detailPageImages/more_button.svg';
 
 export interface CommentMenuProps {
-  boardId: string;
+  boardId: number;
   comment: string;
-  commentId: string;
+  commentId: number;
   isMine: boolean;
-  replyId?: string;
+  replyId?: number;
   tag?: string;
   isRecomment: boolean;
   setIsModifyClick: Dispatch<SetStateAction<boolean>>;
@@ -30,8 +30,6 @@ const CommentMenuIcon = ({ setIsModifyClick, ...props }: CommentMenuProps) => {
       <MoreButton width="6px" height="12px" />
       {isHover && isToggle && (
         <CommentTools
-          boardId={props.boardId}
-          commentId={props.commentId}
           isMine={props.isMine}
           commentInfo={props}
           setIsHover={setIsHover}

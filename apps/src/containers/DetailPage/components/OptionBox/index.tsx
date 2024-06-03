@@ -1,10 +1,29 @@
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
+import useBoardWarningModalState from '../../../../../store/modal/boardWarning';
+import useReportBoxModalState from '../../../../../store/modal/reportBox';
 import Button from '../../../../component/Button';
+import BoardWarningModal from '../../../../component/Modal/BoardWarningModal';
+import ReportBox from '../../../../component/Modal/ReportBoxModal';
+import useCommentWarningModalState from '../../../../../store/modal/commentWarning';
+import CommentWarningModal from '../../../../component/Modal/CommentWarningModal';
 
 const OptionBox = ({ ...props }) => {
   const { data, boardId } = props;
+
+  const { getType: getBoardWarningType, open: warningOpen } =
+    useBoardWarningModalState();
+  const {
+    getType: getReportType,
+    open: reportOpen,
+    targetId,
+  } = useReportBoxModalState();
+  const { getType: getCommentWarningType } = useCommentWarningModalState();
+
+  const warningType = getBoardWarningType();
+  const reportType = getReportType();
+  const commentWarningType = getCommentWarningType();
 
   return (
     <Container>
@@ -18,17 +37,30 @@ const OptionBox = ({ ...props }) => {
               수정하기
             </Button>
           </Link>
-          <Button type="button" sort="danger" onClick={() => {}}>
+          <Button
+            type="button"
+            sort="danger"
+            onClick={() => warningOpen('delete')}
+          >
             삭제하기
           </Button>
         </RightItems>
       ) : (
         <RightItems>
-          <Button type="button" sort="danger" onClick={() => {}}>
+          <Button
+            type="button"
+            sort="danger"
+            onClick={() => reportOpen('Board', boardId)}
+          >
             신고하기
           </Button>
         </RightItems>
       )}
+      {warningType && (
+        <BoardWarningModal type={warningType} boardId={boardId} />
+      )}
+      {reportType && <ReportBox type={reportType} targetId={targetId} />}
+      {commentWarningType && <CommentWarningModal type={commentWarningType} />}
     </Container>
   );
 };

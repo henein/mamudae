@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
-import { deleteBoard } from "../../api/board";
-import { detail } from "../../api/detail";
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { deleteBoard } from '../../api/board';
+import { detail } from '../../api/detail';
 
 interface IUseDetail {
-  boardId: string;
+  boardId: number;
   accessToken?: string;
   options?: any;
 }
 
 export function useDetail({ boardId, options }: IUseDetail) {
   const { data, refetch } = useQuery(
-    ["detailPageData", boardId],
+    ['detailPageData', boardId],
     () => detail(boardId),
     {
       ...options,
@@ -22,17 +22,16 @@ export function useDetail({ boardId, options }: IUseDetail) {
 }
 
 interface IDeleteBoard {
-  boardType: string;
   boardId: number;
 }
-export const useBoardDelete = ({ boardType, boardId }: IDeleteBoard) => {
+export const useBoardDelete = ({ boardId }: IDeleteBoard) => {
   const { mutate: boardDelete } = useMutation(
-    ["board", boardType],
+    ['board', boardId],
     () => deleteBoard(boardId),
     {
       onSuccess: () => {
-        alert("게시물이 삭제되었습니다.");
-        window.location.href = "/";
+        alert('게시물이 삭제되었습니다.');
+        window.location.href = '/';
       },
     }
   );

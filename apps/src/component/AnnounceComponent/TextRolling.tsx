@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Slider from "react-slick";
-import styled from "styled-components";
-import { useGetAnnounce } from "../../hooks/announce/useGetAnnounce";
-import CampaignIcon from "/public/announceCompoImages/campaign.svg";
+import Link from 'next/link';
+import Slider from 'react-slick';
+import styled from 'styled-components';
+import { useGetAnnounce } from '../../hooks/announce/useGetAnnounce';
+import CampaignIcon from '/public/announceCompoImages/campaign.svg';
 
 type SlidePropType = {
   txt: string;
@@ -43,7 +43,7 @@ const TextRolling = () => {
 
   return (
     <Slider {...settings}>
-      {data.content &&
+      {data &&
         data.content.map((item: AnnounceDataType) => {
           return (
             <Link href={`/board/공지/${item.id}`} key={item.id}>

@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import PortalWrapper from './Portal';
+import PortalWrapper from '../Portal';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Image from 'next/image';
-import Button from '../Button';
-import { useProcessSlider } from '../../hooks/userPageHooks/useUserChar';
-import useNexonProccessModalState from '../../../store/modal/nexonProcces';
-import { Bottom } from './modalCommonStyle';
+import Button from '../../Button';
+import { useProcessSlider } from '../../../hooks/userPageHooks/useUserChar';
+import useNexonProccessModalState from '../../../../store/modal/nexonProcces';
+import { Bottom } from '../modalCommonStyle';
 
 const NexonApiProcessModal = () => {
   const { close } = useNexonProccessModalState();

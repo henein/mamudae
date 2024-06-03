@@ -6,8 +6,8 @@ import { usePostForm } from '../../../../hooks/detailPageHooks/useCommentForm';
 
 interface ICommentFormProps {
   setIsClick: (arg: boolean) => void;
-  boardId: string;
-  commentId?: string;
+  boardId: number;
+  commentId?: number;
   isRecomment: boolean;
   nickName?: string;
   firstRecomment?: boolean;

@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
 export interface CommentInfo {
-  boardId: string;
+  boardId: number;
   comment: string;
-  commentId: string;
+  commentId: number;
   isMyComment: boolean;
   isRecomment: boolean;
-  replyId?: string;
+  replyId?: number;
   tag?: string;
 }
 
@@ -17,12 +17,12 @@ interface Prop {
 
 const useCommentInfoState = create<Prop>((set) => ({
   commentInfo: {
-    boardId: '',
+    boardId: 0,
     comment: '',
-    commentId: '',
+    commentId: 0,
     isMyComment: false,
     isRecomment: false,
-    replyId: '',
+    replyId: 0,
     tag: '',
   },
   setCommentInfo: (commentInfo) => set(() => ({ commentInfo: commentInfo })),

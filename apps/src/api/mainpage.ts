@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const getBoardList = async () => {
   const res = await axios.get(
@@ -13,4 +13,9 @@ export const getBoard = async (boardName: string) => {
   );
   const apiData = await json.data;
   return apiData;
+};
+
+export const getMainBoardList = async () => {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/board/main`);
+  return res;
 };

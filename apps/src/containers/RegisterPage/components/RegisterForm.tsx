@@ -27,7 +27,7 @@ const RegisterForm = () => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [token, setToken] = useState("");
 
-  const { register, watch, handleSubmit, formState } =
+  const { register, getValues, handleSubmit, formState } =
     useForm<RegisterFormInputs>();
 
   const onSubmit = async (data: FieldValues) => {
@@ -82,7 +82,7 @@ const RegisterForm = () => {
       case "verify":
         if (
           formState.dirtyFields.verifyCode &&
-          watch("verifyCode").length === 6
+          getValues("verifyCode").length === 6
         ) {
           setIsSubmitDisabled(false);
         } else {
@@ -93,7 +93,7 @@ const RegisterForm = () => {
         if (
           formState.dirtyFields.password &&
           formState.dirtyFields.confirmPassword &&
-          watch("password") === watch("confirmPassword")
+          getValues("password") === getValues("confirmPassword")
         ) {
           setIsSubmitDisabled(false);
         } else {
@@ -103,7 +103,7 @@ const RegisterForm = () => {
       default:
         setIsSubmitDisabled(true);
     }
-  }, [currentPhase, formState, watch]);
+  }, [currentPhase, formState, getValues]);
 
   return (
     <>
@@ -132,7 +132,7 @@ const RegisterForm = () => {
             />
             <TextField
               register={register("confirmPassword", {
-                validate: (value) => value === watch("password"),
+                validate: (value) => value === getValues("password"),
               })}
               type="password"
               placeholder="비밀번호 확인"

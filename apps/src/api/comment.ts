@@ -1,16 +1,16 @@
-import axios from "axios";
-import axiosInstance from "./axiosInstance";
+import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface GetComment {
-  boardId: string;
+  boardId: number;
 }
 export interface PComment {
-  boardId: string;
+  boardId: number;
   comment?: string;
-  commentId?: string | null;
+  commentId?: number | null;
 }
 export interface RComment extends PComment {
-  replyId?: string;
+  replyId?: number;
   tag?: string;
 }
 
