@@ -1,33 +1,35 @@
 import { create } from 'zustand';
+import { ComplainType } from '../../src/api/complain';
 
-export type ReportType = 'board' | 'comment' | 'recomment';
 interface Prop {
   reportBoxOnModal: {
-    board: boolean;
-    comment: boolean;
-    recomment: boolean;
+    Board: boolean;
+    Comment: boolean;
+    Reply: boolean;
   };
-  open: (type: ReportType) => void;
+  targetId: number;
+  open: (type: ComplainType, targetId: number) => void;
   close: () => void;
-  getType: () => ReportType;
+  getType: () => ComplainType;
 }
 
 const initState = {
-  board: false,
-  comment: false,
-  recomment: false,
+  Board: false,
+  Comment: false,
+  Reply: false,
 };
 
 const useReportBoxModalState = create<Prop>((set, get) => ({
   reportBoxOnModal: initState,
-  open: (type) =>
-    set(() => ({ reportBoxOnModal: { ...initState, [type]: true } })),
-  close: () => set(() => ({ reportBoxOnModal: { ...initState } })),
+  targetId: 0,
+  open: (type, targetId) =>
+    set(() => ({ reportBoxOnModal: { ...initState, [type]: true }, targetId })),
+  close: () => set(() => ({ reportBoxOnModal: { ...initState }, targetId: 0 })),
   getType: () => {
     const trueKey = Object.entries(get().reportBoxOnModal)
       .filter(([key, value]) => value)
       .map(([key]) => key);
-    return trueKey[0] as ReportType;
+    return trueKey[0] as ComplainType;
   },
 }));
 

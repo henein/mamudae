@@ -37,8 +37,8 @@ const CommentTools = ({ ...props }: CommentToolsType) => {
             <Report
               onClick={() => {
                 props.commentInfo.isRecomment
-                  ? openReport('recomment')
-                  : openReport('comment');
+                  ? openReport('Reply', props.commentInfo.replyId)
+                  : openReport('Comment', props.commentInfo.commentId);
               }}
             >
               신고하기

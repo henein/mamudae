@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import useReportBoxModalState from '../../../../store/modal/reportBox';
+import { ComplainReasonType, ComplainType } from '../../../api/complain';
+import { usePostComplain } from '../../../hooks/detailPageHooks/useComplain';
 import Button from '../../Button';
 import { Bottom, Container, Content } from '../modalCommonStyle';
 import PortalWrapper from '../Portal';
 
-const ReportBox = ({ type }: { type: 'board' | 'comment' | 'recomment' }) => {
+interface Props {
+  type: ComplainType;
+  targetId: number;
+}
+const ReportBox = ({ type, targetId }: Props) => {
+  const [complainReason, setComplainReason] =
+    useState<ComplainReasonType>('abuse');
+  const [text, setText] = useState<string>('');
   const { close } = useReportBoxModalState();
-  const [optionNum, setOptionNum] = useState<number>(1);
+  const { mutate } = usePostComplain(type, targetId);
 
   return (
     <PortalWrapper>
@@ -16,43 +25,51 @@ const ReportBox = ({ type }: { type: 'board' | 'comment' | 'recomment' }) => {
           <Header>신고</Header>
           <ButtonList>
             <StyledButton
-              onClick={() => setOptionNum(1)}
-              isSelect={optionNum == 1}
+              onClick={() => setComplainReason('abuse')}
+              isSelect={complainReason == 'abuse'}
             >
               욕설/비방
             </StyledButton>
             <StyledButton
-              onClick={() => setOptionNum(2)}
-              isSelect={optionNum == 2}
+              onClick={() => setComplainReason('advertisement')}
+              isSelect={complainReason == 'advertisement'}
             >
               광고/도배
             </StyledButton>
             <StyledButton
-              onClick={() => setOptionNum(3)}
-              isSelect={optionNum == 3}
+              onClick={() => setComplainReason('obscene')}
+              isSelect={complainReason == 'obscene'}
             >
               음란물
             </StyledButton>
             <StyledButton
-              onClick={() => setOptionNum(4)}
-              isSelect={optionNum == 4}
+              onClick={() => setComplainReason('IllegalFilm')}
+              isSelect={complainReason == 'IllegalFilm'}
             >
               불법촬영물
             </StyledButton>
             <StyledButton
-              onClick={() => setOptionNum(5)}
-              isSelect={optionNum == 5}
+              onClick={() => setComplainReason('another')}
+              isSelect={complainReason == 'another'}
             >
               기타
             </StyledButton>
           </ButtonList>
-          <TextArea placeholder="간단한 사유를 입력해주세요."></TextArea>
+          <TextArea
+            placeholder="간단한 사유를 입력해주세요."
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+          />
         </Content>
         <Bottom>
           <Button type="button" sort="secondary" onClick={close}>
             취소
           </Button>
-          <Button type="submit" sort="danger" onClick={() => {}}>
+          <Button
+            type="submit"
+            sort="danger"
+            onClick={() => mutate({ complainReason, text })}
+          >
             제출하기
           </Button>
         </Bottom>

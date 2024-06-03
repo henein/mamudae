@@ -14,7 +14,11 @@ const OptionBox = ({ ...props }) => {
 
   const { getType: getBoardWarningType, open: warningOpen } =
     useBoardWarningModalState();
-  const { getType: getReportType, open: reportOpen } = useReportBoxModalState();
+  const {
+    getType: getReportType,
+    open: reportOpen,
+    targetId,
+  } = useReportBoxModalState();
   const { getType: getCommentWarningType } = useCommentWarningModalState();
 
   const warningType = getBoardWarningType();
@@ -46,7 +50,7 @@ const OptionBox = ({ ...props }) => {
           <Button
             type="button"
             sort="danger"
-            onClick={() => reportOpen('board')}
+            onClick={() => reportOpen('Board', boardId)}
           >
             신고하기
           </Button>
@@ -55,7 +59,7 @@ const OptionBox = ({ ...props }) => {
       {warningType && (
         <BoardWarningModal type={warningType} boardId={boardId} />
       )}
-      {reportType && <ReportBox type={reportType} />}
+      {reportType && <ReportBox type={reportType} targetId={targetId} />}
       {commentWarningType && <CommentWarningModal type={commentWarningType} />}
     </Container>
   );
