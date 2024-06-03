@@ -6,12 +6,12 @@ export interface GetComment {
 }
 export interface PComment {
   boardId: number;
-  comment?: number;
+  comment?: string;
   commentId?: number | null;
 }
 export interface RComment extends PComment {
   replyId?: number;
-  tag?: number;
+  tag?: string;
 }
 
 // 댓글 조회
