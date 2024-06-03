@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import useBoardWarningModalState from '../../../store/modal/boardWarning';
-import { useBoardDelete } from '../../hooks/detailPageHooks/useDetail';
-import Button from '../Button';
+import useBoardWarningModalState from '../../../../store/modal/boardWarning';
+import { useBoardDelete } from '../../../hooks/detailPageHooks/useDetail';
+import Button from '../../Button';
 import {
   Bottom,
   Container,
   Content,
   Phrases,
   WarningIconWrapper,
-} from './modalCommonStyle';
-import PortalWrapper from './Portal';
+} from '../modalCommonStyle';
+import PortalWrapper from '../Portal';
 import WarningIcon from '/public/detailPageImages/warning.svg';
 
 interface Props {
