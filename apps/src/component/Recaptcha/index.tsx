@@ -1,28 +1,26 @@
-import { useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useRecaptchaAuth } from "../../hooks/localLogin/useRecaptchaAuth";
+import ReCAPTCHA from 'react-google-recaptcha';
+import useRecaptchaTokenStore from '../../../store/recaptchaTokenSlice/token';
 
-interface RecaptchaFormProps {
-  ref?: any;
-  size?: "invisible" | undefined;
-  siteKey: string;
-  onChange: any;
-}
 const ReCAPTCHAForm = ({ ...props }) => {
-  const { recaptchaValidate, isSuccess } = useRecaptchaAuth(props.successFn);
-
-  useEffect(() => {
-    props.setIsSuccess(isSuccess);
-  }, [isSuccess]);
+  const { setCaptchaToken, setFail, setSuccess, initToken } =
+    useRecaptchaTokenStore();
 
   return (
     <ReCAPTCHA
       sitekey="6LcLDn0pAAAAAK0ek_YMXkkr2ifpoY6j7vg1BfKM"
       onExpired={() => {
-        props.setIsSuccess(false);
         props.setOnCaptcha(false);
+        setFail();
       }}
-      onChange={(token) => token && recaptchaValidate(token)}
+      onChange={(token) => {
+        if (token) {
+          setCaptchaToken(token);
+          setSuccess();
+        } else {
+          initToken();
+          setFail();
+        }
+      }}
     />
   );
 };

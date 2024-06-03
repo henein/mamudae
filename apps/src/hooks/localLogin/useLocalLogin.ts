@@ -13,13 +13,14 @@ export interface UseLocalLoginProps extends LocalLoginProps {
 export const useLocalLogin = ({
   email: userEmail,
   password,
+  captchaValue: token,
   options,
 }: UseLocalLoginProps) => {
   const { setLocalStorage } = useLocalStorage();
   const router = useRouter();
   const { mutate } = useMutation(
     ['getLocalLogin'],
-    () => postLocalLogin({ password, email: userEmail }),
+    () => postLocalLogin({ password, email: userEmail, captchaValue: token }),
     {
       ...options,
       onSuccess: (data) => {

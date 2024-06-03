@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import styled from "styled-components";
-import Button from "../../../component/Button";
-import { LocalLoginProps } from "../../../api/localLogin";
-import { useLocalLogin } from "../../../hooks/localLogin/useLocalLogin";
-import { TextField } from "../../../component/TextField";
-import KakaoBtn from "../../../component/KakaoBtn";
-import CaptchaBtn from "../../../component/Recaptcha";
+import React, { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import Button from '../../../component/Button';
+import { LocalLoginProps } from '../../../api/localLogin';
+import { useLocalLogin } from '../../../hooks/localLogin/useLocalLogin';
+import { TextField } from '../../../component/TextField';
+import KakaoBtn from '../../../component/KakaoBtn';
+import CaptchaBtn from '../../../component/Recaptcha';
+import useRecaptchaTokenStore from '../../../../store/recaptchaTokenSlice/token';
 
 const LoginForm = () => {
   const [onCaptcha, setOnCaptcha] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
+  const { token, isSuccess } = useRecaptchaTokenStore();
   const { register, handleSubmit } = useForm();
   const [localLoginForm, setLocalLoginForm] = useState<LocalLoginProps>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
+    captchaValue: '',
   });
   const { mutate } = useLocalLogin(localLoginForm);
 
@@ -23,6 +24,7 @@ const LoginForm = () => {
     await setLocalLoginForm({
       email: data.email,
       password: data.password,
+      captchaValue: token,
     });
     await mutate();
   };
@@ -31,42 +33,38 @@ const LoginForm = () => {
     <Container onSubmit={handleSubmit(submit)}>
       <Title>로그인</Title>
       <TextField
-        register={register("email")}
+        register={register('email')}
         type="email"
         placeholder="이메일"
       />
       <TextField
-        register={register("password")}
+        register={register('password')}
         type="password"
         placeholder="비밀번호"
       />
-      {onCaptcha && (
-        <CaptchaBtn setOnCaptcha={setOnCaptcha} setIsSuccess={setIsSuccess} />
-      )}
+      {onCaptcha && <CaptchaBtn setOnCaptcha={setOnCaptcha} />}
+      <Button
+        type="button"
+        sort="primary"
+        width="100%"
+        fontWeight="700"
+        disabled={isSuccess}
+        onClick={() => {
+          setOnCaptcha(true);
+        }}
+      >
+        리캡차 인증
+      </Button>
 
-      {isSuccess ? (
-        <Button
-          type="submit"
-          sort="primary"
-          width="100%"
-          fontWeight="700"
-          disabled={!isSuccess}
-        >
-          로그인
-        </Button>
-      ) : (
-        <Button
-          type="button"
-          sort="primary"
-          width="100%"
-          fontWeight="700"
-          onClick={() => {
-            setOnCaptcha(true);
-          }}
-        >
-          로그인
-        </Button>
-      )}
+      <Button
+        type="submit"
+        sort="primary"
+        width="100%"
+        fontWeight="700"
+        disabled={!isSuccess}
+      >
+        로그인
+      </Button>
 
       <Lines>
         <Line />
