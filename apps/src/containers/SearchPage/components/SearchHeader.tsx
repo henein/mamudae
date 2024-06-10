@@ -8,17 +8,19 @@ const SearchHeader = () => {
   const [type, setType] = useState('ALL');
   return (
     <Container>
-      <SelectBoard onChange={(e) => setType(e.target.value)}>
-        <option value="ALL">전체</option>
-        {data &&
-          data.data.map((item: string) => {
-            return (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            );
-          })}
-      </SelectBoard>
+      <SelectBox>
+        <SelectBoard onChange={(e) => setType(e.target.value)}>
+          <option value="ALL">전체</option>
+          {data &&
+            data.data.map((item: string) => {
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
+            })}
+        </SelectBoard>
+      </SelectBox>
       <SearchBox type={type} />
     </Container>
   );
@@ -30,17 +32,20 @@ const Container = styled.div`
   display: flex;
   gap: 8px;
 `;
-
-const SelectBoard = styled.select`
-  width: 69px;
+const SelectBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 42px;
   border: 1px solid ${({ theme }) => theme.border};
-  background-color: white;
+  border-radius: 8px;
+  padding: 0px 11px;
+  background-color: ${({ theme }) => theme.input};
+`;
+const SelectBoard = styled.select`
+  background-color: transparent;
   outline: none;
   color: ${({ theme }) => theme.text};
   font-size: 14px;
-  border-radius: 8px;
-  ::after {
-    display: none;
-  }
+  border: none;
 `;
