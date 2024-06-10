@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import LoginForm from "./components/Login";
-import { Logo } from "../../component/Logo";
-import Link from "next/link";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import LoginForm from './components/Login';
+import { Logo } from '../../component/Logo';
+import Link from 'next/link';
 
 const LoginPage = () => {
   return (
@@ -42,7 +42,7 @@ const LeftBtn = styled.p`
   color: ${(prop) => prop.theme.subText};
 `;
 
-const RightBtn = styled.a`
+const RightBtn = styled.button`
   font-size: 12px;
   color: ${({ theme }) => theme.brand};
   font-weight: 900;
