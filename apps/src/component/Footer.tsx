@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Footer = () => {
   return (
@@ -21,7 +21,7 @@ const Bottom = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 24px;
-  width: 100%;
+  min-width: 1140px;
 `;
 const InlineBox = styled.div`
   display: flex;
