@@ -1,68 +1,35 @@
-import { useMutation, useQuery } from 'react-query';
-import {
-  LocalLoginProps,
-  postLocalLogin,
-  postLocalRegister,
-} from '../../api/localLogin';
+import { useMutation } from 'react-query';
+import { LocalLoginProps, postLocalLogin } from '../../api/localLogin';
 import { useLocalStorage } from '../storage/useLocalStorage';
 import { useRouter } from 'next/navigation';
+import useRecaptchaTokenStore from '../../../store/recaptchaTokenSlice/token';
 
 export interface UseLocalLoginProps extends LocalLoginProps {
   options?: any;
 }
-export const useLocalLogin = ({
-  email: userEmail,
-  password,
-  captchaValue: token,
-  options,
-}: UseLocalLoginProps) => {
-  const { setLocalStorage } = useLocalStorage();
+export const useLocalLogin = () => {
   const router = useRouter();
+
+  const { setLocalStorage } = useLocalStorage();
+  const { initToken, close } = useRecaptchaTokenStore();
+
   const { mutate } = useMutation(
     ['getLocalLogin'],
-    () => postLocalLogin({ password, email: userEmail, captchaValue: token }),
+    ({ email: userEmail, password, captchaValue: token }: UseLocalLoginProps) =>
+      postLocalLogin({ password, email: userEmail, captchaValue: token }),
     {
-      ...options,
       onSuccess: (data) => {
         setLocalStorage('access', data['authorization']);
         setLocalStorage('refresh', data['refreshtoken']);
         router.push('/');
       },
       onError: (err: any) => {
-        alert(err.response.data.error);
+        initToken();
+        close();
+        alert(err.response.data.errorMessage);
       },
     }
   );
 
   return { mutate };
 };
-
-// export const useLocalSignUp = ({
-//   email,
-//   password,
-//   options,
-// }: UseLocalLoginProps) => {
-//   const { setLocalStorage } = useLocalStorage();
-//   const router = useRouter();
-//   const { mutate } = useMutation(
-//     ['postLocalLogin'],
-//     () => postLocalRegister({ email, password }),
-//     {
-//       ...options,
-//       onSuccess: (data) => {
-//         console.log(data);
-//         setLocalStorage('access', data['authorization']);
-//         setLocalStorage('refresh', data['refreshtoken']);
-//         // data["status"]
-//         //   ? // 첫 로그인일 시
-//         //     router.push("/register")
-//         //   : // 첫 로그인이 아닐 시
-//         router.push('/');
-//       },
-//       onError: (err: any) => {
-//         alert(err.response.data.error);
-//       },
-//     }
-//   );
-//   return { mutate };
-// };

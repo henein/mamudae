@@ -2,20 +2,20 @@ import { create } from 'zustand';
 
 interface Prop {
   token: string;
-  isSuccess: boolean;
+  onCaptchaModal: boolean;
   setCaptchaToken: (token: string) => void;
   initToken: () => void;
-  setSuccess: () => void;
-  setFail: () => void;
+  open: () => void;
+  close: () => void;
 }
 
 const useRecaptchaTokenStore = create<Prop>((set) => ({
   token: '',
-  isSuccess: false,
+  onCaptchaModal: false,
   setCaptchaToken: (token: string) => set(() => ({ token: token })),
   initToken: () => set(() => ({ token: '' })),
-  setSuccess: () => set(() => ({ isSuccess: true })),
-  setFail: () => set(() => ({ isSuccess: false })),
+  open: () => set(() => ({ onCaptchaModal: true })),
+  close: () => set(() => ({ onCaptchaModal: false })),
 }));
 
 export default useRecaptchaTokenStore;
