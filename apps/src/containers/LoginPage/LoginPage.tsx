@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import LoginForm from './components/Login';
 import { Logo } from '../../component/Logo';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import useUserInfoStore from '../../../store/userInfo';
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const { userInfo } = useUserInfoStore();
+  useEffect(() => {
+    if (userInfo.userName && userInfo.userRole)
+      router.push({
+        pathname: `/`,
+      });
+  }, [userInfo]);
+
   return (
     <Container>
-      <Logo />
-      <LoginForm />
-      <SignUpContents>
-        <LeftBtn>아직 계정이 없으신가요?</LeftBtn>
-        <Link href="/register">
-          <RightBtn>회원가입</RightBtn>
-        </Link>
-      </SignUpContents>
+      {!userInfo.userName && (
+        <>
+          <Logo />
+          <LoginForm />
+          <SignUpContents>
+            <LeftBtn>아직 계정이 없으신가요?</LeftBtn>
+            <Link href="/register">
+              <RightBtn>회원가입</RightBtn>
+            </Link>
+          </SignUpContents>
+        </>
+      )}
     </Container>
   );
 };
