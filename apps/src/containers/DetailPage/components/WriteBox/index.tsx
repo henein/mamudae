@@ -47,7 +47,6 @@ const Container = styled.div`
   border: 1px solid ${(prop) => prop.theme.border};
   display: flex;
   flex-direction: column;
-  width: 808px;
 `;
 const Wrapper = styled.div`
   display: flex;

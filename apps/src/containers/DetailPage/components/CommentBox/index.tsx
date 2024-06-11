@@ -60,7 +60,7 @@ const Container = styled.div`
   flex-direction: column;
   margin-top: 32px;
   background-color: ${(prop) => prop.theme.card};
-  width: 808px;
+  width: 100%;
   border-radius: 16px;
   border: 1px solid ${(prop) => prop.theme.border};
 `;
