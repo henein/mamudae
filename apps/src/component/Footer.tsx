@@ -3,37 +3,40 @@ import styled from 'styled-components';
 
 const Footer = () => {
   return (
-    <Bottom>
-      <InlineBox>
-        <Title>Henein</Title>
-        <CopyRight>© Gamza. All rights reserved</CopyRight>
-      </InlineBox>
-    </Bottom>
+    <Container>
+      <Wrapper>
+        <InlineBox>
+          <Title>Henein</Title>
+          <CopyRight>© Gamza. All rights reserved</CopyRight>
+        </InlineBox>
+      </Wrapper>
+    </Container>
   );
 };
 
 export default Footer;
 
-const Bottom = styled.div`
+const Container = styled.div`
   background-color: ${({ theme }) => theme.footerBackground};
   height: 144px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: 24px;
-  min-width: 1140px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+const Wrapper = styled.div`
+  width: 100%;
 `;
 const InlineBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 1140px;
+  max-width: 1140px;
+  margin: 0px auto;
 `;
 const Title = styled.h1`
   color: ${({ theme }) => theme.footerText};
   font-size: 24px;
   font-weight: 900;
   line-height: 29.05px;
-  margin-bottom: 4px;
+  max-width: 1140px;
 `;
 const CopyRight = styled.span`
   color: ${({ theme }) => theme.footerSubText};

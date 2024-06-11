@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import Content from '../components/Content';
 import ContentHeader from '../components/ContentHeader';
-import { useGetMyProfile } from '../../../hooks/userPageHooks/useUserProfile';
+import { useGetUserProfile } from '../../../hooks/userPageHooks/useUserProfile';
 
 const UserPageContent = ({ ...props }) => {
-  const { data } = useGetMyProfile();
+  const { data } = useGetUserProfile(props.nickname);
+  console.log(props.nickname);
   console.log(data);
   return (
     <Container>
@@ -28,9 +29,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  height: 100%;
+  width: 100%;
 `;
 const BoardContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 808px;
+  width: 100%;
+  height: 100%;
 `;

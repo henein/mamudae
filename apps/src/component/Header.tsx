@@ -63,7 +63,6 @@ const Container = styled.header<{ isScrollDown: boolean; stickyTop: boolean }>`
   transform: ${({ isScrollDown }) =>
     isScrollDown ? 'translateY(-73px)' : 'none'};
   transition: transform 0.2s ease-in-out;
-  min-width: 1140px;
 `;
 const Background = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
   display: flex;
@@ -74,6 +73,8 @@ const Background = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
     stickyTop ? `1px solid ${theme.border}` : 'none'};
   box-shadow: ${({ stickyTop, theme }) =>
     stickyTop && `0px 4px 8px ${theme.boxShadow}`};
+  max-width: 1140px;
+  margin: 0px auto;
 `;
 const LeftDiv = styled.div`
   display: flex;
@@ -90,7 +91,7 @@ const TitleBox = styled.div<{ stickyTop: boolean }>`
   justify-content: space-between;
   align-items: ${({ stickyTop }) => (stickyTop ? 'center' : 'flex-end')};
   height: ${({ stickyTop }) => (stickyTop ? '72px' : '64px')};
-  width: 1140px;
+  width: 100%;
   margin: 0 auto;
   background-color: ${({ stickyTop, theme }) =>
     stickyTop ? theme.card : 'none'};

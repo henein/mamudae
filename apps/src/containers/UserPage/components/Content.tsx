@@ -10,24 +10,23 @@ import Character from './Character';
 const Content = ({ ...props }) => {
   const { option } = useOptionSelectStore();
 
-  const { data: myBoards, refetch: refetchMyBoards } = useGetMyBoard({
+  const { data: myBoards } = useGetMyBoard({
     nickname: props.nickname,
     page: props.page,
     options: {
       refetchOnWindowFocus: false,
     },
   });
-  const { data: myCommentBoards, refetch: refetchMyCommentBoards } =
-    useGetMyCommentBoard({
-      nickname: props.nickname,
-      page: props.page,
-      options: {
-        refetchOnWindowFocus: false,
-      },
-    });
+  const { data: myCommentBoards } = useGetMyCommentBoard({
+    nickname: props.nickname,
+    page: props.page,
+    options: {
+      refetchOnWindowFocus: false,
+    },
+  });
 
   return (
-    <div>
+    <>
       {option == 0 ? (
         <MyList data={myBoards} />
       ) : option == 1 ? (
@@ -35,7 +34,7 @@ const Content = ({ ...props }) => {
       ) : (
         <Character uid={props.uid} />
       )}
-    </div>
+    </>
   );
 };
 
