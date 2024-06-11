@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useOptionSelectStore from '../../../../store/option/headerOption';
 import {
   useGetMyBoard,
@@ -25,11 +25,6 @@ const Content = ({ ...props }) => {
         refetchOnWindowFocus: false,
       },
     });
-
-  useEffect(() => {
-    refetchMyBoards();
-    refetchMyCommentBoards();
-  }, [option]);
 
   return (
     <div>

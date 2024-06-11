@@ -1,7 +1,7 @@
 import { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { QueryClient, dehydrate } from 'react-query';
 import { announce } from '../../api/announce';
-import { getMyBoard } from '../../api/userInfo';
+import { getMyBoard, getMyCommentBoard } from '../../api/userInfo';
 import UserPage from '../../containers/UserPage';
 
 const User = (
@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       getMyBoard(nickname, 1)
     );
     await queryClient.fetchQuery(['myCommentBoards', nickname], () =>
-      getMyBoard(nickname, 1)
+      getMyCommentBoard(nickname, 1)
     );
   } catch (err: any) {
     if (err.response.data.code === 404) {
