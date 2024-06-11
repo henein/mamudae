@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import BoardTitle from './components/BoardTitle';
 import UserPostList from '../../component/UserPostList';
 import MoreInfoBox from '../../component/MoreInfoBox';
-import Announcement from '../../component/AnnounceComponent/Announcement';
 import Login from '../../component/LoginComponent/Login';
 import Button from '../../component/Button';
 import { useRouter } from 'next/router';
@@ -19,7 +18,6 @@ const PostPage = () => {
   );
   return (
     <Layout>
-      <Announcement />
       <PostPageSet>
         <Aside>
           <Aside>
@@ -50,12 +48,14 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 1140px;
-  margin: 0 auto;
+  width: 100%;
   box-sizing: border-box;
+  max-width: 1140px;
+  margin: 0px auto;
 `;
 const PostPageSet = styled.div`
   display: flex;
+  width: 100%;
   gap: 32px;
 `;
 export const BoardContent = styled.div`
@@ -64,10 +64,10 @@ export const BoardContent = styled.div`
   justify-content: space-between;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 16px;
-  width: 808px;
   box-sizing: border-box;
   z-index: 0.5;
   background-color: ${({ theme }) => theme.card};
+  width: 100%;
 `;
 const ContentSet = styled.div`
   display: flex;
