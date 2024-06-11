@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import Button from "../Button";
-import { useUserInfo } from "../../hooks/user/useUserInfo";
-import CompleteLogin from "./CompleteLogin";
-import { useDispatch } from "react-redux";
-import { saveUserInfo } from "../../../store/userInfoSlice/userInfo";
-import LoadingSpinner from "../LoadingSpinner";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import Button from '../Button';
+import { useUserInfo } from '../../hooks/user/useUserInfo';
+import CompleteLogin from './CompleteLogin';
+import LoadingSpinner from '../LoadingSpinner';
+import useUserInfoStore from '../../../store/userInfo';
 
 const Login = () => {
   const { data, isLoading } = useUserInfo({
@@ -15,15 +14,12 @@ const Login = () => {
       retry: 0,
     },
   });
+  const { setUserInfo, init } = useUserInfoStore();
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    if (data) {
-      dispatch(
-        saveUserInfo({ userName: data.userName, userRole: data.userRole })
-      );
-    }
-  }, [data, dispatch]);
+    if (data) setUserInfo({ userName: data.userName, userRole: data.userRole });
+    else init();
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -32,6 +28,7 @@ const Login = () => {
       </LoginContainer>
     );
   }
+
   return (
     <>
       {data ? (

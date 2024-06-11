@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import timeDifference from '../utils/timeDifference';
@@ -121,7 +120,7 @@ const PostItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 760px;
+  max-width: 760px;
   min-height: 36px;
   gap: 10px;
 `;

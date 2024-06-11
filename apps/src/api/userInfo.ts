@@ -8,9 +8,9 @@ export const userInfo = async (accessToken: string | undefined) => {
   }
 };
 
-// 유저(본인) Profile 조회
-export const getProfile = async () => {
-  const res = await axiosInstance.get('/userinfo/profile');
+// 유저 Profile 조회
+export const getUserProfile = async (nickname: string) => {
+  const res = await axiosInstance.get(`/userinfo/profile`);
   return res;
 };
 

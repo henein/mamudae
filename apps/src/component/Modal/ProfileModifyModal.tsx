@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useProfileModifyModalState from '../../../store/modal/profileModify';
 import {
-  useGetMyProfile,
+  useGetUserProfile,
   useSetProfileModifyData,
   useProfileModifyMutation,
 } from '../../hooks/userPageHooks/useUserProfile';
@@ -12,7 +12,7 @@ import PortalWrapper from './Portal';
 
 const ProfileModifyModal = () => {
   const { close } = useProfileModifyModalState();
-  const { data } = useGetMyProfile();
+  const { data } = useGetUserProfile('');
 
   const { userForm, src, isDisabled, handleImageUpload, setNickname } =
     useSetProfileModifyData();

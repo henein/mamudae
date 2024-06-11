@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import useProfileModifyModalState from '../../../store/modal/profileModify';
-import { getProfile, setUserProfile } from '../../api/userInfo';
+import { getUserProfile, setUserProfile } from '../../api/userInfo';
 
-export const useGetMyProfile = () => {
-  const { data } = useQuery('myProfile', () => getProfile(), {
+export const useGetUserProfile = (nickname: string) => {
+  const { data } = useQuery('userProfile', () => getUserProfile('동균'), {
     refetchOnWindowFocus: false,
   });
   return { ...data };
@@ -28,7 +28,7 @@ export const useProfileModifyMutation = ({ forms, options }: ISetUserInfo) => {
     ...options,
     onSuccess: () => {
       alert('프로필 변경이 완료되었습니다.');
-      quertClient.refetchQueries('myProfile');
+      quertClient.refetchQueries('userProfile');
       quertClient.refetchQueries('userInfo');
       close();
       router.push(`/user/${forms.userName}`);

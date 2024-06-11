@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Announcement from '../../component/AnnounceComponent/Announcement';
 import Login from '../../component/LoginComponent/Login';
 import { useDetail } from '../../hooks/detailPageHooks/useDetail';
 import CommentBox from './components/CommentBox';
@@ -32,15 +31,14 @@ const DetailPage = () => {
 
   return (
     <Container>
-      <Announcement />
       <SideBox>
         <Login />
       </SideBox>
-      <div>
+      <RightWrapper>
         <WriteBox data={data} boardId={boardId} />
         <OptionBox data={data} boardId={boardId} />
         <CommentBox data={data} boardId={boardId} />
-      </div>
+      </RightWrapper>
     </Container>
   );
 };
@@ -53,9 +51,15 @@ const SideBox = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 0 auto;
-  width: 1140px;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0px auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 32px;
+`;
+
+const RightWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;

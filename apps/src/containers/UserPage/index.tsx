@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Announcement from '../../component/AnnounceComponent/Announcement';
 import Login from '../../component/LoginComponent/Login';
 import UserPageContent from './components/UserPageContent';
 
 const UserPage = ({ ...props }) => {
   return (
     <Layout>
-      <Announcement />
       <Container>
         <Aside>
           <Login />
@@ -22,14 +20,17 @@ export default UserPage;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  width: 1140px;
   margin: 0 auto;
   box-sizing: border-box;
+  width: 100%;
 `;
 const Container = styled.div`
   display: flex;
   gap: 32px;
+  height: 100%;
+  margin: 0px auto;
+  width: 100%;
+  max-width: 1140px;
 `;
 
 const Aside = styled.aside`

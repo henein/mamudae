@@ -1,14 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import Announcement from "../../component/AnnounceComponent/Announcement";
-import Login from "../../component/LoginComponent/Login";
-import SearchHeader from "./components/SearchHeader";
-import SearchContent from "./components/SearchContent";
+import React from 'react';
+import styled from 'styled-components';
+import Login from '../../component/LoginComponent/Login';
+import SearchHeader from './components/SearchHeader';
+import SearchContent from './components/SearchContent';
 
 const SearchPage = ({ ...props }) => {
   return (
     <Layout>
-      <Announcement />
       <SearchPageSet>
         <Aside>
           <Login />
@@ -31,18 +29,22 @@ export default SearchPage;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1140px;
+  width: 100%;
   margin: 0 auto;
 `;
 const SearchPageSet = styled.div`
   display: flex;
   gap: 32px;
+  justify-content: center;
+  height: 100%;
 `;
 const InnerContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 808px;
+  width: 100%;
+  max-width: 808px;
   gap: 24px;
+  height: 100%;
 `;
 const Aside = styled.aside`
   display: flex;

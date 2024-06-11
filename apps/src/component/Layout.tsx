@@ -7,6 +7,7 @@ import GlobalStyles from '../../styles/GlobalStyles';
 import { ScrollProvider } from './ScrollProvider';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import Announcement from './AnnounceComponent/Announcement';
 const Layout = ({ children }: React.PropsWithChildren) => {
   const darkModeState = useSelector(
     (state: RootState) => state.darkMode.isDarkMode
@@ -18,10 +19,9 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <GlobalStyles />
         <div id="modal-root" />
         <PageDiv>
-          <div>
-            <Header />
-            {children}
-          </div>
+          <Header />
+          <Announcement />
+          <PageWrapper>{children}</PageWrapper>
           <Footer />
         </PageDiv>
       </ScrollProvider>
@@ -34,6 +34,9 @@ export default Layout;
 const PageDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   min-height: 100vh;
+`;
+const PageWrapper = styled.div`
+  flex: 1;
+  display: flex;
 `;

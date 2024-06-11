@@ -9,7 +9,7 @@ const PortalWrapper = ({ children }: { children: ReactElement }) => {
 
 export default PortalWrapper;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;

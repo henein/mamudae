@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import Label from '../Label';
 import { useLocalStorage } from '../../hooks/storage/useLocalStorage';
 import Link from 'next/link';
+import useUserInfoStore from '../../../store/userInfo';
 
 const CompleteLogin = ({ ...data }: any) => {
   const { removeLocalStorage } = useLocalStorage();
+
+  const { init } = useUserInfoStore();
   const logout = () => {
     removeLocalStorage('access');
     removeLocalStorage('refresh');
+    init();
     window.location.reload();
   };
 

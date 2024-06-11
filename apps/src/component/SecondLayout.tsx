@@ -1,9 +1,9 @@
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { lightMode, darkMode } from "../constants/DefaultTheme";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import GlobalStyles from "../../styles/GlobalStyles";
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { lightMode, darkMode } from '../constants/DefaultTheme';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import GlobalStyles from '../../styles/GlobalStyles';
 
 const SecondLayout = ({ children }: React.PropsWithChildren) => {
   const isDarkMode = useSelector(
@@ -15,6 +15,7 @@ const SecondLayout = ({ children }: React.PropsWithChildren) => {
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
+        <div id="captcha-portal" />
         {children}
       </ThemeProvider>
     </>
