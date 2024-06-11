@@ -13,7 +13,7 @@ const SearchContent = ({ type, value, page }: any) => {
       {isLoading ? (
         <LoadingSpinner width={30} height={30} borderWidth={3} />
       ) : (
-        <>
+        <div>
           <Title>
             {searchData.totalElements ? (
               <span>
@@ -42,7 +42,7 @@ const SearchContent = ({ type, value, page }: any) => {
                 }
               })}
           </SearchList>
-        </>
+        </div>
       )}
       <Pagenate data={searchData} />
     </Container>
@@ -55,6 +55,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  height: 100%;
+  justify-content: space-between;
 `;
 const Title = styled.h1`
   color: ${({ theme }) => theme.text};
