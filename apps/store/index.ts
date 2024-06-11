@@ -1,6 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import darkModeReducer from './darkmodeSlice/darkmode';
-import userInfoReducer from './userInfoSlice/userInfo';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -12,7 +11,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   darkMode: darkModeReducer,
-  userInfo: userInfoReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
