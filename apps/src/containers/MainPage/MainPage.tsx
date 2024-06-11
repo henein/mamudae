@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Announcement from '../../component/AnnounceComponent/Announcement';
 import Login from '../../component/LoginComponent/Login';
 import Board from './components/Board';
 import { useGetMainBoardList } from '../../hooks/board/useGetBoard';
@@ -21,7 +20,6 @@ const MainPage = () => {
 
   return (
     <Layout>
-      <Announcement />
       <MainPageSet>
         <Aside>
           <Login />
@@ -58,23 +56,20 @@ export default MainPage;
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1140px;
   margin: 0 auto;
+  width: 100%;
 `;
 const MainPageSet = styled.div`
   display: flex;
+  justify-content: center;
   gap: 32px;
+  width: 100%;
 `;
 const BoardSet = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 840px;
-  gap: 24px;
-`;
-const SmallBoard = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  width: 100%;
+  max-width: 808px;
   gap: 24px;
 `;
 const Aside = styled.aside`

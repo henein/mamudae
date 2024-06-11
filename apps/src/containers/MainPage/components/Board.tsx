@@ -21,11 +21,16 @@ function Board({ boardTitle, isLarge, list }: Props) {
 export default Board;
 
 const BoardContent = styled.div<{ isLarge?: boolean }>`
+  display: flex;
+  flex-direction: column;
   border: 1px solid ${({ theme }) => theme.border};
   background-color: ${({ theme }) => theme.card};
   border-radius: 16px;
-  width: ${(props) => (props.isLarge ? '816px' : '396px')};
+  max-width: ${(props) => (props.isLarge ? '808px' : '392px')};
   height: 332px;
   box-sizing: border-box;
-  z-index: 0.5;
+  width: 100%;
+  @media screen and (max-width: 1139px) {
+    max-width: 100%;
+  }
 `;

@@ -19,9 +19,11 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <GlobalStyles />
         <div id="modal-root" />
         <PageDiv>
-          <Header />
-          <Announcement />
-          <PageWrapper>{children}</PageWrapper>
+          <div>
+            <Header />
+            <Announcement />
+            <PageWrapper>{children}</PageWrapper>
+          </div>
           <Footer />
         </PageDiv>
       </ScrollProvider>
@@ -35,7 +37,7 @@ const PageDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
 `;
 const PageWrapper = styled.div`
   display: flex;
