@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import timeDifference from '../utils/timeDifference';
 import Visibility from '/public/detailPageImages/visibility.svg';
-import Comment from '/public/detailPageImages/Comment.svg';
+import Comment from '/public/detailPageImages/comment.svg';
 import Favorite from '/public/detailPageImages/favoriteOutline.svg';
 import Image from 'next/image';
 
