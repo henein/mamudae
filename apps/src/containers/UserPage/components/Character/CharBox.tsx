@@ -6,9 +6,8 @@ import {
   useRefreshOneChar,
 } from '../../../../hooks/userPageHooks/useUserChar';
 import LoadingSpinner from '../../../../component/LoadingSpinner';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../store';
 import RefreshIcon from '/public/myPageImages/refresh.svg';
+import useDarkMode from '../../../../hooks/reduxHooks/useDarkMode';
 
 export interface CharInfo {
   avatar: string | null;
@@ -49,9 +48,7 @@ const CharBox = ({
   pickByUser,
   world,
 }: CharInfo) => {
-  const darkModeState = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
+  const { darkModeState } = useDarkMode();
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);

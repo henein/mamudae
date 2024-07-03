@@ -1,17 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import useDarkMode from '../hooks/reduxHooks/useDarkMode';
 
 interface LogoProps {
   size?: 'small' | 'large';
 }
 
 export const Logo: React.FC<LogoProps> = (props) => {
-  const darkModeState = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
+  const { darkModeState } = useDarkMode();
 
   return (
     <Container>

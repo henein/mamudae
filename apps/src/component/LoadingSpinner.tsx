@@ -1,15 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import React from 'react';
+import styled from 'styled-components';
 
 const LoadingSpinner = ({ ...props }) => {
-  const darkModeState = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
   return (
     <Spinner
-      darkModeState={darkModeState}
       width={props.width}
       height={props.height}
       borderWidth={props.borderWidth}
@@ -20,7 +14,6 @@ const LoadingSpinner = ({ ...props }) => {
 export default LoadingSpinner;
 
 const Spinner = styled.div<{
-  darkModeState: boolean;
   width: number;
   height: number;
   borderWidth: number;
