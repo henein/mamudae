@@ -1,18 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import ChevronRightIcon from "/public/mainPageImages/chevron_right.svg";
-import useDarkMode from "../../../hooks/reduxHooks/useDarkMode";
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import ChevronRightIcon from '/public/mainPageImages/chevron_right.svg';
 
 export type BoardHeadProps = {
   boardTitle: string;
 };
 
 const BoardHead = ({ boardTitle }: BoardHeadProps) => {
-  const darkModeState = useDarkMode();
-
   return (
-    <BoardHeader darkModeState={darkModeState}>
+    <BoardHeader>
       <Link href={`board/${boardTitle}`}>
         <Title>
           {boardTitle}
@@ -26,7 +23,7 @@ const BoardHead = ({ boardTitle }: BoardHeadProps) => {
 };
 export default BoardHead;
 
-const BoardHeader = styled.div<{ darkModeState: boolean }>`
+const BoardHeader = styled.div`
   display: flex;
   align-items: center;
   height: 60px;

@@ -1,16 +1,13 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { lightMode, darkMode } from '../constants/DefaultTheme';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import GlobalStyles from '../../styles/GlobalStyles';
+import useDarkMode from '../hooks/reduxHooks/useDarkMode';
 
 const SecondLayout = ({ children }: React.PropsWithChildren) => {
-  const isDarkMode = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
+  const { darkModeState } = useDarkMode();
 
-  const theme = isDarkMode ? darkMode : lightMode;
+  const theme = darkModeState ? darkMode : lightMode;
   return (
     <>
       <ThemeProvider theme={theme}>

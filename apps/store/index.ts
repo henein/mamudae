@@ -4,9 +4,9 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
-  key: 'root', // localStorage key
-  storage, // localStorage
-  whitelist: ['darkMode'], // target (reducer name)
+  key: 'root',
+  storage,
+  whitelist: ['darkMode'],
 };
 
 const rootReducer = combineReducers({

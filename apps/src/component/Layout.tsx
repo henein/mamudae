@@ -5,13 +5,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import { lightMode, darkMode } from '../constants/DefaultTheme';
 import GlobalStyles from '../../styles/GlobalStyles';
 import { ScrollProvider } from './ScrollProvider';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import Announcement from './AnnounceComponent/Announcement';
+import useDarkMode from '../hooks/reduxHooks/useDarkMode';
 const Layout = ({ children }: React.PropsWithChildren) => {
-  const darkModeState = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
+  const { darkModeState } = useDarkMode();
 
   return (
     <ThemeProvider theme={darkModeState ? darkMode : lightMode}>

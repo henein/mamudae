@@ -1,29 +1,21 @@
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../store';
-import { toggleDarkMode } from '../../store/darkmodeSlice/darkmode';
+import { useDispatch } from 'react-redux';
 import DarkModeIcon from '/public/headerCompoImages/dark_mode.svg';
 import LightModeIcon from '/public/headerCompoImages/light_mode.svg';
 import useScroll from '../hooks/scrollHooks/useScroll';
 import { Logo } from './Logo';
 import SearchBox from './SearchBox';
+import useDarkMode from '../hooks/reduxHooks/useDarkMode';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const darkModeState = useSelector(
-    (state: RootState) => state.darkMode.isDarkMode
-  );
+  const { toggle, darkModeState } = useDarkMode();
   const { isScrollDown, stickyTop } = useScroll();
-
-  const onClick = () => {
-    dispatch(toggleDarkMode());
-  };
 
   return (
     <Container isScrollDown={isScrollDown} stickyTop={stickyTop}>
-      <Background darkModeState={darkModeState} stickyTop={stickyTop}>
+      <Background stickyTop={stickyTop}>
         <TitleBox stickyTop={stickyTop}>
           <LeftDiv>
             <LogoLink href="/">
@@ -39,7 +31,7 @@ const Header = () => {
             </Nav>
           </LeftDiv>
           <RightDiv>
-            <DarkModeBtn onClick={onClick}>
+            <DarkModeBtn onClick={toggle}>
               <LightImg darkModeState={darkModeState}>
                 <LightModeIcon width="20px" height="20px" />
               </LightImg>
@@ -64,7 +56,7 @@ const Container = styled.header<{ isScrollDown: boolean; stickyTop: boolean }>`
     isScrollDown ? 'translateY(-73px)' : 'none'};
   transition: transform 0.2s ease-in-out;
 `;
-const Background = styled.div<{ darkModeState: boolean; stickyTop: boolean }>`
+const Background = styled.div<{ stickyTop: boolean }>`
   display: flex;
   align-items: center;
   background-color: ${({ stickyTop, theme }) =>
