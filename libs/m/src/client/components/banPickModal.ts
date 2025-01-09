@@ -1,4 +1,3 @@
-import { Scrollbox } from 'pixi-scrollbox';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { Job, jobList } from '../../common/jobs';
 import { constants } from '../constants';
@@ -7,28 +6,38 @@ import { Button } from './button';
 import { TextButton } from './textButton';
 import { store } from '../store';
 import { autorun, reaction } from 'mobx';
+import {
+  Container,
+  Graphics,
+  Rectangle,
+  Sprite,
+  Text,
+  TextStyle,
+  Texture,
+} from 'pixi.js';
+import { ScrollBox } from '@pixi/ui';
 
 class PortraitButton extends Button {
   private _isSelected = false;
   job: Job;
   portrait: Portrait;
-  overlay: PIXI.Sprite;
+  overlay: Sprite;
 
   constructor(job: Job) {
     super();
     this.job = job;
     this.portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
-    this.hitArea = new PIXI.Rectangle(0, 0, 128, 128);
+    this.hitArea = new Rectangle(0, 0, 128, 128);
 
     this.overlay = this.addChild(
-      PIXI.Sprite.from('../assets/portraits/overlay.png')
+      Sprite.from('../assets/portraits/overlay.png')
     );
     this.overlay.visible = false;
 
     const name = this.addChild(
-      new PIXI.Text(
+      new Text(
         job.jobName,
-        new PIXI.TextStyle({
+        new TextStyle({
           fontFamily: 'NanumBarunGothic',
           fontSize: 20,
           fill: '#404040',
@@ -54,18 +63,18 @@ class PortraitButton extends Button {
   }
 }
 
-export class BanPickModal extends PIXI.Container {
+export class BanPickModal extends Container {
   private _isVision = false;
-  modal: PIXI.Container;
-  appearTween: Tween<PIXI.Container>;
-  disappearTween: Tween<PIXI.Container>;
+  modal: Container;
+  appearTween: Tween<Container>;
+  disappearTween: Tween<Container>;
   selectedButton?: PortraitButton;
-  toggleButton: PIXI.Sprite;
+  toggleButton: Sprite;
   returnButton: TextButton;
 
   constructor() {
     super();
-    this.modal = this.addChild(new PIXI.Container());
+    this.modal = this.addChild(new Container());
     this.modal.interactiveChildren = false;
 
     this.appearTween = new Tween(this.modal)
@@ -76,27 +85,20 @@ export class BanPickModal extends PIXI.Container {
       .to({ position: { y: 576 + 24 }, alpha: 0 }, 100)
       .easing(Easing.Quartic.Out);
 
-    const graphics = this.modal.addChild(new PIXI.Graphics());
+    const graphics = this.modal.addChild(new Graphics());
     graphics.beginFill(0xffffff, 0.8);
     graphics.drawRoundedRect(0, 0, 928, 752, 64);
     graphics.endFill();
 
-    const scrollbox = this.modal.addChild(
-      new Scrollbox({
-        boxWidth: 928,
-        boxHeight: 576,
-        fade: true,
-        fadeScrollboxWait: 1000,
-        fadeScrollbarTime: 300,
-        scrollbarForegroundAlpha: 0.8,
-        scrollbarBackgroundAlpha: 0,
-        scrollbarOffsetVertical: -16,
-        scrollbarSize: 4,
+    const scrollBox = this.modal.addChild(
+      new ScrollBox({
+        width: 928,
+        height: 576,
       })
     );
-    scrollbox.position.set(0, 48);
+    scrollBox.position.set(0, 48);
 
-    const widthBox = scrollbox.content.addChild(new PIXI.Graphics());
+    const widthBox = scrollBox.addChild(new Graphics());
     widthBox.beginFill(0xffffff, 0);
     widthBox.drawRect(0, 0, 928, 10);
     widthBox.endFill();
@@ -104,7 +106,7 @@ export class BanPickModal extends PIXI.Container {
     const portraitButtonList: PortraitButton[] = [];
 
     for (let i = 0; i < jobList.length; i++) {
-      portraitButtonList[i] = scrollbox.content.addChild(
+      portraitButtonList[i] = scrollBox.addChild(
         new PortraitButton(jobList[i])
       );
       portraitButtonList[i].position.set(
@@ -143,8 +145,6 @@ export class BanPickModal extends PIXI.Container {
       }
     });
 
-    scrollbox.update();
-
     this.returnButton = this.modal.addChild(
       new TextButton({
         title: '선택',
@@ -182,7 +182,7 @@ export class BanPickModal extends PIXI.Container {
     this.modal.alpha = 0;
     this.modal.pivot.set(this.modal.width / 2, this.modal.height / 2);
 
-    this.toggleButton = this.addChild(PIXI.Sprite.from('../assets/ui/up.png'));
+    this.toggleButton = this.addChild(Sprite.from('../assets/ui/up.png'));
     this.toggleButton.position.set(910, 1000);
     this.toggleButton.on('pointerdown', this.onToggle);
 
@@ -200,11 +200,11 @@ export class BanPickModal extends PIXI.Container {
       if (store.jobStore.isModalEnabled) {
         this.toggleButton.alpha = 1;
         this.toggleButton.interactive = true;
-        this.toggleButton.buttonMode = true;
+        // this.toggleButton.buttonMode = true;
       } else {
         this.toggleButton.alpha = 0.3;
         this.toggleButton.interactive = false;
-        this.toggleButton.buttonMode = false;
+        // this.toggleButton.buttonMode = false;
         this.isVision = false;
       }
     });
@@ -229,12 +229,12 @@ export class BanPickModal extends PIXI.Container {
       this.modal.interactiveChildren = true;
       this.disappearTween.stop();
       this.appearTween.start();
-      this.toggleButton.texture = PIXI.Texture.from('../assets/ui/down.png');
+      this.toggleButton.texture = Texture.from('../assets/ui/down.png');
     } else {
       this.modal.interactiveChildren = false;
       this.appearTween.stop();
       this.disappearTween.start();
-      this.toggleButton.texture = PIXI.Texture.from('../assets/ui/up.png');
+      this.toggleButton.texture = Texture.from('../assets/ui/up.png');
     }
   }
 }

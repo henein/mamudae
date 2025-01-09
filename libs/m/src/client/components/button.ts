@@ -1,12 +1,15 @@
-export class Button extends PIXI.Container {
+import { ColorMatrixFilter, Container } from 'pixi.js';
+
+// TODO: buttonMode is deprecated.
+export class Button extends Container {
   private _isDisabled = false;
-  private _filter: PIXI.filters.ColorMatrixFilter;
+  private _filter: ColorMatrixFilter;
 
   constructor() {
     super();
     this.interactive = true;
-    this.buttonMode = true;
-    this._filter = new PIXI.filters.ColorMatrixFilter();
+    // this.buttonMode = true;
+    this._filter = new ColorMatrixFilter();
     this.filters = [this._filter];
 
     this.on('pointerdown', () => {
@@ -41,11 +44,11 @@ export class Button extends PIXI.Container {
     if (value) {
       this._filter.greyscale(0.2, false);
       this.interactive = false;
-      this.buttonMode = false;
+      // this.buttonMode = false;
     } else {
       this._filter.reset();
       this.interactive = true;
-      this.buttonMode = true;
+      // this.buttonMode = true;
     }
   }
 }

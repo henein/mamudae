@@ -1,8 +1,9 @@
 import { autorun } from 'mobx';
 import { store } from '../store';
 import { BanPanel } from './banPanel';
+import { Container } from 'pixi.js';
 
-export class BanViewer extends PIXI.Container {
+export class BanViewer extends Container {
   private _nextPanel?: BanPanel;
   private _size = 64;
 

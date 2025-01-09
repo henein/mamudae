@@ -1,4 +1,5 @@
 export enum JobId {
+  NULL = 0,
   BEGINNER = 1,
   HERO,
   PALADIN,

@@ -20,15 +20,15 @@ export class TextButton extends Button {
       textColor,
     } = option;
 
-    const background = this.addChild(new PIXI.Graphics());
+    const background = this.addChild(new Graphics());
     background.beginFill(backgroundColor);
     background.drawRoundedRect(0, 0, width, height, 64);
     background.endFill();
 
     const text = this.addChild(
-      new PIXI.Text(
+      new Text(
         title,
-        new PIXI.TextStyle({
+        new TextStyle({
           fontFamily: 'MaplestoryOTFLight',
           fontSize: 28,
           fill: textColor,

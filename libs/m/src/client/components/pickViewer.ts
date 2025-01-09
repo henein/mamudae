@@ -2,8 +2,9 @@ import { autorun, reaction } from 'mobx';
 import { IOEvent } from '../../common/events';
 import { store } from '../store';
 import { PickPanel } from './pickPanel';
+import { Container } from 'pixi.js';
 
-export class PickViewer extends PIXI.Container {
+export class PickViewer extends Container {
   private _currentPick?: PickPanel;
 
   constructor() {

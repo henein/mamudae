@@ -11,25 +11,34 @@ import { getJob } from '../../common/jobs';
 import { Splash } from './splash';
 import { JobId } from '../../common/enums';
 import { IOEvent } from '../../common/events';
+import {
+  BlurFilter,
+  ColorMatrixFilter,
+  Container,
+  Sprite,
+  TextStyle,
+  Texture,
+  Text,
+} from 'pixi.js';
 
-export class Camera extends PIXI.Container {
-  private _backgroundContainer: PIXI.Container;
-  private _background: PIXI.Sprite;
-  private _nextBackground: PIXI.Sprite;
-  private _splashContainer: PIXI.Container;
+export class Camera extends Container {
+  private _backgroundContainer: Container;
+  private _background: Sprite;
+  private _nextBackground: Sprite;
+  private _splashContainer: Container;
   private _mainSplash?: Splash;
   private _leftSplash: Splash;
   private _rightSplash: Splash;
-  private _cloudContainer: PIXI.Container;
-  private _cloudA: PIXI.Sprite;
-  private _cloudB: PIXI.Sprite;
+  private _cloudContainer: Container;
+  private _cloudA: Sprite;
+  private _cloudB: Sprite;
   private _cloudAppearTween: Tween<any>;
   private _cloudDisappearTween: Tween<any>;
   private _cloudAlpha = 0;
   private _cloudVisible = false;
-  private _colorFilter: PIXI.filters.ColorMatrixFilter;
-  private _blurFilter: PIXI.filters.BlurFilter;
-  private _jobNameText: PIXI.Text;
+  private _colorFilter: ColorMatrixFilter;
+  private _blurFilter: BlurFilter;
+  private _jobNameText: Text;
   private _simplexX = new SimplexNoise(Math.random);
   private _simplexY = new SimplexNoise(Math.random);
   private _shakeTween: Tween<any>;
@@ -37,33 +46,31 @@ export class Camera extends PIXI.Container {
   private _eventQueue: CameraEventQueue;
   private _lastJobId?: 0 | JobId;
   private _opponentOffset = 360;
-  private _logo: PIXI.Sprite;
+  private _logo: Sprite;
 
   constructor() {
     super();
 
-    const container = this.addChild(new PIXI.Container());
+    const container = this.addChild(new Container());
 
-    this._backgroundContainer = container.addChild(new PIXI.Container());
+    this._backgroundContainer = container.addChild(new Container());
 
     this._background = this._backgroundContainer.addChild(
-      PIXI.Sprite.from('./assets/backgrounds/0.png')
+      Sprite.from('./assets/backgrounds/0.png')
     );
     this._background.anchor.set(0.5);
     this._background.scale.set(2);
     this._background.position.set(1920 / 2, 1080 / 2);
 
-    this._nextBackground = this._backgroundContainer.addChild(
-      new PIXI.Sprite()
-    );
+    this._nextBackground = this._backgroundContainer.addChild(new Sprite());
     this._nextBackground.anchor.set(0.5);
     this._nextBackground.scale.set(2);
     this._nextBackground.position.set(1920 / 2, 1080 / 2);
 
-    this._splashContainer = container.addChild(new PIXI.Container());
+    this._splashContainer = container.addChild(new Container());
 
     this._logo = this._splashContainer.addChild(
-      PIXI.Sprite.from('../assets/ui/logo.png')
+      Sprite.from('../assets/ui/logo.png')
     );
     this._logo.visible = false;
 
@@ -100,17 +107,17 @@ export class Camera extends PIXI.Container {
     this._leftSplash.alpha = 0.5;
     this._rightSplash.alpha = 0.5;
 
-    this._cloudContainer = this.addChild(new PIXI.Container());
+    this._cloudContainer = this.addChild(new Container());
 
     this._cloudA = this._cloudContainer.addChild(
-      PIXI.Sprite.from('../assets/ui/cloudA.png')
+      Sprite.from('../assets/ui/cloudA.png')
     );
     this._cloudA.anchor.set(0.5);
     this._cloudA.scale.set(2);
     this._cloudA.position.set(1920 / 2, 1080 / 2);
 
     this._cloudB = this._cloudContainer.addChild(
-      PIXI.Sprite.from('../assets/ui/cloudB.png')
+      Sprite.from('../assets/ui/cloudB.png')
     );
     this._cloudB.anchor.set(0.5);
     autorun(() => {
@@ -135,8 +142,8 @@ export class Camera extends PIXI.Container {
 
     this.cloudAlpha = 0;
 
-    this._colorFilter = new PIXI.filters.ColorMatrixFilter();
-    this._blurFilter = new PIXI.filters.BlurFilter();
+    this._colorFilter = new ColorMatrixFilter();
+    this._blurFilter = new BlurFilter();
     this._blurFilter.enabled = false;
     this._blurFilter.blur = 0;
     this._blurFilter.quality = 10;
@@ -146,9 +153,7 @@ export class Camera extends PIXI.Container {
     reaction(
       () => store.sequenceStore.reset,
       () => {
-        this._background.texture = PIXI.Texture.from(
-          './assets/backgrounds/0.png'
-        );
+        this._background.texture = Texture.from('./assets/backgrounds/0.png');
         this._nextBackground.visible = false;
         this._mainSplash?.destroy();
         this._mainSplash = undefined;
@@ -324,16 +329,13 @@ export class Camera extends PIXI.Container {
     container.filters = [this._colorFilter, this._blurFilter];
 
     this._jobNameText = this.addChild(
-      new PIXI.Text(
+      new Text(
         '',
-        new PIXI.TextStyle({
+        new TextStyle({
           fontFamily: 'MaplestoryOTFBold',
           fontSize: '48px',
           fill: '#ffffff',
-          dropShadow: true,
-          dropShadowColor: '#404040',
-          dropShadowDistance: 0,
-          dropShadowBlur: 4,
+          dropShadow: { color: '#404040', distance: 0, blur: 4 },
         })
       )
     );
@@ -342,7 +344,7 @@ export class Camera extends PIXI.Container {
 
     this.addChild(new BlurOverlay());
 
-    this.addChild(PIXI.Sprite.from('./assets/ui/cameraUI.png'));
+    this.addChild(Sprite.from('./assets/ui/cameraUI.png'));
   }
 
   get cloudAlpha() {
@@ -421,7 +423,7 @@ export class Camera extends PIXI.Container {
         this._blurFilter.blur = object.blur;
         this._nextBackground.visible = true;
         this._nextBackground.alpha = object.nextBackgroundAlpha;
-        this._nextBackground.texture = PIXI.Texture.from(
+        this._nextBackground.texture = Texture.from(
           `../assets/backgrounds/${getJob(object.jobId).background ?? 0}.png`
         );
       })
@@ -487,7 +489,7 @@ export class Camera extends PIXI.Container {
         this._blurFilter.blur = object.blur;
         this._nextBackground.visible = true;
         this._nextBackground.alpha = object.nextBackgroundAlpha;
-        this._nextBackground.texture = PIXI.Texture.from(
+        this._nextBackground.texture = Texture.from(
           './assets/backgrounds/0.png'
         );
       })
@@ -536,26 +538,26 @@ export class Camera extends PIXI.Container {
   }
 }
 
-class BlurOverlay extends PIXI.Container {
+class BlurOverlay extends Container {
   private _state: 'default' | 'ban';
   private _tween?: Tween<any>;
-  private _multiply: PIXI.Sprite;
+  private _multiply: Sprite;
 
   constructor() {
     super();
 
     this._state = 'default';
 
-    const blurFilter = new PIXI.filters.BlurFilter();
+    const blurFilter = new BlurFilter();
     blurFilter.blur = 16;
     blurFilter.quality = 6;
 
-    const graphics = PIXI.Sprite.from('../assets/backgrounds/multiply.png');
-    graphics.filters = [new PIXI.picture.MaskFilter(blurFilter)];
-    this.addChild(graphics);
+    // const graphics = Sprite.from('../assets/backgrounds/multiply.png');
+    // graphics.filters = [new picture.MaskFilter(blurFilter)];
+    // this.addChild(graphics);
 
-    this._multiply = PIXI.Sprite.from('../assets/backgrounds/multiply.png');
-    this._multiply.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+    this._multiply = Sprite.from('../assets/backgrounds/multiply.png');
+    this._multiply.blendMode = 'multiply';
     this.addChild(this._multiply);
 
     autorun(() => {
@@ -576,12 +578,12 @@ class BlurOverlay extends PIXI.Container {
 
     switch (this._state) {
       case 'default':
-        this._multiply.texture = PIXI.Texture.from(
+        this._multiply.texture = Texture.from(
           '../assets/backgrounds/multiply.png'
         );
         break;
       case 'ban':
-        this._multiply.texture = PIXI.Texture.from(
+        this._multiply.texture = Texture.from(
           '../assets/backgrounds/multiplyBan.png'
         );
         break;

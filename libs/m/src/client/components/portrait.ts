@@ -1,3 +1,4 @@
+import { Sprite, Texture } from 'pixi.js';
 import { JobId } from '../../common/enums';
 
 type Option = {
@@ -5,7 +6,7 @@ type Option = {
   size?: number;
 };
 
-export class Portrait extends PIXI.Sprite {
+export class Portrait extends Sprite {
   private _jobId?: JobId;
   private _size: number;
 
@@ -16,14 +17,14 @@ export class Portrait extends PIXI.Sprite {
 
     this._jobId = jobId;
     this._size = size;
-    this.texture = PIXI.Texture.from(`../assets/portraits/${this._jobId}.png`);
+    this.texture = Texture.from(`../assets/portraits/${this._jobId}.png`);
 
     this.scale.set(this._size / 128);
   }
 
   set jobId(value: JobId) {
     this._jobId = value;
-    this.texture = PIXI.Texture.from(`../assets/portraits/${this._jobId}.png`);
+    this.texture = Texture.from(`../assets/portraits/${this._jobId}.png`);
   }
 
   get size(): number {

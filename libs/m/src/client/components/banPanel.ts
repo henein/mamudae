@@ -1,16 +1,17 @@
+import { Sprite } from 'pixi.js';
 import { Portrait } from './portrait';
 import { Tween, Easing } from '@tweenjs/tween.js';
 
 export class BanPanel extends Portrait {
   private _isNext = false;
-  private _tween: Tween<PIXI.Sprite>;
-  nextOverlay: PIXI.Sprite;
+  private _tween: Tween<Sprite>;
+  nextOverlay: Sprite;
 
   constructor(size: number) {
     super({ size: size });
 
     this.nextOverlay = this.addChild(
-      PIXI.Sprite.from('../assets/portraits/next_ban.png')
+      Sprite.from('../assets/portraits/next_ban.png')
     );
     this.nextOverlay.alpha = 0;
     this._tween = new Tween(this.nextOverlay)

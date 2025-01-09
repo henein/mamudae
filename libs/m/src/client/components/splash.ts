@@ -1,16 +1,17 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { JobId } from '../../common/enums';
 import { getJob } from '../../common/jobs';
+import { Container, Sprite, Texture } from 'pixi.js';
 
-export class Splash extends PIXI.Container {
+export class Splash extends Container {
   private _jobId: JobId = JobId.BEGINNER;
-  private _scale: number;
+  private _scale_: number;
   private _isOpponent: boolean;
   private _direction: 'left' | 'right';
 
-  sprite: PIXI.heaven.Sprite;
-  x: number;
-  y: number;
+  sprite: Sprite;
+  offsetX: number;
+  offsetY: number;
 
   constructor(
     jobId: JobId,
@@ -21,14 +22,14 @@ export class Splash extends PIXI.Container {
     direction: 'left' | 'right' = 'left'
   ) {
     super();
-    this.sprite = this.addChild(new PIXI.Sprite()).convertToHeaven();
+    this.sprite = this.addChild(new Sprite());
     this.sprite.scale.set(scale);
     this.sprite.anchor.set(0.5);
     this.sprite.position.set(x, y);
     this.jobId = jobId;
-    this.x = x;
-    this.y = y;
-    this._scale = scale;
+    this.offsetX = x;
+    this.offsetY = y;
+    this._scale_ = scale;
     this._isOpponent = isOpponent;
     this._direction = direction;
   }
@@ -40,10 +41,10 @@ export class Splash extends PIXI.Container {
       .to({ dark: 1 }, 1000)
       .easing(Easing.Quartic.InOut)
       .onUpdate((object) => {
-        this.sprite.color.setDark(object.dark, object.dark, object.dark);
+        // this.sprite.color.setDark(object.dark, object.dark, object.dark);
       })
       .chain(
-        new Tween({ scale: this._scale })
+        new Tween({ scale: this._scale_ })
           .to({ scale: 0 }, 300)
           .easing(Easing.Quartic.In)
           .onUpdate((object) => {
@@ -77,16 +78,16 @@ export class Splash extends PIXI.Container {
     this._jobId = value;
 
     if (this._jobId == 0) {
-      this.sprite.texture = PIXI.Texture.EMPTY;
+      this.sprite.texture = Texture.EMPTY;
     } else {
-      this.sprite.texture = PIXI.Texture.from(
+      this.sprite.texture = Texture.from(
         `../assets/splashes/${this.jobId}.png`
       );
 
       if (this._isOpponent) {
         const job = getJob(this.jobId);
 
-        this.sprite.scale.set(this._scale);
+        this.sprite.scale.set(this._scale_);
         this.sprite.scale.x *=
           (this._direction == 'left' && job.reverse) ||
           (this._direction == 'right' && !job.reverse)
@@ -96,7 +97,7 @@ export class Splash extends PIXI.Container {
           0.5 + job.offsetX / 1024,
           0.5 + job.offsetY / 604
         );
-        this.sprite.position.set(this.x, this.y);
+        this.sprite.position.set(this.offsetX, this.offsetY);
       }
     }
   }

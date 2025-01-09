@@ -5,7 +5,7 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import { RootStore, store } from '.';
 import { JobId } from '../../common/enums';
 import { InitPayload, IOEvent } from '../../common/events';
@@ -18,7 +18,7 @@ import {
 
 export class SequenceStore {
   rootStore: RootStore;
-  socket: SocketIOClient.Socket;
+  socket: Socket;
   @observable reset = false;
   @observable leftTeamName = '';
   @observable rightTeamName = '';

@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import socketIO from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import path from 'path';
 import dotenv from 'dotenv';
 
@@ -9,8 +9,8 @@ import { InitPayload, IOEvent, SequencePayload } from '../common/events';
 import { SelectPayload, TeamNamePayload } from './../common/events';
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIO(server);
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/admin.html'));
 });
 
-const onInit = (socket: socketIO.Socket) => {
+const onInit = (socket: Socket) => {
   const payload: InitPayload = {
     nextSequence: state.nextSequence,
     nextNextSequence: state.nextNextSequence,
@@ -131,7 +131,7 @@ io.of('/admin').on('connection', (socket) => {
   }
 });
 
-server.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`http://localhost:${port}`);
   console.log('메이플 교차 선택기 실행 됨!');
 });
@@ -145,14 +145,14 @@ function checkNextEvent(event: IOEvent): boolean {
   return false;
 }
 
-function checkAdmin(key: string) {
+function checkAdmin(key?: string | string[]) {
   if (key == process.env.ADMIN_KEY) {
     return true;
   }
   return false;
 }
 
-function getAuth(key: string) {
+function getAuth(key?: string | string[]) {
   switch (key) {
     case process.env.LEFT_MEMBER_KEY:
       return 'leftMember';

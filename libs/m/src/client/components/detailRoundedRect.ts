@@ -1,5 +1,7 @@
+import { Graphics } from 'pixi.js';
+
 type Option = {
-  color?: number;
+  color: number;
   alpha?: number;
   x: number;
   y: number;
@@ -11,7 +13,7 @@ type Option = {
   bottomLeft?: number;
 };
 
-export class DetailRoundedRect extends PIXI.Graphics {
+export class DetailRoundedRect extends Graphics {
   constructor(option: Option) {
     super();
 

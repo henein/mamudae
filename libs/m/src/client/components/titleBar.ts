@@ -1,19 +1,26 @@
 import { autorun } from 'mobx';
-import { GlowFilter } from 'pixi-filters';
 import { IOEvent } from '../../common/events';
 import { store } from '../store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Tween, Easing } from '@tweenjs/tween.js';
-import MultiStyleText from 'pixi-multistyle-text';
+import {
+  Container,
+  Graphics,
+  HTMLText,
+  Sprite,
+  Text,
+  TextStyle,
+} from 'pixi.js';
+import { GlowFilter } from 'pixi-filters';
 
-export class TitleBar extends PIXI.Container {
-  private _main: PIXI.Graphics;
-  private _leftGlow: PIXI.Sprite;
-  private _rightGlow: PIXI.Sprite;
-  private _leftArrow: PIXI.Sprite;
-  private _rightArrow: PIXI.Sprite;
-  private _leftTeamName: PIXI.Text;
-  private _rightTeamName: PIXI.Text;
+export class TitleBar extends Container {
+  private _main: Graphics;
+  private _leftGlow: Sprite;
+  private _rightGlow: Sprite;
+  private _leftArrow: Sprite;
+  private _rightArrow: Sprite;
+  private _leftTeamName: Text;
+  private _rightTeamName: Text;
   private _leftTween: Tween<any>;
   private _rightTween: Tween<any>;
   private _preLeftTween: Tween<any>;
@@ -22,31 +29,24 @@ export class TitleBar extends PIXI.Container {
   constructor() {
     super();
 
-    this._leftGlow = this.addChild(
-      PIXI.Sprite.from('../assets/ui/leftGlow.png')
-    );
+    this._leftGlow = this.addChild(Sprite.from('../assets/ui/leftGlow.png'));
     this._leftGlow.position.set(0, 0);
     this._leftGlow.visible = false;
     this._leftGlow.alpha = 0;
 
-    this._rightGlow = this.addChild(
-      PIXI.Sprite.from('../assets/ui/rightGlow.png')
-    );
+    this._rightGlow = this.addChild(Sprite.from('../assets/ui/rightGlow.png'));
     this._rightGlow.position.set(1920 - 428, 0);
     this._rightGlow.visible = false;
     this._rightGlow.alpha = 0;
 
     this._leftTeamName = this.addChild(
-      new PIXI.Text(
+      new Text(
         '',
-        new PIXI.TextStyle({
+        new TextStyle({
           fontFamily: 'MaplestoryOTFLight',
           fontSize: 28,
           fill: 0xffffff,
-          dropShadow: true,
-          dropShadowColor: 0x0075ca,
-          dropShadowDistance: 0,
-          dropShadowBlur: 4,
+          dropShadow: { color: 0x0075ca, distance: 0, blur: 4 },
         })
       )
     );
@@ -54,16 +54,13 @@ export class TitleBar extends PIXI.Container {
     this._leftTeamName.position.set(32, 132);
 
     this._rightTeamName = this.addChild(
-      new PIXI.Text(
+      new Text(
         '',
-        new PIXI.TextStyle({
+        new TextStyle({
           fontFamily: 'MaplestoryOTFLight',
           fontSize: 28,
           fill: 0xffffff,
-          dropShadow: true,
-          dropShadowColor: 0xde9300,
-          dropShadowDistance: 0,
-          dropShadowBlur: 4,
+          dropShadow: { color: 0xde9300, distance: 0, blur: 4 },
         })
       )
     );
@@ -87,15 +84,11 @@ export class TitleBar extends PIXI.Container {
       })
     );
 
-    const mask = this.addChild(
-      PIXI.Sprite.from('../assets/ui/titlebarMask.png')
-    );
+    const mask = this.addChild(Sprite.from('../assets/ui/titlebarMask.png'));
     mask.position.set(428, 0);
     this._main.mask = mask;
 
-    this._leftArrow = this.addChild(
-      PIXI.Sprite.from('../assets/ui/leftArrow.png')
-    );
+    this._leftArrow = this.addChild(Sprite.from('../assets/ui/leftArrow.png'));
     this._leftArrow.position.set(428, 0);
     this._leftArrow.visible = false;
     this._leftArrow.alpha = 0;
@@ -128,7 +121,7 @@ export class TitleBar extends PIXI.Container {
       });
 
     this._rightArrow = this.addChild(
-      PIXI.Sprite.from('../assets/ui/rightArrow.png')
+      Sprite.from('../assets/ui/rightArrow.png')
     );
     this._rightArrow.position.set(1356, 0);
     this._rightArrow.visible = false;
@@ -168,28 +161,30 @@ export class TitleBar extends PIXI.Container {
     });
     this._main.filters = [glowFilter];
 
-    const title = this.addChild(
-      new MultiStyleText('', {
-        default: {
-          fontFamily: 'MaplestoryOTFBold',
-          fontSize: '56px',
-          fill: '#404040',
-          align: 'center',
-        },
-        leftTeam: {
-          fontSize: '56px',
-          fill: '#0075ca',
-        },
-        rightTeam: {
-          fontSize: '56px',
-          fill: '#de9300',
-        },
-        ban: {
-          fontSize: '56px',
-          fill: '#ca0000',
-        },
-      })
-    );
+    // const title = this.addChild(
+    //   new MultiStyleText('', {
+    //     default: {
+    //       fontFamily: 'MaplestoryOTFBold',
+    //       fontSize: '56px',
+    //       fill: '#404040',
+    //       align: 'center',
+    //     },
+    //     leftTeam: {
+    //       fontSize: '56px',
+    //       fill: '#0075ca',
+    //     },
+    //     rightTeam: {
+    //       fontSize: '56px',
+    //       fill: '#de9300',
+    //     },
+    //     ban: {
+    //       fontSize: '56px',
+    //       fill: '#ca0000',
+    //     },
+    //   })
+    // );
+
+    const title = this.addChild(new HTMLText());
 
     title.anchor.set(0.5, 0);
     title.position.set(1920 / 2, 32 - 2);

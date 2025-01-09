@@ -29,7 +29,7 @@ module.exports = {
     new ESLintWebpackPlugin({ extensions: ['ts', 'js'] }),
   ],
   resolve: {
-    extensions: ['.ts', '.js', '.json'],
+    extensions: ['.ts', '.js', '.mjs', '.json'],
   },
   output: {
     path: path.resolve(__dirname, 'dist/public/js'),
@@ -52,9 +52,60 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|js)$/,
-        use: { loader: 'babel-loader' },
+        test: /\.(ts|js|mjs)$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-typescript'],
+            plugins: [
+              ['@babel/plugin-proposal-decorators', { legacy: true }],
+              ['@babel/plugin-proposal-class-properties', { loose: false }],
+              '@babel/proposal-object-rest-spread',
+              [
+                '@babel/transform-runtime',
+                {
+                  corejs: 3,
+                },
+              ],
+            ],
+          },
+        },
         exclude: /node_modules/,
+      },
+      {
+        test: /\.m?js$/,
+        include: /node_modules\/pixi.js/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.m?js$/,
+        include: /node_modules\/pixi-filters/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.m?js$/,
+        include: /node_modules\/@pixi\/ui/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
       },
       {
         test: /\.css$/,
