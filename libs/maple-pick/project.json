@@ -1,0 +1,9 @@
+{
+  "name": "maple-pick",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/maple-pick/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project maple-pick --web",
+  "targets": {}
+}

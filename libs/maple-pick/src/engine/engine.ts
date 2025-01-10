@@ -35,23 +35,25 @@ extensions.add(CreationNavigationPlugin);
  */
 export class CreationEngine extends Application {
   /** Initialize the application */
-  public async init(opts: Partial<ApplicationOptions>): Promise<void> {
+  public override async init(opts: Partial<ApplicationOptions>, element?: HTMLDivElement): Promise<void> {
     opts.resizeTo ??= window;
     opts.resolution ??= getResolution();
 
     await super.init(opts);
 
-    // Append the application canvas to the document body
-    document.getElementById("pixi-container")!.appendChild(this.canvas);
+    element!.appendChild(this.canvas);
+
+    // // Append the application canvas to the document body
+    // document.getElementById("pixi-container")!.appendChild(this.canvas);
     // Add a visibility listener, so the app can pause sounds and screens
     document.addEventListener("visibilitychange", this.visibilityChange);
 
     // Init PixiJS assets with this asset manifest
-    await Assets.init({ manifest, basePath: "assets" });
+    await Assets.init({ manifest, basePath: "/assets" });
     await Assets.loadBundle("preload");
 
     // List all existing bundles names
-    const allBundles = manifest.bundles.map((item) => item.name);
+    const allBundles = manifest.bundles.map((item: any) => item.name);
     // Start up background loading of all bundles
     Assets.backgroundLoadBundle(allBundles);
   }

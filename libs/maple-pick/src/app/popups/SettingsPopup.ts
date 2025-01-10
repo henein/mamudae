@@ -23,7 +23,7 @@ export class SettingsPopup extends Container {
   /** The panel background */
   private panelBase: RoundedBox;
   /** The build version label */
-  private versionLabel: Text;
+  // private versionLabel: Text;
   /** Layout that organises the UI components */
   private layout: List;
   /** Slider that changes the master volume */
@@ -62,16 +62,16 @@ export class SettingsPopup extends Container {
     this.doneButton.onPress.connect(() => engine().navigation.dismissPopup());
     this.panel.addChild(this.doneButton);
 
-    this.versionLabel = new Label({
-      text: `Version ${APP_VERSION}`,
-      style: {
-        fill: 0xffffff,
-        fontSize: 12,
-      },
-    });
-    this.versionLabel.alpha = 0.5;
-    this.versionLabel.y = this.panelBase.boxHeight * 0.5 - 15;
-    this.panel.addChild(this.versionLabel);
+    // this.versionLabel = new Label({
+    //   text: `Version ${APP_VERSION}`,
+    //   style: {
+    //     fill: 0xffffff,
+    //     fontSize: 12,
+    //   },
+    // });
+    // this.versionLabel.alpha = 0.5;
+    // this.versionLabel.y = this.panelBase.boxHeight * 0.5 - 15;
+    // this.panel.addChild(this.versionLabel);
 
     this.layout = new List({ type: "vertical", elementsMargin: 4 });
     this.layout.x = -140;
