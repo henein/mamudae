@@ -1,0 +1,59 @@
+{
+  "name": "mamudae-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mamudae-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx-electron:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mamudae-app",
+        "main": "apps/mamudae-app/src/main.ts",
+        "tsConfig": "apps/mamudae-app/tsconfig.app.json",
+        "assets": ["apps/mamudae-app/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/mamudae-app/src/environments/environment.ts",
+              "with": "apps/mamudae-app/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx-electron:execute",
+      "options": {
+        "buildTarget": "mamudae-app:build"
+      }
+    },
+    "package": {
+      "executor": "nx-electron:package",
+      "options": {
+        "name": "mamudae-app",
+        "frontendProject": "mamudae",
+        "sourcePath": "dist/apps",
+        "outputPath": "dist/packages",
+        "prepackageOnly": true
+      }
+    },
+    "make": {
+      "executor": "nx-electron:make",
+      "options": {
+        "name": "mamudae-app",
+        "frontendProject": "mamudae",
+        "sourcePath": "dist/apps",
+        "outputPath": "dist/executables"
+      }
+    },
+    "lint": {
+      "command": "eslint apps/mamudae-app/**/*.ts"
+    }
+  }
+}
