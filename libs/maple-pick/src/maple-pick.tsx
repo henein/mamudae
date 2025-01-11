@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { engine, isEngineReady, setEngine } from './app/getEngine';
 import { LoadScreen } from './app/screens/LoadScreen';
-import { MainScreen } from './app/screens/main/MainScreen';
+import { MainScreen } from './app/screens/main/main-screen';
 import { userSettings } from './app/utils/userSettings';
 import { CreationEngine } from './engine/engine';
 

@@ -1,0 +1,9 @@
+{
+  "name": "mamudae-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mamudae-lib/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project mamudae-lib --web",
+  "targets": {}
+}

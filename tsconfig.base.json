@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@henein/mamudae-lib": ["libs/mamudae-lib/src/index.ts"],
       "@henein/maple-pick": ["libs/maple-pick/src/index.ts"]
     }
   },

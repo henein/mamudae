@@ -61,10 +61,10 @@ export class Button extends FancyButton {
   }
 
   private handleHover() {
-    engine().audio.sfx.play("main/sounds/sfx-hover.wav");
+    engine().audio.sfx.play("demo/sounds/sfx-hover.wav");
   }
 
   private handleDown() {
-    engine().audio.sfx.play("main/sounds/sfx-press.wav");
+    engine().audio.sfx.play("demo/sounds/sfx-press.wav");
   }
 }

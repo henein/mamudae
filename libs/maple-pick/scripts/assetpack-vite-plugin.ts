@@ -2,12 +2,14 @@
 import type { AssetPackConfig } from "@assetpack/core";
 import { AssetPack } from "@assetpack/core";
 import { pixiPipes } from "@assetpack/core/pixi";
+import { webfont } from "@assetpack/core/webfont";
 import type { Plugin, ResolvedConfig } from "vite";
 
 export function assetpackPlugin() {
   const apConfig = {
     entry: "./raw-assets",
     pipes: [
+      webfont(),
       ...pixiPipes({
         cacheBust: false,
         manifest: {

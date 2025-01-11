@@ -12,9 +12,9 @@ import { Button } from "../../ui/Button";
 import { Bouncer } from "./Bouncer";
 
 /** The screen that holds the app */
-export class MainScreen extends Container {
+export class DemoScreen extends Container {
   /** Assets bundles required by this screen */
-  public static assetBundles = ["main"];
+  public static assetBundles = ["demo"];
 
   public mainContainer: Container;
   private pauseButton: FancyButton;
@@ -128,7 +128,7 @@ export class MainScreen extends Container {
 
   /** Show screen with animations */
   public async show(): Promise<void> {
-    engine().audio.bgm.play("main/sounds/bgm-main.mp3", { volume: 0.5 });
+    engine().audio.bgm.play("demo/sounds/bgm-main.mp3", { volume: 0.5 });
 
     const elementsToAnimate = [
       this.pauseButton,
