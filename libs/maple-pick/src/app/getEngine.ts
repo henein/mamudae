@@ -1,4 +1,4 @@
-import type { CreationEngine } from "../engine/engine";
+import { CreationEngine } from "../engine/engine";
 
 let instance: CreationEngine | null = null;
 
@@ -12,4 +12,8 @@ export function engine(): CreationEngine {
 
 export function setEngine(app: CreationEngine) {
   instance = app;
+}
+
+export function isEngineReady(): boolean {
+  return !!instance;
 }

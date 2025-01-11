@@ -68,7 +68,6 @@ export default class App {
       width: width,
       height: height,
       show: false,
-      resizable: false,
       useContentSize: true,
       webPreferences: {
         contextIsolation: true,
@@ -76,7 +75,7 @@ export default class App {
         preload: join(__dirname, 'main.preload.js'),
       },
     });
-    App.mainWindow.setMenu(null);
+    // App.mainWindow.setMenu(null);
     App.mainWindow.center();
 
     // if main window is ready to show, close the splash window and show the main window
@@ -102,7 +101,7 @@ export default class App {
   private static loadMainWindow() {
     // load the index.html of the app.
     if (!App.application.isPackaged) {
-      App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
+      App.mainWindow.loadURL(`http://localhost:${rendererAppPort}/mamudae`);
     } else {
       App.mainWindow.loadURL(
         format({

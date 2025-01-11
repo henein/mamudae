@@ -35,13 +35,11 @@ extensions.add(CreationNavigationPlugin);
  */
 export class CreationEngine extends Application {
   /** Initialize the application */
-  public override async init(opts: Partial<ApplicationOptions>, element?: HTMLDivElement): Promise<void> {
+  public override async init(opts: Partial<ApplicationOptions>): Promise<void> {
     opts.resizeTo ??= window;
     opts.resolution ??= getResolution();
 
     await super.init(opts);
-
-    element!.appendChild(this.canvas);
 
     // // Append the application canvas to the document body
     // document.getElementById("pixi-container")!.appendChild(this.canvas);
@@ -56,6 +54,10 @@ export class CreationEngine extends Application {
     const allBundles = manifest.bundles.map((item: any) => item.name);
     // Start up background loading of all bundles
     Assets.backgroundLoadBundle(allBundles);
+  }
+
+  public addCanvas(element: HTMLElement): void {
+    element.appendChild(this.canvas);
   }
 
   public override destroy(

@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const shouldRenderLayout = !['/login', '/signUp', '/register'].includes(
+  const shouldRenderLayout = !['/login', '/signUp', '/register', '/mamudae'].includes(
     router.pathname
   );
 

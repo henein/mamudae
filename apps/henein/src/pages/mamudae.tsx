@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Welcome from '../containers/RegisterPage/components/Welcome';
 import dynamic from 'next/dynamic';
 
 const MaplePick = dynamic(
@@ -12,7 +11,6 @@ const MaplePick = dynamic(
 const test = () => {
   return (
     <>
-      <Welcome />
       <MaplePick />
     </>
   );
