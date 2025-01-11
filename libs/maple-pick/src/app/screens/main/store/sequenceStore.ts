@@ -37,7 +37,7 @@ export class SequenceStore {
 
     // const key = prompt('접속키를 입력해주세요!');
 
-    this.socket = io({
+    this.socket = io('localhost:3000',{
       reconnectionDelayMax: 10000,
       query: {
         key: "key",

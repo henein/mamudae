@@ -1,10 +1,6 @@
 import socketIO from 'socket.io';
 
-import { JobId } from '../common/enums';
-import { Job, jobList } from '../common/jobs';
-import { IOEvent, SequencePayload } from '../common/events';
-import SequenceQueue, { Sequence } from '../common/sequenceQueue';
-import { SelectPayload, TeamNamePayload } from './../common/events';
+import { IOEvent, Job, JobId, JobList, SelectPayload, Sequence, SequencePayload, SequenceQueue, TeamNamePayload } from '@henein/mamudae-lib';
 
 export default class State {
   private _io: socketIO.Server;
@@ -39,7 +35,7 @@ export default class State {
     this.leftTeamName = leftTeamName ?? 'A팀';
     this.rightTeamName = rightTeamName ?? 'B팀';
 
-    this.unPickedList = jobList.reduce<JobId[]>(
+    this.unPickedList = JobList.reduce<JobId[]>(
       (previousValue: JobId[], currentValue: Job) => {
         if (currentValue.globalBan) {
           return previousValue;

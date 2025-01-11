@@ -5,7 +5,7 @@ export type Sequence = {
   payload?: SequencePayload;
 };
 
-export default class SequenceQueue {
+export class SequenceQueue {
   private sequences: Sequence[] = [];
 
   constructor() {

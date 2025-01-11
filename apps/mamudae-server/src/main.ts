@@ -2,17 +2,20 @@ import express from 'express';
 import http from 'http';
 import { Server, Socket } from 'socket.io';
 import path from 'path';
-import dotenv from 'dotenv';
+import cors from 'cors';
 
 import State from './state';
-import { InitPayload, IOEvent, SequencePayload } from '../common/events';
-import { SelectPayload, TeamNamePayload } from './../common/events';
+import {
+  InitPayload,
+  IOEvent,
+  SequencePayload,
+  SelectPayload,
+  TeamNamePayload,
+} from '@henein/mamudae-lib';
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server(httpServer);
-
-dotenv.config();
+const io = new Server(httpServer, { cors: { origin: '*' } });
 
 const port = process.env.PORT || 3000;
 
@@ -20,9 +23,11 @@ let state = new State(io);
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
-app.get('/admin', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public/admin.html'));
-});
+app.use(cors());
+
+// app.get('/admin', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../public/admin.html'));
+// });
 
 const onInit = (socket: Socket) => {
   const payload: InitPayload = {

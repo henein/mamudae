@@ -1,5 +1,5 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
-import { Job, jobList } from '@henein/mamudae-lib';
+import { Job, JobList } from '@henein/mamudae-lib';
 import { constants } from '../constants';
 import { Portrait } from './portrait';
 import { Button } from './button';
@@ -105,9 +105,9 @@ export class BanPickModal extends Container {
 
     const portraitButtonList: PortraitButton[] = [];
 
-    for (let i = 0; i < jobList.length; i++) {
+    for (let i = 0; i < JobList.length; i++) {
       portraitButtonList[i] = scrollBox.addChild(
-        new PortraitButton(jobList[i])
+        new PortraitButton(JobList[i])
       );
       portraitButtonList[i].position.set(
         48 + 176 * (i % 5),

@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { JobId, jobList, SequencePayload } from '@henein/mamudae-lib';
+import { JobId, JobList, SequencePayload } from '@henein/mamudae-lib';
 import { RootStore } from './index';
 
 export class JobStore {
@@ -130,7 +130,7 @@ export class JobStore {
 
   @computed
   get disableList() {
-    return jobList.reduce<JobId[]>((previousValue, currentValue) => {
+    return JobList.reduce<JobId[]>((previousValue, currentValue) => {
       if (this.unPickedList.indexOf(currentValue.id) === -1) {
         previousValue.push(currentValue.id);
       }

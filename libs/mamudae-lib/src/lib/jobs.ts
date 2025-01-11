@@ -13,10 +13,10 @@ export interface Job {
 }
 
 export const getJob = (jobId: JobId) => {
-  return jobList[jobId - 1];
+  return JobList[jobId - 1];
 };
 
-export const jobList: Job[] = [
+export const JobList: Job[] = [
   {
     id: JobId.BEGINNER,
     jobName: '초보자',
