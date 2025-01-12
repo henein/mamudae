@@ -40,7 +40,7 @@ export class SequenceStore {
     this.socket = io('localhost:3000',{
       reconnectionDelayMax: 10000,
       query: {
-        key: "key",
+        key: "left_leader",
       },
     });
 

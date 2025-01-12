@@ -5,6 +5,7 @@ import { TitleBar } from "./components/titleBar";
 import { BanViewer } from "./components/banViewer";
 import { PickViewer } from "./components/pickViewer";
 import { BanPickModal } from "./components/banPickModal";
+import TWEEN from "@tweenjs/tween.js";
 
 export class MainScreen extends Container {
   public static assetBundles = ["main"];
@@ -55,7 +56,7 @@ export class MainScreen extends Container {
   /** Update the screen */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(_time: Ticker) {
-    //
+    TWEEN.update(_time.lastTime);
   }
 
   /** Pause gameplay - automatically fired when a popup is presented */
