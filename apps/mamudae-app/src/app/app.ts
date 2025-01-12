@@ -69,6 +69,7 @@ export default class App {
       height: height,
       show: false,
       useContentSize: true,
+      autoHideMenuBar: true,
       webPreferences: {
         contextIsolation: true,
         backgroundThrottling: false,
@@ -77,6 +78,22 @@ export default class App {
     });
     // App.mainWindow.setMenu(null);
     App.mainWindow.center();
+
+    App.mainWindow.on('resize', () => {
+      const ratio = 16 / 9;
+      const size = App.mainWindow.getContentSize();
+
+      let width = size[0];
+      let height = size[1];
+
+      if (width / height < ratio) {
+        width = Math.round(height * ratio);
+      } else {
+        height = Math.round(width / ratio);
+      }
+
+      App.mainWindow.setContentSize(width, height);
+    })
 
     // if main window is ready to show, close the splash window and show the main window
     App.mainWindow.once('ready-to-show', () => {
