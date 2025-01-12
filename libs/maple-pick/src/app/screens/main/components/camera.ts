@@ -40,7 +40,7 @@ export class Camera extends Container {
   private _simplexX = createNoise2D();
   private _simplexY = createNoise2D();
   private _shakeTween: Tween<any>;
-  private _shakeRange = 32;
+  private _shakeRange = 16;
   private _eventQueue: CameraEventQueue;
   private _lastJobId?: 0 | JobId;
   private _opponentOffset = 360;
@@ -308,7 +308,7 @@ export class Camera extends Container {
         this._simplexY = createNoise2D();
       })
       .onUpdate((object, elapsed) => {
-        time += elapsed / 60;
+        time += elapsed / 180;
         this._backgroundContainer.position.set(
           this._simplexX(0, time) * (this.shakeRange / 4),
           this._simplexY(0, time) * (this.shakeRange / 4)

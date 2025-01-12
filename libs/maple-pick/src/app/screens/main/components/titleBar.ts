@@ -184,7 +184,9 @@ export class TitleBar extends Container {
     //   })
     // );
 
-    const title = this.addChild(new HTMLText());
+    const title = this.addChild(new HTMLText(
+      {style: {fontFamily: 'Maplestory Bold', fontSize: '56px', fill: '#404040', align: 'center'}},
+    ));
 
     title.anchor.set(0.5, 0);
     title.position.set(1920 / 2, 32 - 2);
@@ -205,16 +207,16 @@ export class TitleBar extends Container {
             if (nextSequence.payload?.action == 'ban') {
               title.text = `${
                 nextSequence.payload.team == 'left'
-                  ? `<leftTeam>${store.sequenceStore.leftTeamName}</leftTeam>`
-                  : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
+                  ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
+                  : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
               }이 ${
                 (nextSequence.payload.index ?? 0) + 1
-              }번째 <ban>밴</ban>할 직업을 선택 중`;
+              }번째 <span style="fill: #ca0000">밴</span>할 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'pick') {
               title.text = `${
                 nextSequence.payload?.team == 'left'
-                  ? `<leftTeam>${store.sequenceStore.leftTeamName}</leftTeam>`
-                  : `<rightTeam>${store.sequenceStore.rightTeamName}</rightTeam>`
+                  ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
+                  : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
               }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
             } else if (nextSequence.payload?.action == 'opponentPick') {
               title.text = '상대팀 직업을 선택 중';
@@ -244,7 +246,7 @@ export class TitleBar extends Container {
             title.text = '';
         }
       } else {
-        title.text = '메무대 시작합니다!';
+        title.text = '결과!';
       }
     });
   }
