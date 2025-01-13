@@ -17,11 +17,13 @@ export default class State {
   rightBanList: JobId[];
   leftPickList: JobId[];
   rightPickList: JobId[];
-  leftOpponentPick?: JobId;
-  rightOpponentPick?: JobId;
+  leftVotePick?: JobId;
+  rightVotePick?: JobId;
 
   leftSelect?: JobId;
   rightSelect?: JobId;
+  votePicks: JobId[];
+  voteBan: JobId;
 
   constructor(
     io: socketIO.Server,
@@ -50,8 +52,8 @@ export default class State {
     this.rightBanList = [];
     this.leftPickList = [];
     this.rightPickList = [];
-    this.leftOpponentPick = undefined;
-    this.rightOpponentPick = undefined;
+    this.leftVotePick = undefined;
+    this.rightVotePick = undefined;
 
     this.leftSelect = undefined;
     this.rightSelect = undefined;
@@ -59,7 +61,7 @@ export default class State {
 
   private dequeueSequence() {
     this.nextSequence = this._sequenceQueue.dequeue();
-    this.nextNextSequence = this._sequenceQueue.next();
+    this.nextNextSequence = this._sequenceQueue.pick();
     console.log('[NextEvent]' + this.nextSequence?.event);
   }
 
@@ -147,10 +149,10 @@ export default class State {
     const { action, team, jobId } = payload;
 
     if (this.checkUnPicked(jobId)) {
-      if (team == 'left' && !this.leftOpponentPick) {
-        this.leftOpponentPick = jobId;
-      } else if (team == 'right' && !this.rightOpponentPick) {
-        this.rightOpponentPick = jobId;
+      if (team == 'left' && !this.leftVotePick) {
+        this.leftVotePick = jobId;
+      } else if (team == 'right' && !this.rightVotePick) {
+        this.rightVotePick = jobId;
       } else {
         console.error('잘못된 순서');
         return;
@@ -170,13 +172,13 @@ export default class State {
   }
 
   onEnd = () => {
-    if (!this.leftOpponentPick || !this.rightOpponentPick) {
+    if (!this.leftVotePick || !this.rightVotePick) {
       return;
     }
 
     // 상대픽이라 반대로
-    this.addJob(this.leftOpponentPick, this.rightPickList);
-    this.addJob(this.rightOpponentPick, this.leftPickList);
+    this.addJob(this.leftVotePick, this.rightPickList);
+    this.addJob(this.rightVotePick, this.leftPickList);
 
     this.dequeueSequence();
     this._io.emit(IOEvent.END);

@@ -44,4 +44,9 @@ export enum JobId {
   HOYOUNG,
   ZERO,
   KINESIS,
+  KAIN,
+  LARA,
+  KHALI,
 }
+
+export type Team = 'left' | 'right';

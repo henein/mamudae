@@ -23,20 +23,6 @@ export class MainScreen extends Container {
 
     this.addChild(new BanPickModal());
 
-    const authorText = this.addChild(
-      new Text(
-        'made by Pdom (프돔이@스카니아)',
-        new TextStyle({
-          fontFamily: 'Maplestory Light',
-          fontSize: 24,
-          fill: 0xb2b2b2,
-          dropShadow: { color: 0x000000, distance: 0, blur: 4 },
-        })
-      )
-    );
-    authorText.anchor.set(1, 1);
-    authorText.position.set(1920 - 28, 1080 - 24);
-
     this.filters = [new AlphaFilter()];
     this.filterArea = engine().screen;
 
