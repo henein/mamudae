@@ -1,5 +1,4 @@
 import { autorun, reaction } from 'mobx';
-import { IOEvent } from '@henein/mamudae-lib';
 import { store } from '../store';
 import { PickPanel } from './pickPanel';
 import { Container } from 'pixi.js';
@@ -13,7 +12,7 @@ export class PickViewer extends Container {
     const leftPick: PickPanel[] = [];
 
     for (let i = 0; i < 6; i++) {
-      if (i == 5) {
+      if (i === 5) {
         leftPick[i] = this.addChild(
           new PickPanel({ direction: 'left', isOpponent: true })
         );
@@ -27,7 +26,7 @@ export class PickViewer extends Container {
     const rightPick: PickPanel[] = [];
 
     for (let i = 0; i < 6; i++) {
-      if (i == 5) {
+      if (i === 5) {
         rightPick[i] = this.addChild(
           new PickPanel({ direction: 'right', isOpponent: true })
         );
@@ -55,28 +54,28 @@ export class PickViewer extends Container {
         this._currentPick.state = 'default';
       }
 
-      if (!store.sequenceStore.currentSequence) {
+      const currentSequence = store.sequenceStore.currentSequence;
+
+      if (!currentSequence) {
         leftPick[5].state = 'default';
         rightPick[5].state = 'default';
         return;
-      } else if (store.sequenceStore.currentSequence.event == IOEvent.END) {
+      } else if (currentSequence.action === 'end') {
         leftPick[5].state = 'done';
         rightPick[5].state = 'done';
         return;
       }
 
-      const payload = store.sequenceStore.currentSequence.payload;
+      if (currentSequence?.action === 'pick') {
+        const target = currentSequence.team === 'left' ? leftPick : rightPick;
 
-      if (payload?.action == 'pick') {
-        const target = payload.team == 'left' ? leftPick : rightPick;
-
-        if (payload.index == undefined) {
+        if (currentSequence.index === undefined) {
           return;
         }
 
-        this._currentPick = target[payload.index];
+        this._currentPick = target[currentSequence.index];
         this._currentPick.state = 'current';
-      } else if (payload?.action == 'opponentPick') {
+      } /* else if (currentSequence?.action === 'opponentPick') {
         leftPick[5].state = 'blind';
         rightPick[5].state = 'blind';
 
@@ -87,32 +86,33 @@ export class PickViewer extends Container {
         if (store.jobStore.rightOpponentPick) {
           rightPick[5].state = 'done';
         }
-      }
+      } */
     });
 
     autorun(() => {
-      if (!store.sequenceStore.nextSequence) {
+      const nextSequence = store.sequenceStore.nextSequence;
+
+      if (!nextSequence) {
         return;
       }
 
-      const payload = store.sequenceStore.nextSequence.payload;
 
-      if (payload?.action == 'pick') {
-        const target = payload.team == 'left' ? leftPick : rightPick;
+      if (nextSequence?.action === 'pick') {
+        const target = nextSequence.team === 'left' ? leftPick : rightPick;
 
-        if (payload.index == undefined) {
+        if (nextSequence.index === undefined) {
           return;
         }
 
-        target[payload.index].state = 'next';
-      } else if (payload?.action == 'opponentPick') {
+        target[nextSequence.index].state = 'next';
+      } /* else if (nextSequence?.action === 'opponentPick') {
         if (
-          store.sequenceStore.currentSequence?.payload?.action != 'opponentPick'
+          store.sequenceStore.currentSequence?.action != 'opponentPick'
         ) {
           leftPick[5].state = 'next';
           rightPick[5].state = 'next';
         }
-      }
+      } */
     });
 
     autorun(() => {

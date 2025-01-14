@@ -7,7 +7,7 @@ import { store } from '../store';
 import { Tween } from '@tweenjs/tween.js';
 import { createNoise2D } from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';
-import { getJob, JobId, IOEvent } from '@henein/mamudae-lib';
+import { getJob, JobId } from '@henein/mamudae-lib';
 import { Splash } from './splash';
 import {
   BlurFilter,
@@ -27,11 +27,6 @@ export class Camera extends Container {
   private _mainSplash?: Splash;
   private _leftSplash: Splash;
   private _rightSplash: Splash;
-  private _cloudContainer: Container;
-  private _cloudA: Sprite;
-  private _cloudB: Sprite;
-  private _cloudAppearTween: Tween<any>;
-  private _cloudDisappearTween: Tween<any>;
   private _cloudAlpha = 0;
   private _cloudVisible = false;
   private _colorFilter: ColorMatrixFilter;
@@ -73,7 +68,7 @@ export class Camera extends Container {
     this._logo.visible = false;
 
     autorun(() => {
-      if (store.sequenceStore.currentSequence?.event == IOEvent.START) {
+      if (store.sequenceStore.currentSequence?.action === 'start') {
         this._logo.visible = true;
       } else {
         this._logo.visible = false;
@@ -104,41 +99,6 @@ export class Camera extends Container {
 
     this._leftSplash.alpha = 0.5;
     this._rightSplash.alpha = 0.5;
-
-    this._cloudContainer = this.addChild(new Container());
-
-    this._cloudA = this._cloudContainer.addChild(
-      Sprite.from('main/ui/cloudA.png')
-    );
-    this._cloudA.anchor.set(0.5);
-    this._cloudA.scale.set(2);
-    this._cloudA.position.set(1920 / 2, 1080 / 2);
-
-    this._cloudB = this._cloudContainer.addChild(
-      Sprite.from('main/ui/cloudB.png')
-    );
-    this._cloudB.anchor.set(0.5);
-    autorun(() => {
-      this._cloudB.scale.set(2);
-      this._cloudB.scale.x *= store.sequenceStore.team == 'left' ? 1 : -1;
-    });
-    this._cloudB.position.set(1920 / 2, 1080 / 2);
-
-    this._cloudAppearTween = new Tween({ alpha: 0 })
-      .to({ alpha: 1 }, 2000)
-      .easing(Easing.Quartic.InOut)
-      .onUpdate((object) => {
-        this.cloudAlpha = object.alpha;
-      });
-
-    this._cloudDisappearTween = new Tween({ alpha: 1 })
-      .to({ alpha: 0 })
-      .easing(Easing.Quartic.InOut)
-      .onUpdate((object) => {
-        this.cloudAlpha = object.alpha;
-      });
-
-    this.cloudAlpha = 0;
 
     this._colorFilter = new ColorMatrixFilter();
     this._blurFilter = new BlurFilter();
@@ -182,20 +142,20 @@ export class Camera extends Container {
         this._jobNameText.text = '';
         this._eventQueue = new CameraEventQueue(this.onEvent);
         this._lastJobId = undefined;
-        this.cloudVisible = false;
+        // this.cloudVisible = false;
       }
     );
 
     autorun(() => {
-      switch (store.sequenceStore.currentSequence?.payload?.action) {
+      switch (store.sequenceStore.currentSequence?.action) {
         case 'ban':
         case 'pick':
-          if (this._lastJobId == store.jobStore.selectJobId) {
+          if (this._lastJobId === store.jobStore.selectJobId) {
             return;
           }
 
           if (!store.jobStore.selectJobId) {
-            if (store.jobStore.selectJobId == undefined) {
+            if (store.jobStore.selectJobId === undefined) {
               return;
             }
             this._eventQueue.enqueue({
@@ -210,94 +170,96 @@ export class Camera extends Container {
 
           this._lastJobId = store.jobStore.selectJobId;
           break;
-        case 'opponentPick':
-          if (store.sequenceStore.nextSequence?.event != IOEvent.END) {
-            this._eventQueue.enqueue({ action: 'defaultBG' });
-          }
-          break;
+        // case 'opponentPick':
+        //   if (store.sequenceStore.nextSequence?.action !== 'end') {
+        //     this._eventQueue.enqueue({ action: 'defaultBG' });
+        //   }
+        //   break;
       }
     });
 
-    autorun(() => {
-      if (
-        store.sequenceStore.currentSequence?.payload?.action ==
-          'opponentPick' ||
-        store.sequenceStore.currentSequence?.event == IOEvent.END
-      ) {
-        if (store.sequenceStore.team == 'left') {
-          if (store.jobStore.leftOpponentPick) {
-            this._leftSplash.jobId = store.jobStore.leftOpponentPick;
-            this._leftSplash.alpha = 1;
-          } else {
-            this._leftSplash.jobId = store.jobStore.leftSelect ?? 0;
-          }
-        } else if (store.sequenceStore.team == 'right') {
-          if (store.jobStore.rightOpponentPick) {
-            this._rightSplash.jobId = store.jobStore.rightOpponentPick;
-            this._rightSplash.alpha = 1;
-          } else {
-            this._rightSplash.jobId = store.jobStore.rightSelect ?? 0;
-          }
-        }
-      } else if (!store.sequenceStore.currentSequence?.event) {
-        if (
-          store.jobStore.leftOpponentPick &&
-          store.jobStore.rightOpponentPick
-        ) {
-          if (store.sequenceStore.team == 'left') {
-            this._rightSplash.jobId = store.jobStore.rightOpponentPick;
-            this._rightSplash.alpha = 1;
-          } else if (store.sequenceStore.team == 'right') {
-            this._leftSplash.jobId = store.jobStore.leftOpponentPick;
-            this._leftSplash.alpha = 1;
-          }
+    // NOTE: 상대픽 관련
+    // autorun(() => {
+    //   if (
+    //     store.sequenceStore.currentSequence?.payload?.action ===
+    //       'opponentPick' ||
+    //     store.sequenceStore.currentSequence?.action === 'end'
+    //   ) {
+    //     if (store.sequenceStore.team === 'left') {
+    //       if (store.jobStore.leftOpponentPick) {
+    //         this._leftSplash.jobId = store.jobStore.leftOpponentPick;
+    //         this._leftSplash.alpha = 1;
+    //       } else {
+    //         this._leftSplash.jobId = store.jobStore.leftSelect ?? 0;
+    //       }
+    //     } else if (store.sequenceStore.team === 'right') {
+    //       if (store.jobStore.rightOpponentPick) {
+    //         this._rightSplash.jobId = store.jobStore.rightOpponentPick;
+    //         this._rightSplash.alpha = 1;
+    //       } else {
+    //         this._rightSplash.jobId = store.jobStore.rightSelect ?? 0;
+    //       }
+    //     }
+    //   } else if (!store.sequenceStore.currentSequence?.event) {
+    //     if (
+    //       store.jobStore.leftOpponentPick &&
+    //       store.jobStore.rightOpponentPick
+    //     ) {
+    //       if (store.sequenceStore.team === 'left') {
+    //         this._rightSplash.jobId = store.jobStore.rightOpponentPick;
+    //         this._rightSplash.alpha = 1;
+    //       } else if (store.sequenceStore.team === 'right') {
+    //         this._leftSplash.jobId = store.jobStore.leftOpponentPick;
+    //         this._leftSplash.alpha = 1;
+    //       }
 
-          const target =
-            store.sequenceStore.team == 'left'
-              ? this._rightSplash
-              : this._leftSplash;
+    //       const target =
+    //         store.sequenceStore.team === 'left'
+    //           ? this._rightSplash
+    //           : this._leftSplash;
 
-          if (
-            store.sequenceStore.team == 'left'
-              ? this._leftSplash.alpha == 1
-              : this._rightSplash.alpha == 1
-          ) {
-            target.alpha = 0;
-            target.position.x = store.sequenceStore.team == 'left' ? 600 : -600;
+    //       if (
+    //         store.sequenceStore.team === 'left'
+    //           ? this._leftSplash.alpha === 1
+    //           : this._rightSplash.alpha === 1
+    //       ) {
+    //         target.alpha = 0;
+    //         target.position.x = store.sequenceStore.team === 'left' ? 600 : -600;
 
-            new Tween(target)
-              .to({
-                alpha: 1,
-                position: {
-                  x: 0,
-                },
-              })
-              .easing(Easing.Quartic.InOut)
-              .chain(
-                new Tween({}).to({}, 1000).onComplete(() => {
-                  this._leftSplash.remove();
-                  this._rightSplash.remove();
-                })
-              )
-              .start();
-          } else {
-            target.alpha = 0;
-          }
-        }
-      }
-    });
+    //         new Tween(target)
+    //           .to({
+    //             alpha: 1,
+    //             position: {
+    //               x: 0,
+    //             },
+    //           })
+    //           .easing(Easing.Quartic.InOut)
+    //           .chain(
+    //             new Tween({}).to({}, 1000).onComplete(() => {
+    //               this._leftSplash.remove();
+    //               this._rightSplash.remove();
+    //             })
+    //           )
+    //           .start();
+    //       } else {
+    //         target.alpha = 0;
+    //       }
+    //     }
+    //   }
+    // });
 
-    autorun(() => {
-      if (
-        store.sequenceStore.currentSequence?.payload?.action ==
-          'opponentPick' ||
-        store.sequenceStore.currentSequence?.event == IOEvent.END
-      ) {
-        this.cloudVisible = true;
-      } else {
-        this.cloudVisible = false;
-      }
-    });
+    // NOTE: 상대픽 관련련
+    // autorun(() => {
+    //   if (
+    //     store.sequenceStore.currentSequence?.payload?.action ===
+    //       'opponentPick' ||
+    //     store.sequenceStore.currentSequence?.event === IOEvent.END
+    //   ) {
+    //     this.cloudVisible = true;
+    //   } else {
+    //     this.cloudVisible = false;
+    //   }
+    // });
 
     let time = 0;
     this._shakeTween = new Tween({})
@@ -316,10 +278,6 @@ export class Camera extends Container {
         this._splashContainer.position.set(
           this._simplexX(0, time) * this.shakeRange,
           this._simplexY(0, time) * this.shakeRange
-        );
-        this._cloudContainer.position.set(
-          this._simplexX(0, time) * (this.shakeRange / -4),
-          this._simplexY(0, time) * (this.shakeRange / -4)
         );
       })
       .start();
@@ -345,36 +303,36 @@ export class Camera extends Container {
     this.addChild(Sprite.from('main/ui/cameraUI.png'));
   }
 
-  get cloudAlpha() {
-    return this._cloudAlpha;
-  }
+  // get cloudAlpha() {
+  //   return this._cloudAlpha;
+  // }
 
-  set cloudAlpha(value: number) {
-    this._cloudAlpha = value;
-    this._cloudA.alpha = value;
-    this._cloudB.alpha = value;
-    this._cloudB.position.x =
-      1920 / 2 +
-      (store.sequenceStore.team == 'left'
-        ? 400 * (1 - value)
-        : -400 * (1 - value));
-  }
+  // set cloudAlpha(value: number) {
+  //   this._cloudAlpha = value;
+  //   this._cloudA.alpha = value;
+  //   this._cloudB.alpha = value;
+  //   this._cloudB.position.x =
+  //     1920 / 2 +
+  //     (store.sequenceStore.team === 'left'
+  //       ? 400 * (1 - value)
+  //       : -400 * (1 - value));
+  // }
 
-  set cloudVisible(value: boolean) {
-    if (this._cloudVisible == value) {
-      return;
-    }
+  // set cloudVisible(value: boolean) {
+  //   if (this._cloudVisible === value) {
+  //     return;
+  //   }
 
-    this._cloudVisible = value;
+  //   this._cloudVisible = value;
 
-    if (value) {
-      this._cloudDisappearTween.stop();
-      this._cloudAppearTween.start();
-    } else {
-      this._cloudAppearTween.stop();
-      this._cloudDisappearTween.start();
-    }
-  }
+  //   if (value) {
+  //     this._cloudDisappearTween.stop();
+  //     this._cloudAppearTween.start();
+  //   } else {
+  //     this._cloudAppearTween.stop();
+  //     this._cloudDisappearTween.start();
+  //   }
+  // }
 
   onEvent = (event: CameraEvent, done: () => void) => {
     switch (event.action) {
@@ -559,7 +517,7 @@ class BlurOverlay extends Container {
     this.addChild(this._multiply);
 
     autorun(() => {
-      if (store.sequenceStore.currentSequence?.payload?.action == 'ban') {
+      if (store.sequenceStore.currentSequence?.action === 'ban') {
         this.state = 'ban';
       } else {
         this.state = 'default';
@@ -568,7 +526,7 @@ class BlurOverlay extends Container {
   }
 
   set state(value: 'default' | 'ban') {
-    if (this._state == value) {
+    if (this._state === value) {
       return;
     }
 
@@ -610,7 +568,7 @@ class CameraEventQueue {
         this._cameraEvents.push(item);
       } else {
         if (
-          this._cameraEvents[this._cameraEvents.length - 1].action ==
+          this._cameraEvents[this._cameraEvents.length - 1].action ===
           item.action
         ) {
           this._cameraEvents[this._cameraEvents.length - 1] = item;

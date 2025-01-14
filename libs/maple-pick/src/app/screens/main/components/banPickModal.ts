@@ -124,7 +124,7 @@ export class BanPickModal extends Container {
       () => store.sequenceStore.reset,
       () => {
         portraitButtonList.forEach((value) => {
-          if (store.jobStore.disableList.indexOf(value.job.id) == -1) {
+          if (store.jobStore.disableList.indexOf(value.job.id) === -1) {
             value.isDisabled = false;
           } else {
             value.isDisabled = true;
@@ -136,7 +136,7 @@ export class BanPickModal extends Container {
     autorun(() => {
       if (store.jobStore.disableList.length) {
         portraitButtonList.forEach((value) => {
-          if (store.jobStore.disableList.indexOf(value.job.id) == -1) {
+          if (store.jobStore.disableList.indexOf(value.job.id) === -1) {
             value.isDisabled = false;
           } else {
             value.isDisabled = true;
@@ -189,7 +189,7 @@ export class BanPickModal extends Container {
     autorun(() => {
       const auth = store.sequenceStore.auth;
 
-      if (auth == 'leftMember' || auth == 'rightMember') {
+      if (auth === 'leftMember' || auth === 'rightMember') {
         this.toggleButton.visible = false;
       } else {
         this.toggleButton.visible = true;

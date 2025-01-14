@@ -92,7 +92,7 @@ app.post('/create-room', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log(`[${socket.id}] 접속!`);
-  onInit(socket);
+  // onInit(socket);
 
   socket.on('disconnect', () => {
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);

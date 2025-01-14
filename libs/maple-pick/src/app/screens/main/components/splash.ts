@@ -51,8 +51,8 @@ export class Splash extends Container {
             if (this._isOpponent) {
               const job = getJob(this.jobId);
               this.sprite.scale.x *=
-                (this._direction == 'left' && job.reverse) ||
-                (this._direction == 'right' && !job.reverse)
+                (this._direction === 'left' && job.reverse) ||
+                (this._direction === 'right' && !job.reverse)
                   ? -1
                   : 1;
             }
@@ -71,12 +71,12 @@ export class Splash extends Container {
   }
 
   set jobId(value: JobId) {
-    if (this._jobId == value) {
+    if (this._jobId === value) {
       return;
     }
     this._jobId = value;
 
-    if (this._jobId == 0) {
+    if (this._jobId === 0) {
       this.sprite.texture = Texture.EMPTY;
     } else {
       this.sprite.texture = Texture.from(
@@ -88,8 +88,8 @@ export class Splash extends Container {
 
         this.sprite.scale.set(this._scale_);
         this.sprite.scale.x *=
-          (this._direction == 'left' && job.reverse) ||
-          (this._direction == 'right' && !job.reverse)
+          (this._direction === 'left' && job.reverse) ||
+          (this._direction === 'right' && !job.reverse)
             ? -1
             : 1;
         this.sprite.anchor.set(

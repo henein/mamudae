@@ -72,7 +72,7 @@
       }
     }
   },
-  "defaultProject": "memudea-app",
+  "defaultProject": "mamudae-app",
   "targetDefaults": {
     "@nx/esbuild:esbuild": {
       "cache": true,

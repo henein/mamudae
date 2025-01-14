@@ -60,10 +60,10 @@ export class SequenceStore {
   //   });
 
   //   this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
-  //     if (payload.action == 'opponentPick' && payload.jobId && payload.team) {
+  //     if (payload.action === 'opponentPick' && payload.jobId && payload.team) {
   //       rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
   //     } else {
-  //       rootStore.jobStore.moveJob(payload);
+  //       rootStore.jobStore.moveJob(payload, //jobId);
   //     }
 
   //     runInAction(() => {
@@ -83,21 +83,21 @@ export class SequenceStore {
   //       this.setNextSequence(undefined);
   //     });
   //   });
-  // }
+  }
 
-  // @computed
-  // get team() {
-  //   switch (this.auth) {
-  //     case 'leftLeader':
-  //     case 'leftMember':
-  //       return 'left';
-  //     case 'rightLeader':
-  //     case 'rightMember':
-  //       return 'right';
-  //     default:
-  //       return;
-  //   }
-  // }
+  @computed
+  get team() {
+    switch (this.auth) {
+      case 'leftLeader':
+      case 'leftMember':
+        return 'left';
+      case 'rightLeader':
+      case 'rightMember':
+        return 'right';
+      default:
+        return;
+    }
+  }
 
   // @action
   // init() {
@@ -156,21 +156,21 @@ export class SequenceStore {
   // @action
   // setCurrentSequence(sequence?: Sequence) {
   //   this.currentSequence = sequence;
-  //   if (sequence?.payload?.team == 'left' && this.auth == 'leftLeader') {
+  //   if (sequence?.payload?.team === 'left' && this.auth === 'leftLeader') {
   //     this.rootStore.jobStore.isModalEnabled = true;
   //   } else if (
-  //     sequence?.payload?.team == 'right' &&
-  //     this.auth == 'rightLeader'
+  //     sequence?.payload?.team === 'right' &&
+  //     this.auth === 'rightLeader'
   //   ) {
   //     this.rootStore.jobStore.isModalEnabled = true;
   //   } else if (
-  //     sequence?.payload?.action == 'opponentPick' &&
-  //     (this.auth == 'leftLeader' || this.auth == 'rightLeader')
+  //     sequence?.payload?.action === 'opponentPick' &&
+  //     (this.auth === 'leftLeader' || this.auth === 'rightLeader')
   //   ) {
-  //     console.log(sequence?.payload.team == this.team);
-  //     if (this.team == 'left' && store.jobStore.leftOpponentPick) {
+  //     console.log(sequence?.payload.team === this.team);
+  //     if (this.team === 'left' && store.jobStore.leftOpponentPick) {
   //       this.rootStore.jobStore.isModalEnabled = false;
-  //     } else if (this.team == 'right' && store.jobStore.rightOpponentPick) {
+  //     } else if (this.team === 'right' && store.jobStore.rightOpponentPick) {
   //       this.rootStore.jobStore.isModalEnabled = false;
   //     } else {
   //       this.rootStore.jobStore.isModalEnabled = true;
@@ -180,32 +180,32 @@ export class SequenceStore {
   //   }
   // }
 
-  // @action
-  // setNextSequence(sequence?: Sequence) {
-  //   this.nextSequence = sequence;
-  // }
+  @action
+  setNextSequence(sequence?: Sequence) {
+    this.nextSequence = sequence;
+  }
 
-  // @action
-  // emitSelect(value: JobId) {
-  //   if (this.rootStore.sequenceStore.auth == 'leftLeader') {
-  //     const payload: SelectPayload = { leftSelect: value };
-  //     this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
-  //   } else if (this.rootStore.sequenceStore.auth == 'rightLeader') {
-  //     const payload: SelectPayload = { rightSelect: value };
-  //     this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
-  //   }
-  // }
+  @action
+  emitSelect(value: JobId) {
+    // if (this.rootStore.sequenceStore.auth === 'leftLeader') {
+    //   const payload: SelectPayload = { leftSelect: value };
+    //   this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
+    // } else if (this.rootStore.sequenceStore.auth === 'rightLeader') {
+    //   const payload: SelectPayload = { rightSelect: value };
+    //   this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
+    // }
+  }
 
-  // @action
-  // emitBanPick() {
-  //   const nextPayload = this.currentSequence?.payload;
+  @action
+  emitBanPick() {
+    // const nextPayload = this.currentSequence?.payload;
 
-  //   const payload: SequencePayload = {
-  //     action: nextPayload?.action,
-  //     team: this.team,
-  //     index: nextPayload?.index,
-  //     jobId: this.rootStore.jobStore.teamSelect,
-  //   };
-  //   this.socket.emit(IOEvent.BAN_PICK, payload);
+    // const payload: SequencePayload = {
+    //   action: nextPayload?.action,
+    //   team: this.team,
+    //   index: nextPayload?.index,
+    //   jobId: this.rootStore.jobStore.teamSelect,
+    // };
+    // this.socket.emit(IOEvent.BAN_PICK, payload);
   }
 }

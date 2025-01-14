@@ -34,7 +34,9 @@ export class BanViewer extends Container {
     );
 
     autorun(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       store.sequenceStore.reset;
+
       for (let i = 0; i < leftBan.length; i++) {
         leftBan[i].jobId = 0;
       }
@@ -55,17 +57,17 @@ export class BanViewer extends Container {
     });
 
     autorun(() => {
-      const nextPayload = store.sequenceStore.currentSequence?.payload;
+      const currentSequence = store.sequenceStore.currentSequence;
 
       if (this._nextPanel) {
         this._nextPanel.isNext = false;
       }
 
-      if (nextPayload?.action == 'ban') {
-        const target = nextPayload?.team == 'left' ? leftBan : rightBan;
+      if (currentSequence?.action === 'ban') {
+        const target = currentSequence?.team === 'left' ? leftBan : rightBan;
 
-        if (nextPayload.index != undefined) {
-          this._nextPanel = target[nextPayload.index];
+        if (currentSequence.index !== undefined) {
+          this._nextPanel = target[currentSequence.index];
           this._nextPanel.isNext = true;
         }
       }

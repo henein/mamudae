@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { JobId, JobList, SequencePayload } from '@henein/mamudae-lib';
+import { Job, JobId, JobList, Sequence } from '@henein/mamudae-lib';
 import { RootStore } from './index';
 
 export class JobStore {
@@ -25,9 +25,9 @@ export class JobStore {
   @computed get selectJobId() {
     const nextSequence = this.rootStore.sequenceStore.currentSequence;
 
-    if (nextSequence?.payload?.team === 'left') {
+    if (nextSequence?.team === 'left') {
       return this.leftSelect;
-    } else if (nextSequence?.payload?.team === 'right') {
+    } else if (nextSequence?.team === 'right') {
       return this.rightSelect;
     }
   }
@@ -65,8 +65,8 @@ export class JobStore {
   };
 
   @action // index 추가 검사
-  moveJob = (payload: SequencePayload): boolean => {
-    const { action, team, jobId } = payload;
+  moveJob = (payload: Sequence, jobId: JobId): boolean => {
+    const { action, team } = payload;
     const fromIndex = this.unPickedList.indexOf(jobId ?? -1 as JobId);
     const targetList =
       action === 'ban'

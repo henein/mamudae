@@ -10,6 +10,30 @@ export default class Main {
       // squirrel event handled (except first run event) and app will exit in 1000ms, so don't do anything else
       app.quit();
     }
+
+    app.on('browser-window-created', (event, window) => {
+      window.on('resize', () => {
+
+        if (window.getTitle() !== 'Maple Pick')
+        {
+          return;
+        }
+
+        const ratio = 16 / 9;
+        const size = window.getContentSize();
+
+        let width = size[0];
+        let height = size[1];
+
+        if (width / height < ratio) {
+          width = Math.round(height * ratio);
+        } else {
+          height = Math.round(width / ratio);
+        }
+
+        window.setContentSize(width, height);
+      });
+    });
   }
 
   static bootstrapApp() {

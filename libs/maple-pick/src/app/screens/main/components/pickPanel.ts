@@ -42,7 +42,7 @@ export class PickPanel extends Container {
 
     this.background = this.addChild(
       Sprite.from(
-        `main/ui/${direction == 'left' ? 'leftPickBG' : 'rightPickBG'}.png`
+        `main/ui/${direction === 'left' ? 'leftPickBG' : 'rightPickBG'}.png`
       )
     );
 
@@ -53,8 +53,8 @@ export class PickPanel extends Container {
         y: 0,
         width: 396,
         height: 120,
-        topRight: direction == 'left' ? 64 : 0,
-        topLeft: direction == 'right' ? 64 : 0,
+        topRight: direction === 'left' ? 64 : 0,
+        topLeft: direction === 'right' ? 64 : 0,
       })
     );
     this.mask = graphics;
@@ -86,8 +86,8 @@ export class PickPanel extends Container {
         })
       )
     );
-    this.title.anchor.set(direction == 'left' ? 1 : 0, 1);
-    this.title.position.set(direction == 'left' ? 396 - 12 : 0 + 12, 120 - 8);
+    this.title.anchor.set(direction === 'left' ? 1 : 0, 1);
+    this.title.position.set(direction === 'left' ? 396 - 12 : 0 + 12, 120 - 8);
 
     const dropShadowFilter = new DropShadowFilter({
       offset: { x: 0, y: 4 },
@@ -117,13 +117,13 @@ export class PickPanel extends Container {
     sprite.texture = Texture.from(`main/splashes/${job.id}.png`);
     sprite.scale.set(0.65);
     sprite.scale.x *=
-      (this._direction == 'left' && job.reverse) ||
-      (this._direction == 'right' && !job.reverse)
+      (this._direction === 'left' && job.reverse) ||
+      (this._direction === 'right' && !job.reverse)
         ? -1
         : 1;
     sprite.anchor.set(0.5 + job.offsetX / 1024, 0.5 + job.offsetY / 604);
     sprite.position.set(
-      396 / 2 + (this._direction == 'left' ? -76 : 76),
+      396 / 2 + (this._direction === 'left' ? -76 : 76),
       120 / 2 + 20
     );
   };
@@ -131,7 +131,7 @@ export class PickPanel extends Container {
   set jobId(value: JobId) {
     this._job = getJob(value);
 
-    if (this._state == 'default') {
+    if (this._state === 'default') {
       this.background.alpha = this._backgroundAlpha.done;
       this.sprite.visible = true;
       this._currentSprite.visible = false;
@@ -146,7 +146,7 @@ export class PickPanel extends Container {
   }
 
   set state(value: 'default' | 'current' | 'next' | 'blind' | 'done') {
-    if (this._state == value) {
+    if (this._state === value) {
       return;
     }
 
@@ -179,7 +179,7 @@ export class PickPanel extends Container {
         this._currentSprite.alpha = 0.5;
         this._currentDisposer = autorun(() => {
           const selectJobId =
-            this._direction == 'left'
+            this._direction === 'left'
               ? store.jobStore.leftSelect
               : store.jobStore.rightSelect;
 

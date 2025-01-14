@@ -1,5 +1,4 @@
 import { autorun } from 'mobx';
-import { IOEvent } from '@henein/mamudae-lib';
 import { store } from '../store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Tween, Easing } from '@tweenjs/tween.js';
@@ -199,30 +198,29 @@ export class TitleBar extends Container {
       this._rightTween.stop();
 
       if (nextSequence) {
-        switch (nextSequence.event) {
-          case IOEvent.START:
+        switch (nextSequence.action) {
+          case 'start':
             title.text = '대기 중';
             break;
-          case IOEvent.BAN_PICK:
-            if (nextSequence.payload?.action == 'ban') {
+          case 'ban':
+          case 'pick':
+            if (nextSequence.action === 'ban') {
               title.text = `${
-                nextSequence.payload.team == 'left'
+                nextSequence.team === 'left'
                   ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
                   : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
               }이 ${
-                (nextSequence.payload.index ?? 0) + 1
+                (nextSequence.index ?? 0) + 1
               }번째 <span style="fill: #ca0000">밴</span>할 직업을 선택 중`;
-            } else if (nextSequence.payload?.action == 'pick') {
+            } else if (nextSequence.action === 'pick') {
               title.text = `${
-                nextSequence.payload?.team == 'left'
+                nextSequence.team === 'left'
                   ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
                   : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
-              }이 ${(nextSequence.payload?.index ?? 0) + 1}번째 직업을 선택 중`;
-            } else if (nextSequence.payload?.action == 'opponentPick') {
-              title.text = '상대팀 직업을 선택 중';
+              }이 ${(nextSequence.index ?? 0) + 1}번째 직업을 선택 중`;
             }
 
-            switch (nextSequence?.payload?.team) {
+            switch (nextSequence?.team) {
               case 'left':
                 this._preLeftTween.chain(this._leftTween).start();
                 break;
@@ -239,7 +237,7 @@ export class TitleBar extends Container {
             }
 
             break;
-          case IOEvent.END:
+          case 'end':
             title.text = '상대팀 직업 선택 완료!';
             break;
           default:
