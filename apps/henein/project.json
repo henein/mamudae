@@ -5,52 +5,5 @@
   "projectType": "application",
   "tags": [],
   "// targets": "to see all targets run: nx show project henein --web",
-  "targets": {
-    "build": {
-      "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist/apps/henein",
-        "assets": [
-          {
-            "input": "libs/maple-pick/public/assets",
-            "glob": "**/*",
-            "output": "./assets"
-          }
-        ]
-      },
-      "configurations": {
-        "development": {
-          "outputPath": "apps/henein"
-        },
-        "production": {}
-      }
-    },
-    "serve": {
-      "executor": "@nx/next:server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "henein:build",
-        "dev": true,
-        "assets": [
-          {
-            "input": "libs/maple-pick/public/assets",
-            "glob": "**/*",
-            "output": "./assets"
-          }
-        ]
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "henein:build:development",
-          "dev": true
-        },
-        "production": {
-          "buildTarget": "henein:build:production",
-          "dev": false
-        }
-      }
-    }
-  }
+  "targets": {}
 }
