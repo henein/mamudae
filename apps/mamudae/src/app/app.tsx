@@ -7,7 +7,7 @@ export function App() {
   return (
     <Routes>
       <Route path={RoutePath.Home} element={<HomePage />} />
-      <Route path={RoutePath.MaplePick} element={<MaplePickPage />} />
+      <Route path={`${RoutePath.MaplePick}/:id`} element={<MaplePickPage />} />
     </Routes>
   );
 }

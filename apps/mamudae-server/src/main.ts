@@ -4,37 +4,49 @@ import { Server } from 'socket.io';
 import path from 'path';
 import cors from 'cors';
 import { createId } from '@paralleldrive/cuid2';
-import { JobId, RoomState, Team } from '@henein/mamudae-lib';
+import {
+  ClientToServerEvents,
+  InterServerEvents,
+  JobId,
+  RoomState,
+  ServerToClientEvents,
+  SocketData,
+  JobList,
+} from '@henein/mamudae-lib';
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server(httpServer, { cors: { origin: '*' } });
+const io = new Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>(httpServer, { cors: { origin: '*' } });
 
 const port = process.env.PORT || 3000;
+
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 app.use(cors());
 
+app.use(express.json());
+
 const rooms = new Map<string, RoomState>();
 
-// app.get('/admin', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../public/admin.html'));
-// });
+app.get('/admin', (req, res) => {
+  res.render('admin', { jobList: JobList });
+});
 
 app.post('/create-room', (req, res) => {
-  const { myTeam, leftTeamName, rightTeamName, votedPicks, votedBan } = req.body as {
-    myTeam: Team;
+  const { leftTeamName, rightTeamName, votedPicks, votedBan } = req.body as {
     leftTeamName: string;
     rightTeamName: string;
     votedPicks: JobId[];
     votedBan: JobId;
   };
-
-  if (!myTeam) {
-    res.status(400).send('myTeam 필수');
-    return;
-  }
 
   if (!leftTeamName || !rightTeamName) {
     res.status(400).send('leftTeamName, rightTeamName 필수');
@@ -90,9 +102,49 @@ app.post('/create-room', (req, res) => {
   res.json({ roomId });
 });
 
+app.post('/start-room', (req, res) => {
+  const { roomId } = req.body as { roomId: string };
+
+  const room = rooms.get(roomId);
+
+  if (!room) {
+    res.status(404).send('방이 없음');
+    return;
+  }
+
+  if (room.sequences[0].action !== 'start') {
+    res.status(400).send('이미 시작된 방');
+    return;
+  }
+
+  room.sequences.shift();
+  io.to(roomId).emit('update', room);
+
+  res.json({ roomId: roomId, result: '시작!' });
+});
+
 io.on('connection', (socket) => {
   console.log(`[${socket.id}] 접속!`);
   // onInit(socket);
+
+  socket.on('join', (roomId, team, callback) => {
+    console.log(`[${socket.id}] join: ${roomId}, ${team}`);
+    const room = rooms.get(roomId);
+
+    if (!room) {
+      return;
+    }
+
+    // if (team === 'left') {
+    //   room.leftTeam.players.push(socket.id);
+    // } else {
+    //   room.rightTeam.players.push(socket.id);
+    // }
+
+    socket.join(roomId);
+
+    callback(room);
+  });
 
   socket.on('disconnect', () => {
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);

@@ -1,32 +1,19 @@
-// import { JobId } from './enums';
-// import { Sequence } from './sequenceQueue';
+import { Team } from "./enums";
+import { RoomState } from "./room-state";
 
-// export interface InitPayload {
-//   nextSequence?: Sequence;
-//   nextNextSequence?: Sequence;
-//   leftTeamName: string;
-//   rightTeamName: string;
-//   unPickedList: JobId[];
-//   leftBanList: JobId[];
-//   rightBanList: JobId[];
-//   leftPickList: JobId[];
-//   rightPickList: JobId[];
-//   leftVotePick?: JobId;
-//   rightVotePick?: JobId;
-//   leftSelect?: JobId;
-//   rightSelect?: JobId;
-//   votePicks: JobId[];
-//   voteBan: JobId;
-// }
+export interface ServerToClientEvents {
+  update: (state: RoomState) => void;
+}
 
-// export interface SequencePayload {
-//   nextSequence?: Sequence;
-//   nextNextSequence?: Sequence;
-//   action?: 'ban' | 'pick' | 'opponentPick';
-//   team?: 'left' | 'right';
-//   index?: number;
-//   jobId?: JobId;
-//   opponentJobId?: { left: JobId; right: JobId };
-// }
+export interface ClientToServerEvents {
+  join: (roomId: string, team: Team, callback: (state: RoomState) => void) => void;
+}
 
+export interface InterServerEvents {
+  ping: () => void;
+}
 
+export interface SocketData {
+  nickname: string;
+  team: Team;
+}

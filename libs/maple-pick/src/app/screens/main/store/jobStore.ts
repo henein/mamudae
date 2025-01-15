@@ -13,11 +13,14 @@ export class JobStore {
   @observable rightOpponentPick?: JobId;
   @observable leftSelect?: JobId | 0;
   @observable rightSelect?: JobId | 0;
-  @observable isModalEnabled = false;
 
   constructor(rootStore: RootStore) {
     makeObservable(this);
     this.rootStore = rootStore;
+  }
+
+  @computed get isModalEnabled() {
+    return this.rootStore.sequenceStore.currentSequence?.team === this.rootStore.sequenceStore.team;
   }
 
   // undefined: 없음

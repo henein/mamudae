@@ -1,25 +1,25 @@
 import {
   action,
   computed,
+  IObservableArray,
   makeObservable,
   observable,
-  runInAction,
 } from 'mobx';
-import io, { Socket } from 'socket.io-client';
-import { RootStore, store } from '.';
+import { RootStore } from '.';
 import {
   JobId,
+  RoomState,
   Sequence,
+  Team,
 } from '@henein/mamudae-lib';
 
 export class SequenceStore {
   rootStore: RootStore;
-  socket: Socket;
   @observable reset = false;
   @observable leftTeamName = '';
   @observable rightTeamName = '';
-  @observable currentSequence?: Sequence;
-  @observable nextSequence?: Sequence;
+  @observable sequences = observable.array<Sequence>([]);
+  @observable team?: Team;
   @observable auth?:
     | 'leftMember'
     | 'rightMember'
@@ -31,13 +31,6 @@ export class SequenceStore {
     this.rootStore = rootStore;
 
     // const key = prompt('접속키를 입력해주세요!');
-
-    this.socket = io('localhost:3000',{
-      reconnectionDelayMax: 10000,
-      query: {
-        key: "left_leader",
-      },
-    });
 
     // this.init();
 
@@ -86,17 +79,13 @@ export class SequenceStore {
   }
 
   @computed
-  get team() {
-    switch (this.auth) {
-      case 'leftLeader':
-      case 'leftMember':
-        return 'left';
-      case 'rightLeader':
-      case 'rightMember':
-        return 'right';
-      default:
-        return;
-    }
+  get currentSequence() {
+    return this.sequences?.[0];
+  }
+
+  @computed
+  get nextSequence() {
+    return this.sequences?.[1];
   }
 
   // @action
@@ -153,36 +142,12 @@ export class SequenceStore {
   //   this.rightTeamName = payload.rightTeamName;
   // }
 
-  // @action
-  // setCurrentSequence(sequence?: Sequence) {
-  //   this.currentSequence = sequence;
-  //   if (sequence?.payload?.team === 'left' && this.auth === 'leftLeader') {
-  //     this.rootStore.jobStore.isModalEnabled = true;
-  //   } else if (
-  //     sequence?.payload?.team === 'right' &&
-  //     this.auth === 'rightLeader'
-  //   ) {
-  //     this.rootStore.jobStore.isModalEnabled = true;
-  //   } else if (
-  //     sequence?.payload?.action === 'opponentPick' &&
-  //     (this.auth === 'leftLeader' || this.auth === 'rightLeader')
-  //   ) {
-  //     console.log(sequence?.payload.team === this.team);
-  //     if (this.team === 'left' && store.jobStore.leftOpponentPick) {
-  //       this.rootStore.jobStore.isModalEnabled = false;
-  //     } else if (this.team === 'right' && store.jobStore.rightOpponentPick) {
-  //       this.rootStore.jobStore.isModalEnabled = false;
-  //     } else {
-  //       this.rootStore.jobStore.isModalEnabled = true;
-  //     }
-  //   } else {
-  //     this.rootStore.jobStore.isModalEnabled = false;
-  //   }
-  // }
-
   @action
-  setNextSequence(sequence?: Sequence) {
-    this.nextSequence = sequence;
+  updateRoomState(roomState: RoomState, team?: Team) {
+    this.leftTeamName = roomState.leftTeam.name;
+    this.rightTeamName = roomState.rightTeam.name;
+    this.sequences.replace(roomState.sequences);
+    this.team = team ?? this.team;
   }
 
   @action

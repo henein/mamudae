@@ -1,0 +1,122 @@
+<html lang='ko'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>밴픽 관리자</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
+    <div class='container-fluid'>
+      <a class='navbar-brand' href='#'>밴픽 관리자</a>
+    </div>
+  </nav>
+
+  <div class='container mt-4'>
+    <div class='row'>
+      <div class='col-md-8'>
+        <form id='createRoomForm' class='card card-body mb-4'>
+          <h2 class='mb-3'>방 생성</h2>
+          <div class='mb-3'>
+            <label for='leftTeamName' class='form-label'>선픽 팀 이름</label>
+            <input type='text' class='form-control' id='leftTeamName' required />
+          </div>
+          <div class='mb-3'>
+            <label for='rightTeamName' class='form-label'>후픽 팀 이름</label>
+            <input type='text' class='form-control' id='rightTeamName' required />
+          </div>
+          <div class='mb-3'>
+            <label for='votedPicks1' class='form-label'>투표 픽 #1</label>
+            <select class='form-select' id='votedPicks1' required>
+              {{#each jobList}}
+              <option value='{{this.id}}'>{{this.jobName}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class='mb-3'>
+            <label for='votedPicks2' class='form-label'>투표 픽 #2</label>
+            <select class='form-select' id='votedPicks2' required>
+              {{#each jobList}}
+              <option value='{{this.id}}'>{{this.jobName}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class='mb-3'>
+            <label for='votedBan' class='form-label'>투표 밴</label>
+            <select class='form-select' id='votedBan' required>
+              {{#each jobList}}
+              <option value='{{this.id}}'>{{this.jobName}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <button type='submit' class='btn btn-primary'>생성</button>
+                <div class='col-md-4'>
+        <div class='response alert alert-info d-none mt-4'></div>
+      </div>
+        </form>
+
+        <form id='startRoomForm' class='card card-body'>
+          <h2 class='mb-3'>방 시작</h2>
+          <div class='mb-3'>
+            <label for='roomId' class='form-label'>Room ID</label>
+            <input type='text' class='form-control' id='roomId' required />
+          </div>
+          <button type='submit' class='btn btn-success'>시작</button>
+                  <div class='col-md-4'>
+        <div class='response alert alert-info d-none mt-4'></div>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document
+      .getElementById('createRoomForm')
+      .addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const leftTeamName = document.getElementById('leftTeamName').value;
+        const rightTeamName = document.getElementById('rightTeamName').value;
+        const votedPicks1 = document.getElementById('votedPicks1').value;
+        const votedPicks2 = document.getElementById('votedPicks2').value;
+        const votedBan = document.getElementById('votedBan').value;
+
+        const res = await fetch('/create-room', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            leftTeamName,
+            rightTeamName,
+            votedPicks: [Number(votedPicks1), Number(votedPicks2)],
+            votedBan: Number(votedBan),
+          }),
+        });
+        const data = await res.json();
+
+        const responseDiv = document.querySelector('#createRoomForm > div > .response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.textContent = JSON.stringify(data, null, 2);
+      });
+
+    document
+      .getElementById('startRoomForm')
+      .addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const roomId = document.getElementById('roomId').value;
+        const res = await fetch('/start-room', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ roomId }),
+        });
+        const data = await res.text();
+        const responseDiv = document.querySelector('#startRoomForm > div > .response');
+        responseDiv.classList.remove('d-none');
+        responseDiv.textContent = data;
+      });
+  </script>
+</body>
+
+</html>

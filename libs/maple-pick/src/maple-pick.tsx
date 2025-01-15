@@ -9,9 +9,16 @@ import { CreationEngine } from './engine/engine';
  * Importing these modules will automatically register there plugins with the engine.
  */
 import '@pixi/sound';
+import { store } from './app/screens/main/store';
+import { RoomState, Team } from '@henein/mamudae-lib';
 // import "@esotericsoftware/spine-pixi-v8";
 
-export const MaplePick = () => {
+export interface MaplePickProps {
+  team?: Team;
+  roomState?: RoomState;
+}
+
+export const MaplePick: React.FC<MaplePickProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,7 +27,7 @@ export const MaplePick = () => {
     }
 
     if (isEngineReady()) {
-      engine().addCanvas(ref.current);
+      // engine().addCanvas(ref.current);
       return;
     }
 
@@ -51,6 +58,14 @@ export const MaplePick = () => {
     //   engine.destroy(true);
     // };
   });
+
+  useEffect(() => {
+    if (!props.roomState) {
+      return;
+    }
+
+    store.sequenceStore.updateRoomState(props.roomState);
+  }, [props.roomState]);
 
   return (
     <div

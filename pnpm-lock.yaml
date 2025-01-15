@@ -95,6 +95,9 @@ importers:
       graphql:
         specifier: ^16.8.1
         version: 16.10.0
+      hbs:
+        specifier: ^4.2.0
+        version: 4.2.0
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -239,7 +242,7 @@ importers:
         version: 20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/helpers@0.5.15)(@types/node@18.16.9)(@zkochan/js-yaml@0.0.7)(esbuild@0.19.12)(eslint@9.17.0(jiti@1.21.7))(next@14.2.16(@babel/core@7.26.0)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.1))(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(vue-tsc@1.8.27(typescript@5.6.3))(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       '@nx/vite':
         specifier: 20.3.1
-        version: 20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(vite@5.4.11(@types/node@18.16.9)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))(vitest@1.6.0)
+        version: 20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(vite@5.4.11(@types/node@18.16.9)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))(vitest@1.6.0(@types/node@18.16.9)(@vitest/ui@1.6.0)(jsdom@22.1.0)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))
       '@nx/web':
         specifier: 20.3.1
         version: 20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)
@@ -267,6 +270,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      '@types/hbs':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -329,7 +335,7 @@ importers:
         version: 33.3.1
       electron-builder:
         specifier: ^25.1.8
-        version: 25.1.8(electron-builder-squirrel-windows@25.1.8)
+        version: 25.1.8(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
       esbuild:
         specifier: ^0.19.2
         version: 0.19.12
@@ -371,7 +377,7 @@ importers:
         version: 20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))
       nx-electron:
         specifier: ^20.0.0
-        version: 20.0.0(@nx/workspace@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(@swc/core@1.5.29(@swc/helpers@0.5.15))(electron-builder-squirrel-windows@25.1.8)(electron@33.3.1)(esbuild@0.19.12)(rxjs@7.8.1)(typescript@5.6.3)
+        version: 20.0.0(@nx/workspace@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(@swc/core@1.5.29(@swc/helpers@0.5.15))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))(electron@33.3.1)(esbuild@0.19.12)(rxjs@7.8.1)(typescript@5.6.3)
       postcss:
         specifier: 8.4.38
         version: 8.4.38
@@ -3568,6 +3574,9 @@ packages:
   '@types/gradient-parser@0.1.5':
     resolution: {integrity: sha512-r7K3NkJz3A95WkVVmjs0NcchhHstC2C/VIYNX4JC6tieviUNo774FFeOHjThr3Vw/WCeMP9kAT77MKbIRlO/4w==}
 
+  '@types/hbs@4.0.4':
+    resolution: {integrity: sha512-GH3SIb2tzDBnTByUSOIVcD6AcLufnydBllTuFAIAGMhqPNbz8GL4tLryVdNqhq0NQEb5mVpu2FJOrUeqwJrPtg==}
+
   '@types/hoist-non-react-statics@3.3.6':
     resolution: {integrity: sha512-lPByRJUer/iN/xa4qpyL0qmL11DqNW81iU/IG1S3uvRUq4oKagz8VCxZjiWkumgt66YT3vOdDgZ0o32sGKtCEw==}
 
@@ -5859,6 +5868,9 @@ packages:
   for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
 
+  foreachasync@3.0.0:
+    resolution: {integrity: sha512-J+ler7Ta54FwwNcx6wQRDhTIbNeyDcARMkOcguEqnEdtm0jKvN3Li3PDAb2Du3ubJYEWfYL83XMROXdsXAXycw==}
+
   foreground-child@3.3.0:
     resolution: {integrity: sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==}
     engines: {node: '>=14'}
@@ -6132,6 +6144,11 @@ packages:
   handle-thing@2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
 
+  handlebars@4.7.7:
+    resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
+    engines: {node: '>=0.4.7'}
+    hasBin: true
+
   handlebars@4.7.8:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
@@ -6177,6 +6194,10 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hbs@4.2.0:
+    resolution: {integrity: sha512-dQwHnrfWlTk5PvG9+a45GYpg0VpX47ryKF8dULVd6DtwOE6TEcYQXQ5QM6nyOx/h7v3bvEQbdn19EDAcfUAgZg==}
+    engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
   he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
@@ -10054,6 +10075,9 @@ packages:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
     engines: {node: '>=14'}
 
+  walk@2.3.15:
+    resolution: {integrity: sha512-4eRTBZljBfIISK1Vnt69Gvr2w/wc3U6Vtrw7qiN5iqYJPH7LElcYh/iU4XWhdCy2dZqv1ToMyYlybDylfG/5Vg==}
+
   walker@1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
 
@@ -13179,7 +13203,7 @@ snapshots:
       - webpack
       - webpack-cli
 
-  '@nx/vite@20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(vite@5.4.11(@types/node@18.16.9)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))(vitest@1.6.0)':
+  '@nx/vite@20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(vite@5.4.11(@types/node@18.16.9)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))(vitest@1.6.0(@types/node@18.16.9)(@vitest/ui@1.6.0)(jsdom@22.1.0)(less@4.1.3)(sass@1.83.1)(stylus@0.64.0)(terser@5.37.0))':
     dependencies:
       '@nx/devkit': 20.3.1(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
       '@nx/js': 20.3.1(@babel/traverse@7.26.4)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)
@@ -14144,6 +14168,10 @@ snapshots:
 
   '@types/gradient-parser@0.1.5': {}
 
+  '@types/hbs@4.0.4':
+    dependencies:
+      handlebars: 4.7.8
+
   '@types/hoist-non-react-statics@3.3.6':
     dependencies:
       '@types/react': 18.3.1
@@ -14826,7 +14854,7 @@ snapshots:
 
   app-builder-bin@5.0.0-alpha.10: {}
 
-  app-builder-lib@25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8):
+  app-builder-lib@25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8)):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.5.0
@@ -16126,7 +16154,7 @@ snapshots:
 
   dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
       builder-util: 25.1.7
       builder-util-runtime: 9.2.10
       fs-extra: 10.1.0
@@ -16231,7 +16259,7 @@ snapshots:
 
   electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
       archiver: 5.3.2
       builder-util: 25.1.7
       fs-extra: 10.1.0
@@ -16240,9 +16268,9 @@ snapshots:
       - dmg-builder
       - supports-color
 
-  electron-builder@25.1.8(electron-builder-squirrel-windows@25.1.8):
+  electron-builder@25.1.8(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8)):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
       builder-util: 25.1.7
       builder-util-runtime: 9.2.10
       chalk: 4.1.2
@@ -16595,7 +16623,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -16617,7 +16645,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.17.0(jiti@1.21.7)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.17.0(jiti@1.21.7)))(eslint@9.17.0(jiti@1.21.7))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -17072,6 +17100,8 @@ snapshots:
     dependencies:
       is-callable: 1.2.7
 
+  foreachasync@3.0.0: {}
+
   foreground-child@3.3.0:
     dependencies:
       cross-spawn: 7.0.6
@@ -17429,6 +17459,15 @@ snapshots:
 
   handle-thing@2.0.1: {}
 
+  handlebars@4.7.7:
+    dependencies:
+      minimist: 1.2.8
+      neo-async: 2.6.2
+      source-map: 0.6.1
+      wordwrap: 1.0.0
+    optionalDependencies:
+      uglify-js: 3.19.3
+
   handlebars@4.7.8:
     dependencies:
       minimist: 1.2.8
@@ -17467,6 +17506,11 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hbs@4.2.0:
+    dependencies:
+      handlebars: 4.7.7
+      walk: 2.3.15
 
   he@1.2.0: {}
 
@@ -19209,12 +19253,12 @@ snapshots:
 
   nwsapi@2.2.16: {}
 
-  nx-electron@20.0.0(@nx/workspace@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(@swc/core@1.5.29(@swc/helpers@0.5.15))(electron-builder-squirrel-windows@25.1.8)(electron@33.3.1)(esbuild@0.19.12)(rxjs@7.8.1)(typescript@5.6.3):
+  nx-electron@20.0.0(@nx/workspace@20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(@swc/core@1.5.29(@swc/helpers@0.5.15))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))(electron@33.3.1)(esbuild@0.19.12)(rxjs@7.8.1)(typescript@5.6.3):
     dependencies:
       '@nx/workspace': 20.3.1(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))
       copy-webpack-plugin: 12.0.2(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       electron: 33.3.1
-      electron-builder: 25.1.8(electron-builder-squirrel-windows@25.1.8)
+      electron-builder: 25.1.8(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
       fork-ts-checker-webpack-plugin: 9.0.2(typescript@5.6.3)(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       license-webpack-plugin: 4.0.2(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.19.12))
       rxjs-for-await: 1.0.0(rxjs@7.8.1)
@@ -21863,6 +21907,10 @@ snapshots:
   w3c-xmlserializer@4.0.0:
     dependencies:
       xml-name-validator: 4.0.0
+
+  walk@2.3.15:
+    dependencies:
+      foreachasync: 3.0.0
 
   walker@1.0.8:
     dependencies:

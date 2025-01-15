@@ -16,7 +16,13 @@
         "bundle": false,
         "main": "apps/mamudae-server/src/main.ts",
         "tsConfig": "apps/mamudae-server/tsconfig.app.json",
-        "assets": ["apps/mamudae-server/src/assets"],
+        "assets": [
+          {
+            "input": "apps/mamudae-server/src/views",
+            "glob": "**/*",
+            "output": "./apps/mamudae-server/src/views"
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -26,7 +32,9 @@
         }
       },
       "configurations": {
-        "development": {},
+        "development": {
+
+        },
         "production": {
           "esbuildOptions": {
             "sourcemap": false,
