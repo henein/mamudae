@@ -18,5 +18,6 @@ WORKDIR /app
 
 # Copy build output
 COPY --from=builder /app/dist/apps/mamudae-server/ ./
+RUN npm ci
 EXPOSE 3000
 CMD ["node", "main.js"]
