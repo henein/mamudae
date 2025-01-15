@@ -24,18 +24,8 @@
         "serveStaticTargetName": "serve-static"
       }
     },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
+    { "plugin": "@nx/jest/plugin", "options": { "targetName": "test" } },
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
@@ -50,10 +40,7 @@
   ],
   "generators": {
     "@nx/next": {
-      "application": {
-        "style": "@emotion/styled",
-        "linter": "eslint"
-      }
+      "application": { "style": "@emotion/styled", "linter": "eslint" }
     },
     "@nx/react": {
       "library": {
@@ -67,9 +54,7 @@
         "linter": "eslint",
         "bundler": "vite"
       },
-      "component": {
-        "style": "tailwind"
-      }
+      "component": { "style": "tailwind" }
     }
   },
   "defaultProject": "mamudae-app",
@@ -79,5 +64,6 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     }
-  }
+  },
+  "nxCloudId": "6787c8da29932a38067f1f52"
 }
