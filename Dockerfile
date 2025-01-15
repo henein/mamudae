@@ -18,6 +18,9 @@ WORKDIR /app
 
 # Copy build output
 COPY --from=builder /app/dist/apps/mamudae-server/ ./
-RUN npm ci
+
+RUN npm install -g pnpm
+RUN pnpm install
+
 EXPOSE 3000
 CMD ["node", "main.js"]
