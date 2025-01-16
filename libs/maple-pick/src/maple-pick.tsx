@@ -9,7 +9,7 @@ import { CreationEngine } from './engine/engine';
  * Importing these modules will automatically register there plugins with the engine.
  */
 import '@pixi/sound';
-import { store } from './app/screens/main/store';
+import { store } from './app/store';
 import { RoomState, Team } from '@henein/mamudae-lib';
 // import "@esotericsoftware/spine-pixi-v8";
 

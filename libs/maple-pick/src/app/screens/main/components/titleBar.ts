@@ -1,5 +1,5 @@
 import { autorun } from 'mobx';
-import { store } from '../store';
+import { store } from '../../../store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Tween, Easing } from '@tweenjs/tween.js';
 import {

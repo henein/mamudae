@@ -1,5 +1,5 @@
 import { autorun } from 'mobx';
-import { store } from '../store';
+import { store } from '../../../store';
 import { BanPanel } from './banPanel';
 import { Container } from 'pixi.js';
 

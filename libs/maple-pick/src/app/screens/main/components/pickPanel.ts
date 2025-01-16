@@ -1,7 +1,7 @@
 import { IReactionDisposer, autorun } from 'mobx';
 import { DropShadowFilter } from 'pixi-filters';
 import { JobId, getJob, Job  } from '@henein/mamudae-lib';
-import { store } from '../store';
+import { store } from '../../../store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 

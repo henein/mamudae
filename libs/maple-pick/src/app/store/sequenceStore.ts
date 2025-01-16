@@ -5,7 +5,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import { RootStore } from '.';
+import { RootStore } from './index';
 import {
   JobId,
   RoomState,
@@ -42,40 +42,30 @@ export class SequenceStore {
   //     console.log('start');
   //   });
 
-  //   this.socket.on(IOEvent.RESET, () => {
-  //     this.socket.emit(IOEvent.INIT);
-  //     console.log('reset');
-  //   });
+    this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
+      if (payload.action === 'opponentPick' && payload.jobId && payload.team) {
+        rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
+      } else {
+        rootStore.jobStore.moveJob(payload, //jobId);
+      }
 
-  //   this.socket.on(IOEvent.TEAM_NAME, (payload: TeamNamePayload) => {
-  //     this.onTeamName(payload);
-  //     console.log('teamName');
-  //   });
+      runInAction(() => {
+        this.setCurrentSequence(payload.nextSequence);
+        this.setNextSequence(payload.nextNextSequence);
+      });
+    });
 
-  //   this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
-  //     if (payload.action === 'opponentPick' && payload.jobId && payload.team) {
-  //       rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
-  //     } else {
-  //       rootStore.jobStore.moveJob(payload, //jobId);
-  //     }
+    this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
+      this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
+    });
 
-  //     runInAction(() => {
-  //       this.setCurrentSequence(payload.nextSequence);
-  //       this.setNextSequence(payload.nextNextSequence);
-  //     });
-  //   });
-
-  //   this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
-  //     this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
-  //   });
-
-  //   this.socket.on(IOEvent.END, () => {
-  //     this.rootStore.jobStore.onEnd();
-  //     runInAction(() => {
-  //       this.setCurrentSequence(undefined);
-  //       this.setNextSequence(undefined);
-  //     });
-  //   });
+    this.socket.on(IOEvent.END, () => {
+      this.rootStore.jobStore.onEnd();
+      runInAction(() => {
+        this.setCurrentSequence(undefined);
+        this.setNextSequence(undefined);
+      });
+    });
   }
 
   @computed

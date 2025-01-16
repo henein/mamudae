@@ -9,8 +9,8 @@ export class JobStore {
   @observable rightBanList: JobId[] = [];
   @observable leftPickList: JobId[] = [];
   @observable rightPickList: JobId[] = [];
-  @observable leftOpponentPick?: JobId;
-  @observable rightOpponentPick?: JobId;
+  // @observable leftOpponentPick?: JobId;
+  // @observable rightOpponentPick?: JobId;
   @observable leftSelect?: JobId | 0;
   @observable rightSelect?: JobId | 0;
 
@@ -51,8 +51,8 @@ export class JobStore {
     rightBanList: JobId[],
     leftPickList: JobId[],
     rightPickList: JobId[],
-    leftOpponentPick?: JobId,
-    rightOpponentPick?: JobId,
+    // leftOpponentPick?: JobId,
+    // rightOpponentPick?: JobId,
     leftSelect?: JobId,
     rightSelect?: JobId
   ) => {
@@ -61,8 +61,8 @@ export class JobStore {
     this.rightBanList = rightBanList;
     this.leftPickList = leftPickList;
     this.rightPickList = rightPickList;
-    this.leftOpponentPick = leftOpponentPick;
-    this.rightOpponentPick = rightOpponentPick;
+    // this.leftOpponentPick = leftOpponentPick;
+    // this.rightOpponentPick = rightOpponentPick;
     this.leftSelect = leftSelect;
     this.rightSelect = rightSelect;
   };
@@ -112,24 +112,24 @@ export class JobStore {
     this.rightSelect = rightSelect;
   }
 
-  @action
-  onOpponentPick = (jobId: JobId, team: 'left' | 'right') => {
-    if (team === 'left') {
-      this.leftOpponentPick = jobId;
-    } else if (team === 'right') {
-      this.rightOpponentPick = jobId;
-    }
-  };
+  // @action
+  // onOpponentPick = (jobId: JobId, team: 'left' | 'right') => {
+  //   if (team === 'left') {
+  //     this.leftOpponentPick = jobId;
+  //   } else if (team === 'right') {
+  //     this.rightOpponentPick = jobId;
+  //   }
+  // };
 
-  @action
-  onEnd = () => {
-    if (!this.leftOpponentPick || !this.rightOpponentPick) {
-      return;
-    }
-
-    this.leftPickList.push(this.rightOpponentPick);
-    this.rightPickList.push(this.leftOpponentPick);
-  };
+  // @action
+  // onEnd = () => {
+  //   if (!this.leftOpponentPick || !this.rightOpponentPick) {
+  //     return;
+  //   }
+  //
+  //   this.leftPickList.push(this.rightOpponentPick);
+  //   this.rightPickList.push(this.leftOpponentPick);
+  // };
 
   @computed
   get disableList() {

@@ -3,7 +3,7 @@
 */
 
 import { autorun, reaction } from 'mobx';
-import { store } from '../store';
+import { store } from '../../../store';
 import { Tween } from '@tweenjs/tween.js';
 import { createNoise2D } from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';

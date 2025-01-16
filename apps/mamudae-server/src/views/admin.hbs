@@ -96,6 +96,10 @@
         });
         const data = await res.json();
 
+        if (data.roomId) {
+          document.getElementById('roomId').value = data.roomId;
+        }
+
         const responseDiv = document.querySelector('#createRoomForm > div > .response');
         responseDiv.classList.remove('d-none');
         responseDiv.textContent = JSON.stringify(data, null, 2);

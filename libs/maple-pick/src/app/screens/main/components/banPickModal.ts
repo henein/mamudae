@@ -4,7 +4,7 @@ import { constants } from '../constants';
 import { Portrait } from './portrait';
 import { Button } from './button';
 import { TextButton } from './textButton';
-import { store } from '../store';
+import { store } from '../../../store';
 import { autorun, reaction } from 'mobx';
 import {
   Container,

@@ -6,7 +6,10 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  join: (roomId: string, team: Team, callback: (state: RoomState) => void) => void;
+  join: (roomId: string, team: Team, callback: (state: RoomState, error?: string) => void) => void;
+  select: (jobId: string) => void;
+  ban: (jobId: string) => void;
+  pick: (jobId: string) => void;
 }
 
 export interface InterServerEvents {

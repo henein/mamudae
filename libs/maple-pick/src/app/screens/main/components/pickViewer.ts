@@ -1,5 +1,5 @@
 import { autorun, reaction } from 'mobx';
-import { store } from '../store';
+import { store } from '../../../store';
 import { PickPanel } from './pickPanel';
 import { Container } from 'pixi.js';
 
