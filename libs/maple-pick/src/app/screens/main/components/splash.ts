@@ -1,6 +1,6 @@
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { JobId, getJob } from '@henein/mamudae-lib';
-import { Container, Sprite, Texture } from 'pixi.js';
+import { ColorMatrixFilter, Container, Sprite, Texture } from 'pixi.js';
 
 export class Splash extends Container {
   private _jobId: JobId = JobId.BEGINNER;
@@ -8,6 +8,7 @@ export class Splash extends Container {
   private _isOpponent: boolean;
   private _direction: 'left' | 'right';
 
+  colorMatrixFilter: ColorMatrixFilter;
   sprite: Sprite;
   offsetX: number;
   offsetY: number;
@@ -21,10 +22,14 @@ export class Splash extends Container {
     direction: 'left' | 'right' = 'left'
   ) {
     super();
+    this.colorMatrixFilter = new ColorMatrixFilter();
+    this.filters = [this.colorMatrixFilter];
+
     this.sprite = this.addChild(new Sprite());
     this.sprite.scale.set(scale);
     this.sprite.anchor.set(0.5);
     this.sprite.position.set(x, y);
+
     this.jobId = jobId;
     this.offsetX = x;
     this.offsetY = y;
@@ -40,7 +45,13 @@ export class Splash extends Container {
       .to({ dark: 1 }, 1000)
       .easing(Easing.Quartic.InOut)
       .onUpdate((object) => {
-        // this.sprite.color.setDark(object.dark, object.dark, object.dark);
+        const value = object.dark;
+        this.colorMatrixFilter.matrix = [
+          1, 0, 0, 0, value,
+          0, 1, 0, 0, value,
+          0, 0, 1, 0, value,
+          0, 0, 0, 1, 0
+        ];
       })
       .chain(
         new Tween({ scale: this._scale_ })

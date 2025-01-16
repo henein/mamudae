@@ -1,7 +1,7 @@
 import { JobId, Team } from "./enums";
 
 export type Sequence = {
-  action: 'start' | 'ban' | 'pick' | 'votePick' | 'end';
+  action: 'start' | 'ban' | 'pick' | 'coinToss' | 'votePick';
   team?: Team;
   index?: number;
 };
@@ -11,7 +11,6 @@ export type TeamState = {
   pickList: JobId[];
   banList: JobId[];
   votePick?: JobId;
-  select?: JobId;
 }
 
 export type RoomState = {
@@ -22,4 +21,8 @@ export type RoomState = {
 
   votedPicks: JobId[];
   votedBan: JobId;
+
+  selected?: JobId;
+
+  coinTossTeam?: Team;
 }

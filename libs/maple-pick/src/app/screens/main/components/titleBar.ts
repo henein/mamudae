@@ -1,5 +1,5 @@
 import { autorun } from 'mobx';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Tween, Easing } from '@tweenjs/tween.js';
 import {
@@ -67,8 +67,8 @@ export class TitleBar extends Container {
     this._rightTeamName.position.set(1920 - 32, 132);
 
     autorun(() => {
-      this._leftTeamName.text = store.sequenceStore.leftTeamName;
-      this._rightTeamName.text = store.sequenceStore.rightTeamName;
+      this._leftTeamName.text = store.roomState.leftTeam.name;
+      this._rightTeamName.text = store.roomState.rightTeam.name;
     });
 
     this._main = this.addChild(
@@ -119,9 +119,7 @@ export class TitleBar extends Container {
         object.arrow.alpha = 0;
       });
 
-    this._rightArrow = this.addChild(
-      Sprite.from('main/ui/rightArrow.png')
-    );
+    this._rightArrow = this.addChild(Sprite.from('main/ui/rightArrow.png'));
     this._rightArrow.position.set(1356, 0);
     this._rightArrow.visible = false;
     this._rightArrow.alpha = 0;
@@ -183,15 +181,22 @@ export class TitleBar extends Container {
     //   })
     // );
 
-    const title = this.addChild(new HTMLText(
-      {style: {fontFamily: 'Maplestory Bold', fontSize: '56px', fill: '#404040', align: 'center'}},
-    ));
+    const title = this.addChild(
+      new HTMLText({
+        style: {
+          fontFamily: 'Maplestory Bold',
+          fontSize: '56px',
+          fill: '#404040',
+          align: 'center',
+        },
+      })
+    );
 
     title.anchor.set(0.5, 0);
     title.position.set(1920 / 2, 32 - 2);
 
     autorun(() => {
-      const nextSequence = store.sequenceStore.currentSequence;
+      const nextSequence = store.currentSequence;
       this._preLeftTween.stop();
       this._leftTween.stop();
       this._preRightTween.stop();
@@ -207,16 +212,16 @@ export class TitleBar extends Container {
             if (nextSequence.action === 'ban') {
               title.text = `${
                 nextSequence.team === 'left'
-                  ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
-                  : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
+                  ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
+                  : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
               }이 ${
                 (nextSequence.index ?? 0) + 1
               }번째 <span style="fill: #ca0000">밴</span>할 직업을 선택 중`;
             } else if (nextSequence.action === 'pick') {
               title.text = `${
                 nextSequence.team === 'left'
-                  ? `<span style="fill: #0075ca">${store.sequenceStore.leftTeamName}</span>`
-                  : `<span style="fill: #de9300">${store.sequenceStore.rightTeamName}</span>`
+                  ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
+                  : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
               }이 ${(nextSequence.index ?? 0) + 1}번째 직업을 선택 중`;
             }
 
@@ -227,18 +232,15 @@ export class TitleBar extends Container {
               case 'right':
                 this._preRightTween.chain(this._rightTween).start();
                 break;
-              default:
-                if (!store.jobStore.leftOpponentPick) {
-                  this._preLeftTween.chain(this._leftTween).start();
-                }
-                if (!store.jobStore.rightOpponentPick) {
-                  this._preRightTween.chain(this._rightTween).start();
-                }
             }
-
+            break;
+          case 'votePick':
+            title.text = '시청자 직업 배분';
+            this._preLeftTween.chain(this._leftTween).start();
+            this._preRightTween.chain(this._rightTween).start();
             break;
           case 'end':
-            title.text = '상대팀 직업 선택 완료!';
+            title.text = '종료!';
             break;
           default:
             title.text = '';

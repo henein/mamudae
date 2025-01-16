@@ -47,6 +47,7 @@ export enum JobId {
   KAIN,
   LARA,
   KHALI,
+  JOB_MAXIMIM,
 }
 
 export type Team = 'left' | 'right';

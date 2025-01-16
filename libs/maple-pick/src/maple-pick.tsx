@@ -9,13 +9,16 @@ import { CreationEngine } from './engine/engine';
  * Importing these modules will automatically register there plugins with the engine.
  */
 import '@pixi/sound';
-import { store } from './app/store';
-import { RoomState, Team } from '@henein/mamudae-lib';
+import { store } from './app/store/state-store';
+import { JobId, RoomState, Team } from '@henein/mamudae-lib';
+
 // import "@esotericsoftware/spine-pixi-v8";
 
 export interface MaplePickProps {
   team?: Team;
   roomState?: RoomState;
+  onSelect: (jobId: JobId) => void;
+  onPush: (jobId: JobId) => void;
 }
 
 export const MaplePick: React.FC<MaplePickProps> = (props) => {
@@ -64,8 +67,13 @@ export const MaplePick: React.FC<MaplePickProps> = (props) => {
       return;
     }
 
-    store.sequenceStore.updateRoomState(props.roomState);
-  }, [props.roomState]);
+    store.updateState(props.roomState, props.team);
+  }, [props.roomState, props.team]);
+
+  useEffect(() => {
+    store.onSelect = props.onSelect;
+    store.onPush = props.onPush;
+  }, [props.onPush, props.onSelect]);
 
   return (
     <div
@@ -74,3 +82,36 @@ export const MaplePick: React.FC<MaplePickProps> = (props) => {
     />
   );
 };
+
+//   this.socket.on(IOEvent.START, (payload: SequencePayload) => {
+//     runInAction(() => {
+//       this.setCurrentSequence(payload.nextSequence);
+//       this.setNextSequence(payload.nextNextSequence);
+//     });
+//     console.log('start');
+//   });
+//
+//   this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
+//     if (payload.action === 'opponentPick' && payload.jobId && payload.team) {
+//       rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
+//     } else {
+//       rootStore.jobStore.moveJob(payload, //jobId);
+//     }
+//
+//     runInAction(() => {
+//       this.setCurrentSequence(payload.nextSequence);
+//       this.setNextSequence(payload.nextNextSequence);
+//     });
+//   });
+//
+//   this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
+//     this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
+//   });
+//
+//   this.socket.on(IOEvent.END, () => {
+//     this.rootStore.jobStore.onEnd();
+//     runInAction(() => {
+//       this.setCurrentSequence(undefined);
+//       this.setNextSequence(undefined);
+//     });
+//   });

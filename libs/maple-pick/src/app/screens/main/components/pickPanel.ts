@@ -1,7 +1,7 @@
 import { IReactionDisposer, autorun } from 'mobx';
 import { DropShadowFilter } from 'pixi-filters';
 import { JobId, getJob, Job  } from '@henein/mamudae-lib';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 
@@ -178,10 +178,7 @@ export class PickPanel extends Container {
         this._currentSprite.visible = true;
         this._currentSprite.alpha = 0.5;
         this._currentDisposer = autorun(() => {
-          const selectJobId =
-            this._direction === 'left'
-              ? store.jobStore.leftSelect
-              : store.jobStore.rightSelect;
+          const selectJobId = store.roomState?.selected;
 
           if (!selectJobId) {
             return;

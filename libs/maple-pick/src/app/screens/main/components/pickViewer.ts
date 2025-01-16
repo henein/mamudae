@@ -1,5 +1,5 @@
 import { autorun, reaction } from 'mobx';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { PickPanel } from './pickPanel';
 import { Container } from 'pixi.js';
 
@@ -38,7 +38,7 @@ export class PickViewer extends Container {
     }
 
     reaction(
-      () => store.sequenceStore.reset,
+      () => store.reset,
       () => {
         for (let i = 0; i < leftPick.length; i++) {
           leftPick[i].reset();
@@ -54,7 +54,7 @@ export class PickViewer extends Container {
         this._currentPick.state = 'default';
       }
 
-      const currentSequence = store.sequenceStore.currentSequence;
+      const currentSequence = store.currentSequence;
 
       if (!currentSequence) {
         leftPick[5].state = 'default';
@@ -90,7 +90,7 @@ export class PickViewer extends Container {
     });
 
     autorun(() => {
-      const nextSequence = store.sequenceStore.nextSequence;
+      const nextSequence = store.nextSequence;
 
       if (!nextSequence) {
         return;
@@ -117,12 +117,12 @@ export class PickViewer extends Container {
 
     autorun(() => {
       for (let i = 0; i < leftPick.length; i++) {
-        if (store.jobStore.leftPickList.length <= i) break;
-        leftPick[i].jobId = store.jobStore.leftPickList[i];
+        if (store.roomState.leftTeam.pickList.length <= i) break;
+        leftPick[i].jobId = store.roomState.leftTeam.pickList[i];
       }
       for (let i = 0; i < rightPick.length; i++) {
-        if (store.jobStore.rightPickList.length <= i) break;
-        rightPick[i].jobId = store.jobStore.rightPickList[i];
+        if (store.roomState.rightTeam.pickList.length <= i) break;
+        rightPick[i].jobId = store.roomState.rightTeam.pickList[i];
       }
     });
   }

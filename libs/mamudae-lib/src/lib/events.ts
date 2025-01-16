@@ -1,15 +1,14 @@
-import { Team } from "./enums";
+import { JobId, Team } from './enums';
 import { RoomState } from "./room-state";
 
 export interface ServerToClientEvents {
+  welcome: (state?: RoomState, error?: string) => void;
   update: (state: RoomState) => void;
 }
 
 export interface ClientToServerEvents {
-  join: (roomId: string, team: Team, callback: (state: RoomState, error?: string) => void) => void;
-  select: (jobId: string) => void;
-  ban: (jobId: string) => void;
-  pick: (jobId: string) => void;
+  select: (jobId: JobId) => void;
+  push: (jobId: JobId) => void;
 }
 
 export interface InterServerEvents {
@@ -18,5 +17,6 @@ export interface InterServerEvents {
 
 export interface SocketData {
   nickname: string;
+  roomId: string;
   team: Team;
 }

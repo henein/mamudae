@@ -3,7 +3,7 @@
 */
 
 import { autorun, reaction } from 'mobx';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { Tween } from '@tweenjs/tween.js';
 import { createNoise2D } from 'simplex-noise';
 import { Easing } from '@tweenjs/tween.js';
@@ -68,7 +68,7 @@ export class Camera extends Container {
     this._logo.visible = false;
 
     autorun(() => {
-      if (store.sequenceStore.currentSequence?.action === 'start') {
+      if (store.currentSequence?.action === 'start') {
         this._logo.visible = true;
       } else {
         this._logo.visible = false;
@@ -109,7 +109,7 @@ export class Camera extends Container {
     this._eventQueue = new CameraEventQueue(this.onEvent);
 
     reaction(
-      () => store.sequenceStore.reset,
+      () => store.reset,
       () => {
         this._background.texture = Texture.from('main/backgrounds/0.png');
         this._nextBackground.visible = false;
@@ -147,35 +147,27 @@ export class Camera extends Container {
     );
 
     autorun(() => {
-      switch (store.sequenceStore.currentSequence?.action) {
-        case 'ban':
-        case 'pick':
-          if (this._lastJobId === store.jobStore.selectJobId) {
-            return;
-          }
-
-          if (!store.jobStore.selectJobId) {
-            if (store.jobStore.selectJobId === undefined) {
-              return;
-            }
-            this._eventQueue.enqueue({
-              action: 'select',
-            });
-          } else {
-            this._eventQueue.enqueue({
-              action: 'change',
-              jobId: store.jobStore.selectJobId,
-            });
-          }
-
-          this._lastJobId = store.jobStore.selectJobId;
-          break;
-        // case 'opponentPick':
-        //   if (store.sequenceStore.nextSequence?.action !== 'end') {
-        //     this._eventQueue.enqueue({ action: 'defaultBG' });
-        //   }
-        //   break;
+      if (this._lastJobId === store.roomState.selected) {
+        return;
       }
+
+      if (!store.roomState.selected) {
+        if (
+          this._lastJobId !== undefined &&
+          store.roomState.selected === undefined
+        ) {
+          this._eventQueue.enqueue({
+            action: 'select',
+          });
+        }
+      } else {
+        this._eventQueue.enqueue({
+          action: 'change',
+          jobId: store.roomState.selected,
+        });
+      }
+
+      this._lastJobId = store.roomState.selected;
     });
 
     // NOTE: 상대픽 관련
@@ -367,7 +359,7 @@ export class Camera extends Container {
       .to(
         {
           brightness: 1.3,
-          blur: 32,
+          blur: 64,
           nextBackgroundAlpha: 1,
         },
         300
@@ -391,7 +383,7 @@ export class Camera extends Container {
       .chain(
         new Tween({
           brightness: 1.3,
-          blur: 32,
+          blur: 64,
           jobId: jobId,
         })
           .to({ brightness: 1, blur: 0 }, 300)
@@ -445,9 +437,7 @@ export class Camera extends Container {
         this._blurFilter.blur = object.blur;
         this._nextBackground.visible = true;
         this._nextBackground.alpha = object.nextBackgroundAlpha;
-        this._nextBackground.texture = Texture.from(
-          'main/backgrounds/0.png'
-        );
+        this._nextBackground.texture = Texture.from('main/backgrounds/0.png');
       })
       .onUpdate((object) => {
         this._colorFilter.brightness(object.brightness, false);
@@ -517,7 +507,7 @@ class BlurOverlay extends Container {
     this.addChild(this._multiply);
 
     autorun(() => {
-      if (store.sequenceStore.currentSequence?.action === 'ban') {
+      if (store.currentSequence?.action === 'ban') {
         this.state = 'ban';
       } else {
         this.state = 'default';
@@ -534,9 +524,7 @@ class BlurOverlay extends Container {
 
     switch (this._state) {
       case 'default':
-        this._multiply.texture = Texture.from(
-          'main/backgrounds/multiply.png'
-        );
+        this._multiply.texture = Texture.from('main/backgrounds/multiply.png');
         break;
       case 'ban':
         this._multiply.texture = Texture.from(

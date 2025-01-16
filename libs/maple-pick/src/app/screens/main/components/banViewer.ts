@@ -1,5 +1,5 @@
 import { autorun } from 'mobx';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { BanPanel } from './banPanel';
 import { Container } from 'pixi.js';
 
@@ -12,30 +12,26 @@ export class BanViewer extends Container {
 
     const leftBan = [
       this.addChild(new BanPanel(this._size)),
-      this.addChild(new BanPanel(this._size)),
-      this.addChild(new BanPanel(this._size)),
     ];
 
     leftBan[0].position.set(32, 32);
-    leftBan[1].position.set(32 + this._size + 16, 32);
-    leftBan[2].position.set(32 + this._size + 16 + this._size + 16 + 16, 32);
+    // leftBan[1].position.set(32 + this._size + 16, 32);
+    // leftBan[2].position.set(32 + this._size + 16 + this._size + 16 + 16, 32);
 
     const rightBan = [
-      this.addChild(new BanPanel(this._size)),
-      this.addChild(new BanPanel(this._size)),
       this.addChild(new BanPanel(this._size)),
     ];
 
     rightBan[0].position.set(1920 - this._size - 32, 32);
-    rightBan[1].position.set(1920 - this._size - (32 + this._size + 16), 32);
-    rightBan[2].position.set(
-      1920 - this._size - (32 + this._size + 16 + this._size + 16 + 16),
-      32
-    );
+    // rightBan[1].position.set(1920 - this._size - (32 + this._size + 16), 32);
+    // rightBan[2].position.set(
+    //   1920 - this._size - (32 + this._size + 16 + this._size + 16 + 16),
+    //   32
+    // );
 
     autorun(() => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      store.sequenceStore.reset;
+      store.reset;
 
       for (let i = 0; i < leftBan.length; i++) {
         leftBan[i].jobId = 0;
@@ -46,18 +42,21 @@ export class BanViewer extends Container {
     });
 
     autorun(() => {
+      if (!store.roomState)
+        return;
+
       for (let i = 0; i < leftBan.length; i++) {
-        if (store.jobStore.leftBanList.length <= i) break;
-        leftBan[i].jobId = store.jobStore.leftBanList[i];
+        if (store.roomState.leftTeam.banList.length <= i) break;
+        leftBan[i].jobId = store.roomState.leftTeam.banList[i];
       }
       for (let i = 0; i < rightBan.length; i++) {
-        if (store.jobStore.rightBanList.length <= i) break;
-        rightBan[i].jobId = store.jobStore.rightBanList[i];
+        if (store.roomState.rightTeam.banList.length <= i) break;
+        rightBan[i].jobId = store.roomState.rightTeam.banList[i];
       }
     });
 
     autorun(() => {
-      const currentSequence = store.sequenceStore.currentSequence;
+      const currentSequence = store.currentSequence;
 
       if (this._nextPanel) {
         this._nextPanel.isNext = false;

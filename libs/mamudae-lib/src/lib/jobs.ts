@@ -13,7 +13,7 @@ export interface Job {
 }
 
 export const getJob = (jobId: JobId) => {
-  return JobList[jobId - 1];
+  return JobList.find((job) => job.id === jobId) ?? JobList[0];
 };
 
 export const JobList: Job[] = [

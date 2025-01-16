@@ -5,7 +5,7 @@ import {
   makeObservable,
   observable,
 } from 'mobx';
-import { RootStore } from './index';
+import { StateStore } from './state-store';
 import {
   JobId,
   RoomState,
@@ -14,19 +14,10 @@ import {
 } from '@henein/mamudae-lib';
 
 export class SequenceStore {
-  rootStore: RootStore;
-  @observable reset = false;
-  @observable leftTeamName = '';
-  @observable rightTeamName = '';
-  @observable sequences = observable.array<Sequence>([]);
-  @observable team?: Team;
-  @observable auth?:
-    | 'leftMember'
-    | 'rightMember'
-    | 'leftLeader'
-    | 'rightLeader';
+  rootStore: StateStore;
 
-  constructor(rootStore: RootStore) {
+
+  constructor(rootStore: StateStore) {
     makeObservable(this);
     this.rootStore = rootStore;
 
@@ -34,49 +25,9 @@ export class SequenceStore {
 
     // this.init();
 
-  //   this.socket.on(IOEvent.START, (payload: SequencePayload) => {
-  //     runInAction(() => {
-  //       this.setCurrentSequence(payload.nextSequence);
-  //       this.setNextSequence(payload.nextNextSequence);
-  //     });
-  //     console.log('start');
-  //   });
 
-    this.socket.on(IOEvent.BAN_PICK, (payload: SequencePayload) => {
-      if (payload.action === 'opponentPick' && payload.jobId && payload.team) {
-        rootStore.jobStore.onOpponentPick(payload.jobId, payload.team);
-      } else {
-        rootStore.jobStore.moveJob(payload, //jobId);
-      }
-
-      runInAction(() => {
-        this.setCurrentSequence(payload.nextSequence);
-        this.setNextSequence(payload.nextNextSequence);
-      });
-    });
-
-    this.socket.on(IOEvent.SELECT, (payload: SelectPayload) => {
-      this.rootStore.jobStore.onSelect(payload.leftSelect, payload.rightSelect);
-    });
-
-    this.socket.on(IOEvent.END, () => {
-      this.rootStore.jobStore.onEnd();
-      runInAction(() => {
-        this.setCurrentSequence(undefined);
-        this.setNextSequence(undefined);
-      });
-    });
   }
 
-  @computed
-  get currentSequence() {
-    return this.sequences?.[0];
-  }
-
-  @computed
-  get nextSequence() {
-    return this.sequences?.[1];
-  }
 
   // @action
   // init() {
@@ -121,10 +72,7 @@ export class SequenceStore {
   //   });
   // }
 
-  // @action
-  // onReset() {
-  //   this.reset = !this.reset;
-  // }
+
 
   // @action
   // onTeamName(payload: TeamNamePayload) {
@@ -132,35 +80,6 @@ export class SequenceStore {
   //   this.rightTeamName = payload.rightTeamName;
   // }
 
-  @action
-  updateRoomState(roomState: RoomState, team?: Team) {
-    this.leftTeamName = roomState.leftTeam.name;
-    this.rightTeamName = roomState.rightTeam.name;
-    this.sequences.replace(roomState.sequences);
-    this.team = team ?? this.team;
-  }
 
-  @action
-  emitSelect(value: JobId) {
-    // if (this.rootStore.sequenceStore.auth === 'leftLeader') {
-    //   const payload: SelectPayload = { leftSelect: value };
-    //   this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
-    // } else if (this.rootStore.sequenceStore.auth === 'rightLeader') {
-    //   const payload: SelectPayload = { rightSelect: value };
-    //   this.rootStore.sequenceStore.socket.emit(IOEvent.SELECT, payload);
-    // }
-  }
 
-  @action
-  emitBanPick() {
-    // const nextPayload = this.currentSequence?.payload;
-
-    // const payload: SequencePayload = {
-    //   action: nextPayload?.action,
-    //   team: this.team,
-    //   index: nextPayload?.index,
-    //   jobId: this.rootStore.jobStore.teamSelect,
-    // };
-    // this.socket.emit(IOEvent.BAN_PICK, payload);
-  }
 }

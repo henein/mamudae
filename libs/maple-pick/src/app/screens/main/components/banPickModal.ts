@@ -4,7 +4,7 @@ import { constants } from '../constants';
 import { Portrait } from './portrait';
 import { Button } from './button';
 import { TextButton } from './textButton';
-import { store } from '../../../store';
+import { store } from '../../../store/state-store';
 import { autorun, reaction } from 'mobx';
 import {
   Container,
@@ -29,9 +29,7 @@ class PortraitButton extends Button {
     this.portrait = this.addChild(new Portrait({ size: 128, jobId: job.id }));
     this.hitArea = new Rectangle(0, 0, 128, 128);
 
-    this.overlay = this.addChild(
-      Sprite.from('main/portraits/overlay.png')
-    );
+    this.overlay = this.addChild(Sprite.from('main/portraits/overlay.png'));
     this.overlay.visible = false;
 
     const name = this.addChild(
@@ -55,11 +53,7 @@ class PortraitButton extends Button {
   set isSelected(value: boolean) {
     this._isSelected = value;
 
-    if (value) {
-      this.overlay.visible = true;
-    } else {
-      this.overlay.visible = false;
-    }
+    this.overlay.visible = value;
   }
 }
 
@@ -115,16 +109,16 @@ export class BanPickModal extends Container {
       );
       portraitButtonList[i].on('pointertap', () => {
         if (!portraitButtonList[i].isDisabled) {
-          store.sequenceStore.emitSelect(portraitButtonList[i].job.id);
+          store.onSelect?.(portraitButtonList[i].job.id);
         }
       });
     }
 
     reaction(
-      () => store.sequenceStore.reset,
+      () => store.reset,
       () => {
         portraitButtonList.forEach((value) => {
-          if (store.jobStore.disableList.indexOf(value.job.id) === -1) {
+          if (store.disableList.indexOf(value.job.id) === -1) {
             value.isDisabled = false;
           } else {
             value.isDisabled = true;
@@ -134,9 +128,9 @@ export class BanPickModal extends Container {
     );
 
     autorun(() => {
-      if (store.jobStore.disableList.length) {
+      if (store.disableList.length) {
         portraitButtonList.forEach((value) => {
-          if (store.jobStore.disableList.indexOf(value.job.id) === -1) {
+          if (store.disableList.indexOf(value.job.id) === -1) {
             value.isDisabled = false;
           } else {
             value.isDisabled = true;
@@ -158,8 +152,8 @@ export class BanPickModal extends Container {
     this.returnButton.pivot.set(this.returnButton.width / 2, 0);
     this.returnButton.position.set(928 / 2, 640);
     this.returnButton.on('pointertap', () => {
-      if (store.jobStore.teamSelect) {
-        store.sequenceStore.emitBanPick();
+      if (store.isMyTurn && store.roomState?.selected) {
+        store.onPush?.(store.roomState?.selected);
         this.isVision = false;
       }
     });
@@ -169,8 +163,11 @@ export class BanPickModal extends Container {
         this.selectedButton.isSelected = false;
       }
 
-      if (store.jobStore.teamSelect) {
-        this.selectedButton = portraitButtonList[store.jobStore.teamSelect - 1];
+      if (store.roomState?.selected) {
+        this.selectedButton =
+          portraitButtonList.find(
+            (value) => value.job.id === store.roomState.selected
+          ) ?? portraitButtonList[0];
         this.selectedButton.isSelected = true;
         this.returnButton.isDisabled = false;
       } else {
@@ -184,38 +181,25 @@ export class BanPickModal extends Container {
 
     this.toggleButton = this.addChild(Sprite.from('main/ui/up.png'));
     this.toggleButton.position.set(910, 1000);
+    this.toggleButton.interactive = true;
     this.toggleButton.on('pointerdown', this.onToggle);
 
-    autorun(() => {
-      const auth = store.sequenceStore.auth;
-
-      if (auth === 'leftMember' || auth === 'rightMember') {
-        this.toggleButton.visible = false;
-      } else {
-        this.toggleButton.visible = true;
-      }
-    });
-
-    autorun(() => {
-      if (store.jobStore.isModalEnabled) {
-        this.toggleButton.alpha = 1;
-        this.toggleButton.interactive = true;
-        // this.toggleButton.buttonMode = true;
-      } else {
-        this.toggleButton.alpha = 0.3;
-        this.toggleButton.interactive = false;
-        // this.toggleButton.buttonMode = false;
-        this.isVision = false;
-      }
-    });
+    // autorun(() => {
+    //   if (store.isMyTurn) {
+    //     this.toggleButton.alpha = 1;
+    //     this.toggleButton.interactive = true;
+    //     // this.toggleButton.buttonMode = true;
+    //   } else {
+    //     this.toggleButton.alpha = 0.3;
+    //     this.toggleButton.interactive = false;
+    //     // this.toggleButton.buttonMode = false;
+    //     this.isVision = false;
+    //   }
+    // });
   }
 
   onToggle = () => {
-    if (this.isVision) {
-      this.isVision = false;
-    } else {
-      this.isVision = true;
-    }
+    this.isVision = !this.isVision;
   };
 
   get isVision(): boolean {
