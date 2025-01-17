@@ -56,15 +56,15 @@ export class PickViewer extends Container {
 
       const currentSequence = store.currentSequence;
 
-      if (!currentSequence) {
-        leftPick[5].state = 'default';
-        rightPick[5].state = 'default';
-        return;
-      } else if (currentSequence.action === 'end') {
-        leftPick[5].state = 'done';
-        rightPick[5].state = 'done';
-        return;
-      }
+      // if (!currentSequence) {
+      //   leftPick[5].state = 'default';
+      //   rightPick[5].state = 'default';
+      //   return;
+      // } else if (currentSequence.action === 'end') {
+      //   leftPick[5].state = 'done';
+      //   rightPick[5].state = 'done';
+      //   return;
+      // }
 
       if (currentSequence?.action === 'pick') {
         const target = currentSequence.team === 'left' ? leftPick : rightPick;

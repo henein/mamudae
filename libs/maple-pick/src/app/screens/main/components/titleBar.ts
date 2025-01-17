@@ -235,13 +235,15 @@ export class TitleBar extends Container {
             }
             break;
           case 'votePick':
-            title.text = '시청자 직업 배분';
+            title.text = `${store.roomState.coinTossTeam === 'left'
+              ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
+              : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`}이 선택 중`
             this._preLeftTween.chain(this._leftTween).start();
             this._preRightTween.chain(this._rightTween).start();
             break;
-          case 'end':
-            title.text = '종료!';
-            break;
+          // case 'end':
+          //   title.text = '종료!';
+          //   break;
           default:
             title.text = '';
         }

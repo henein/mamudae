@@ -37,7 +37,7 @@ class PortraitButton extends Button {
         job.jobName,
         new TextStyle({
           fontFamily: 'NanumBarunGothic',
-          fontSize: 20,
+          fontSize: 16,
           fill: '#404040',
         })
       )
@@ -88,25 +88,27 @@ export class BanPickModal extends Container {
       new ScrollBox({
         width: 928,
         height: 576,
+        padding: 38,
+        elementsMargin: 16,
       })
     );
     scrollBox.position.set(0, 48);
 
-    const widthBox = scrollBox.addChild(new Graphics());
-    widthBox.beginFill(0xffffff, 0);
-    widthBox.drawRect(0, 0, 928, 10);
-    widthBox.endFill();
+    // const widthBox = scrollBox.addItem(new Graphics());
+    // widthBox.beginFill(0xffffff, 0);
+    // widthBox.drawRect(0, 0, 928, 10);
+    // widthBox.endFill();
 
     const portraitButtonList: PortraitButton[] = [];
 
     for (let i = 0; i < JobList.length; i++) {
-      portraitButtonList[i] = scrollBox.addChild(
+      portraitButtonList[i] = scrollBox.addItem(
         new PortraitButton(JobList[i])
       );
-      portraitButtonList[i].position.set(
-        48 + 176 * (i % 5),
-        168 * Math.floor(i / 5)
-      );
+      // portraitButtonList[i].position.set(
+      //   48 + 176 * (i % 5),
+      //   168 * Math.floor(i / 5)
+      // );
       portraitButtonList[i].on('pointertap', () => {
         if (!portraitButtonList[i].isDisabled) {
           store.onSelect?.(portraitButtonList[i].job.id);

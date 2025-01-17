@@ -35,7 +35,7 @@ export const HomePage = () => {
             onChange={() => setTeam('left')}
             className="mr-2"
           />
-          Left Team
+          선픽
         </label>
         <label className="flex items-center">
           <input
@@ -46,7 +46,7 @@ export const HomePage = () => {
             onChange={() => setTeam('right')}
             className="mr-2"
           />
-          Right Team
+          후픽
         </label>
       </div>
       <Button onClick={() => openMaplePick()}>입장</Button>

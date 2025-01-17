@@ -11,7 +11,7 @@ export const useSocket = (roomId: string, team?: Team) => {
     useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
   useEffect(() => {
-    const socket = io('http://localhost:3000', { query: { roomId, team } });
+    const socket = io(import.meta.env.VITE_SERVER_URL, { query: { roomId, team } });
     setSocket(socket);
 
     return () => {

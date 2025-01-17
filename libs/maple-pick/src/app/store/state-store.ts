@@ -71,9 +71,9 @@ export class StateStore {
   @computed get isMyTurn() {
     const action = this.currentSequence?.action;
 
-    if (action == 'pick' || action == 'ban') {
+    if (action === 'pick' || action === 'ban') {
       return this.currentSequence?.team === this.team;
-    } else if (action == 'votePick') {
+    } else if (action === 'votePick') {
       return this.roomState.coinTossTeam === this.team;
     }
 
