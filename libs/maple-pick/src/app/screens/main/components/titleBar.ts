@@ -234,10 +234,15 @@ export class TitleBar extends Container {
                 break;
             }
             break;
+          case 'coinToss':
+            title.text = '누가 선택할지 결정 중';
+            break;
           case 'votePick':
-            title.text = `${store.roomState.coinTossTeam === 'left'
-              ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
-              : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`}이 선택 중`
+            title.text = `${
+              store.roomState.coinTossTeam === 'left'
+                ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
+                : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
+            }이 선택 중`;
             this._preLeftTween.chain(this._leftTween).start();
             this._preRightTween.chain(this._rightTween).start();
             break;

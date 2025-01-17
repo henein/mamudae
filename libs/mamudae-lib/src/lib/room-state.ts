@@ -11,6 +11,7 @@ export type TeamState = {
   pickList: JobId[];
   banList: JobId[];
   votePick?: JobId;
+  userId?: string;
 }
 
 export type RoomState = {

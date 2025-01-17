@@ -10,6 +10,7 @@ export const MaplePickPage = () => {
 
   const socket = useSocket(params.id ?? '', searchParams.get('team') as Team);
   const [roomState, setRoomState] = useState<RoomState>();
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     if (!socket) {
@@ -24,7 +25,12 @@ export const MaplePickPage = () => {
       console.log('Disconnected from server');
     });
 
-    socket.on('welcome', (state) => {
+    socket.on('welcome', (state, error) => {
+      if (error) {
+        setError(error);
+        return;
+      }
+
       console.log('Welcome', state);
       setRoomState(state);
     });
@@ -54,9 +60,19 @@ export const MaplePickPage = () => {
   };
 
   const onPush = (jobId: JobId) => {
-    const action = roomState?.sequences[0].action;
+    const currentSequence = roomState?.sequences[0];
+    const team = searchParams.get('team') as Team;
 
-    if (action === 'ban' || action === 'pick') {
+    if (
+      (currentSequence?.action === 'ban' ||
+        currentSequence?.action === 'pick') &&
+      currentSequence.team === team
+    ) {
+      socket?.emit('push', jobId);
+    } else if (
+      currentSequence?.action === 'votePick' &&
+      roomState?.coinTossTeam === team
+    ) {
       socket?.emit('push', jobId);
     }
   };
@@ -66,12 +82,18 @@ export const MaplePickPage = () => {
       {/* <Helmet>
         <title>Maple Pick</title>
       </Helmet> */}
-      <MaplePick
-        roomState={roomState}
-        team={searchParams.get('team') as Team}
-        onSelect={onSelect}
-        onPush={onPush}
-      />
+      {!error ? (
+        <MaplePick
+          roomState={roomState}
+          team={searchParams.get('team') as Team}
+          onSelect={onSelect}
+          onPush={onPush}
+        />
+      ) : (
+        <div className="flex h-screen justify-center items-center">
+          <h1 className="text-3xl font-bold">{error}</h1>
+        </div>
+      )}
     </>
   );
 };

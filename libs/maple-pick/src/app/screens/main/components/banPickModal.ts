@@ -130,6 +130,18 @@ export class BanPickModal extends Container {
     );
 
     autorun(() => {
+      if (store.isMyTurn) {
+        portraitButtonList.forEach((value) => {
+          value.alpha = 1;
+        });
+      } else {
+        portraitButtonList.forEach((value) => {
+          value.alpha = 0.5;
+        });
+      }
+    });
+
+    autorun(() => {
       if (store.disableList.length) {
         portraitButtonList.forEach((value) => {
           if (store.disableList.indexOf(value.job.id) === -1) {
@@ -171,7 +183,10 @@ export class BanPickModal extends Container {
             (value) => value.job.id === store.roomState.selected
           ) ?? portraitButtonList[0];
         this.selectedButton.isSelected = true;
-        this.returnButton.isDisabled = false;
+
+        if (store.isMyTurn) {
+          this.returnButton.isDisabled = false;
+        }
       } else {
         this.returnButton.isDisabled = true;
       }
@@ -186,18 +201,18 @@ export class BanPickModal extends Container {
     this.toggleButton.interactive = true;
     this.toggleButton.on('pointerdown', this.onToggle);
 
-    // autorun(() => {
-    //   if (store.isMyTurn) {
-    //     this.toggleButton.alpha = 1;
-    //     this.toggleButton.interactive = true;
-    //     // this.toggleButton.buttonMode = true;
-    //   } else {
-    //     this.toggleButton.alpha = 0.3;
-    //     this.toggleButton.interactive = false;
-    //     // this.toggleButton.buttonMode = false;
-    //     this.isVision = false;
-    //   }
-    // });
+    autorun(() => {
+      if (store.isMyTurn) {
+        this.toggleButton.alpha = 1;
+        this.toggleButton.interactive = true;
+        // this.toggleButton.buttonMode = true;
+      } else {
+        this.toggleButton.alpha = 0.3;
+        this.toggleButton.interactive = false;
+        // this.toggleButton.buttonMode = false;
+        this.isVision = false;
+      }
+    });
   }
 
   onToggle = () => {

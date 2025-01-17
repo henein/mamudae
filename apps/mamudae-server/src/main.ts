@@ -36,7 +36,8 @@ app.use(cors());
 
 app.use(express.json());
 
-const rooms = new Redis('');
+// const rooms = new Redis('');
+const rooms = new Map<string, RoomState>();
 
 const getRoom = async (roomId: string) => {
   const room = await rooms.get(roomId);
@@ -45,11 +46,13 @@ const getRoom = async (roomId: string) => {
     return null;
   }
 
-  return JSON.parse(room) as RoomState;
+  // return JSON.parse(room) as RoomState;
+  return room;
 };
 
 const setRoom = async (roomId: string, room: RoomState) => {
-  await rooms.set(roomId, JSON.stringify(room));
+  // await rooms.set(roomId, JSON.stringify(room));
+  await rooms.set(roomId, room);
 };
 
 app.get('/admin', (req, res) => {
@@ -176,10 +179,23 @@ io.on('connection', async (socket) => {
       return;
     }
 
+    if (team === 'left') {
+      if (room.leftTeam.userId !== undefined) {
+        socket.emit('welcome', undefined, '누군가 이미 접속했습니다.');
+        return;
+      }
+      room.leftTeam.userId = socket.id;
+    } else if (team === 'right') {
+      if (room.rightTeam.userId !== undefined) {
+        socket.emit('welcome', undefined, '누군가 이미 접속했습니다.');
+        return;
+      }
+      room.rightTeam.userId = socket.id;
+    }
+
     socket.join(roomId);
     socket.emit('welcome', room);
-
-    // TODO: 방에 있는 사람 체크해야 함. 그리고 저장.
+    await setRoom(roomId, room);
 
     console.log(`[${socket.id}] connection: ${roomId}, ${team}`);
   }
@@ -208,16 +224,31 @@ io.on('connection', async (socket) => {
 
     const nextSequence = room.sequences[0];
 
-    if (nextSequence.team !== team) {
-      return;
-    }
-
     const teamData = team === 'left' ? room.leftTeam : room.rightTeam;
 
+    console.log(nextSequence);
+
     if (nextSequence.action === 'ban') {
+      if (nextSequence.team !== team) return;
+
       teamData.banList.push(jobId);
     } else if (nextSequence.action === 'pick') {
+      if (nextSequence.team !== team) return;
+
       teamData.pickList.push(jobId);
+    } else if (nextSequence.action === 'votePick') {
+      if (room.coinTossTeam !== team) return;
+
+      const anotherVotePick =
+        room.votedPicks[0] === jobId ? room.votedPicks[1] : room.votedPicks[0];
+
+      if (team === 'left') {
+        room.leftTeam.pickList.push(jobId);
+        room.rightTeam.pickList.push(anotherVotePick);
+      } else {
+        room.leftTeam.pickList.push(anotherVotePick);
+        room.rightTeam.pickList.push(jobId);
+      }
     } else {
       return;
     }
@@ -231,7 +262,21 @@ io.on('connection', async (socket) => {
     console.log(`[${socket.id}] ban: ${jobId} in ${roomId}`);
   });
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
+    const room = await getRoom(roomId);
+
+    if (!room) {
+      return;
+    }
+
+    if (team === 'left') {
+      room.leftTeam.userId = undefined;
+    } else if (team === 'right') {
+      room.rightTeam.userId = undefined;
+    }
+
+    await setRoom(roomId, room);
+
     console.log(`[${socket.id}] 접속 끊어짐 ㅠㅠ`);
   });
 });
