@@ -5,6 +5,7 @@ import path from 'path';
 import cors from 'cors';
 import { createId } from '@paralleldrive/cuid2';
 import Redis from 'ioredis';
+import hbs from 'hbs';
 import {
   ClientToServerEvents,
   InterServerEvents,
