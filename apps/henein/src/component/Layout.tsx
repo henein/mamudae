@@ -17,7 +17,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <div id="modal-root" />
         <PageDiv>
           <Header />
-          <Announcement />
+          {/*<Announcement />*/}
           <PageWrapper>{children}</PageWrapper>
           <Footer />
         </PageDiv>

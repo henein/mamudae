@@ -28,6 +28,9 @@ const Header = () => {
               <Link href="/">
                 <NavItem stickyTop={stickyTop}>커뮤니티</NavItem>
               </Link>
+              <Link href="/sign-in">
+                <NavItem stickyTop={stickyTop}>로그인</NavItem>
+              </Link>
             </Nav>
           </LeftDiv>
           <RightDiv>

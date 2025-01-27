@@ -1,17 +1,9 @@
-import MainPage from '../containers/MainPage/MainPage';
-import { GetServerSideProps } from 'next';
-import { dehydrate, QueryClient } from 'react-query';
-
-export default function Home() {
-  return <MainPage />;
+export default function HomePage() {
+  return (
+    <div className="flex flex-col mx-auto">
+      <div className="flex justify-center gap-8 w-full">
+        Hello!
+      </div>
+    </div>
+  );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const queryClient = new QueryClient();
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
