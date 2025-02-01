@@ -11,6 +11,7 @@ import {
   TextStyle,
 } from 'pixi.js';
 import { GlowFilter } from 'pixi-filters';
+import { josa } from 'es-hangul';
 
 export class TitleBar extends Container {
   private _main: Graphics;
@@ -203,6 +204,24 @@ export class TitleBar extends Container {
       this._rightTween.stop();
 
       if (nextSequence) {
+        let teamText = '';
+
+        if (nextSequence.team === 'left') {
+          const leftTeamName = store.roomState.leftTeam.name;
+
+          teamText = `<span style="color: #0075ca">${leftTeamName}</span>${josa.pick(
+            leftTeamName,
+            '이/가'
+          )}`;
+        } else if (nextSequence.team === 'right') {
+          const rightTeamName = store.roomState.rightTeam.name;
+
+          teamText = `<span style="color: #de9300">${rightTeamName}</span>${josa.pick(
+            rightTeamName,
+            '이/가'
+          )}`;
+        }
+
         switch (nextSequence.action) {
           case 'start':
             title.text = '대기 중';
@@ -210,19 +229,13 @@ export class TitleBar extends Container {
           case 'ban':
           case 'pick':
             if (nextSequence.action === 'ban') {
-              title.text = `${
-                nextSequence.team === 'left'
-                  ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
-                  : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
-              }이 ${
+              title.text = `${teamText} ${
                 (nextSequence.index ?? 0) + 1
-              }번째 <span style="fill: #ca0000">밴</span>할 직업을 선택 중`;
+              }번째 <span style="color: #ca0000">밴</span>할 직업을 선택 중`;
             } else if (nextSequence.action === 'pick') {
-              title.text = `${
-                nextSequence.team === 'left'
-                  ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
-                  : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
-              }이 ${(nextSequence.index ?? 0) + 1}번째 직업을 선택 중`;
+              title.text = `${teamText} ${
+                (nextSequence.index ?? 0) + 1
+              }번째 직업을 선택 중`;
             }
 
             switch (nextSequence?.team) {
@@ -238,11 +251,7 @@ export class TitleBar extends Container {
             title.text = '누가 선택할지 결정 중';
             break;
           case 'votePick':
-            title.text = `${
-              store.roomState.coinTossTeam === 'left'
-                ? `<span style="fill: #0075ca">${store.roomState.leftTeam.name}</span>`
-                : `<span style="fill: #de9300">${store.roomState.rightTeam.name}</span>`
-            }이 선택 중`;
+            title.text = `${teamText} 선택 중`;
             this._preLeftTween.chain(this._leftTween).start();
             this._preRightTween.chain(this._rightTween).start();
             break;
