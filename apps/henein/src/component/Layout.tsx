@@ -1,11 +1,14 @@
-import React from 'react';
-import Footer from './Footer';
-import styled, { ThemeProvider } from 'styled-components';
-import { lightMode, darkMode } from '../constants/DefaultTheme';
-import GlobalStyles from '../../styles/GlobalStyles';
-import { ScrollProvider } from './ScrollProvider';
-import useDarkMode from '../hooks/reduxHooks/useDarkMode';
-import { MamudaeHeader } from '@henein/components';
+import React from "react";
+import styled, { ThemeProvider } from "styled-components";
+
+import GlobalStyles from "../../styles/GlobalStyles";
+import { darkMode, lightMode } from "../constants/DefaultTheme";
+import useDarkMode from "../hooks/reduxHooks/useDarkMode";
+import Announcement from "./AnnounceComponent/Announcement";
+import Footer from "./Footer";
+import Header from "./Header";
+import { ScrollProvider } from "./ScrollProvider";
+
 const Layout = ({ children }: React.PropsWithChildren) => {
   const { darkModeState } = useDarkMode();
 
@@ -14,9 +17,9 @@ const Layout = ({ children }: React.PropsWithChildren) => {
       <ScrollProvider>
         <GlobalStyles />
         <div id="modal-root" />
-        <div className='flex flex-col min-h-screen'>
-          <MamudaeHeader />
-          {/*<Announcement />*/}
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <Announcement />
           <PageWrapper>{children}</PageWrapper>
           <Footer />
         </div>
