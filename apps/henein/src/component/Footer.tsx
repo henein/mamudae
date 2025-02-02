@@ -7,7 +7,7 @@ const Footer = () => {
       <Wrapper>
         <InlineBox>
           <Title>Henein</Title>
-          <CopyRight>© Gamza. All rights reserved</CopyRight>
+          <CopyRight>© 2025. Henein All rights reserved. Henein is not associated with NEXON Korea.</CopyRight>
         </InlineBox>
       </Wrapper>
     </Container>

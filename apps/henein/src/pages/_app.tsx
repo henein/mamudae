@@ -1,21 +1,24 @@
+import 'material-symbols';
 import '../../styles/globals.css';
-import type { AppProps } from 'next/app';
-import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { useState } from 'react';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { useRouter } from 'next/router';
-import Layout from '../component/Layout';
-import { Provider } from 'react-redux';
-import { store, persistor } from '../../store/store';
-import SecondLayout from '../component/SecondLayout';
+
 import { ThemeProvider } from 'next-themes';
+import { useRouter } from 'next/router';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { MamudaeLayout } from '@henein/components';
+
+import { persistor, store } from '../../store/store';
+import SecondLayout from '../component/SecondLayout';
+
+import type { AppProps } from 'next/app';
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const shouldRenderLayout = !['/login', '/signUp', '/register', '/mamudae'].includes(
+  const shouldRenderLayout = !['/sign-in'].includes(
     router.pathname
   );
 
@@ -27,9 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <Provider store={store}>
               <PersistGate persistor={persistor}>
                 {shouldRenderLayout ? (
-                  <Layout>
+                  <MamudaeLayout>
                     <Component {...pageProps} />
-                  </Layout>
+                  </MamudaeLayout>
                 ) : (
                   <SecondLayout>
                     <Component {...pageProps} />
