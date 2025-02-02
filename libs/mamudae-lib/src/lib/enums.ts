@@ -1,4 +1,3 @@
-import { Boss } from './enums';
 export enum JobId {
   NULL = 0,
   BEGINNER = 1,
