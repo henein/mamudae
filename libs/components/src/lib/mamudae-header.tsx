@@ -1,12 +1,12 @@
-import Link from 'next/link';
 import { NavigationItem } from './navigation-item';
+import Link from 'next/link';
 
 export const MamudaeHeader = () => {
   return (
     <header>
-      <div className="max-w-5xl mx-auto mt-6 flex items-center">
-        <div className="flex justify-between items-center w-full mx-auto">
-          <div className="flex gap-3 items-end">
+      <div className="mx-auto mt-6 flex max-w-5xl items-center">
+        <div className="mx-auto flex w-full items-center justify-between">
+          <div className="flex items-end gap-3">
             <Link href="/">
               <svg
                 className="fill-black-800 dark:fill-white-900"
@@ -19,28 +19,31 @@ export const MamudaeHeader = () => {
               </svg>
             </Link>
             <div className="flex items-center">
-              <Link href="/mamudae/prize">
-                <NavigationItem>상금</NavigationItem>
-              </Link>
+              {/* <Link href="/mamudae/prize"> */}
+                <NavigationItem isWIP>상금</NavigationItem>
+              {/* </Link> */}
               <Link href="/mamudae/boss">
                 <NavigationItem>보스</NavigationItem>
               </Link>
-              <Link href="/mamudae/record">
-                <NavigationItem>기록</NavigationItem>
-              </Link>
+              {/* <Link href="/mamudae/record"> */}
+              <NavigationItem isWIP>기록</NavigationItem>
+              {/* </Link> */}
+              {/* <Link href="/mamudae/daily"> */}
+              <NavigationItem isWIP>일일미션</NavigationItem>
+              {/* </Link> */}
               {/* <Link href="/"> */}
               <NavigationItem isWIP>커뮤니티</NavigationItem>
               {/* </Link> */}
             </div>
           </div>
           <div className="flex gap-4">
-            <Link href="/sign-in">
-              <NavigationItem isIcon>
+            {/* <Link href="/sign-in"> */}
+              <NavigationItem isIcon isWIP>
                 <span className="material-symbols-outlined">
                   account_circle
                 </span>
               </NavigationItem>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>

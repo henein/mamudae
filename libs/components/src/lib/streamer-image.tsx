@@ -1,21 +1,25 @@
 import { Streamer } from '@henein/mamudae-lib';
-import { romanize } from 'es-hangul';
-import Image from 'next/image';
+import classNames from 'classnames';
 
 export interface StreamerImageProps {
   streamer: Streamer;
-  width?: number;
-  height?: number;
+  className?: string;
+  size?: number;
 }
 
 export const StreamerImage = (props: StreamerImageProps) => {
+  const nickname = Object.keys(Streamer)[Object.values(Streamer).indexOf(props.streamer)].toLowerCase();
+
   return (
-    <Image
-      className="rounded-full border border-border dark:border-dark-border"
-      src={`/images/mamudae/profile/${romanize(props.streamer)}.png`}
+    <img
+      className={classNames(
+        'rounded-full',
+        props.className,
+      )}
+      src={`/images/mamudae/profile/${nickname}.png`}
       alt={props.streamer}
-      width={props.width || 160}
-      height={props.height || 160}
+      width={props.size || 160}
+      height={props.size || 160}
     />
   );
 };

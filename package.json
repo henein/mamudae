@@ -8,7 +8,6 @@
     "serve:mamudae": "nx run-many --parallel --target=serve --projects=mamudae,mamudae-server"
   },
   "private": true,
-  "type": "module",
   "dependencies": {
     "@apollo/client": "^3.8.7",
     "@emotion/react": "11.11.1",
