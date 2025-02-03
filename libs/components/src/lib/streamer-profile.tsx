@@ -45,7 +45,7 @@ export const StreamerProfile = (props: StreamerProfileProps) => {
   return (
     <div className={classNames('flex flex-col items-center', props.className)}>
       <div className="relative">
-        <div className="absolute z-10 flex h-full w-full items-center justify-center rounded-full bg-black-800 opacity-0 transition-opacity hover:opacity-100">
+        <div className="absolute z-10 flex h-full w-full items-center justify-center gap-2 rounded-full bg-black-800 opacity-0 transition-opacity hover:opacity-100">
           {streamer.links.map((platformLink) => (
             <a
               key={platformLink.platform}
