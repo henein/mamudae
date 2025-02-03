@@ -1,5 +1,5 @@
 import { StreamerProfile } from '@henein/components';
-import { Streamer } from '@henein/mamudae-lib';
+import { StreamerId } from '@henein/mamudae-lib';
 import Image from 'next/image';
 
 export default function HomePage() {
@@ -16,20 +16,20 @@ export default function HomePage() {
       </div>
       <h2 className="mt-6 mb-6 text-3xl font-bold">참여자</h2>
       <div className="flex justify-between gap-1">
-        <StreamerProfile streamer={Streamer.NACHO} />
-        <StreamerProfile streamer={Streamer.TERO} />
-        <StreamerProfile streamer={Streamer.BAEKDOA} />
-        <StreamerProfile streamer={Streamer.JJANGJJUNG} />
-        <StreamerProfile streamer={Streamer.ISEUTEO} />
-        <StreamerProfile streamer={Streamer.KONGJU} />
+        <StreamerProfile streamerId={StreamerId.NACHO} />
+        <StreamerProfile streamerId={StreamerId.TERO} />
+        <StreamerProfile streamerId={StreamerId.BAEKDOA} />
+        <StreamerProfile streamerId={StreamerId.JJANGJJUNG} />
+        <StreamerProfile streamerId={StreamerId.ISEUTEO} />
+        <StreamerProfile streamerId={StreamerId.KONGJU} />
       </div>
       <div className="mt-4 flex justify-between gap-1">
-        <StreamerProfile streamer={Streamer.YUHIHI} />
-        <StreamerProfile streamer={Streamer.GYEOMJI} />
-        <StreamerProfile streamer={Streamer.NAENGIKIM} />
-        <StreamerProfile streamer={Streamer.NAMJIO} />
-        <StreamerProfile streamer={Streamer.NUSEUNYANG} />
-        <StreamerProfile streamer={Streamer.UDEONG} />
+        <StreamerProfile streamerId={StreamerId.YUHIHI} />
+        <StreamerProfile streamerId={StreamerId.GYEOMJI} />
+        <StreamerProfile streamerId={StreamerId.NAENGIKIM} />
+        <StreamerProfile streamerId={StreamerId.NAMJIO} />
+        <StreamerProfile streamerId={StreamerId.NUSEUNYANG} />
+        <StreamerProfile streamerId={StreamerId.UDEONG} />
       </div>
       <h2 className="mt-32 mb-6 text-3xl font-bold">규정</h2>
       <div className="rounded-2xl border border-dark-border bg-grey-800 px-6 py-5">

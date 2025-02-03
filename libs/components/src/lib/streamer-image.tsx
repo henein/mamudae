@@ -8,16 +8,14 @@ export interface StreamerImageProps {
 }
 
 export const StreamerImage = (props: StreamerImageProps) => {
-  const nickname = Object.keys(Streamer)[Object.values(Streamer).indexOf(props.streamer)].toLowerCase();
-
   return (
     <img
       className={classNames(
         'rounded-full',
         props.className,
       )}
-      src={`/images/mamudae/profile/${nickname}.png`}
-      alt={props.streamer}
+      src={`/images/mamudae/profile/${props.streamer.id}.png`}
+      alt={props.streamer.nickname}
       width={props.size || 160}
       height={props.size || 160}
     />

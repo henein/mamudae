@@ -1,5 +1,7 @@
+import { StreamerPlatform } from "@henein/mamudae-lib";
+
 export interface PlatformIconProps {
-  platform: 'soop' | 'youtube' | 'chzzk';
+  platform: StreamerPlatform;
 }
 
 export const PlatformIcon = (props: PlatformIconProps) => {
