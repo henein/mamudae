@@ -22,11 +22,20 @@ export const StreamerProfile = (props: StreamerProfileProps) => {
       const chzzkLink = streamer.links.find(
         (link) => link.platform === 'chzzk',
       )?.link;
+      const soopLink = streamer.links.find(
+        (link) => link.platform === 'soop',
+      )?.link;
 
       if (chzzkLink) {
         const chzzkId = chzzkLink.replace('https://chzzk.naver.com/', '');
 
         const res = await fetch(`/api/mamudae?chzzkId=${chzzkId}`);
+
+        setIsOnAir((await res.json()).isOnAir);
+      } else if (soopLink) {
+        const soopId = soopLink.replace('https://ch.sooplive.co.kr/', '');
+
+        const res = await fetch(`/api/mamudae?soopId=${soopId}`);
 
         setIsOnAir((await res.json()).isOnAir);
       }

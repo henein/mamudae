@@ -11,10 +11,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {
-  const live = await client.live.detail(req.query.chzzkId as string);
+  if (req.query.chzzkId) {
+    const live = await client.live.detail(req.query.chzzkId as string);
 
-  console.log(req.query.chzzkId)
-  console.log(live.livePlayback.media);
+    return res
+      .status(200)
+      .json({ isOnAir: live.livePlayback.media.length !== 0 });
+  } else if (req.query.soopId) {
+    const soopRes = await fetch(
+      `https://chapi.sooplive.co.kr/api/${req.query.soopId as string}/station`,
+      {
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
+        },
+      },
+    );
+    const station = await soopRes.json();
 
-  res.status(200).json({ isOnAir: live.livePlayback.media.length !== 0 });
+    return res.status(200).json({ isOnAir: station.broad ? true : false });
+  }
+
+  return res.status(400).end();
 }
