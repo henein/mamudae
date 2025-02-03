@@ -86,6 +86,9 @@ importers:
       babel-plugin-styled-components:
         specifier: ^2.0.7
         version: 2.1.4(@babel/core@7.26.0)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react-is@19.0.0)(react@18.3.1))(supports-color@5.5.0)
+      chzzk:
+        specifier: ^1.10.4
+        version: 1.10.4
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -4760,6 +4763,9 @@ packages:
 
   chromium-pickle-js@0.2.0:
     resolution: {integrity: sha512-1R5Fho+jBq0DDydt+/vHWj5KJNJCKdARKOCwZUen84I5BreWoLqRLANH1U87eJy1tiASPtMnGqJJq0ZsLoRPOw==}
+
+  chzzk@1.10.4:
+    resolution: {integrity: sha512-FIjZm9pi8ZE/OJQNXpUYL+mUY9HkTdNT3Ry0vvKR35qlhddf/Y5xJRpkZ8+GXD2ISqcDaxxEeDjHwqAcE58NMw==}
 
   ci-info@2.0.0:
     resolution: {integrity: sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==}
@@ -15931,6 +15937,14 @@ snapshots:
   chrome-trace-event@1.0.4: {}
 
   chromium-pickle-js@0.2.0: {}
+
+  chzzk@1.10.4:
+    dependencies:
+      isomorphic-ws: 5.0.0(ws@8.18.0)
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   ci-info@2.0.0: {}
 
