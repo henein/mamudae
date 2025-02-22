@@ -97,8 +97,6 @@ app.post('/create-room', async (req, res) => {
       { action: 'pick', team: 'left', index: 2 },
       { action: 'pick', team: 'left', index: 3 },
       { action: 'pick', team: 'right', index: 3 },
-      { action: 'pick', team: 'right', index: 4 },
-      { action: 'pick', team: 'left', index: 4 },
       { action: 'coinToss' },
       { action: 'votePick' },
     ],

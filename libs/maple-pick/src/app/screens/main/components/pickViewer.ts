@@ -11,8 +11,8 @@ export class PickViewer extends Container {
 
     const leftPick: PickPanel[] = [];
 
-    for (let i = 0; i < 6; i++) {
-      if (i === 5) {
+    for (let i = 0; i < 5; i++) {
+      if (i === 4) {
         leftPick[i] = this.addChild(
           new PickPanel({ direction: 'left', isOpponent: true })
         );
@@ -20,13 +20,13 @@ export class PickViewer extends Container {
         leftPick[i] = this.addChild(new PickPanel({ direction: 'left' }));
       }
 
-      leftPick[i].position.set(0, 168 + 136 * i);
+      leftPick[i].position.set(0, 236 + 136 * i);
     }
 
     const rightPick: PickPanel[] = [];
 
-    for (let i = 0; i < 6; i++) {
-      if (i === 5) {
+    for (let i = 0; i < 5; i++) {
+      if (i === 4) {
         rightPick[i] = this.addChild(
           new PickPanel({ direction: 'right', isOpponent: true })
         );
@@ -34,7 +34,7 @@ export class PickViewer extends Container {
         rightPick[i] = this.addChild(new PickPanel({ direction: 'right' }));
       }
 
-      rightPick[i].position.set(1524, 168 + 136 * i);
+      rightPick[i].position.set(1524, 236 + 136 * i);
     }
 
     reaction(
