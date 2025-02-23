@@ -168,7 +168,7 @@ app.post('/coin-toss', async (req, res) => {
 io.on('connection', async (socket) => {
   const query = socket.handshake.query;
   const roomId = query.roomId as string;
-  const team = query.team as 'left' | 'right';
+  const team = query.team as 'left' | 'right' | undefined;
 
   {
     const room = await getRoom(roomId);

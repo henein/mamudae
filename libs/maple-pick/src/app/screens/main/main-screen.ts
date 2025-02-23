@@ -1,4 +1,5 @@
 import { engine } from '../../getEngine';
+import { store } from '../../store/state-store';
 import { BanPickModal } from './components/banPickModal';
 import { BanViewer } from './components/banViewer';
 import { Camera } from './components/camera';
@@ -6,6 +7,7 @@ import { CoinFlip } from './components/coinFlip';
 import { PickViewer } from './components/pickViewer';
 import { TitleBar } from './components/titleBar';
 import TWEEN from '@tweenjs/tween.js';
+import { autorun, reaction } from 'mobx';
 import {
   AlphaFilter,
   Container,
@@ -43,8 +45,19 @@ export class MainScreen extends Container {
 
     this.mask = graphics;
 
-    this.coinFlip = this.addChild(new CoinFlip('절절배절절승', '누렁즈'));
+    this.coinFlip = this.addChild(new CoinFlip('누렁즈', '절절배절절승'));
     this.coinFlip.position = { x: 1920 / 2, y: 1080 / 2 };
+
+    reaction(
+      () => store.roomState.coinTossTeam,
+      async (coinTossTeam) => {
+        if (coinTossTeam) {
+          store.isPaused = true;
+          await this.coinFlip.run(coinTossTeam);
+          store.isPaused = false;
+        }
+      },
+    );
   }
 
   /** Prepare the screen just before showing */
@@ -56,8 +69,6 @@ export class MainScreen extends Container {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(_time: Ticker) {
     TWEEN.update(_time.lastTime);
-
-    this.coinFlip.update(_time);
   }
 
   /** Pause gameplay - automatically fired when a popup is presented */

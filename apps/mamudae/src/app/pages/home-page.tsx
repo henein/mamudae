@@ -5,7 +5,7 @@ import { Team } from '@henein/mamudae-lib';
 
 export const HomePage = () => {
   const [roomId, setRoomId] = useState('');
-  const [team, setTeam] = useState<Team>('left');
+  const [team, setTeam] = useState<Team>();
 
   const openMaplePick = async () => {
     const iframe = `<html><head><title>Maple Pick</title><style>body, html {width: 100%; height: 100%; margin: 0; padding: 0}</style></head><body><iframe src="${RoutePath.MaplePick}/${roomId}?team=${team}" style="height:100%;width:100%;border:none;"></iframe></body></html>`;
@@ -47,6 +47,17 @@ export const HomePage = () => {
             className="mr-2"
           />
           후픽
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            name="team"
+            value=""
+            checked={team === undefined}
+            onChange={() => setTeam(undefined)}
+            className="mr-2"
+          />
+          관전자
         </label>
       </div>
       <Button onClick={() => openMaplePick()}>입장</Button>

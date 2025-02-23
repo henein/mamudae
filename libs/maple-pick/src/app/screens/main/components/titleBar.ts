@@ -1,7 +1,9 @@
-import { autorun } from 'mobx';
 import { store } from '../../../store/state-store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { Tween, Easing } from '@tweenjs/tween.js';
+import { josa } from 'es-hangul';
+import { autorun } from 'mobx';
+import { GlowFilter } from 'pixi-filters';
 import {
   Container,
   Graphics,
@@ -10,8 +12,6 @@ import {
   Text,
   TextStyle,
 } from 'pixi.js';
-import { GlowFilter } from 'pixi-filters';
-import { josa } from 'es-hangul';
 
 export class TitleBar extends Container {
   private _main: Graphics;
@@ -47,8 +47,8 @@ export class TitleBar extends Container {
           fontSize: 28,
           fill: 0xffffff,
           dropShadow: { color: 0x0075ca, distance: 0, blur: 4 },
-        })
-      )
+        }),
+      ),
     );
     this._leftTeamName.anchor.set(0, 0.5);
     this._leftTeamName.position.set(32, 132);
@@ -61,8 +61,8 @@ export class TitleBar extends Container {
           fontSize: 28,
           fill: 0xffffff,
           dropShadow: { color: 0xde9300, distance: 0, blur: 4 },
-        })
-      )
+        }),
+      ),
     );
     this._rightTeamName.anchor.set(1, 0.5);
     this._rightTeamName.position.set(1920 - 32, 132);
@@ -81,7 +81,7 @@ export class TitleBar extends Container {
         height: 136,
         bottomLeft: 64,
         bottomRight: 64,
-      })
+      }),
     );
 
     const mask = this.addChild(Sprite.from('main/ui/titlebarMask.png'));
@@ -190,7 +190,7 @@ export class TitleBar extends Container {
           fill: '#404040',
           align: 'center',
         },
-      })
+      }),
     );
 
     title.anchor.set(0.5, 0);
@@ -206,19 +206,25 @@ export class TitleBar extends Container {
       if (nextSequence) {
         let teamText = '';
 
-        if (nextSequence.team === 'left') {
+        if (
+          nextSequence.team === 'left' ||
+          store.roomState.coinTossTeam === 'left'
+        ) {
           const leftTeamName = store.roomState.leftTeam.name;
 
           teamText = `<span style="color: #0075ca">${leftTeamName}</span>${josa.pick(
             leftTeamName,
-            '이/가'
+            '이/가',
           )}`;
-        } else if (nextSequence.team === 'right') {
+        } else if (
+          nextSequence.team === 'right' ||
+          store.roomState.coinTossTeam === 'right'
+        ) {
           const rightTeamName = store.roomState.rightTeam.name;
 
           teamText = `<span style="color: #de9300">${rightTeamName}</span>${josa.pick(
             rightTeamName,
-            '이/가'
+            '이/가',
           )}`;
         }
 
@@ -251,9 +257,18 @@ export class TitleBar extends Container {
             title.text = '누가 선택할지 결정 중';
             break;
           case 'votePick':
-            title.text = `${teamText} 선택 중`;
-            this._preLeftTween.chain(this._leftTween).start();
-            this._preRightTween.chain(this._rightTween).start();
+            title.text = '누가 선택할지 결정 중';
+
+            if (!store.isPaused) {
+              if (store.roomState.coinTossTeam === 'left') {
+                this._preLeftTween.chain(this._leftTween).start();
+              } else {
+                this._preRightTween.chain(this._rightTween).start();
+              }
+
+              title.text = `${teamText} 선택 중`;
+            }
+
             break;
           // case 'end':
           //   title.text = '종료!';

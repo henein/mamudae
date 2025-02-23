@@ -77,6 +77,14 @@ export const MaplePickPage = () => {
     }
   };
 
+  const rawTeam = searchParams.get('team');
+
+  let team: Team | undefined;
+
+  if (rawTeam === 'left' || rawTeam === 'right') {
+    team = rawTeam;
+  }
+
   return (
     <>
       {/* <Helmet>
@@ -85,7 +93,7 @@ export const MaplePickPage = () => {
       {!error ? (
         <MaplePick
           roomState={roomState}
-          team={searchParams.get('team') as Team}
+          team={team}
           onSelect={onSelect}
           onPush={onPush}
         />

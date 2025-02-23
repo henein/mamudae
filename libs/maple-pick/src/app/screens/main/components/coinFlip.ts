@@ -1,48 +1,39 @@
-import { Container, Graphics, Text, Ticker } from 'pixi.js';
+import { Coin } from './coin';
+import { Team } from '@henein/mamudae-lib';
+import { animate } from 'motion';
+import { Container } from 'pixi.js';
 
 export class CoinFlip extends Container {
-  front: Container;
-  back: Container;
+  coin: Coin;
 
   constructor(leftName: string, rightName: string) {
     super();
 
-    this.front = this.addChild(new Container());
-    const frontBg = this.front.addChild(new Graphics());
-    frontBg.circle(0, 0, 200).fill(0x0075ca);
-    frontBg.circle(0, 0, 190).stroke({ color: 0xffffff, width: 4 });
-    const frontText = this.front.addChild(
-      new Text({
-        text: leftName,
-        style: {
-          fontFamily: 'Maplestory Bold',
-          fontSize: '64px',
-          fill: '#ffffff',
-        },
-      }),
-    );
-    frontText.anchor.set(0.5);
-    frontText.position.set(0, 0);
-
-    this.back = this.addChild(new Container());
-    const backBg = this.back.addChild(new Graphics());
-    backBg.circle(0, 0, 200).fill(0xde9300);
-    backBg.circle(0, 0, 190).stroke({ color: 0xffffff, width: 4 });
-    const backText = this.back.addChild(
-      new Text({
-        text: rightName,
-        style: {
-          fontFamily: 'Maplestory Bold',
-          fontSize: '64px',
-          fill: '#ffffff',
-        },
-      }),
-    );
-    backText.anchor.set(0.5);
-    backText.position.set(0, 0);
+    this.coin = this.addChild(new Coin(leftName, rightName));
+    this.coin.alpha = 0;
   }
 
-  update(time: Ticker) {
-    
+  async run(team: Team) {
+    this.coin.visible = true;
+
+    await animate(
+      this.coin,
+      { coinAngle: 2 * Math.PI * 10, coinScale: 1.5, alpha: 1 },
+      { duration: 1, ease: 'easeOut' },
+    );
+
+    await animate(
+      this.coin,
+      { coinAngle: team === 'left' ? 0 : Math.PI, coinScale: 1, alpha: 1 },
+      { duration: 1, ease: 'easeIn' },
+    );
+
+    await animate(
+      this.coin,
+      { alpha: 0 },
+      { delay: 1, duration: 1, ease: 'easeOut' },
+    );
+
+    this.coin.visible = false;
   }
 }

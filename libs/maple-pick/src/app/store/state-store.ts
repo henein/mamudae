@@ -4,6 +4,7 @@ import { action, autorun, computed, makeObservable, observable } from 'mobx';
 export class StateStore {
   @observable reset = false;
   @observable team?: Team;
+  @observable isPaused = false;
 
   @observable roomState: RoomState = {
     sequences: [],
@@ -69,6 +70,8 @@ export class StateStore {
   }
 
   @computed get isMyTurn() {
+    if (store.isPaused) return false;
+
     const action = this.currentSequence?.action;
 
     if (action === 'pick' || action === 'ban') {

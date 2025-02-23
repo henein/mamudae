@@ -202,6 +202,12 @@ export class BanPickModal extends Container {
     this.toggleButton.on('pointerdown', this.onToggle);
 
     autorun(() => {
+      if (!store.team) {
+        this.toggleButton.alpha = 1;
+        this.toggleButton.interactive = true;
+        return;
+      }
+
       if (store.isMyTurn) {
         this.toggleButton.alpha = 1;
         this.toggleButton.interactive = true;
