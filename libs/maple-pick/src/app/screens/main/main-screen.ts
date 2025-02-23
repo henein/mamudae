@@ -1,14 +1,24 @@
-import { AlphaFilter, Container, Graphics, Text, TextStyle, Ticker } from "pixi.js";
-import { engine } from "../../getEngine";
-import { Camera } from "./components/camera";
-import { TitleBar } from "./components/titleBar";
-import { BanViewer } from "./components/banViewer";
-import { PickViewer } from "./components/pickViewer";
-import { BanPickModal } from "./components/banPickModal";
-import TWEEN from "@tweenjs/tween.js";
+import { engine } from '../../getEngine';
+import { BanPickModal } from './components/banPickModal';
+import { BanViewer } from './components/banViewer';
+import { Camera } from './components/camera';
+import { CoinFlip } from './components/coinFlip';
+import { PickViewer } from './components/pickViewer';
+import { TitleBar } from './components/titleBar';
+import TWEEN from '@tweenjs/tween.js';
+import {
+  AlphaFilter,
+  Container,
+  Graphics,
+  Text,
+  TextStyle,
+  Ticker,
+} from 'pixi.js';
 
 export class MainScreen extends Container {
-  public static assetBundles = ["main"];
+  public static assetBundles = ['main'];
+
+  coinFlip: CoinFlip;
 
   constructor() {
     super();
@@ -32,6 +42,9 @@ export class MainScreen extends Container {
     graphics.endFill();
 
     this.mask = graphics;
+
+    this.coinFlip = this.addChild(new CoinFlip('절절배절절승', '누렁즈'));
+    this.coinFlip.position = { x: 1920 / 2, y: 1080 / 2 };
   }
 
   /** Prepare the screen just before showing */
@@ -43,6 +56,8 @@ export class MainScreen extends Container {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public update(_time: Ticker) {
     TWEEN.update(_time.lastTime);
+
+    this.coinFlip.update(_time);
   }
 
   /** Pause gameplay - automatically fired when a popup is presented */
@@ -80,7 +95,6 @@ export class MainScreen extends Container {
     //
   }
 }
-
 
 // WebFont.load({
 //   custom: {
