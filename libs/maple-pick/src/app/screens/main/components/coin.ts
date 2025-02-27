@@ -33,7 +33,7 @@ export class Coin extends Container {
     this.scale.set(value);
   }
 
-  constructor(leftName: string, rightName: string) {
+  constructor() {
     super();
 
     this.front = this.addChild(new Container());
@@ -41,7 +41,7 @@ export class Coin extends Container {
     frontBg.beginFill(0x0075ca).drawCircle(0, 0, 200).endFill();
     frontBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
     const frontText = this.front.addChild(
-      new Text(leftName, {
+      new Text(store.roomState.leftTeam.name, {
         fontFamily: 'Maplestory Bold',
         fontSize: '64px',
         fill: '#ffffff',
@@ -55,7 +55,7 @@ export class Coin extends Container {
     backBg.beginFill(0xde9300).drawCircle(0, 0, 200).endFill();
     backBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
     const backText = this.back.addChild(
-      new Text(rightName, {
+      new Text(store.roomState.rightTeam.name, {
         fontFamily: 'Maplestory Bold',
         fontSize: '64px',
         fill: '#ffffff',

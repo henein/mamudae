@@ -6,10 +6,10 @@ import { Container } from 'pixi.js';
 export class CoinFlip extends Container {
   coin: Coin;
 
-  constructor(leftName: string, rightName: string) {
+  constructor() {
     super();
 
-    this.coin = this.addChild(new Coin(leftName, rightName));
+    this.coin = this.addChild(new Coin());
     this.coin.alpha = 0;
   }
 

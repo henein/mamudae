@@ -7,15 +7,8 @@ import { CoinFlip } from './components/coinFlip';
 import { PickViewer } from './components/pickViewer';
 import { TitleBar } from './components/titleBar';
 import TWEEN from '@tweenjs/tween.js';
-import { autorun, reaction } from 'mobx';
-import {
-  AlphaFilter,
-  Container,
-  Graphics,
-  Text,
-  TextStyle,
-  Ticker,
-} from 'pixi.js';
+import { reaction } from 'mobx';
+import { AlphaFilter, Container, Graphics } from 'pixi.js';
 
 export class MainScreen extends Container {
   public static assetBundles = ['main'];
@@ -45,7 +38,7 @@ export class MainScreen extends Container {
 
     this.mask = graphics;
 
-    this.coinFlip = this.addChild(new CoinFlip('누렁즈', '절절배절절승'));
+    this.coinFlip = this.addChild(new CoinFlip());
     this.coinFlip.position = { x: 1920 / 2, y: 1080 / 2 };
 
     reaction(

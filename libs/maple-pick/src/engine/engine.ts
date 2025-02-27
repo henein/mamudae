@@ -16,6 +16,7 @@ import {
   IDestroyOptions,
   ResizePlugin,
 } from 'pixi.js';
+import '@pixi-spine/loader-3.7';
 
 extensions.remove(ResizePlugin);
 extensions.add(CreationResizePlugin);
