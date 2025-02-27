@@ -1,8 +1,8 @@
-import { IReactionDisposer, autorun } from 'mobx';
-import { DropShadowFilter } from 'pixi-filters';
-import { JobId, getJob, Job  } from '@henein/mamudae-lib';
 import { store } from '../../../store/state-store';
 import { DetailRoundedRect } from './detailRoundedRect';
+import { JobId, getJob, Job } from '@henein/mamudae-lib';
+import { IReactionDisposer, autorun } from 'mobx';
+import { DropShadowFilter } from 'pixi-filters';
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from 'pixi.js';
 
 type Option = {
@@ -42,8 +42,8 @@ export class PickPanel extends Container {
 
     this.background = this.addChild(
       Sprite.from(
-        `main/ui/${direction === 'left' ? 'leftPickBG' : 'rightPickBG'}.png`
-      )
+        `main/ui/${direction === 'left' ? 'leftPickBG' : 'rightPickBG'}.png`,
+      ),
     );
 
     const graphics = this.addChild(
@@ -55,7 +55,7 @@ export class PickPanel extends Container {
         height: 120,
         topRight: direction === 'left' ? 64 : 0,
         topLeft: direction === 'right' ? 64 : 0,
-      })
+      }),
     );
     this.mask = graphics;
 
@@ -63,13 +63,13 @@ export class PickPanel extends Container {
     this._currentSprite = this.addChild(new Sprite());
 
     this.shadow = this.addChild(
-      Sprite.from(`main/ui/${direction}PickShadow.png`)
+      Sprite.from(`main/ui/${direction}PickShadow.png`),
     );
     this.shadow.visible = false;
 
     if (isOpponent) {
       const opponentIcon = this.addChild(
-        Sprite.from(`main/ui/${direction}Opponent.png`)
+        Sprite.from(`main/ui/${direction}Opponent.png`),
       );
       opponentIcon.anchor.set(0.5);
       opponentIcon.position.set(396 / 2, 120 / 2);
@@ -82,9 +82,12 @@ export class PickPanel extends Container {
           fontFamily: 'Maplestory Light',
           fontSize: 28,
           fill: '#ffffff',
-          dropShadow: { color: 0x000000, distance: 0, blur: 4 },
-        })
-      )
+          dropShadow: true,
+          dropShadowColor: 0x000000,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
+        }),
+      ),
     );
     this.title.anchor.set(direction === 'left' ? 1 : 0, 1);
     this.title.position.set(direction === 'left' ? 396 - 12 : 0 + 12, 120 - 8);
@@ -124,7 +127,7 @@ export class PickPanel extends Container {
     sprite.anchor.set(0.5 + job.offsetX / 1024, 0.5 + job.offsetY / 604);
     sprite.position.set(
       396 / 2 + (this._direction === 'left' ? -76 : 76),
-      120 / 2 + 20
+      120 / 2 + 20,
     );
   };
 

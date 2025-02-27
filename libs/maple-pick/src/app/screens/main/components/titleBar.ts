@@ -46,7 +46,10 @@ export class TitleBar extends Container {
           fontFamily: 'Maplestory Light',
           fontSize: 28,
           fill: 0xffffff,
-          dropShadow: { color: 0x0075ca, distance: 0, blur: 4 },
+          dropShadow: true,
+          dropShadowColor: 0x0075ca,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
         }),
       ),
     );
@@ -60,7 +63,10 @@ export class TitleBar extends Container {
           fontFamily: 'Maplestory Light',
           fontSize: 28,
           fill: 0xffffff,
-          dropShadow: { color: 0xde9300, distance: 0, blur: 4 },
+          dropShadow: true,
+          dropShadowColor: 0xde9300,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
         }),
       ),
     );
@@ -183,15 +189,17 @@ export class TitleBar extends Container {
     // );
 
     const title = this.addChild(
-      new HTMLText({
-        style: {
-          fontFamily: 'Maplestory Bold',
-          fontSize: '56px',
-          fill: '#404040',
-          align: 'center',
-        },
+      new HTMLText('', {
+        fontFamily: ['Maplestory Bold', 'sans-serif'],
+        fontSize: 56,
+        fill: 0x404040,
+        align: 'center',
       }),
     );
+
+    title.style.loadFont('/assets/preload/Maplestory Bold.woff2', {
+      family: 'Maplestory Bold',
+    });
 
     title.anchor.set(0.5, 0);
     title.position.set(1920 / 2, 32 - 2);

@@ -62,13 +62,18 @@ export class MainScreen extends Container {
 
   /** Prepare the screen just before showing */
   public prepare() {
-    //
+    function animate(time: number) {
+      requestAnimationFrame(animate);
+      TWEEN.update(time);
+    }
+
+    requestAnimationFrame(animate);
   }
 
   /** Update the screen */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public update(_time: Ticker) {
-    TWEEN.update(_time.lastTime);
+  public update(dt: number) {
+    // TWEEN.update(dt);
   }
 
   /** Pause gameplay - automatically fired when a popup is presented */

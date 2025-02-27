@@ -1,10 +1,11 @@
-import { Easing, Tween } from '@tweenjs/tween.js';
-import { Job, JobList } from '@henein/mamudae-lib';
-import { constants } from '../constants';
-import { Portrait } from './portrait';
-import { Button } from './button';
-import { TextButton } from './textButton';
 import { store } from '../../../store/state-store';
+import { constants } from '../constants';
+import { Button } from './button';
+import { Portrait } from './portrait';
+import { TextButton } from './textButton';
+import { Job, JobList } from '@henein/mamudae-lib';
+import { ScrollBox } from '@pixi/ui';
+import { Easing, Tween } from '@tweenjs/tween.js';
 import { autorun, reaction } from 'mobx';
 import {
   Container,
@@ -15,7 +16,6 @@ import {
   TextStyle,
   Texture,
 } from 'pixi.js';
-import { ScrollBox } from '@pixi/ui';
 
 class PortraitButton extends Button {
   private _isSelected = false;
@@ -39,8 +39,8 @@ class PortraitButton extends Button {
           fontFamily: 'NanumBarunGothic',
           fontSize: 16,
           fill: '#404040',
-        })
-      )
+        }),
+      ),
     );
     name.anchor.set(0.5, 0);
     name.position.set(64, 132);
@@ -90,7 +90,7 @@ export class BanPickModal extends Container {
         height: 576,
         padding: 38,
         elementsMargin: 16,
-      })
+      }),
     );
     scrollBox.position.set(0, 48);
 
@@ -102,9 +102,7 @@ export class BanPickModal extends Container {
     const portraitButtonList: PortraitButton[] = [];
 
     for (let i = 0; i < JobList.length; i++) {
-      portraitButtonList[i] = scrollBox.addItem(
-        new PortraitButton(JobList[i])
-      );
+      portraitButtonList[i] = scrollBox.addItem(new PortraitButton(JobList[i]));
       // portraitButtonList[i].position.set(
       //   48 + 176 * (i % 5),
       //   168 * Math.floor(i / 5)
@@ -126,7 +124,7 @@ export class BanPickModal extends Container {
             value.isDisabled = true;
           }
         });
-      }
+      },
     );
 
     autorun(() => {
@@ -160,7 +158,7 @@ export class BanPickModal extends Container {
         textColor: 0xffffff,
         width: 200,
         height: 96,
-      })
+      }),
     );
     this.returnButton.isDisabled = true;
     this.returnButton.pivot.set(this.returnButton.width / 2, 0);
@@ -180,7 +178,7 @@ export class BanPickModal extends Container {
       if (store.roomState?.selected) {
         this.selectedButton =
           portraitButtonList.find(
-            (value) => value.job.id === store.roomState.selected
+            (value) => value.job.id === store.roomState.selected,
           ) ?? portraitButtonList[0];
         this.selectedButton.isSelected = true;
 

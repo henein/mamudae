@@ -34,16 +34,14 @@ export const MaplePick: React.FC<MaplePickProps> = (props) => {
       return;
     }
 
-    const e = new CreationEngine();
+    const e = new CreationEngine({
+      background: '#1E1E1E',
+      width: 1920,
+      height: 1080,
+    });
     setEngine(e);
 
     (async () => {
-      // Initialize the creation engine instance
-      await e.init({
-        background: '#1E1E1E',
-        resizeOptions: { minWidth: 1920, minHeight: 1080, letterbox: false },
-      });
-
       if (ref.current) {
         e.addCanvas(ref.current);
       }
@@ -52,9 +50,9 @@ export const MaplePick: React.FC<MaplePickProps> = (props) => {
       userSettings.init();
 
       // Show the load screen
-      await e.navigation.showScreen(LoadScreen);
+      await e.navigation?.showScreen(LoadScreen);
       // Show the main screen once the load screen is dismissed
-      await e.navigation.showScreen(MainScreen);
+      await e.navigation?.showScreen(MainScreen);
     })();
 
     // return () => {

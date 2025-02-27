@@ -17,6 +17,7 @@ import {
   TextStyle,
   Texture,
   Text,
+  BLEND_MODES,
 } from 'pixi.js';
 
 export class Camera extends Container {
@@ -283,7 +284,10 @@ export class Camera extends Container {
           fontFamily: 'Maplestory Bold',
           fontSize: '48px',
           fill: '#ffffff',
-          dropShadow: { color: '#404040', distance: 0, blur: 4 },
+          dropShadow: true,
+          dropShadowColor: 0x404040,
+          dropShadowDistance: 0,
+          dropShadowBlur: 4,
         })
       )
     );
@@ -503,7 +507,7 @@ class BlurOverlay extends Container {
     // this.addChild(graphics);
 
     this._multiply = Sprite.from('main/backgrounds/multiply.png');
-    this._multiply.blendMode = 'multiply';
+    this._multiply.blendMode = BLEND_MODES.MULTIPLY;
     this.addChild(this._multiply);
 
     autorun(() => {

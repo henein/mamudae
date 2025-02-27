@@ -1,8 +1,8 @@
 import { ExtensionType } from "pixi.js";
 import type {
   Application,
-  ApplicationOptions,
   ExtensionMetadata,
+  IApplicationOptions,
   ResizePluginOptions,
 } from "pixi.js";
 
@@ -50,7 +50,7 @@ export class CreationResizePlugin {
    * Initialize the plugin with scope of application instance
    * @param {object} [options] - See application options
    */
-  public static init(options: ApplicationOptions): void {
+  public static init(options: Partial<IApplicationOptions>): void {
     const app = this as unknown as Application;
 
     Object.defineProperty(
@@ -122,13 +122,13 @@ export class CreationResizePlugin {
       const { width, height } = resize(
         canvasWidth,
         canvasHeight,
-        app.resizeOptions.minWidth,
-        app.resizeOptions.minHeight,
-        app.resizeOptions.letterbox,
+        1920,
+        1080,
+        false,
       );
 
-      app.renderer.canvas.style.width = `${canvasWidth}px`;
-      app.renderer.canvas.style.height = `${canvasHeight}px`;
+      app.renderer.view.style!.width = `${canvasWidth}px`;
+      app.renderer.view.style!.height = `${canvasHeight}px`;
       window.scrollTo(0, 0);
 
       app.renderer.resize(width, height);
@@ -142,12 +142,12 @@ export class CreationResizePlugin {
     };
     this._resizeId = null;
     this._resizeTo = null;
-    app.resizeOptions = {
-      minWidth: 768,
-      minHeight: 1024,
-      letterbox: true,
-      ...options.resizeOptions,
-    };
+    // app.resizeOptions = {
+    //   minWidth: 768,
+    //   minHeight: 1024,
+    //   letterbox: true,
+    //   ...options.resizeOptions,
+    // };
     app.resizeTo =
       options.resizeTo || (null as unknown as Window | HTMLElement);
   }

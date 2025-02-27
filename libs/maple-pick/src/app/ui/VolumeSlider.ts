@@ -1,7 +1,6 @@
-import { Slider } from "@pixi/ui";
-import { Graphics } from "pixi.js";
-
-import { Label } from "./Label";
+import { Label } from './Label';
+import { Slider } from '@pixi/ui';
+import { Graphics } from 'pixi.js';
 
 /**
  * A volume slider component to be used in the Settings popup.
@@ -23,32 +22,37 @@ export class VolumeSlider extends Slider {
     const backgroundColor = 0xffffff;
 
     const bg = new Graphics()
-      .roundRect(0, 0, width, height, radius)
-      .fill({ color: borderColor })
-      .roundRect(
+      .beginFill(borderColor)
+      .drawRoundedRect(0, 0, width, height, radius)
+      .endFill()
+      .beginFill(backgroundColor)
+      .drawRoundedRect(
         border,
         border,
         width - border * 2,
         height - border * 2,
         radius,
       )
-      .fill({ color: backgroundColor });
+      .endFill();
 
     const fill = new Graphics()
-      .roundRect(0, 0, width, height, radius)
-      .fill({ color: borderColor })
-      .roundRect(
+      .beginFill(borderColor)
+      .drawRoundedRect(0, 0, width, height, radius)
+      .endFill()
+      .beginFill(fillColor)
+      .drawRoundedRect(
         border,
         border,
         width - border * 2,
         height - border * 2,
         radius,
       )
-      .fill({ color: fillColor });
+      .endFill();
 
     const slider = new Graphics()
-      .circle(0, 0, handleRadius + handleBorder)
-      .fill({ color: meshColor });
+      .beginFill(meshColor)
+      .drawCircle(0, 0, handleRadius + handleBorder)
+      .endFill();
 
     super({
       bg,
@@ -60,13 +64,10 @@ export class VolumeSlider extends Slider {
 
     this.value = value;
 
-    this.messageLabel = new Label({
-      text: label,
-      style: {
-        align: "left",
-        fill: 0x4a4a4a,
-        fontSize: 18,
-      },
+    this.messageLabel = new Label(label, {
+      align: 'left',
+      fill: 0x4a4a4a,
+      fontSize: 18,
     });
     this.messageLabel.anchor.x = 0;
     this.messageLabel.x = 10;

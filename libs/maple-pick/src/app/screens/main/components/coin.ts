@@ -1,6 +1,6 @@
-import { Container, Graphics, Text } from 'pixi.js';
-import { StateStore, store } from '../../../store/state-store';
+import { store } from '../../../store/state-store';
 import { autorun } from 'mobx';
+import { Container, Graphics, Text } from 'pixi.js';
 
 export class Coin extends Container {
   front: Container;
@@ -30,7 +30,7 @@ export class Coin extends Container {
 
   set coinScale(value) {
     this._coinScale = value;
-    this.scale = value
+    this.scale.set(value);
   }
 
   constructor(leftName: string, rightName: string) {
@@ -38,16 +38,13 @@ export class Coin extends Container {
 
     this.front = this.addChild(new Container());
     const frontBg = this.front.addChild(new Graphics());
-    frontBg.circle(0, 0, 200).fill(0x0075ca);
-    frontBg.circle(0, 0, 190).stroke({ color: 0xffffff, width: 4 });
+    frontBg.beginFill(0x0075ca).drawCircle(0, 0, 200).endFill();
+    frontBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
     const frontText = this.front.addChild(
-      new Text({
-        text: leftName,
-        style: {
-          fontFamily: 'Maplestory Bold',
-          fontSize: '64px',
-          fill: '#ffffff',
-        },
+      new Text(leftName, {
+        fontFamily: 'Maplestory Bold',
+        fontSize: '64px',
+        fill: '#ffffff',
       }),
     );
     frontText.anchor.set(0.5);
@@ -55,16 +52,13 @@ export class Coin extends Container {
 
     this.back = this.addChild(new Container());
     const backBg = this.back.addChild(new Graphics());
-    backBg.circle(0, 0, 200).fill(0xde9300);
-    backBg.circle(0, 0, 190).stroke({ color: 0xffffff, width: 4 });
+    backBg.beginFill(0xde9300).drawCircle(0, 0, 200).endFill();
+    backBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
     const backText = this.back.addChild(
-      new Text({
-        text: rightName,
-        style: {
-          fontFamily: 'Maplestory Bold',
-          fontSize: '64px',
-          fill: '#ffffff',
-        },
+      new Text(rightName, {
+        fontFamily: 'Maplestory Bold',
+        fontSize: '64px',
+        fill: '#ffffff',
       }),
     );
     backText.anchor.set(0.5);
@@ -78,6 +72,6 @@ export class Coin extends Container {
       backText.text = store.roomState.rightTeam.name;
       backText.anchor.set(0.5);
       backText.position.set(0, 0);
-    })
+    });
   }
 }

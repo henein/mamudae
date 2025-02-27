@@ -1,5 +1,5 @@
 import type { Ticker } from "pixi.js";
-import { Assets, BigPool, Container } from "pixi.js";
+import { Assets, Container } from "pixi.js";
 
 import type { CreationEngine } from "../engine";
 
@@ -18,7 +18,7 @@ interface AppScreen extends Container {
   /** Reset screen, after hidden */
   reset?(): void;
   /** Update the screen, passing delta time/step */
-  update?(time: Ticker): void;
+  update?(dt: number): void;
   /** Resize the screen */
   resize?(width: number, height: number): void;
   /** Blur the screen */
@@ -158,8 +158,8 @@ export class Navigation {
     }
 
     // Create the new screen and add that to the stage
-    this.currentScreen = BigPool.get(ctor);
-    await this.addAndShowScreen(this.currentScreen);
+    this.currentScreen = new ctor();
+    await this.addAndShowScreen(this.currentScreen!);
   }
 
   /**

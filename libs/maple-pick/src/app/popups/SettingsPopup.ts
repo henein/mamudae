@@ -1,14 +1,13 @@
-import { List } from "@pixi/ui";
-import { animate } from "motion";
-import type { Text } from "pixi.js";
-import { BlurFilter, Container, Sprite, Texture } from "pixi.js";
-
-import { engine } from "../getEngine";
-import { Button } from "../ui/Button";
-import { Label } from "../ui/Label";
-import { RoundedBox } from "../ui/RoundedBox";
-import { VolumeSlider } from "../ui/VolumeSlider";
-import { userSettings } from "../utils/userSettings";
+import { engine } from '../getEngine';
+import { Button } from '../ui/Button';
+import { Label } from '../ui/Label';
+import { RoundedBox } from '../ui/RoundedBox';
+import { VolumeSlider } from '../ui/VolumeSlider';
+import { userSettings } from '../utils/userSettings';
+import { List } from '@pixi/ui';
+import { animate } from 'motion';
+import type { Text } from 'pixi.js';
+import { BlurFilter, Container, Sprite, Texture } from 'pixi.js';
 
 /** Popup for volume */
 export class SettingsPopup extends Container {
@@ -47,17 +46,14 @@ export class SettingsPopup extends Container {
     this.panelBase = new RoundedBox({ height: 425 });
     this.panel.addChild(this.panelBase);
 
-    this.title = new Label({
-      text: "Settings",
-      style: {
-        fill: 0xec1561,
-        fontSize: 50,
-      },
+    this.title = new Label('Settings', {
+      fill: 0xec1561,
+      fontSize: 50,
     });
     this.title.y = -this.panelBase.boxHeight * 0.5 + 60;
     this.panel.addChild(this.title);
 
-    this.doneButton = new Button({ text: "OK" });
+    this.doneButton = new Button({ text: 'OK' });
     this.doneButton.y = this.panelBase.boxHeight * 0.5 - 78;
     this.doneButton.onPress.connect(() => engine().navigation.dismissPopup());
     this.panel.addChild(this.doneButton);
@@ -73,24 +69,24 @@ export class SettingsPopup extends Container {
     // this.versionLabel.y = this.panelBase.boxHeight * 0.5 - 15;
     // this.panel.addChild(this.versionLabel);
 
-    this.layout = new List({ type: "vertical", elementsMargin: 4 });
+    this.layout = new List({ type: 'vertical', elementsMargin: 4 });
     this.layout.x = -140;
     this.layout.y = -80;
     this.panel.addChild(this.layout);
 
-    this.masterSlider = new VolumeSlider("Master Volume");
+    this.masterSlider = new VolumeSlider('Master Volume');
     this.masterSlider.onUpdate.connect((v) => {
       userSettings.setMasterVolume(v / 100);
     });
     this.layout.addChild(this.masterSlider);
 
-    this.bgmSlider = new VolumeSlider("BGM Volume");
+    this.bgmSlider = new VolumeSlider('BGM Volume');
     this.bgmSlider.onUpdate.connect((v) => {
       userSettings.setBgmVolume(v / 100);
     });
     this.layout.addChild(this.bgmSlider);
 
-    this.sfxSlider = new VolumeSlider("SFX Volume");
+    this.sfxSlider = new VolumeSlider('SFX Volume');
     this.sfxSlider.onUpdate.connect((v) => {
       userSettings.setSfxVolume(v / 100);
     });
@@ -116,18 +112,16 @@ export class SettingsPopup extends Container {
   public async show() {
     const currentEngine = engine();
     if (currentEngine.navigation.currentScreen) {
-      currentEngine.navigation.currentScreen.filters = [
-        new BlurFilter({ strength: 4 }),
-      ];
+      currentEngine.navigation.currentScreen.filters = [new BlurFilter(4)];
     }
 
     this.bg.alpha = 0;
     this.panel.pivot.y = -400;
-    animate(this.bg, { alpha: 0.8 }, { duration: 0.2, ease: "linear" });
+    animate(this.bg, { alpha: 0.8 }, { duration: 0.2, ease: 'linear' });
     await animate(
       this.panel.pivot,
       { y: 0 },
-      { duration: 0.3, ease: "backOut" },
+      { duration: 0.3, ease: 'backOut' },
     );
   }
 
@@ -137,13 +131,13 @@ export class SettingsPopup extends Container {
     if (currentEngine.navigation.currentScreen) {
       currentEngine.navigation.currentScreen.filters = [];
     }
-    animate(this.bg, { alpha: 0 }, { duration: 0.2, ease: "linear" });
+    animate(this.bg, { alpha: 0 }, { duration: 0.2, ease: 'linear' });
     await animate(
       this.panel.pivot,
       { y: -500 },
       {
         duration: 0.3,
-        ease: "backIn",
+        ease: 'backIn',
       },
     );
   }
