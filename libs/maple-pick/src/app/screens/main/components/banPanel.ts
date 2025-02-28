@@ -1,10 +1,10 @@
+import { store } from '../../../store/state-store';
 import { Portrait } from './portrait';
+import { getJob } from '@henein/mamudae-lib';
 import { Tween, Easing } from '@tweenjs/tween.js';
+import { th } from 'date-fns/locale';
 import { autorun, IReactionDisposer } from 'mobx';
 import { Container, Sprite } from 'pixi.js';
-import { store } from '../../../store/state-store';
-import { getJob } from '@henein/mamudae-lib';
-import { th } from 'date-fns/locale';
 
 export class BanPanel extends Container {
   private _isNext = false;
@@ -29,6 +29,21 @@ export class BanPanel extends Container {
       .easing(Easing.Quadratic.InOut)
       .repeat(Infinity)
       .yoyo(true);
+
+    autorun(() => {
+      if (this._isNext) {
+        const selectJobId = store.roomState?.selected;
+
+        if (!selectJobId) {
+          return;
+        }
+
+        this.portrait.jobId = selectJobId;
+        this.portrait.alpha = 0.5;
+      } else {
+        this.portrait.alpha = 1;
+      }
+    });
   }
 
   get isNext(): boolean {
@@ -37,22 +52,6 @@ export class BanPanel extends Container {
 
   set isNext(value: boolean) {
     this._isNext = value;
-
-    if (this.currentDisposer) {
-      this.currentDisposer();
-      this.portrait.alpha = 1;
-    }
-
-    this.currentDisposer = autorun(() => {
-      const selectJobId = store.roomState?.selected;
-
-      if (!selectJobId) {
-        return;
-      }
-
-      this.portrait.jobId = selectJobId;
-      this.portrait.alpha = 0.5
-    });
 
     if (this._isNext) {
       this.nextOverlay.alpha = 0.2;

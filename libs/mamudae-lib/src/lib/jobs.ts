@@ -10,6 +10,7 @@ export interface Job {
   offsetX: number;
   offsetY: number;
   reverse?: boolean;
+  spine?: number;
 }
 
 export const getJob = (jobId: JobId) => {
@@ -109,6 +110,7 @@ export const JobList: Job[] = [
     offsetX: +40,
     offsetY: 0,
     reverse: true,
+    spine: 22,
   },
   {
     id: JobId.NIGHT_LORD,
@@ -136,6 +138,7 @@ export const JobList: Job[] = [
     background: 6,
     offsetX: -60,
     offsetY: 0,
+    spine: 8,
   },
   {
     id: JobId.BUCCANEER,
@@ -164,6 +167,7 @@ export const JobList: Job[] = [
     offsetX: +28,
     offsetY: 0,
     reverse: true,
+    spine: 13,
   },
   {
     id: JobId.DAWN_WARRIOR,
@@ -182,6 +186,7 @@ export const JobList: Job[] = [
     background: 8,
     offsetX: -56,
     offsetY: 0,
+    spine: 9,
   },
   {
     id: JobId.BLAZE_WIZARD,
@@ -263,6 +268,7 @@ export const JobList: Job[] = [
     background: 10,
     offsetX: -64,
     offsetY: 0,
+    spine: 14,
   },
   {
     id: JobId.DEMON_SLAYER,
@@ -291,6 +297,7 @@ export const JobList: Job[] = [
     background: 12,
     offsetX: -16,
     offsetY: 0,
+    spine: 3,
   },
   {
     id: JobId.EVAN,
@@ -310,6 +317,7 @@ export const JobList: Job[] = [
     background: 14,
     offsetX: -4,
     offsetY: 0,
+    spine: 10,
   },
   {
     id: JobId.MERCEDES,
@@ -320,6 +328,7 @@ export const JobList: Job[] = [
     offsetX: +36,
     offsetY: 0,
     reverse: true,
+    spine: 5,
   },
   {
     id: JobId.PHANTOM,
@@ -330,6 +339,7 @@ export const JobList: Job[] = [
     offsetX: -24,
     offsetY: 0,
     reverse: true,
+    spine: 7,
   },
   {
     id: JobId.SHADE,
@@ -339,6 +349,7 @@ export const JobList: Job[] = [
     background: 17,
     offsetX: -24,
     offsetY: 0,
+    // spine: 16,
   },
   {
     id: JobId.KAISER,
@@ -349,6 +360,7 @@ export const JobList: Job[] = [
     offsetX: -56,
     offsetY: 0,
     reverse: true,
+    spine: 11,
   },
   {
     id: JobId.CADENA,
@@ -359,6 +371,7 @@ export const JobList: Job[] = [
     offsetX: -28,
     offsetY: 0,
     reverse: true,
+    spine: 19,
   },
   {
     id: JobId.ANGELIC_BUSTER,
@@ -368,6 +381,7 @@ export const JobList: Job[] = [
     background: 20,
     offsetX: +4,
     offsetY: 0,
+    spine: 12,
   },
   {
     id: JobId.ADELE,
@@ -377,6 +391,7 @@ export const JobList: Job[] = [
     background: 21,
     offsetX: -12,
     offsetY: 0,
+    spine: 24
   },
   {
     id: JobId.ILLIUM,
@@ -387,6 +402,7 @@ export const JobList: Job[] = [
     offsetX: +56,
     offsetY: 0,
     reverse: true,
+    spine: 20,
   },
   {
     id: JobId.KAIN,
@@ -396,6 +412,7 @@ export const JobList: Job[] = [
     background: 27,
     offsetX: 0,
     offsetY: 0,
+    spine: 25
   },
   {
     id: JobId.KHALI,
@@ -405,6 +422,7 @@ export const JobList: Job[] = [
     background: 29,
     offsetX: 0,
     offsetY: 0,
+    spine: 28
   },
   {
     id: JobId.ARK,
@@ -414,6 +432,7 @@ export const JobList: Job[] = [
     background: 23,
     offsetX: +36,
     offsetY: 0,
+    spine: 21,
   },
   {
     id: JobId.LARA,
@@ -423,6 +442,7 @@ export const JobList: Job[] = [
     background: 28,
     offsetX: 0,
     offsetY: 0,
+    spine: 27
   },
   {
     id: JobId.HOYOUNG,
@@ -432,6 +452,7 @@ export const JobList: Job[] = [
     background: 24,
     offsetX: -52,
     offsetY: 0,
+    spine: 23
   },
   {
     id: JobId.ZERO,
@@ -441,6 +462,7 @@ export const JobList: Job[] = [
     background: 25,
     offsetX: 0,
     offsetY: 0,
+    spine: 15,
   },
   {
     id: JobId.KINESIS,
@@ -450,5 +472,6 @@ export const JobList: Job[] = [
     background: 26,
     offsetX: -40,
     offsetY: 0,
+    spine: 18,
   },
 ];

@@ -1,0 +1,206 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+khali_Bhair1
+  rotate: false
+  xy: 890, 397
+  size: 101, 109
+  orig: 101, 109
+  offset: 0, 0
+  index: -1
+khali_Bline1
+  rotate: false
+  xy: 890, 85
+  size: 83, 145
+  orig: 83, 145
+  offset: 0, 0
+  index: -1
+khali_Bline2
+  rotate: false
+  xy: 2, 17
+  size: 886, 1001
+  orig: 886, 1001
+  offset: 0, 0
+  index: -1
+khali_Fhair1
+  rotate: false
+  xy: 975, 73
+  size: 46, 157
+  orig: 46, 157
+  offset: 0, 0
+  index: -1
+khali_Lhair1
+  rotate: true
+  xy: 890, 2
+  size: 69, 97
+  orig: 69, 97
+  offset: 0, 0
+  index: -1
+khali_Rhair1
+  rotate: false
+  xy: 890, 232
+  size: 96, 163
+  orig: 96, 163
+  offset: 0, 0
+  index: -1
+khali_bodyacc
+  rotate: false
+  xy: 989, 40
+  size: 29, 31
+  orig: 29, 31
+  offset: 0, 0
+  index: -1
+khali_eyes
+  rotate: true
+  xy: 890, 723
+  size: 295, 119
+  orig: 295, 119
+  offset: 0, 0
+  index: -1
+khali_neck
+  rotate: true
+  xy: 890, 508
+  size: 213, 115
+  orig: 213, 115
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+khali_Bhair2
+  rotate: false
+  xy: 525, 392
+  size: 59, 133
+  orig: 59, 133
+  offset: 0, 0
+  index: -1
+khali_Bhair3
+  rotate: false
+  xy: 2, 527
+  size: 592, 437
+  orig: 592, 437
+  offset: 0, 0
+  index: -1
+khali_Larm1
+  rotate: true
+  xy: 450, 392
+  size: 133, 73
+  orig: 133, 73
+  offset: 0, 0
+  index: -1
+khali_Rarm
+  rotate: true
+  xy: 596, 385
+  size: 579, 415
+  orig: 579, 415
+  offset: 0, 0
+  index: -1
+sand2
+  rotate: false
+  xy: 2, 2
+  size: 446, 523
+  orig: 446, 523
+  offset: 0, 0
+  index: -1
+sand4
+  rotate: false
+  xy: 450, 22
+  size: 549, 361
+  orig: 549, 361
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+khali_Fline
+  rotate: false
+  xy: 730, 122
+  size: 281, 465
+  orig: 281, 465
+  offset: 0, 0
+  index: -1
+khali_Lleg
+  rotate: false
+  xy: 384, 2
+  size: 226, 293
+  orig: 226, 293
+  offset: 0, 0
+  index: -1
+khali_Rleg
+  rotate: true
+  xy: 2, 297
+  size: 257, 726
+  orig: 257, 726
+  offset: 0, 0
+  index: -1
+khali_hair
+  rotate: true
+  xy: 421, 589
+  size: 425, 312
+  orig: 425, 312
+  offset: 0, 0
+  index: -1
+khali_hair2
+  rotate: true
+  xy: 2, 43
+  size: 252, 380
+  orig: 252, 380
+  offset: 0, 0
+  index: -1
+khali_head
+  rotate: true
+  xy: 735, 590
+  size: 424, 238
+  orig: 424, 238
+  offset: 0, 0
+  index: -1
+sand
+  rotate: false
+  xy: 2, 556
+  size: 417, 458
+  orig: 417, 458
+  offset: 0, 0
+  index: -1
+
+skeleton4.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+khali_Larm2
+  rotate: false
+  xy: 2, 225
+  size: 473, 170
+  orig: 473, 170
+  offset: 0, 0
+  index: -1
+khali_headacc
+  rotate: false
+  xy: 471, 2
+  size: 286, 189
+  orig: 286, 189
+  offset: 0, 0
+  index: -1
+pati
+  rotate: false
+  xy: 477, 193
+  size: 402, 202
+  orig: 402, 202
+  offset: 0, 0
+  index: -1
+sand3
+  rotate: false
+  xy: 2, 58
+  size: 467, 165
+  orig: 467, 165
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,1 @@
+{"version":3,"file":"Spine.d.ts","sourceRoot":"","sources":["../src/Spine.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,mBAAmB,EAAE,SAAS,EAAE,aAAa,EAAE,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAM7G;;GAEG;AACH,qBAAa,KAAM,SAAQ,SAAS,CAAC,SAAS,EAAE,aAAa,EAAE,eAAe,EAAE,mBAAmB,CAAC;IAChG,cAAc,CAAC,SAAS,EAAE,aAAa;CAuB1C"}

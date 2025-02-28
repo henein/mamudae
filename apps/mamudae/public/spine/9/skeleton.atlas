@@ -1,0 +1,221 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+m/aura
+  rotate: true
+  xy: 872, 844
+  size: 176, 144
+  orig: 176, 144
+  offset: 0, 0
+  index: -1
+m/mi_Bhair
+  rotate: true
+  xy: 974, 22
+  size: 66, 37
+  orig: 66, 37
+  offset: 0, 0
+  index: -1
+m/mi_Rarm
+  rotate: false
+  xy: 872, 466
+  size: 130, 376
+  orig: 130, 376
+  offset: 0, 0
+  index: -1
+m/mi_ear
+  rotate: true
+  xy: 477, 14
+  size: 68, 92
+  orig: 68, 92
+  offset: 0, 0
+  index: -1
+m/mi_effect
+  rotate: false
+  xy: 2, 84
+  size: 868, 936
+  orig: 868, 936
+  offset: 0, 0
+  index: -1
+m/mi_eyes
+  rotate: false
+  xy: 2, 2
+  size: 238, 80
+  orig: 238, 80
+  offset: 0, 0
+  index: -1
+m/mi_hair02
+  rotate: false
+  xy: 571, 29
+  size: 65, 53
+  orig: 65, 53
+  offset: 0, 0
+  index: -1
+m/mi_hair03
+  rotate: false
+  xy: 872, 304
+  size: 122, 160
+  orig: 122, 160
+  offset: 0, 0
+  index: -1
+m/mi_hair04
+  rotate: true
+  xy: 242, 9
+  size: 73, 149
+  orig: 73, 149
+  offset: 0, 0
+  index: -1
+m/mi_hair05
+  rotate: true
+  xy: 872, 90
+  size: 212, 120
+  orig: 212, 120
+  offset: 0, 0
+  index: -1
+m/mi_hair06
+  rotate: true
+  xy: 393, 10
+  size: 72, 82
+  orig: 72, 82
+  offset: 0, 0
+  index: -1
+m/mi_hair07
+  rotate: false
+  xy: 872, 4
+  size: 100, 84
+  orig: 100, 84
+  offset: 0, 0
+  index: -1
+m/mi_hair08
+  rotate: false
+  xy: 638, 32
+  size: 99, 50
+  orig: 99, 50
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+m/mi_body
+  rotate: true
+  xy: 2, 53
+  size: 442, 534
+  orig: 442, 534
+  offset: 0, 0
+  index: -1
+m/mi_hair01
+  rotate: false
+  xy: 908, 190
+  size: 105, 120
+  orig: 105, 120
+  offset: 0, 0
+  index: -1
+m/mi_headacc
+  rotate: true
+  xy: 538, 2
+  size: 493, 368
+  orig: 493, 368
+  offset: 0, 0
+  index: -1
+m/mi_manto
+  rotate: false
+  xy: 2, 497
+  size: 876, 494
+  orig: 876, 494
+  offset: 0, 0
+  index: -1
+m/mi_sword
+  rotate: false
+  xy: 908, 312
+  size: 107, 679
+  orig: 107, 679
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+m/light
+  rotate: false
+  xy: 2, 2
+  size: 241, 207
+  orig: 241, 207
+  offset: 0, 0
+  index: -1
+m/light2
+  rotate: false
+  xy: 774, 386
+  size: 180, 180
+  orig: 180, 180
+  offset: 0, 0
+  index: -1
+m/mi_Larm1
+  rotate: true
+  xy: 424, 461
+  size: 227, 156
+  orig: 227, 156
+  offset: 0, 0
+  index: -1
+m/mi_Larm2
+  rotate: false
+  xy: 582, 404
+  size: 190, 162
+  orig: 190, 162
+  offset: 0, 0
+  index: -1
+m/mi_hair
+  rotate: false
+  xy: 2, 320
+  size: 420, 368
+  orig: 420, 368
+  offset: 0, 0
+  index: -1
+m/mi_head
+  rotate: false
+  xy: 245, 57
+  size: 276, 152
+  orig: 276, 152
+  offset: 0, 0
+  index: -1
+m/mi_shield
+  rotate: false
+  xy: 582, 568
+  size: 194, 219
+  orig: 194, 219
+  offset: 0, 0
+  index: -1
+m/mi_shield2
+  rotate: false
+  xy: 778, 568
+  size: 194, 219
+  orig: 194, 219
+  offset: 0, 0
+  index: -1
+m/mi_swordlight
+  rotate: true
+  xy: 2, 211
+  size: 107, 529
+  orig: 107, 529
+  offset: 0, 0
+  index: -1
+m/paticle
+  rotate: false
+  xy: 2, 690
+  size: 546, 307
+  orig: 546, 307
+  offset: 0, 0
+  index: -1
+m/smoke
+  rotate: false
+  xy: 550, 789
+  size: 360, 208
+  orig: 360, 208
+  offset: 0, 0
+  index: -1

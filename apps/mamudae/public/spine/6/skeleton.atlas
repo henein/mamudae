@@ -1,0 +1,212 @@
+
+skeleton.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+slayer_Fhair3
+  rotate: false
+  xy: 1578, 766
+  size: 447, 1267
+  orig: 447, 1267
+  offset: 0, 0
+  index: -1
+slayer_Rarm
+  rotate: false
+  xy: 1578, 2
+  size: 435, 762
+  orig: 435, 762
+  offset: 0, 0
+  index: -1
+slayer_Rwing
+  rotate: false
+  xy: 2, 5
+  size: 1574, 2028
+  orig: 1574, 2028
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+avenger_Bhair
+  rotate: true
+  xy: 2, 35
+  size: 158, 501
+  orig: 158, 501
+  offset: 0, 0
+  index: -1
+avenger_Bhair2
+  rotate: false
+  xy: 1705, 885
+  size: 225, 280
+  orig: 225, 280
+  offset: 0, 0
+  index: -1
+avenger_Fhair2
+  rotate: false
+  xy: 1559, 2
+  size: 345, 708
+  orig: 345, 708
+  offset: 0, 0
+  index: -1
+avenger_Larm
+  rotate: false
+  xy: 505, 42
+  size: 314, 151
+  orig: 314, 151
+  offset: 0, 0
+  index: -1
+avenger_Rarm
+  rotate: false
+  xy: 2, 195
+  size: 649, 1838
+  orig: 649, 1838
+  offset: 0, 0
+  index: -1
+avenger_leg
+  rotate: true
+  xy: 821, 44
+  size: 666, 736
+  orig: 666, 736
+  offset: 0, 0
+  index: -1
+avenger_manto
+  rotate: true
+  xy: 653, 712
+  size: 1321, 1050
+  orig: 1321, 1050
+  offset: 0, 0
+  index: -1
+slayer_Fhair2
+  rotate: false
+  xy: 653, 349
+  size: 115, 361
+  orig: 115, 361
+  offset: 0, 0
+  index: -1
+slayer_Larm
+  rotate: false
+  xy: 1705, 1167
+  size: 340, 866
+  orig: 340, 866
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+avenger_body
+  rotate: true
+  xy: 1291, 1385
+  size: 640, 710
+  orig: 640, 710
+  offset: 0, 0
+  index: -1
+avenger_wing1
+  rotate: false
+  xy: 2, 827
+  size: 1229, 815
+  orig: 1229, 815
+  offset: 0, 0
+  index: -1
+slayer_Bhair3
+  rotate: true
+  xy: 819, 35
+  size: 790, 1154
+  orig: 790, 1154
+  offset: 0, 0
+  index: -1
+slayer_Fhair
+  rotate: true
+  xy: 1233, 922
+  size: 461, 802
+  orig: 461, 802
+  offset: 0, 0
+  index: -1
+slayer_Lwing
+  rotate: false
+  xy: 2, 1644
+  size: 1287, 381
+  orig: 1287, 381
+  offset: 0, 0
+  index: -1
+slayer_head
+  rotate: false
+  xy: 2, 2
+  size: 815, 823
+  orig: 815, 823
+  offset: 0, 0
+  index: -1
+
+skeleton4.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+avenger_head
+  rotate: false
+  xy: 960, 312
+  size: 661, 680
+  orig: 661, 680
+  offset: 0, 0
+  index: -1
+avenger_wing2
+  rotate: false
+  xy: 1623, 2
+  size: 356, 1008
+  orig: 356, 1008
+  offset: 0, 0
+  index: -1
+paticle
+  rotate: false
+  xy: 2, 281
+  size: 956, 538
+  orig: 956, 538
+  offset: 0, 0
+  index: -1
+slayer_Bhair
+  rotate: false
+  xy: 1514, 1012
+  size: 420, 975
+  orig: 420, 975
+  offset: 0, 0
+  index: -1
+slayer_Bhair2
+  rotate: false
+  xy: 892, 994
+  size: 620, 993
+  orig: 620, 993
+  offset: 0, 0
+  index: -1
+slayer_body
+  rotate: false
+  xy: 2, 821
+  size: 888, 1166
+  orig: 888, 1166
+  offset: 0, 0
+  index: -1
+
+skeleton5.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+avenger_Bhair3
+  rotate: false
+  xy: 2, 2
+  size: 608, 636
+  orig: 608, 636
+  offset: 0, 0
+  index: -1
+avenger_Fhair1
+  rotate: true
+  xy: 612, 120
+  size: 518, 654
+  orig: 518, 654
+  offset: 0, 0
+  index: -1

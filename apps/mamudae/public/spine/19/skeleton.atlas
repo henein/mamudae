@@ -1,0 +1,187 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kadena_Bhair
+  rotate: false
+  xy: 517, 521
+  size: 314, 93
+  orig: 314, 93
+  offset: 0, 0
+  index: -1
+kadena_Fhair
+  rotate: false
+  xy: 622, 3
+  size: 346, 356
+  orig: 346, 356
+  offset: 0, 0
+  index: -1
+kadena_Larm1
+  rotate: false
+  xy: 411, 415
+  size: 141, 104
+  orig: 141, 104
+  offset: 0, 0
+  index: -1
+kadena_Lfur
+  rotate: true
+  xy: 622, 361
+  size: 158, 179
+  orig: 158, 179
+  offset: 0, 0
+  index: -1
+kadena_Lleg
+  rotate: false
+  xy: 0, 0
+  size: 262, 408
+  orig: 262, 408
+  offset: 0, 0
+  index: -1
+kadena_Rarm2
+  rotate: false
+  xy: 833, 361
+  size: 185, 253
+  orig: 185, 253
+  offset: 0, 0
+  index: -1
+kadena_Rarm3
+  rotate: false
+  xy: 411, 521
+  size: 104, 148
+  orig: 104, 148
+  offset: 0, 0
+  index: -1
+kadena_acc
+  rotate: true
+  xy: 968, 932
+  size: 87, 38
+  orig: 87, 38
+  offset: 0, 0
+  index: -1
+kadena_brow
+  rotate: true
+  xy: 411, 671
+  size: 83, 107
+  orig: 83, 107
+  offset: 0, 0
+  index: -1
+kadena_chain
+  rotate: false
+  xy: 0, 756
+  size: 520, 263
+  orig: 520, 263
+  offset: 0, 0
+  index: -1
+kadena_eye
+  rotate: true
+  xy: 554, 463
+  size: 56, 62
+  orig: 56, 62
+  offset: 0, 0
+  index: -1
+kadena_head
+  rotate: false
+  xy: 522, 616
+  size: 444, 403
+  orig: 444, 403
+  offset: 0, 0
+  index: -1
+pati
+  rotate: false
+  xy: 0, 410
+  size: 409, 344
+  orig: 409, 344
+  offset: 0, 0
+  index: -1
+pati2
+  rotate: true
+  xy: 264, 5
+  size: 403, 356
+  orig: 403, 356
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kadena_LBfur
+  rotate: false
+  xy: 173, 9
+  size: 126, 122
+  orig: 126, 122
+  offset: 0, 0
+  index: -1
+kadena_Larm2
+  rotate: false
+  xy: 0, 268
+  size: 249, 225
+  orig: 249, 225
+  offset: 0, 0
+  index: -1
+kadena_Ljac
+  rotate: true
+  xy: 830, 379
+  size: 114, 149
+  orig: 114, 149
+  offset: 0, 0
+  index: -1
+kadena_Rarm1
+  rotate: false
+  xy: 661, 393
+  size: 167, 100
+  orig: 167, 100
+  offset: 0, 0
+  index: -1
+kadena_Rchain1
+  rotate: false
+  xy: 251, 320
+  size: 222, 173
+  orig: 222, 173
+  offset: 0, 0
+  index: -1
+kadena_Rchain2
+  rotate: false
+  xy: 173, 133
+  size: 128, 133
+  orig: 128, 133
+  offset: 0, 0
+  index: -1
+kadena_Rfur
+  rotate: true
+  xy: 303, 137
+  size: 77, 111
+  orig: 77, 111
+  offset: 0, 0
+  index: -1
+kadena_Rjac
+  rotate: false
+  xy: 303, 216
+  size: 111, 102
+  orig: 111, 102
+  offset: 0, 0
+  index: -1
+kadena_Rleg
+  rotate: false
+  xy: 0, 0
+  size: 171, 266
+  orig: 171, 266
+  offset: 0, 0
+  index: -1
+kadena_body
+  rotate: true
+  xy: 475, 317
+  size: 176, 184
+  orig: 176, 184
+  offset: 0, 0
+  index: -1
+kadena_eye2
+  rotate: false
+  xy: 661, 293
+  size: 126, 98
+  orig: 126, 98
+  offset: 0, 0
+  index: -1

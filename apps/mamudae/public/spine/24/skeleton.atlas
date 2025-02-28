@@ -1,0 +1,159 @@
+
+skeleton.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bskirt1
+  rotate: true
+  xy: 1121, 426
+  size: 195, 871
+  orig: 195, 871
+  offset: 0, 0
+  index: -1
+Bskirt2
+  rotate: true
+  xy: 1121, 176
+  size: 248, 852
+  orig: 248, 852
+  offset: 0, 0
+  index: -1
+Bsword
+  rotate: false
+  xy: 925, 52
+  size: 372, 122
+  orig: 372, 122
+  offset: 0, 0
+  index: -1
+Fhair1
+  rotate: false
+  xy: 1677, 767
+  size: 304, 706
+  orig: 304, 706
+  offset: 0, 0
+  index: -1
+Fhair2
+  rotate: true
+  xy: 485, 249
+  size: 372, 634
+  orig: 372, 634
+  offset: 0, 0
+  index: -1
+Fhair3
+  rotate: true
+  xy: 1299, 14
+  size: 110, 538
+  orig: 110, 538
+  offset: 0, 0
+  index: -1
+Rarm
+  rotate: true
+  xy: 1726, 1628
+  size: 407, 298
+  orig: 407, 298
+  offset: 0, 0
+  index: -1
+acc1
+  rotate: false
+  xy: 1378, 685
+  size: 297, 788
+  orig: 297, 788
+  offset: 0, 0
+  index: -1
+belt
+  rotate: false
+  xy: 485, 14
+  size: 438, 233
+  orig: 438, 233
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 623
+  size: 1374, 1412
+  orig: 1374, 1412
+  offset: 0, 0
+  index: -1
+dust
+  rotate: false
+  xy: 2, 2
+  size: 443, 232
+  orig: 443, 232
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: true
+  xy: 1378, 1475
+  size: 560, 346
+  orig: 560, 346
+  offset: 0, 0
+  index: -1
+smoke
+  rotate: false
+  xy: 2, 236
+  size: 481, 385
+  orig: 481, 385
+  offset: 0, 0
+  index: -1
+swordside
+  rotate: false
+  xy: 1299, 126
+  size: 743, 48
+  orig: 743, 48
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bhair
+  rotate: false
+  xy: 2, 1017
+  size: 997, 1020
+  orig: 997, 1020
+  offset: 0, 0
+  index: -1
+Fskirt
+  rotate: true
+  xy: 1001, 1340
+  size: 205, 670
+  orig: 205, 670
+  offset: 0, 0
+  index: -1
+Fsword
+  rotate: false
+  xy: 1001, 1793
+  size: 743, 244
+  orig: 743, 244
+  offset: 0, 0
+  index: -1
+Larm
+  rotate: true
+  xy: 1001, 1149
+  size: 189, 530
+  orig: 189, 530
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 248
+  size: 932, 767
+  orig: 932, 767
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 2, 2
+  size: 743, 244
+  orig: 743, 244
+  offset: 0, 0
+  index: -1
+swordglow
+  rotate: false
+  xy: 1001, 1547
+  size: 743, 244
+  orig: 743, 244
+  offset: 0, 0
+  index: -1

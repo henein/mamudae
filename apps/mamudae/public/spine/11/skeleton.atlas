@@ -1,0 +1,144 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bbody
+  rotate: false
+  xy: 624, 1
+  size: 102, 102
+  orig: 102, 102
+  offset: 0, 0
+  index: -1
+Larm_eff
+  rotate: true
+  xy: 728, 11
+  size: 92, 115
+  orig: 92, 115
+  offset: 0, 0
+  index: -1
+RBarm1
+  rotate: false
+  xy: 865, 681
+  size: 152, 149
+  orig: 152, 149
+  offset: 0, 0
+  index: -1
+Rarm2
+  rotate: true
+  xy: 232, 21
+  size: 403, 330
+  orig: 403, 330
+  offset: 0, 0
+  index: -1
+acc1
+  rotate: false
+  xy: 865, 372
+  size: 129, 159
+  orig: 129, 159
+  offset: 0, 0
+  index: -1
+acc2
+  rotate: true
+  xy: 865, 533
+  size: 146, 149
+  orig: 146, 149
+  offset: 0, 0
+  index: -1
+aura
+  rotate: true
+  xy: 564, 0
+  size: 103, 58
+  orig: 103, 58
+  offset: 0, 0
+  index: -1
+auraa
+  rotate: true
+  xy: 959, 328
+  size: 42, 49
+  orig: 42, 49
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 564, 105
+  size: 319, 275
+  orig: 319, 275
+  offset: 0, 0
+  index: -1
+eye
+  rotate: true
+  xy: 845, 264
+  size: 106, 112
+  orig: 106, 112
+  offset: 0, 0
+  index: -1
+paticle
+  rotate: true
+  xy: 0, 14
+  size: 410, 230
+  orig: 410, 230
+  offset: 0, 0
+  index: -1
+skirt
+  rotate: false
+  xy: 865, 832
+  size: 155, 187
+  orig: 155, 187
+  offset: 0, 0
+  index: -1
+wing
+  rotate: false
+  xy: 0, 426
+  size: 863, 593
+  orig: 863, 593
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Larm
+  rotate: false
+  xy: 0, 28
+  size: 518, 851
+  orig: 518, 851
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 520, 0
+  size: 308, 462
+  orig: 308, 462
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 520, 310
+  size: 569, 337
+  orig: 569, 337
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Rarm1
+  rotate: false
+  xy: 338, 113
+  size: 270, 234
+  orig: 270, 234
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 0, 0
+  size: 336, 347
+  orig: 336, 347
+  offset: 0, 0
+  index: -1

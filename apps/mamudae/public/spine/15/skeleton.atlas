@@ -1,0 +1,149 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A_Barm
+  rotate: false
+  xy: 184, 3
+  size: 254, 231
+  orig: 254, 231
+  offset: 0, 0
+  index: -1
+A_W
+  rotate: true
+  xy: 811, 92
+  size: 920, 198
+  orig: 920, 198
+  offset: 0, 0
+  index: -1
+A_head
+  rotate: false
+  xy: 0, 236
+  size: 809, 776
+  orig: 809, 776
+  offset: 0, 0
+  index: -1
+A_line
+  rotate: true
+  xy: 585, 108
+  size: 126, 141
+  orig: 126, 141
+  offset: 0, 0
+  index: -1
+B_Whead
+  rotate: true
+  xy: 440, 83
+  size: 151, 143
+  orig: 151, 143
+  offset: 0, 0
+  index: -1
+light
+  rotate: true
+  xy: 0, 26
+  size: 64, 113
+  orig: 64, 113
+  offset: 0, 0
+  index: -1
+paticle
+  rotate: false
+  xy: 0, 100
+  size: 159, 134
+  orig: 159, 134
+  offset: 0, 0
+  index: -1
+zero_BG2
+  rotate: true
+  xy: 115, 0
+  size: 90, 67
+  orig: 90, 67
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+B_Bhair
+  rotate: true
+  xy: 0, 0
+  size: 274, 793
+  orig: 274, 793
+  offset: 0, 0
+  index: -1
+B_W
+  rotate: true
+  xy: 795, 134
+  size: 842, 189
+  orig: 842, 189
+  offset: 0, 0
+  index: -1
+B_head
+  rotate: false
+  xy: 0, 276
+  size: 644, 700
+  orig: 644, 700
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A_arm
+  rotate: false
+  xy: 0, 0
+  size: 644, 376
+  orig: 644, 376
+  offset: 0, 0
+  index: -1
+A_body
+  rotate: false
+  xy: 663, 245
+  size: 355, 769
+  orig: 355, 769
+  offset: 0, 0
+  index: -1
+B_legs
+  rotate: false
+  xy: 0, 378
+  size: 661, 636
+  orig: 661, 636
+  offset: 0, 0
+  index: -1
+
+skeleton4.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A_legs
+  rotate: false
+  xy: 0, 288
+  size: 659, 622
+  orig: 659, 622
+  offset: 0, 0
+  index: -1
+A_manto
+  rotate: false
+  xy: 0, 0
+  size: 279, 286
+  orig: 279, 286
+  offset: 0, 0
+  index: -1
+
+skeleton5.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A_Bwing
+  rotate: false
+  xy: 0, 0
+  size: 590, 655
+  orig: 590, 655
+  offset: 0, 0
+  index: -1

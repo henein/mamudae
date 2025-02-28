@@ -1,0 +1,296 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mer_Bhair
+  rotate: false
+  xy: 0, 219
+  size: 855, 801
+  orig: 855, 801
+  offset: 0, 0
+  index: -1
+mer_Larm1
+  rotate: false
+  xy: 857, 220
+  size: 132, 74
+  orig: 132, 74
+  offset: 0, 0
+  index: -1
+mer_Larrow
+  rotate: false
+  xy: 857, 969
+  size: 152, 51
+  orig: 152, 51
+  offset: 0, 0
+  index: -1
+mer_Ljac
+  rotate: true
+  xy: 857, 296
+  size: 116, 138
+  orig: 116, 138
+  offset: 0, 0
+  index: -1
+mer_Lleg
+  rotate: true
+  xy: 0, 0
+  size: 217, 302
+  orig: 217, 302
+  offset: 0, 0
+  index: -1
+mer_Rleg
+  rotate: false
+  xy: 857, 660
+  size: 145, 186
+  orig: 145, 186
+  offset: 0, 0
+  index: -1
+mer_Rline
+  rotate: false
+  xy: 857, 848
+  size: 151, 119
+  orig: 151, 119
+  offset: 0, 0
+  index: -1
+mer_acc
+  rotate: true
+  xy: 838, 97
+  size: 120, 175
+  orig: 120, 175
+  offset: 0, 0
+  index: -1
+mer_armor
+  rotate: true
+  xy: 496, 3
+  size: 214, 118
+  orig: 214, 118
+  offset: 0, 0
+  index: -1
+mer_body
+  rotate: false
+  xy: 304, 0
+  size: 190, 217
+  orig: 190, 217
+  offset: 0, 0
+  index: -1
+mer_earring
+  rotate: false
+  xy: 838, 0
+  size: 98, 95
+  orig: 98, 95
+  offset: 0, 0
+  index: -1
+mer_eyelight
+  rotate: true
+  xy: 976, 44
+  size: 51, 40
+  orig: 51, 40
+  offset: 0, 0
+  index: -1
+mer_mouth
+  rotate: true
+  xy: 938, 7
+  size: 88, 36
+  orig: 88, 36
+  offset: 0, 0
+  index: -1
+mer_skirt
+  rotate: true
+  xy: 857, 414
+  size: 244, 138
+  orig: 244, 138
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 616, 7
+  size: 220, 210
+  orig: 220, 210
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mer_Fhair2
+  rotate: true
+  xy: 812, 327
+  size: 301, 206
+  orig: 301, 206
+  offset: 0, 0
+  index: -1
+mer_Lear
+  rotate: true
+  xy: 950, 21
+  size: 107, 59
+  orig: 107, 59
+  offset: 0, 0
+  index: -1
+mer_Rarm
+  rotate: true
+  xy: 812, 630
+  size: 385, 189
+  orig: 385, 189
+  offset: 0, 0
+  index: -1
+mer_Rarrow
+  rotate: true
+  xy: 950, 130
+  size: 195, 70
+  orig: 195, 70
+  offset: 0, 0
+  index: -1
+mer_Thair
+  rotate: false
+  xy: 0, 10
+  size: 690, 279
+  orig: 690, 279
+  offset: 0, 0
+  index: -1
+mer_brow
+  rotate: true
+  xy: 830, 52
+  size: 273, 118
+  orig: 273, 118
+  offset: 0, 0
+  index: -1
+mer_eyes
+  rotate: true
+  xy: 692, 0
+  size: 289, 136
+  orig: 289, 136
+  offset: 0, 0
+  index: -1
+pog
+  rotate: false
+  xy: 0, 291
+  size: 810, 724
+  orig: 810, 724
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mer_Fhair
+  rotate: false
+  xy: 546, 140
+  size: 470, 369
+  orig: 470, 369
+  offset: 0, 0
+  index: -1
+mer_Fhair3
+  rotate: true
+  xy: 546, 25
+  size: 113, 100
+  orig: 113, 100
+  offset: 0, 0
+  index: -1
+mer_Larm2
+  rotate: true
+  xy: 0, 0
+  size: 509, 212
+  orig: 509, 212
+  offset: 0, 0
+  index: -1
+mer_Lshoulder
+  rotate: false
+  xy: 855, 696
+  size: 124, 73
+  orig: 124, 73
+  offset: 0, 0
+  index: -1
+mer_Rjac
+  rotate: true
+  xy: 648, 25
+  size: 113, 92
+  orig: 113, 92
+  offset: 0, 0
+  index: -1
+mer_eye
+  rotate: true
+  xy: 742, 65
+  size: 73, 61
+  orig: 73, 61
+  offset: 0, 0
+  index: -1
+mer_head
+  rotate: true
+  xy: 214, 36
+  size: 473, 330
+  orig: 473, 330
+  offset: 0, 0
+  index: -1
+mer_tail3
+  rotate: false
+  xy: 0, 511
+  size: 853, 494
+  orig: 853, 494
+  offset: 0, 0
+  index: -1
+smoke
+  rotate: true
+  xy: 855, 771
+  size: 234, 134
+  orig: 234, 134
+  offset: 0, 0
+  index: -1
+
+skeleton4.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mer_tail
+  rotate: false
+  xy: 634, 313
+  size: 313, 361
+  orig: 313, 361
+  offset: 0, 0
+  index: -1
+mer_tail2
+  rotate: false
+  xy: 528, 0
+  size: 416, 311
+  orig: 416, 311
+  offset: 0, 0
+  index: -1
+mer_tail2_2
+  rotate: false
+  xy: 0, 606
+  size: 632, 401
+  orig: 632, 401
+  offset: 0, 0
+  index: -1
+mer_tail4
+  rotate: true
+  xy: 0, 151
+  size: 453, 526
+  orig: 453, 526
+  offset: 0, 0
+  index: -1
+rainbow
+  rotate: false
+  xy: 634, 676
+  size: 331, 331
+  orig: 331, 331
+  offset: 0, 0
+  index: -1
+
+skeleton5.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light
+  rotate: false
+  xy: 0, 0
+  size: 203, 203
+  orig: 203, 203
+  offset: 0, 0
+  index: -1

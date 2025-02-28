@@ -1,0 +1,249 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+evan_Fhair2
+  rotate: false
+  xy: 210, 570
+  size: 363, 192
+  orig: 363, 192
+  offset: 0, 0
+  index: -1
+evan_Fhair3
+  rotate: false
+  xy: 719, 560
+  size: 141, 97
+  orig: 141, 97
+  offset: 0, 0
+  index: -1
+evan_Rarm1
+  rotate: false
+  xy: 575, 553
+  size: 142, 104
+  orig: 142, 104
+  offset: 0, 0
+  index: -1
+evan_Rarm2
+  rotate: true
+  xy: 0, 556
+  size: 206, 208
+  orig: 206, 208
+  offset: 0, 0
+  index: -1
+evan_Rhair
+  rotate: false
+  xy: 753, 293
+  size: 52, 116
+  orig: 52, 116
+  offset: 0, 0
+  index: -1
+evan_Rleg
+  rotate: true
+  xy: 753, 31
+  size: 146, 232
+  orig: 146, 232
+  offset: 0, 0
+  index: -1
+evan_brow
+  rotate: true
+  xy: 924, 550
+  size: 214, 76
+  orig: 214, 76
+  offset: 0, 0
+  index: -1
+evan_eye
+  rotate: false
+  xy: 862, 602
+  size: 50, 55
+  orig: 50, 55
+  offset: 0, 0
+  index: -1
+evan_manto
+  rotate: false
+  xy: 575, 659
+  size: 340, 103
+  orig: 340, 103
+  offset: 0, 0
+  index: -1
+evan_mouth
+  rotate: true
+  xy: 753, 223
+  size: 68, 42
+  orig: 68, 42
+  offset: 0, 0
+  index: -1
+evan_neckless
+  rotate: true
+  xy: 924, 766
+  size: 143, 86
+  orig: 143, 86
+  offset: 0, 0
+  index: -1
+evan_poc
+  rotate: false
+  xy: 924, 911
+  size: 90, 107
+  orig: 90, 107
+  offset: 0, 0
+  index: -1
+fog
+  rotate: true
+  xy: 0, 6
+  size: 403, 405
+  orig: 403, 405
+  offset: 0, 0
+  index: -1
+lightning
+  rotate: false
+  xy: 0, 411
+  size: 810, 137
+  orig: 810, 137
+  offset: 0, 0
+  index: -1
+magic
+  rotate: false
+  xy: 0, 764
+  size: 922, 254
+  orig: 922, 254
+  offset: 0, 0
+  index: -1
+paticle
+  rotate: true
+  xy: 812, 179
+  size: 369, 207
+  orig: 369, 207
+  offset: 0, 0
+  index: -1
+paticle2
+  rotate: true
+  xy: 407, 0
+  size: 409, 344
+  orig: 409, 344
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+evan_Bhair
+  rotate: false
+  xy: 0, 74
+  size: 478, 459
+  orig: 478, 459
+  offset: 0, 0
+  index: -1
+evan_Larm1
+  rotate: false
+  xy: 877, 687
+  size: 139, 110
+  orig: 139, 110
+  offset: 0, 0
+  index: -1
+evan_Larm2
+  rotate: false
+  xy: 701, 78
+  size: 199, 116
+  orig: 199, 116
+  offset: 0, 0
+  index: -1
+evan_Lhand
+  rotate: true
+  xy: 0, 0
+  size: 72, 83
+  orig: 72, 83
+  offset: 0, 0
+  index: -1
+evan_Lleg
+  rotate: false
+  xy: 877, 799
+  size: 140, 220
+  orig: 140, 220
+  offset: 0, 0
+  index: -1
+evan_band
+  rotate: true
+  xy: 480, 46
+  size: 487, 219
+  orig: 487, 219
+  offset: 0, 0
+  index: -1
+evan_coat
+  rotate: false
+  xy: 701, 196
+  size: 287, 380
+  orig: 287, 380
+  offset: 0, 0
+  index: -1
+evan_eyes
+  rotate: false
+  xy: 701, 1
+  size: 220, 75
+  orig: 220, 75
+  offset: 0, 0
+  index: -1
+evan_ward
+  rotate: false
+  xy: 541, 578
+  size: 334, 441
+  orig: 334, 441
+  offset: 0, 0
+  index: -1
+ring
+  rotate: false
+  xy: 0, 535
+  size: 539, 484
+  orig: 539, 484
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+evan_Fclo
+  rotate: false
+  xy: 0, 282
+  size: 358, 302
+  orig: 358, 302
+  offset: 0, 0
+  index: -1
+evan_Fhair1
+  rotate: true
+  xy: 657, 426
+  size: 252, 265
+  orig: 252, 265
+  offset: 0, 0
+  index: -1
+evan_body
+  rotate: false
+  xy: 362, 626
+  size: 293, 328
+  orig: 293, 328
+  offset: 0, 0
+  index: -1
+evan_head
+  rotate: false
+  xy: 0, 0
+  size: 338, 280
+  orig: 338, 280
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 657, 680
+  size: 311, 274
+  orig: 311, 274
+  offset: 0, 0
+  index: -1
+lighting
+  rotate: false
+  xy: 0, 586
+  size: 360, 368
+  orig: 360, 368
+  offset: 0, 0
+  index: -1

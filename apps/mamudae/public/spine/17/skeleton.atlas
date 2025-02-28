@@ -1,0 +1,89 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pink_Lhand
+  rotate: true
+  xy: 785, 10
+  size: 149, 178
+  orig: 149, 178
+  offset: 0, 0
+  index: -1
+pink_Lleg
+  rotate: false
+  xy: 785, 429
+  size: 229, 326
+  orig: 229, 326
+  offset: 0, 0
+  index: -1
+pink_Rhand
+  rotate: false
+  xy: 785, 161
+  size: 224, 266
+  orig: 224, 266
+  offset: 0, 0
+  index: -1
+pink_body
+  rotate: false
+  xy: 0, 104
+  size: 783, 890
+  orig: 783, 890
+  offset: 0, 0
+  index: -1
+pink_eye
+  rotate: true
+  xy: 0, 0
+  size: 102, 107
+  orig: 102, 107
+  offset: 0, 0
+  index: -1
+star2
+  rotate: true
+  xy: 785, 757
+  size: 237, 231
+  orig: 237, 231
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pink_Rleg
+  rotate: false
+  xy: 808, 538
+  size: 203, 362
+  orig: 203, 362
+  offset: 0, 0
+  index: -1
+pink_headp
+  rotate: false
+  xy: 0, 0
+  size: 319, 398
+  orig: 319, 398
+  offset: 0, 0
+  index: -1
+pink_headp2
+  rotate: false
+  xy: 0, 400
+  size: 806, 500
+  orig: 806, 500
+  offset: 0, 0
+  index: -1
+pink_tail
+  rotate: false
+  xy: 321, 82
+  size: 343, 316
+  orig: 343, 316
+  offset: 0, 0
+  index: -1
+star1
+  rotate: false
+  xy: 666, 142
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1

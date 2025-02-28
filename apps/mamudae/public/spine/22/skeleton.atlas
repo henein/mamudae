@@ -1,0 +1,187 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bhair2
+  rotate: false
+  xy: 722, 254
+  size: 260, 129
+  orig: 260, 129
+  offset: 0, 0
+  index: -1
+Fhood
+  rotate: true
+  xy: 0, 63
+  size: 322, 353
+  orig: 322, 353
+  offset: 0, 0
+  index: -1
+Rarm2
+  rotate: false
+  xy: 722, 183
+  size: 147, 69
+  orig: 147, 69
+  offset: 0, 0
+  index: -1
+acc
+  rotate: true
+  xy: 299, 13
+  size: 48, 47
+  orig: 48, 47
+  offset: 0, 0
+  index: -1
+aura
+  rotate: true
+  xy: 737, 385
+  size: 271, 255
+  orig: 271, 255
+  offset: 0, 0
+  index: -1
+bow
+  rotate: false
+  xy: 0, 658
+  size: 984, 361
+  orig: 984, 361
+  offset: 0, 0
+  index: -1
+boweff
+  rotate: false
+  xy: 0, 387
+  size: 735, 269
+  orig: 735, 269
+  offset: 0, 0
+  index: -1
+boweff2
+  rotate: false
+  xy: 503, 6
+  size: 368, 135
+  orig: 368, 135
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: false
+  xy: 115, 6
+  size: 182, 55
+  orig: 182, 55
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 503, 143
+  size: 242, 217
+  orig: 242, 217
+  offset: 0, 0
+  index: -1
+lighting
+  rotate: true
+  xy: 873, 20
+  size: 232, 129
+  orig: 232, 129
+  offset: 0, 0
+  index: -1
+muff
+  rotate: false
+  xy: 0, 0
+  size: 113, 61
+  orig: 113, 61
+  offset: 0, 0
+  index: -1
+spark
+  rotate: true
+  xy: 355, 13
+  size: 372, 146
+  orig: 372, 146
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bhair
+  rotate: true
+  xy: 359, 322
+  size: 414, 165
+  orig: 414, 165
+  offset: 0, 0
+  index: -1
+Bhood
+  rotate: false
+  xy: 0, 63
+  size: 303, 362
+  orig: 303, 362
+  offset: 0, 0
+  index: -1
+Larm
+  rotate: false
+  xy: 622, 856
+  size: 352, 164
+  orig: 352, 164
+  offset: 0, 0
+  index: -1
+Rarm1
+  rotate: false
+  xy: 0, 7
+  size: 111, 54
+  orig: 111, 54
+  offset: 0, 0
+  index: -1
+arrow
+  rotate: false
+  xy: 0, 921
+  size: 620, 99
+  orig: 620, 99
+  offset: 0, 0
+  index: -1
+arroweff
+  rotate: false
+  xy: 526, 343
+  size: 175, 70
+  orig: 175, 70
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 817, 696
+  size: 104, 158
+  orig: 104, 158
+  offset: 0, 0
+  index: -1
+bow2
+  rotate: false
+  xy: 0, 738
+  size: 492, 181
+  orig: 492, 181
+  offset: 0, 0
+  index: -1
+hair
+  rotate: false
+  xy: 526, 565
+  size: 289, 289
+  orig: 289, 289
+  offset: 0, 0
+  index: -1
+leg
+  rotate: false
+  xy: 0, 427
+  size: 357, 309
+  orig: 357, 309
+  offset: 0, 0
+  index: -1
+light
+  rotate: true
+  xy: 305, 0
+  size: 320, 163
+  orig: 320, 163
+  offset: 0, 0
+  index: -1
+pati
+  rotate: false
+  xy: 526, 415
+  size: 195, 148
+  orig: 195, 148
+  offset: 0, 0
+  index: -1

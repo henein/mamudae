@@ -1,0 +1,180 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+element
+  rotate: false
+  xy: 669, 82
+  size: 315, 281
+  orig: 315, 281
+  offset: 0, 0
+  index: -1
+floatingParticles
+  rotate: false
+  xy: 449, 416
+  size: 220, 215
+  orig: 220, 215
+  offset: 0, 0
+  index: -1
+ilium_Bhood
+  rotate: false
+  xy: 986, 338
+  size: 32, 25
+  orig: 32, 25
+  offset: 0, 0
+  index: -1
+ilium_Fhood
+  rotate: false
+  xy: 0, 366
+  size: 251, 265
+  orig: 251, 265
+  offset: 0, 0
+  index: -1
+ilium_Fmanto
+  rotate: false
+  xy: 0, 0
+  size: 447, 363
+  orig: 447, 363
+  offset: 0, 0
+  index: -1
+ilium_Larm
+  rotate: true
+  xy: 253, 380
+  size: 251, 172
+  orig: 251, 172
+  offset: 0, 0
+  index: -1
+ilium_Rarmeff
+  rotate: false
+  xy: 674, 682
+  size: 346, 329
+  orig: 346, 329
+  offset: 0, 0
+  index: -1
+ilium_acc
+  rotate: false
+  xy: 651, 2
+  size: 60, 78
+  orig: 60, 78
+  offset: 0, 0
+  index: -1
+ilium_belt
+  rotate: false
+  xy: 713, 16
+  size: 123, 64
+  orig: 123, 64
+  offset: 0, 0
+  index: -1
+ilium_eye
+  rotate: false
+  xy: 838, 16
+  size: 92, 64
+  orig: 92, 64
+  offset: 0, 0
+  index: -1
+ilium_jac
+  rotate: false
+  xy: 449, 1
+  size: 200, 204
+  orig: 200, 204
+  offset: 0, 0
+  index: -1
+lighting
+  rotate: false
+  xy: 449, 207
+  size: 218, 207
+  orig: 218, 207
+  offset: 0, 0
+  index: -1
+line
+  rotate: false
+  xy: 0, 633
+  size: 672, 378
+  orig: 672, 378
+  offset: 0, 0
+  index: -1
+smoke
+  rotate: true
+  xy: 674, 365
+  size: 315, 346
+  orig: 315, 346
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Beff
+  rotate: false
+  xy: 445, 0
+  size: 272, 252
+  orig: 272, 252
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 451, 575
+  size: 255, 390
+  orig: 255, 390
+  offset: 0, 0
+  index: -1
+ilium_Bmanto
+  rotate: true
+  xy: 719, 15
+  size: 258, 232
+  orig: 258, 232
+  offset: 0, 0
+  index: -1
+ilium_Rarm
+  rotate: false
+  xy: 248, 165
+  size: 195, 387
+  orig: 195, 387
+  offset: 0, 0
+  index: -1
+ilium_head
+  rotate: false
+  xy: 0, 554
+  size: 449, 411
+  orig: 449, 411
+  offset: 0, 0
+  index: -1
+ilium_jew
+  rotate: false
+  xy: 445, 254
+  size: 146, 298
+  orig: 146, 298
+  offset: 0, 0
+  index: -1
+ilium_jewlight
+  rotate: false
+  xy: 593, 275
+  size: 146, 298
+  orig: 146, 298
+  offset: 0, 0
+  index: -1
+ilium_jewshadow
+  rotate: false
+  xy: 741, 276
+  size: 146, 298
+  orig: 146, 298
+  offset: 0, 0
+  index: -1
+ilium_legs
+  rotate: false
+  xy: 708, 576
+  size: 181, 389
+  orig: 181, 389
+  offset: 0, 0
+  index: -1
+ilium_wing
+  rotate: true
+  xy: 0, 70
+  size: 482, 246
+  orig: 482, 246
+  offset: 0, 0
+  index: -1

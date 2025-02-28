@@ -1,0 +1,130 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cannon_Larm
+  rotate: false
+  xy: 0, 386
+  size: 971, 614
+  orig: 971, 614
+  offset: 0, 0
+  index: -1
+monkey_head
+  rotate: true
+  xy: 685, 40
+  size: 344, 330
+  orig: 344, 330
+  offset: 0, 0
+  index: -1
+paticle
+  rotate: false
+  xy: 0, 0
+  size: 683, 384
+  orig: 683, 384
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cannon_Rarm1
+  rotate: true
+  xy: 532, 377
+  size: 306, 224
+  orig: 306, 224
+  offset: 0, 0
+  index: -1
+cannon_Rarm2
+  rotate: true
+  xy: 749, 0
+  size: 286, 189
+  orig: 286, 189
+  offset: 0, 0
+  index: -1
+cannon_hair
+  rotate: false
+  xy: 0, 359
+  size: 530, 630
+  orig: 530, 630
+  offset: 0, 0
+  index: -1
+cannon_head
+  rotate: false
+  xy: 532, 685
+  size: 412, 304
+  orig: 412, 304
+  offset: 0, 0
+  index: -1
+cannon_tail
+  rotate: false
+  xy: 0, 27
+  size: 634, 330
+  orig: 634, 330
+  offset: 0, 0
+  index: -1
+monkey_Larm
+  rotate: false
+  xy: 636, 249
+  size: 111, 126
+  orig: 111, 126
+  offset: 0, 0
+  index: -1
+monkey_Rarm
+  rotate: true
+  xy: 946, 642
+  size: 75, 71
+  orig: 75, 71
+  offset: 0, 0
+  index: -1
+monkey_body
+  rotate: false
+  xy: 758, 487
+  size: 166, 196
+  orig: 166, 196
+  offset: 0, 0
+  index: -1
+monkey_jac
+  rotate: false
+  xy: 926, 531
+  size: 86, 109
+  orig: 86, 109
+  offset: 0, 0
+  index: -1
+monkey_jac2
+  rotate: true
+  xy: 926, 469
+  size: 60, 85
+  orig: 60, 85
+  offset: 0, 0
+  index: -1
+monkey_prop
+  rotate: true
+  xy: 946, 719
+  size: 270, 70
+  orig: 270, 70
+  offset: 0, 0
+  index: -1
+monkey_tail
+  rotate: false
+  xy: 758, 288
+  size: 122, 197
+  orig: 122, 197
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 512,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cannon_body
+  rotate: false
+  xy: 0, 0
+  size: 510, 633
+  orig: 510, 633
+  offset: 0, 0
+  index: -1

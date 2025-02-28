@@ -8,7 +8,7 @@ import { Navigation } from './navigation/navigation';
 import { CreationResizePlugin } from './resize/ResizePlugin';
 import { getResolution } from './utils/getResolution';
 import { sound } from '@pixi/sound';
-import 'pixi-spine';
+import '../spine';
 import {
   Application,
   Assets,
@@ -65,6 +65,31 @@ export class CreationEngine extends Application {
     await Assets.init({ manifest, basePath: '/assets' });
     await Assets.loadBundle('preload');
 
+    await Assets.load('/spine/4/skeleton.json');
+    await Assets.load('/spine/5/skeleton.json');
+    await Assets.load('/spine/6/skeleton.json');
+    await Assets.load('/spine/7/skeleton.json');
+    await Assets.load('/spine/8/skeleton.json');
+    await Assets.load('/spine/9/skeleton.json');
+    await Assets.load('/spine/10/skeleton.json');
+    await Assets.load('/spine/11/skeleton.json');
+    await Assets.load('/spine/12/skeleton.json');
+    await Assets.load('/spine/13/skeleton.json');
+    await Assets.load('/spine/14/skeleton.json');
+    await Assets.load('/spine/15/skeleton.json');
+    // await Assets.load('/spine/16/skeleton.json');
+    await Assets.load('/spine/17/skeleton.json');
+    await Assets.load('/spine/18/skeleton.json');
+    await Assets.load('/spine/19/skeleton.json');
+    await Assets.load('/spine/20/skeleton.json');
+    await Assets.load('/spine/21/skeleton.json');
+    await Assets.load('/spine/22/skeleton.json');
+    await Assets.load('/spine/23/skeleton.json');
+    await Assets.load('/spine/24/skeleton.json');
+    await Assets.load('/spine/25/skeleton.json');
+    await Assets.load('/spine/26/skeleton.json');
+    await Assets.load('/spine/27/skeleton.json');
+    await Assets.load('/spine/28/skeleton.json');
     // List all existing bundles names
     const allBundles = manifest.bundles.map((item: any) => item.name);
     // Start up background loading of all bundles

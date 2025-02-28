@@ -1,3 +1,4 @@
+import { Spine } from '../../../spine';
 import { engine } from '../../getEngine';
 import { store } from '../../store/state-store';
 import { BanPickModal } from './components/banPickModal';
@@ -8,7 +9,7 @@ import { PickViewer } from './components/pickViewer';
 import { TitleBar } from './components/titleBar';
 import TWEEN from '@tweenjs/tween.js';
 import { reaction } from 'mobx';
-import { AlphaFilter, Container, Graphics } from 'pixi.js';
+import { AlphaFilter, Assets, Container, Graphics } from 'pixi.js';
 
 export class MainScreen extends Container {
   public static assetBundles = ['main'];
@@ -51,6 +52,14 @@ export class MainScreen extends Container {
         }
       },
     );
+
+     {
+      // const spine = this.addChild(new Spine(Assets.get('/spine/4/skeleton.json').spineData));
+      // console.log(spine.state.hasAnimation('animation'))
+      // spine.state.setAnimation(0, 'animation', true);
+      // spine.autoUpdate = true;
+      // this.spine.visible = false;
+    }
   }
 
   /** Prepare the screen just before showing */

@@ -1,6 +1,7 @@
-import { Easing, Tween } from '@tweenjs/tween.js';
+import { Spine } from '../../../../spine';
 import { JobId, getJob } from '@henein/mamudae-lib';
-import { ColorMatrixFilter, Container, Sprite, Texture } from 'pixi.js';
+import { Easing, Tween } from '@tweenjs/tween.js';
+import { Assets, ColorMatrixFilter, Container, Sprite, Texture } from 'pixi.js';
 
 export class Splash extends Container {
   private _jobId: JobId = JobId.BEGINNER;
@@ -10,6 +11,7 @@ export class Splash extends Container {
 
   colorMatrixFilter: ColorMatrixFilter;
   sprite: Sprite;
+  spine: Spine;
   offsetX: number;
   offsetY: number;
 
@@ -19,7 +21,7 @@ export class Splash extends Container {
     y: number,
     scale: number,
     isOpponent = false,
-    direction: 'left' | 'right' = 'left'
+    direction: 'left' | 'right' = 'left',
   ) {
     super();
     this.colorMatrixFilter = new ColorMatrixFilter();
@@ -29,6 +31,12 @@ export class Splash extends Container {
     this.sprite.scale.set(scale);
     this.sprite.anchor.set(0.5);
     this.sprite.position.set(x, y);
+
+    this.spine = this.addChild(
+      new Spine(Assets.get('/spine/4/skeleton.json').spineData),
+    );
+    this.spine.visible = false;
+    this.spine.position.set(100, 100);
 
     this.jobId = jobId;
     this.offsetX = x;
@@ -47,10 +55,26 @@ export class Splash extends Container {
       .onUpdate((object) => {
         const value = object.dark;
         this.colorMatrixFilter.matrix = [
-          1, 0, 0, 0, value,
-          0, 1, 0, 0, value,
-          0, 0, 1, 0, value,
-          0, 0, 0, 1, 0
+          1,
+          0,
+          0,
+          0,
+          value,
+          0,
+          1,
+          0,
+          0,
+          value,
+          0,
+          0,
+          1,
+          0,
+          value,
+          0,
+          0,
+          0,
+          1,
+          0,
         ];
       })
       .chain(
@@ -72,7 +96,7 @@ export class Splash extends Container {
             if (onRemove) {
               onRemove();
             }
-          })
+          }),
       )
       .start();
   };
@@ -90,25 +114,41 @@ export class Splash extends Container {
     if (this._jobId === 0) {
       this.sprite.texture = Texture.EMPTY;
     } else {
-      this.sprite.texture = Texture.from(
-        `main/splashes/${this.jobId}.png`
-      );
+      const job = getJob(this._jobId);
 
-      if (this._isOpponent) {
-        const job = getJob(this.jobId);
-
-        this.sprite.scale.set(this._scale_);
-        this.sprite.scale.x *=
-          (this._direction === 'left' && job.reverse) ||
-          (this._direction === 'right' && !job.reverse)
-            ? -1
-            : 1;
-        this.sprite.anchor.set(
-          0.5 + job.offsetX / 1024,
-          0.5 + job.offsetY / 604
-        );
-        this.sprite.position.set(this.offsetX, this.offsetY);
+      if (!job.spine) {
+        this.sprite.texture = Texture.from(`main/splashes/${this.jobId}.png`);
+        this.spine.visible = false;
+        return;
       }
+
+      this.sprite.texture = Texture.EMPTY;
+
+      this.spine?.destroy();
+      this.spine = this.addChild(
+        new Spine(Assets.get(`/spine/${job.spine}/skeleton.json`).spineData),
+      );
+      this.spine.state.setAnimation(0, 'animation', true);
+      this.spine.position.set(200, 200);
+      this.spine.scale.set(1.5);
+      this.spine.autoUpdate = true;
+      this.spine.visible = true;
+
+      // if (this._isOpponent) {
+      //   const job = getJob(this.jobId);
+
+      //   this.sprite.scale.set(this._scale_);
+      //   this.sprite.scale.x *=
+      //     (this._direction === 'left' && job.reverse) ||
+      //     (this._direction === 'right' && !job.reverse)
+      //       ? -1
+      //       : 1;
+      //   this.sprite.anchor.set(
+      //     0.5 + job.offsetX / 1024,
+      //     0.5 + job.offsetY / 604
+      //   );
+      //   this.sprite.position.set(this.offsetX, this.offsetY);
+      // }
     }
   }
 }

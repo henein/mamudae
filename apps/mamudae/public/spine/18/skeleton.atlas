@@ -1,0 +1,159 @@
+
+skeleton.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Larm
+  rotate: false
+  xy: 1205, 152
+  size: 390, 480
+  orig: 390, 480
+  offset: 0, 0
+  index: -1
+board
+  rotate: false
+  xy: 2, 1614
+  size: 1211, 427
+  orig: 1211, 427
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 1598, 800
+  size: 410, 488
+  orig: 410, 488
+  offset: 0, 0
+  index: -1
+chess1
+  rotate: true
+  xy: 1597, 167
+  size: 181, 206
+  orig: 181, 206
+  offset: 0, 0
+  index: -1
+chess2
+  rotate: false
+  xy: 1629, 5
+  size: 156, 160
+  orig: 156, 160
+  offset: 0, 0
+  index: -1
+chess3
+  rotate: false
+  xy: 1071, 1288
+  size: 98, 150
+  orig: 98, 150
+  offset: 0, 0
+  index: -1
+chess4
+  rotate: true
+  xy: 1430, 5
+  size: 145, 197
+  orig: 145, 197
+  offset: 0, 0
+  index: -1
+chess5
+  rotate: false
+  xy: 1912, 405
+  size: 95, 197
+  orig: 95, 197
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: true
+  xy: 1005, 90
+  size: 536, 198
+  orig: 536, 198
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 2, 628
+  size: 984, 1067
+  orig: 984, 1067
+  offset: 0, 0
+  index: -1
+kara
+  rotate: false
+  xy: 1205, 2
+  size: 223, 148
+  orig: 223, 148
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 1215, 1290
+  size: 490, 810
+  orig: 490, 810
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 1071, 1440
+  size: 133, 172
+  orig: 133, 172
+  offset: 0, 0
+  index: -1
+line
+  rotate: false
+  xy: 1071, 634
+  size: 525, 652
+  orig: 525, 652
+  offset: 0, 0
+  index: -1
+pati
+  rotate: false
+  xy: 1629, 350
+  size: 281, 252
+  orig: 281, 252
+  offset: 0, 0
+  index: -1
+pati2
+  rotate: true
+  xy: 504, 49
+  size: 577, 499
+  orig: 577, 499
+  offset: 0, 0
+  index: -1
+phone
+  rotate: false
+  xy: 1598, 604
+  size: 408, 194
+  orig: 408, 194
+  offset: 0, 0
+  index: -1
+smoke
+  rotate: true
+  xy: 2, 26
+  size: 600, 500
+  orig: 600, 500
+  offset: 0, 0
+  index: -1
+tie
+  rotate: false
+  xy: 1215, 1782
+  size: 814, 259
+  orig: 814, 259
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Rarm
+  rotate: false
+  xy: 2, 2
+  size: 637, 338
+  orig: 637, 338
+  offset: 0, 0
+  index: -1
+hair
+  rotate: true
+  xy: 2, 342
+  size: 672, 1024
+  orig: 672, 1024
+  offset: 0, 0
+  index: -1
