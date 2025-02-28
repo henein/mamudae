@@ -14,6 +14,7 @@ export class Splash extends Container {
   spine: Spine;
   offsetX: number;
   offsetY: number;
+  c: Container;
 
   constructor(
     jobId: JobId,
@@ -32,7 +33,8 @@ export class Splash extends Container {
     this.sprite.anchor.set(0.5);
     this.sprite.position.set(x, y);
 
-    this.spine = this.addChild(
+    this.c = this.addChild(new Container());
+    this.spine = this.c.addChild(
       new Spine(Assets.get('/spine/4/skeleton.json').spineData),
     );
     this.spine.visible = false;
@@ -83,6 +85,7 @@ export class Splash extends Container {
           .easing(Easing.Quartic.In)
           .onUpdate((object) => {
             this.sprite.scale.set(object.scale);
+            this.c.scale.set(1.5 * object.scale);
             if (this._isOpponent) {
               const job = getJob(this.jobId);
               this.sprite.scale.x *=
@@ -125,14 +128,19 @@ export class Splash extends Container {
       this.sprite.texture = Texture.EMPTY;
 
       this.spine?.destroy();
-      this.spine = this.addChild(
+      this.spine = this.c.addChild(
         new Spine(Assets.get(`/spine/${job.spine}/skeleton.json`).spineData),
       );
       this.spine.state.setAnimation(0, 'animation', true);
-      this.spine.position.set(200, 200);
-      this.spine.scale.set(1.5);
       this.spine.autoUpdate = true;
       this.spine.visible = true;
+      this.c.scale.set(1.5);
+      this.c.pivot.set(700, 250);
+      this.c.position.set(1920 / 2, 1080 / 2);
+
+      if (job.spine === 15) {
+        this.c.position.set(1320, 400);
+      }
 
       // if (this._isOpponent) {
       //   const job = getJob(this.jobId);

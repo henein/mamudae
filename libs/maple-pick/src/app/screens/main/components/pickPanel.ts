@@ -128,7 +128,6 @@ export class PickPanel extends Container {
 
     sprite.texture = Texture.from(`main/splashes/${job.id}.png`);
     sprite.scale.set(0.65);
-    sprite.scale.x *= job.reverse ? 1 : -1;
     sprite.anchor.set(0.5 + job.offsetX / 1024, 0.5 + job.offsetY / 604);
     sprite.position.set(
       152 / 2,

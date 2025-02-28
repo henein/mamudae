@@ -224,7 +224,7 @@ export class TitleBar extends Container {
         ) {
           const leftTeamName = store.roomState.leftTeam.name;
 
-          teamText = `<span style="color: #0075ca">${leftTeamName}</span>${josa.pick(
+          teamText = `<span style="color: #4C9ED9">${leftTeamName}</span>${josa.pick(
             leftTeamName,
             '이/가',
           )}`;
@@ -234,7 +234,7 @@ export class TitleBar extends Container {
         ) {
           const rightTeamName = store.roomState.rightTeam.name;
 
-          teamText = `<span style="color: #de9300">${rightTeamName}</span>${josa.pick(
+          teamText = `<span style="color: #E4A832">${rightTeamName}</span>${josa.pick(
             rightTeamName,
             '이/가',
           )}`;

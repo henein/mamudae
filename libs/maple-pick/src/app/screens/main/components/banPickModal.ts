@@ -72,7 +72,7 @@ export class BanPickModal extends Container {
     this.modal.interactiveChildren = false;
 
     this.appearTween = new Tween(this.modal)
-      .to({ position: { y: 576 }, alpha: 1 }, 500)
+      .to({ position: { y: 480 }, alpha: 1 }, 500)
       .easing(Easing.Quartic.Out);
 
     this.disappearTween = new Tween(this.modal)
@@ -81,13 +81,13 @@ export class BanPickModal extends Container {
 
     const graphics = this.modal.addChild(new Graphics());
     graphics.beginFill(0xffffff, 0.8);
-    graphics.drawRoundedRect(0, 0, 928, 752, 64);
+    graphics.drawRoundedRect(0, 0, 928, 500, 64);
     graphics.endFill();
 
     const scrollBox = this.modal.addChild(
       new ScrollBox({
         width: 928,
-        height: 576,
+        height: 300,
         padding: 38,
         elementsMargin: 16,
       }),
@@ -162,7 +162,7 @@ export class BanPickModal extends Container {
     );
     this.returnButton.isDisabled = true;
     this.returnButton.pivot.set(this.returnButton.width / 2, 0);
-    this.returnButton.position.set(928 / 2, 640);
+    this.returnButton.position.set(928 / 2, 372);
     this.returnButton.on('pointertap', () => {
       if (store.isMyTurn && store.roomState?.selected) {
         store.onPush?.(store.roomState?.selected);

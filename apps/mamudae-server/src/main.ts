@@ -37,7 +37,7 @@ app.use(cors());
 
 app.use(express.json());
 
-const rooms = new Redis('redis://localhost:6379');
+const rooms = new Redis('rediss://default:AWhBAAIjcDE3MjdhZGU5Y2ZhYmE0YmI0YjdkNDUzMjc2OGY5N2EwZXAxMA@enabling-sawfly-26689.upstash.io:6379');
 // const rooms = new Map<string, RoomState>();
 
 const serverId = createId();

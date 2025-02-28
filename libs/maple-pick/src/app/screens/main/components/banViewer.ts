@@ -1,6 +1,6 @@
-import { autorun } from 'mobx';
 import { store } from '../../../store/state-store';
 import { BanPanel } from './banPanel';
+import { autorun } from 'mobx';
 import { Container, Graphics } from 'pixi.js';
 
 export class BanViewer extends Container {
@@ -10,17 +10,13 @@ export class BanViewer extends Container {
   constructor() {
     super();
 
-    const leftBan = [
-      this.addChild(new BanPanel(this._size)),
-    ];
+    const leftBan = [this.addChild(new BanPanel(this._size))];
 
     leftBan[0].position.set(0, 830 - this._size);
     // leftBan[1].position.set(32 + this._size + 16, 32);
     // leftBan[2].position.set(32 + this._size + 16 + this._size + 16 + 16, 32);
 
-    const rightBan = [
-      this.addChild(new BanPanel(this._size)),
-    ];
+    const rightBan = [this.addChild(new BanPanel(this._size))];
 
     rightBan[0].position.set(1920 - this._size, 830 - this._size);
     // rightBan[1].position.set(1920 - this._size - (32 + this._size + 16), 32);
@@ -35,6 +31,18 @@ export class BanViewer extends Container {
     voteBg.endFill();
     voteBg.position.set(760, 830);
 
+    const ban1 = voteBg.addChild(new BanPanel(this._size));
+    ban1.portrait.jobId = store.roomState.votedBan;
+    ban1.position.set(158 - 84 - 32, 83);
+
+    const ban2 = voteBg.addChild(new BanPanel(this._size));
+    ban2.portrait.jobId = store.roomState.votedPicks[0];
+    ban2.position.set(158, 83);
+
+    const ban3 = voteBg.addChild(new BanPanel(this._size));
+    ban3.portrait.jobId = store.roomState.votedPicks[1];
+    ban3.position.set(158 + 84 + 32, 83);
+
     autorun(() => {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       store.reset;
@@ -48,8 +56,7 @@ export class BanViewer extends Container {
     });
 
     autorun(() => {
-      if (!store.roomState)
-        return;
+      if (!store.roomState) return;
 
       for (let i = 0; i < leftBan.length; i++) {
         if (store.roomState.leftTeam.banList.length <= i) break;
