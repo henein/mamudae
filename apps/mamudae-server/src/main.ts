@@ -37,8 +37,10 @@ app.use(cors());
 
 app.use(express.json());
 
-// const rooms = new Redis('');
-const rooms = new Map<string, RoomState>();
+const rooms = new Redis('redis://localhost:6379');
+// const rooms = new Map<string, RoomState>();
+
+const serverId = createId();
 
 const getRoom = async (roomId: string) => {
   const room = await rooms.get(roomId);
@@ -47,13 +49,13 @@ const getRoom = async (roomId: string) => {
     return null;
   }
 
-  // return JSON.parse(room) as RoomState;
-  return room;
+  return JSON.parse(room) as RoomState;
+  // return room;
 };
 
 const setRoom = async (roomId: string, room: RoomState) => {
-  // await rooms.set(roomId, JSON.stringify(room));
-  await rooms.set(roomId, room);
+  await rooms.set(roomId, JSON.stringify(room));
+  // await rooms.set(roomId, room);
 };
 
 app.get('/admin', (req, res) => {
@@ -179,17 +181,17 @@ io.on('connection', async (socket) => {
     }
 
     if (team === 'left') {
-      if (room.leftTeam.userId !== undefined) {
+      if (room.leftTeam.userId !== undefined && room.leftTeam.userId.split('-')[0] === serverId) {
         socket.emit('welcome', undefined, '누군가 이미 접속했습니다.');
         return;
       }
-      room.leftTeam.userId = socket.id;
+      room.leftTeam.userId = `${serverId}-${socket.id}`;
     } else if (team === 'right') {
-      if (room.rightTeam.userId !== undefined) {
+      if (room.rightTeam.userId !== undefined && room.rightTeam.userId.split('-')[0] === serverId) {
         socket.emit('welcome', undefined, '누군가 이미 접속했습니다.');
         return;
       }
-      room.rightTeam.userId = socket.id;
+      room.rightTeam.userId = `${serverId}-${socket.id}`;
     }
 
     socket.join(roomId);

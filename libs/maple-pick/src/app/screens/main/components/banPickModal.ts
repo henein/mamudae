@@ -195,7 +195,8 @@ export class BanPickModal extends Container {
     this.modal.pivot.set(this.modal.width / 2, this.modal.height / 2);
 
     this.toggleButton = this.addChild(Sprite.from('main/ui/up.png'));
-    this.toggleButton.position.set(910, 1000);
+    this.toggleButton.anchor.set(0.5, 0.5);
+    this.toggleButton.position.set(1920 / 2, 1080 - 298);
     this.toggleButton.interactive = true;
     this.toggleButton.on('pointerdown', this.onToggle);
 

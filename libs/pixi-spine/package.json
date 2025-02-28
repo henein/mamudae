@@ -1,9 +1,0 @@
-{
-  "name": "@henein/pixi-spine",
-  "version": "0.0.1",
-  "dependencies": {},
-  "type": "module",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
-  "private": true
-}

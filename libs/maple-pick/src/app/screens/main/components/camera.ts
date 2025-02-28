@@ -1,14 +1,13 @@
 /*
   스프라이트 화질 개선?
 */
-
-import { autorun, reaction } from 'mobx';
 import { store } from '../../../store/state-store';
-import { Tween } from '@tweenjs/tween.js';
-import { createNoise2D } from 'simplex-noise';
-import { Easing } from '@tweenjs/tween.js';
-import { getJob, JobId } from '@henein/mamudae-lib';
 import { Splash } from './splash';
+import { getJob, JobId } from '@henein/mamudae-lib';
+import { Tween } from '@tweenjs/tween.js';
+import { Easing } from '@tweenjs/tween.js';
+import { autorun, reaction } from 'mobx';
+import { ZoomBlurFilter } from 'pixi-filters';
 import {
   BlurFilter,
   ColorMatrixFilter,
@@ -19,6 +18,7 @@ import {
   Text,
   BLEND_MODES,
 } from 'pixi.js';
+import { createNoise2D } from 'simplex-noise';
 
 export class Camera extends Container {
   private _backgroundContainer: Container;
@@ -32,7 +32,7 @@ export class Camera extends Container {
   private _cloudVisible = false;
   private _colorFilter: ColorMatrixFilter;
   private _blurFilter: BlurFilter;
-  private _jobNameText: Text;
+  // private _jobNameText: Text;
   private _simplexX = createNoise2D();
   private _simplexY = createNoise2D();
   private _shakeTween: Tween<any>;
@@ -50,7 +50,7 @@ export class Camera extends Container {
     this._backgroundContainer = container.addChild(new Container());
 
     this._background = this._backgroundContainer.addChild(
-      Sprite.from('main/backgrounds/0.png')
+      Sprite.from('main/backgrounds/0.png'),
     );
     this._background.anchor.set(0.5);
     this._background.scale.set(2);
@@ -64,7 +64,7 @@ export class Camera extends Container {
     this._splashContainer = container.addChild(new Container());
 
     this._logo = this._splashContainer.addChild(
-      Sprite.from('main/ui/logo.png')
+      Sprite.from('main/ui/logo.png'),
     );
     this._logo.visible = false;
 
@@ -83,8 +83,8 @@ export class Camera extends Container {
         1080 / 2,
         1.5,
         true,
-        'left'
-      )
+        'left',
+      ),
     );
 
     this._rightSplash = this._splashContainer.addChild(
@@ -94,8 +94,8 @@ export class Camera extends Container {
         1080 / 2,
         1.5,
         true,
-        'right'
-      )
+        'right',
+      ),
     );
 
     this._leftSplash.alpha = 0.5;
@@ -124,8 +124,8 @@ export class Camera extends Container {
             1080 / 2,
             1.5,
             true,
-            'left'
-          )
+            'left',
+          ),
         );
         this._rightSplash.destroy();
         this._rightSplash = this._splashContainer.addChild(
@@ -135,16 +135,16 @@ export class Camera extends Container {
             1080 / 2,
             1.5,
             true,
-            'right'
-          )
+            'right',
+          ),
         );
         this._leftSplash.alpha = 0.5;
         this._rightSplash.alpha = 0.5;
-        this._jobNameText.text = '';
+        // this._jobNameText.text = '';
         this._eventQueue = new CameraEventQueue(this.onEvent);
         this._lastJobId = undefined;
         // this.cloudVisible = false;
-      }
+      },
     );
 
     autorun(() => {
@@ -266,37 +266,41 @@ export class Camera extends Container {
         time += elapsed / 180;
         this._backgroundContainer.position.set(
           this._simplexX(0, time) * (this.shakeRange / 4),
-          this._simplexY(0, time) * (this.shakeRange / 4)
+          this._simplexY(0, time) * (this.shakeRange / 4),
         );
         this._splashContainer.position.set(
           this._simplexX(0, time) * this.shakeRange,
-          this._simplexY(0, time) * this.shakeRange
+          this._simplexY(0, time) * this.shakeRange - 20,
         );
       })
       .start();
 
-    container.filters = [this._colorFilter, this._blurFilter];
+    const zoomFilter = new ZoomBlurFilter();
+    zoomFilter.center = [1920 / 2, 1080 / 2];
+    zoomFilter.innerRadius = 600;
 
-    this._jobNameText = this.addChild(
-      new Text(
-        '',
-        new TextStyle({
-          fontFamily: 'Maplestory Bold',
-          fontSize: '48px',
-          fill: '#ffffff',
-          dropShadow: true,
-          dropShadowColor: 0x404040,
-          dropShadowDistance: 0,
-          dropShadowBlur: 4,
-        })
-      )
-    );
-    this._jobNameText.anchor.set(0.5);
-    this._jobNameText.position.set(1920 / 2, 916);
+    container.filters = [this._colorFilter, this._blurFilter, zoomFilter];
+
+    // this._jobNameText = this.addChild(
+    //   new Text(
+    //     '',
+    //     new TextStyle({
+    //       fontFamily: 'Maplestory Bold',
+    //       fontSize: 48,
+    //       fill: '#ffffff',
+    //       dropShadow: true,
+    //       dropShadowColor: 0x404040,
+    //       dropShadowDistance: 0,
+    //       dropShadowBlur: 4,
+    //     }),
+    //   ),
+    // );
+    // this._jobNameText.anchor.set(0.5, 0.5);
+    // this._jobNameText.position.set(1920 / 2, 786);
 
     this.addChild(new BlurOverlay());
 
-    this.addChild(Sprite.from('main/ui/cameraUI.png'));
+    // this.addChild(Sprite.from('main/ui/cameraUI.png'));
   }
 
   // get cloudAlpha() {
@@ -341,10 +345,10 @@ export class Camera extends Container {
             this._mainSplash = undefined;
             done();
           });
-          new Tween(this._jobNameText)
-            .to({ alpha: 0 }, 1000)
-            .easing(Easing.Quartic.InOut)
-            .start();
+          // new Tween(this._jobNameText)
+          //   .to({ alpha: 0 }, 1000)
+          //   .easing(Easing.Quartic.InOut)
+          //   .start();
         }
         break;
       case 'defaultBG':
@@ -366,7 +370,7 @@ export class Camera extends Container {
           blur: 64,
           nextBackgroundAlpha: 1,
         },
-        300
+        300,
       )
       .easing(Easing.Quartic.InOut)
       .onStart((object) => {
@@ -376,7 +380,7 @@ export class Camera extends Container {
         this._nextBackground.visible = true;
         this._nextBackground.alpha = object.nextBackgroundAlpha;
         this._nextBackground.texture = Texture.from(
-          `main/backgrounds/${getJob(object.jobId).background ?? 0}.png`
+          `main/backgrounds/${getJob(object.jobId).background ?? 0}.png`,
         );
       })
       .onUpdate((object) => {
@@ -397,11 +401,11 @@ export class Camera extends Container {
               this._mainSplash.jobId = object.jobId;
             } else {
               this._mainSplash = this._splashContainer.addChild(
-                new Splash(object.jobId, 1920 / 2, 1080 / 2, 2)
+                new Splash(object.jobId, 1920 / 2, 1080 / 2, 2),
               );
             }
-            this._jobNameText.text = getJob(object.jobId).jobName;
-            this._jobNameText.alpha = 1;
+            // this._jobNameText.text = getJob(object.jobId).jobName;
+            // this._jobNameText.alpha = 1;
           })
           .onUpdate((object) => {
             this._colorFilter.brightness(object.brightness, false);
@@ -415,7 +419,7 @@ export class Camera extends Container {
             this._nextBackground.visible = false;
 
             done();
-          })
+          }),
       )
       .start();
   };
@@ -432,7 +436,7 @@ export class Camera extends Container {
           blur: 32,
           nextBackgroundAlpha: 1,
         },
-        300
+        300,
       )
       .easing(Easing.Quartic.InOut)
       .onStart((object) => {
@@ -467,7 +471,7 @@ export class Camera extends Container {
             this._nextBackground.visible = false;
 
             done();
-          })
+          }),
       )
       .start();
   };
@@ -532,7 +536,7 @@ class BlurOverlay extends Container {
         break;
       case 'ban':
         this._multiply.texture = Texture.from(
-          'main/backgrounds/multiplyBan.png'
+          'main/backgrounds/multiplyBan.png',
         );
         break;
     }

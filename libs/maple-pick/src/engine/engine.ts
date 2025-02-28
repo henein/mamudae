@@ -8,6 +8,7 @@ import { Navigation } from './navigation/navigation';
 import { CreationResizePlugin } from './resize/ResizePlugin';
 import { getResolution } from './utils/getResolution';
 import { sound } from '@pixi/sound';
+import 'pixi-spine';
 import {
   Application,
   Assets,
@@ -16,7 +17,6 @@ import {
   IDestroyOptions,
   ResizePlugin,
 } from 'pixi.js';
-import '@pixi-spine/loader-3.7';
 
 extensions.remove(ResizePlugin);
 extensions.add(CreationResizePlugin);
@@ -43,7 +43,7 @@ export class CreationEngine extends Application {
     sfx: SFX;
     getMasterVolume: () => number;
     setMasterVolume: (volume: number) => void;
-  }
+  };
 
   /** Initialize the application */
   constructor(opts: Partial<IApplicationOptions>) {

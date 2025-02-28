@@ -39,7 +39,7 @@ export class Coin extends Container {
     this.front = this.addChild(new Container());
     const frontBg = this.front.addChild(new Graphics());
     frontBg.beginFill(0x0075ca).drawCircle(0, 0, 200).endFill();
-    frontBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
+    frontBg.lineStyle(1, 0xffffff).beginFill(0, 0).drawCircle(0, 0, 190).endFill();
     const frontText = this.front.addChild(
       new Text(store.roomState.leftTeam.name, {
         fontFamily: 'Maplestory Bold',
@@ -53,7 +53,7 @@ export class Coin extends Container {
     this.back = this.addChild(new Container());
     const backBg = this.back.addChild(new Graphics());
     backBg.beginFill(0xde9300).drawCircle(0, 0, 200).endFill();
-    backBg.lineStyle(1, 0xffffff).beginFill().drawCircle(0, 0, 190).endFill();
+    backBg.lineStyle(1, 0xffffff).beginFill(0, 0).drawCircle(0, 0, 190).endFill();
     const backText = this.back.addChild(
       new Text(store.roomState.rightTeam.name, {
         fontFamily: 'Maplestory Bold',

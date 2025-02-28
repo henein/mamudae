@@ -20,7 +20,7 @@ export class PickViewer extends Container {
         leftPick[i] = this.addChild(new PickPanel({ direction: 'left' }));
       }
 
-      leftPick[i].position.set(0, 236 + 136 * i);
+      leftPick[i].position.set(608 - 152 * i, 1080);
     }
 
     const rightPick: PickPanel[] = [];
@@ -34,7 +34,7 @@ export class PickViewer extends Container {
         rightPick[i] = this.addChild(new PickPanel({ direction: 'right' }));
       }
 
-      rightPick[i].position.set(1524, 236 + 136 * i);
+      rightPick[i].position.set(1160 + 152 * i, 1080);
     }
 
     reaction(

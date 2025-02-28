@@ -24,6 +24,7 @@ export const HomePage = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2">
       <input
+        type="password"
         className="rounded-md border border-gray-400 px-3 py-2 active:border-orange-400"
         onChange={(event) => setRoomId(event.target.value)}
         placeholder="Enter Room ID"

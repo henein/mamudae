@@ -1,6 +1,7 @@
 import { store } from '../../../store/state-store';
 import { DetailRoundedRect } from './detailRoundedRect';
 import { JobId, getJob, Job } from '@henein/mamudae-lib';
+import { Easing, Tween } from '@tweenjs/tween.js';
 import { IReactionDisposer, autorun } from 'mobx';
 import { DropShadowFilter } from 'pixi-filters';
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from 'pixi.js';
@@ -18,14 +19,15 @@ export class PickPanel extends Container {
   private _currentSprite: Sprite;
   private _backgroundAlpha = {
     none: 0,
-    current: 0.95,
-    next: 0.2,
-    done: 0.5,
+    current: 0.2,
+    next: 0,
+    done: 1,
   };
   background: Sprite;
   sprite: Sprite;
   title: Text;
   shadow: Sprite;
+  shadowTween: Tween<Sprite>;
 
   constructor(option: Option = {}) {
     super();
@@ -36,8 +38,8 @@ export class PickPanel extends Container {
     this._state = 'default';
 
     const backgroundColor = this.addChild(new Graphics());
-    backgroundColor.beginFill(0x000000, 0.3);
-    backgroundColor.drawRect(0, 0, 396, 120);
+    backgroundColor.beginFill(0x424347, 0.8);
+    backgroundColor.drawRect(0, 0, 152, 250);
     backgroundColor.endFill();
 
     this.background = this.addChild(
@@ -51,10 +53,8 @@ export class PickPanel extends Container {
         color: 0x000000,
         x: 0,
         y: 0,
-        width: 396,
-        height: 120,
-        topRight: direction === 'left' ? 64 : 0,
-        topLeft: direction === 'right' ? 64 : 0,
+        width: 152,
+        height: 250,
       }),
     );
     this.mask = graphics;
@@ -67,9 +67,15 @@ export class PickPanel extends Container {
     );
     this.shadow.visible = false;
 
+    this.shadowTween = new Tween(this.shadow)
+      .to({ alpha: 1 }, 1000)
+      .easing(Easing.Quadratic.InOut)
+      .repeat(Infinity)
+      .yoyo(true);
+
     if (isOpponent) {
       const opponentIcon = this.addChild(
-        Sprite.from(`main/ui/${direction}Opponent.png`),
+        Sprite.from(`main/ui/RightOpponent.png`),
       );
       opponentIcon.anchor.set(0.5);
       opponentIcon.position.set(396 / 2, 120 / 2);
@@ -80,8 +86,9 @@ export class PickPanel extends Container {
         '',
         new TextStyle({
           fontFamily: 'Maplestory Light',
-          fontSize: 28,
+          fontSize: 20,
           fill: '#ffffff',
+          align: 'center',
           dropShadow: true,
           dropShadowColor: 0x000000,
           dropShadowDistance: 0,
@@ -89,13 +96,15 @@ export class PickPanel extends Container {
         }),
       ),
     );
-    this.title.anchor.set(direction === 'left' ? 1 : 0, 1);
-    this.title.position.set(direction === 'left' ? 396 - 12 : 0 + 12, 120 - 8);
+    this.title.anchor.set(0.5, 1);
+    this.title.position.set(76, 250 - 16);
 
     const dropShadowFilter = new DropShadowFilter({
       offset: { x: 0, y: 4 },
     });
     this.filters = [dropShadowFilter];
+
+    this.pivot.set(0, 250);
 
     this.reset();
   }
@@ -119,15 +128,11 @@ export class PickPanel extends Container {
 
     sprite.texture = Texture.from(`main/splashes/${job.id}.png`);
     sprite.scale.set(0.65);
-    sprite.scale.x *=
-      (this._direction === 'left' && job.reverse) ||
-      (this._direction === 'right' && !job.reverse)
-        ? -1
-        : 1;
+    sprite.scale.x *= job.reverse ? 1 : -1;
     sprite.anchor.set(0.5 + job.offsetX / 1024, 0.5 + job.offsetY / 604);
     sprite.position.set(
-      396 / 2 + (this._direction === 'left' ? -76 : 76),
-      120 / 2 + 20,
+      152 / 2,
+      250 / 2,
     );
   };
 
@@ -139,6 +144,7 @@ export class PickPanel extends Container {
       this.sprite.visible = true;
       this._currentSprite.visible = false;
       this.title.text = this._job.jobName;
+      this.shadow.visible = true;
     }
 
     this.applyJob(this.sprite, this._job);
@@ -157,6 +163,13 @@ export class PickPanel extends Container {
 
     if (this._currentDisposer) {
       this._currentDisposer();
+    }
+
+    if (this._state === 'current') {
+      this.shadow.alpha = 0.5;
+      this.shadowTween.start();
+    } else {
+      this.shadowTween.stop();
     }
 
     switch (this._state) {
@@ -180,6 +193,8 @@ export class PickPanel extends Container {
         this.sprite.visible = false;
         this._currentSprite.visible = true;
         this._currentSprite.alpha = 0.5;
+        this.shadow.visible = true;
+        this.title.text = '선택 중...';
         this._currentDisposer = autorun(() => {
           const selectJobId = store.roomState?.selected;
 
@@ -190,9 +205,8 @@ export class PickPanel extends Container {
           const selectJob = getJob(selectJobId);
 
           this.applyJob(this._currentSprite, selectJob);
+          this.title.text = selectJob.jobName;
         });
-        this.title.text = '선택 중...';
-        this.shadow.visible = true;
         break;
       case 'next':
         this.background.alpha = this._backgroundAlpha.next;
@@ -201,13 +215,13 @@ export class PickPanel extends Container {
         this.title.text = '다음 선택';
         this.shadow.visible = false;
         break;
-      case 'blind':
-        this.background.alpha = this._backgroundAlpha.current;
-        this.sprite.visible = false;
-        this._currentSprite.visible = false;
-        this.title.text = '선택 중...';
-        this.shadow.visible = true;
-        break;
+      // case 'blind':
+      //   this.background.alpha = this._backgroundAlpha.current;
+      //   this.sprite.visible = false;
+      //   this._currentSprite.visible = false;
+      //   this.title.text = '선택 중...';
+      //   this.shadow.visible = true;
+      //   break;
       case 'done':
         this.background.alpha = this._backgroundAlpha.done;
         this.sprite.visible = true;

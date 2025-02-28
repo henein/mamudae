@@ -1,9 +1,0 @@
-{
-  "name": "pixi-spine",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/pixi-spine/src",
-  "projectType": "library",
-  "tags": [],
-  "// targets": "to see all targets run: nx show project pixi-spine --web",
-  "targets": {}
-}
