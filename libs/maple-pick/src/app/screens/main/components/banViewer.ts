@@ -35,6 +35,8 @@ export class BanViewer extends Container {
     ban1.portrait.jobId = store.roomState.votedBan;
     ban1.position.set(158 - 84 - 32, 83);
 
+    // const text1
+
     const ban2 = voteBg.addChild(new BanPanel(this._size));
     ban2.portrait.jobId = store.roomState.votedPicks[0];
     ban2.position.set(158, 83);

@@ -4,6 +4,7 @@
 import { store } from '../../../store/state-store';
 import { Splash } from './splash';
 import { getJob, JobId } from '@henein/mamudae-lib';
+import { MaskFilter } from '@pixi/picture';
 import { Tween } from '@tweenjs/tween.js';
 import { Easing } from '@tweenjs/tween.js';
 import { autorun, reaction } from 'mobx';
@@ -17,6 +18,7 @@ import {
   Texture,
   Text,
   BLEND_MODES,
+  Graphics,
 } from 'pixi.js';
 import { createNoise2D } from 'simplex-noise';
 
@@ -503,12 +505,13 @@ class BlurOverlay extends Container {
     this._state = 'default';
 
     const blurFilter = new BlurFilter();
-    blurFilter.blur = 16;
+    blurFilter.blur = 32;
     blurFilter.quality = 6;
+    blurFilter.repeatEdgePixels = true;
 
-    // const graphics = Sprite.from('main/backgrounds/multiply.png');
-    // graphics.filters = [new picture.MaskFilter(blurFilter)];
-    // this.addChild(graphics);
+    const graphics = Sprite.from('main/backgrounds/mask.png');
+    graphics.filters = [new MaskFilter(blurFilter)];
+    this.addChild(graphics);
 
     this._multiply = Sprite.from('main/backgrounds/multiply.png');
     this._multiply.blendMode = BLEND_MODES.MULTIPLY;

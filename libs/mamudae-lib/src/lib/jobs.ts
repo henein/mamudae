@@ -126,7 +126,7 @@ export const JobList: Job[] = [
     branchName: '도적',
     background: 5,
     offsetX: -24,
-    offsetY: 0,
+    offsetY: -20,
   },
   {
     id: JobId.DUAL_BLADE,

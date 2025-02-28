@@ -7,6 +7,7 @@ import { Job, JobList } from '@henein/mamudae-lib';
 import { ScrollBox } from '@pixi/ui';
 import { Easing, Tween } from '@tweenjs/tween.js';
 import { autorun, reaction } from 'mobx';
+import { DropShadowFilter } from 'pixi-filters';
 import {
   Container,
   Graphics,
@@ -199,6 +200,7 @@ export class BanPickModal extends Container {
     this.toggleButton.position.set(1920 / 2, 1080 - 298);
     this.toggleButton.interactive = true;
     this.toggleButton.on('pointerdown', this.onToggle);
+    this.filters = [new DropShadowFilter({ offset: { x: 0, y: 0}, blur: 4 })];
 
     autorun(() => {
       if (!store.team) {
